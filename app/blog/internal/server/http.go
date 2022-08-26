@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/go-kratos/kratos/v2/middleware/auth/jwt"
 	"github.com/go-kratos/kratos/v2/middleware/logging"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/middleware/selector"
@@ -11,6 +12,7 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/go-kratos/swagger-api/openapiv2"
 
+	jwtV4 "github.com/golang-jwt/jwt/v4"
 	"github.com/gorilla/handlers"
 
 	v1 "kratos-blog/api/blog/v1"
@@ -20,7 +22,9 @@ import (
 
 // NewWhiteListMatcher 创建jwt白名单
 func NewWhiteListMatcher() selector.MatchFunc {
-	whiteList := make(map[string]struct{})
+	whiteList := make(map[string]bool)
+	whiteList["/blog.v1.UserService/Register"] = true
+	whiteList["/blog.v1.UserService/Login"] = true
 	return func(ctx context.Context, operation string) bool {
 		if _, ok := whiteList[operation]; ok {
 			return false
@@ -35,13 +39,13 @@ func NewMiddleware(ac *conf.Auth, logger log.Logger) http.ServerOption {
 		recovery.Recovery(),
 		tracing.Server(),
 		logging.Server(logger),
-		//selector.Server(
-		//	jwt.Server(func(token *jwtv4.Token) (interface{}, error) {
-		//		return []byte(ac.ApiKey), nil
-		//	}, jwt.WithSigningMethod(jwtv4.SigningMethodHS256)),
-		//).
-		//	Match(NewWhiteListMatcher()).
-		//	Build(),
+		selector.Server(
+			jwt.Server(func(token *jwtV4.Token) (interface{}, error) {
+				return []byte(ac.ApiKey), nil
+			}, jwt.WithSigningMethod(jwtV4.SigningMethodHS256)),
+		).
+			Match(NewWhiteListMatcher()).
+			Build(),
 	)
 }
 
@@ -59,8 +63,7 @@ func NewHTTPServer(
 	var opts = []http.ServerOption{
 		NewMiddleware(ac, logger),
 		http.Filter(handlers.CORS(
-			handlers.AllowedHeaders([]string{"" +
-				"", "Content-Type", "Authorization"}),
+			handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}),
 			handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"}),
 			handlers.AllowedOrigins([]string{"*"}),
 		)),

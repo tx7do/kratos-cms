@@ -82,6 +82,29 @@
         ]
       }
     },
+    "/blog/v1/me": {
+      "get": {
+        "summary": "获取已经登陆的用户的数据",
+        "operationId": "UserService_GetMe",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1User"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "UserService"
+        ]
+      }
+    },
     "/blog/v1/register": {
       "post": {
         "summary": "注册",

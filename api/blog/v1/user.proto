@@ -33,6 +33,13 @@ service UserService {
       body: "*"
     };
   }
+
+  // 获取已经登陆的用户的数据
+  rpc GetMe (google.protobuf.Empty) returns (User) {
+    option (google.api.http) = {
+      get: "/blog/v1/me"
+    };
+  }
 }
 
 message User {

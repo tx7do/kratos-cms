@@ -31,7 +31,9 @@ func NewUserUseCase(repo UserRepo, logger log.Logger) *UserUseCase {
 }
 
 func (uc *UserUseCase) Get(ctx context.Context, req uint32) (*v1.User, error) {
-	return uc.repo.Get(ctx, req)
+	user, err := uc.repo.Get(ctx, req)
+	user.Password = nil
+	return user, err
 }
 
 func (uc *UserUseCase) GetUserByUserName(ctx context.Context, userName string) (*v1.User, error) {

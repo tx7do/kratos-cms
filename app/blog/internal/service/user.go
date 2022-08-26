@@ -2,10 +2,14 @@ package service
 
 import (
 	"context"
+	"errors"
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/go-kratos/kratos/v2/middleware/auth/jwt"
+	jwtV4 "github.com/golang-jwt/jwt/v4"
 	"google.golang.org/protobuf/types/known/emptypb"
 	v1 "kratos-blog/api/blog/v1"
 	"kratos-blog/app/blog/internal/biz"
+	"strconv"
 )
 
 type UserService struct {
@@ -75,4 +79,43 @@ func (s *UserService) Register(ctx context.Context, req *v1.RegisterRequest) (*v
 		UserName: user.GetUserName(),
 		Token:    token,
 	}, nil
+}
+
+func (s *UserService) ParseFromContext(ctx context.Context) (uint32, string, error) {
+	claims, ok := jwt.FromContext(ctx)
+	if !ok {
+		return 0, "", errors.New("no jwt token in context")
+	}
+
+	mc, ok := claims.(jwtV4.MapClaims)
+	if !ok {
+		return 0, "", errors.New("claims is not map claims")
+	}
+
+	var strUserName string
+	userName, ok := mc["sub"]
+	if ok {
+		strUserName = userName.(string)
+	}
+
+	var userId uint32
+	strUserId, ok := mc["userId"]
+	if ok {
+		userId_, err := strconv.ParseUint(strUserId.(string), 10, 64)
+		if err != nil {
+			return 0, "", err
+		}
+		userId = uint32(userId_)
+	}
+
+	return userId, strUserName, nil
+}
+
+func (s *UserService) GetMe(ctx context.Context, _ *emptypb.Empty) (*v1.User, error) {
+	userId, _, err := s.ParseFromContext(ctx)
+	if err != nil {
+		return nil, v1.ErrorRequestNotSupport("权限信息不存在")
+	}
+
+	return s.uc.Get(ctx, userId)
 }
