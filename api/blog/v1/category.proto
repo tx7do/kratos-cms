@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+package blog.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "pagination/pagination.proto";
+
+option go_package = "kratos-blog/api/blog/v1;v1";
+
+// 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
+
+service CategoryService {
+  // 获取类别列表
+  rpc ListCategory (pagination.PagingRequest) returns (ListCategoryResponse) {
+    option (google.api.http) = {
+      get: "/blog/v1/categories"
+    };
+  }
+
+  // 获取类别数据
+  rpc GetCategory (GetCategoryRequest) returns (Category) {
+    option (google.api.http) = {
+      get: "/blog/v1/categories/{id}"
+    };
+  }
+
+  // 创建类别
+  rpc CreateCategory (CreateCategoryRequest) returns (Category) {
+    option (google.api.http) = {
+      post: "/blog/v1/categories"
+      body: "*"
+    };
+  }
+
+  // 更新类别
+  rpc UpdateCategory (UpdateCategoryRequest) returns (Category) {
+    option (google.api.http) = {
+      put: "/blog/v1/categories/{id}"
+      body: "category"
+    };
+  }
+
+  // 删除类别
+  rpc DeleteCategory (DeleteCategoryRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/blog/v1/categories/{id}"
+    };
+  }
+}
+
+message Category {
+  uint64 id = 1;
+  optional uint64 parentId = 2;
+  optional string name = 3;
+  optional string seoDesc = 4;
+}
+
+// 回应 - 类别列表
+message ListCategoryResponse {
+  repeated Category items = 1;
+  int32 total = 2;
+}
+
+// 请求 - 类别数据
+message GetCategoryRequest {
+  uint64 id = 1;
+}
+
+// 请求 - 创建类别
+message CreateCategoryRequest {
+  Category category = 1;
+  optional uint64 operatorId = 2;
+}
+
+// 请求 - 更新类别
+message UpdateCategoryRequest {
+  uint64 id = 1;
+  Category category = 2;
+  optional uint64 operatorId = 3;
+}
+
+// 请求 - 删除类别
+message DeleteCategoryRequest {
+  uint64 id = 1;
+  optional uint64 operatorId = 2;
+}

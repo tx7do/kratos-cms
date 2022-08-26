@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package blog.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "pagination/pagination.proto";
+
+option go_package = "kratos-blog/api/blog/v1;v1";
+
+// 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
+
+service PostService {
+  // 获取帖子列表
+  rpc ListPost (pagination.PagingRequest) returns (ListPostResponse) {
+    option (google.api.http) = {
+      get: "/blog/v1/posts"
+    };
+  }
+
+  // 获取帖子数据
+  rpc GetPost (GetPostRequest) returns (Post) {
+    option (google.api.http) = {
+      get: "/blog/v1/posts/{id}"
+    };
+  }
+
+  // 创建帖子
+  rpc CreatePost (CreatePostRequest) returns (Post) {
+    option (google.api.http) = {
+      post: "/blog/v1/posts"
+      body: "*"
+    };
+  }
+
+  // 更新帖子
+  rpc UpdatePost (UpdatePostRequest) returns (Post) {
+    option (google.api.http) = {
+      put: "/blog/v1/posts/{id}"
+      body: "post"
+    };
+  }
+
+  // 删除帖子
+  rpc DeletePost (DeletePostRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/blog/v1/posts/{id}"
+    };
+  }
+}
+
+
+message Post {
+  uint64 id = 1;
+  optional string title = 2;
+  optional string summary = 3;
+  optional string content = 4;
+  optional int32 category = 5;
+  repeated int32 tags = 6;
+}
+
+// 回应 - 帖子列表
+message ListPostResponse {
+  repeated Post items = 1;
+  int32 total = 2;
+}
+
+// 请求 - 帖子数据
+message GetPostRequest {
+  uint64 id = 1;
+}
+
+// 请求 - 创建帖子
+message CreatePostRequest {
+  Post post = 1;
+  optional uint64 operatorId = 2;
+}
+
+// 请求 - 更新帖子
+message UpdatePostRequest {
+  uint64 id = 1;
+  Post post = 2;
+  optional uint64 operatorId = 3;
+}
+
+// 请求 - 删除帖子
+message DeletePostRequest {
+  uint64 id = 1;
+  optional uint64 operatorId = 2;
+}

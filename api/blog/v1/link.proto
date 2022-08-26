@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+package blog.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "pagination/pagination.proto";
+
+option go_package = "kratos-blog/api/blog/v1;v1";
+
+// 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
+
+service LinkService {
+  // 获取链接列表
+  rpc ListLink (pagination.PagingRequest) returns (ListLinkResponse) {
+    option (google.api.http) = {
+      get: "/blog/v1/links"
+    };
+  }
+
+  // 获取链接数据
+  rpc GetLink (GetLinkRequest) returns (Link) {
+    option (google.api.http) = {
+      get: "/blog/v1/links/{id}"
+    };
+  }
+
+  // 创建链接
+  rpc CreateLink (CreateLinkRequest) returns (Link) {
+    option (google.api.http) = {
+      post: "/blog/v1/links"
+      body: "*"
+    };
+  }
+
+  // 更新链接
+  rpc UpdateLink (UpdateLinkRequest) returns (Link) {
+    option (google.api.http) = {
+      put: "/blog/v1/links/{id}"
+      body: "link"
+    };
+  }
+
+  // 删除链接
+  rpc DeleteLink (DeleteLinkRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/blog/v1/links/{id}"
+    };
+  }
+}
+
+message Link {
+  uint64 id = 1;
+  optional string name = 2;
+  optional string link = 3;
+  optional int32 orderId = 4;
+}
+
+// 回应 - 链接列表
+message ListLinkResponse {
+  repeated Link items = 1;
+  int32 total = 2;
+}
+
+// 请求 - 链接数据
+message GetLinkRequest {
+  uint64 id = 1;
+}
+
+// 请求 - 创建链接
+message CreateLinkRequest {
+  Link link = 1;
+  optional uint64 operatorId = 2;
+}
+
+// 请求 - 更新链接
+message UpdateLinkRequest {
+  uint64 id = 1;
+  Link link = 2;
+  optional uint64 operatorId = 3;
+}
+
+// 请求 - 删除链接
+message DeleteLinkRequest {
+  uint64 id = 1;
+  optional uint64 operatorId = 2;
+}

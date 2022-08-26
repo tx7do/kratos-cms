@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package blog.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "kratos-blog/api/blog/v1;v1";
+
+// 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
+
+service UserService {
+  // 登陆
+  rpc Login (LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/blog/v1/login"
+      body: "*"
+    };
+  }
+
+  // 登出
+  rpc Logout (LogoutRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/blog/v1/logout"
+      body: "*"
+    };
+  }
+
+  // 注册
+  rpc Register (RegisterRequest) returns (RegisterResponse) {
+    option (google.api.http) = {
+      post: "/blog/v1/register"
+      body: "*"
+    };
+  }
+}
+
+message User {
+  uint64 id = 1;
+  optional string userName = 2;
+  optional string nickName = 3;
+  optional string email = 4;
+  optional string password = 5;
+}
+
+// 请求 - 登录
+message LoginRequest {
+  string userName = 1;
+  string password = 2;
+}
+// 回应 - 登录
+message LoginResponse {
+  string token = 1;
+  string refreshToken = 2;
+}
+
+// 请求 - 登出
+message LogoutRequest {
+  uint64 id = 1;
+}
+
+// 请求 - 注册
+message RegisterRequest {
+  User user = 1;
+}
+// 回应 - 注册
+message RegisterResponse {
+  uint64 id = 1;
+}
+
+
+// 请求 - 创建
+message CreateUserRequest {
+  User user = 1;
+  optional uint64 operatorId = 2;
+}
+
+// 请求 - 更新
+message UpdateUserRequest {
+  uint64 id = 1;
+  User user = 2;
+  optional uint64 operatorId = 3;
+}
+
+// 请求 - 删除标签
+message DeleteUserRequest {
+  uint64 id = 1;
+  optional uint64 operatorId = 2;
+}
