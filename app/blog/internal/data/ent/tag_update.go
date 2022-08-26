@@ -67,70 +67,110 @@ func (tu *TagUpdate) ClearName() *TagUpdate {
 	return tu
 }
 
-// SetDisplayName sets the "display_name" field.
-func (tu *TagUpdate) SetDisplayName(s string) *TagUpdate {
-	tu.mutation.SetDisplayName(s)
+// SetSlug sets the "slug" field.
+func (tu *TagUpdate) SetSlug(s string) *TagUpdate {
+	tu.mutation.SetSlug(s)
 	return tu
 }
 
-// SetNillableDisplayName sets the "display_name" field if the given value is not nil.
-func (tu *TagUpdate) SetNillableDisplayName(s *string) *TagUpdate {
+// SetNillableSlug sets the "slug" field if the given value is not nil.
+func (tu *TagUpdate) SetNillableSlug(s *string) *TagUpdate {
 	if s != nil {
-		tu.SetDisplayName(*s)
+		tu.SetSlug(*s)
 	}
 	return tu
 }
 
-// ClearDisplayName clears the value of the "display_name" field.
-func (tu *TagUpdate) ClearDisplayName() *TagUpdate {
-	tu.mutation.ClearDisplayName()
+// ClearSlug clears the value of the "slug" field.
+func (tu *TagUpdate) ClearSlug() *TagUpdate {
+	tu.mutation.ClearSlug()
 	return tu
 }
 
-// SetSeoDesc sets the "seo_desc" field.
-func (tu *TagUpdate) SetSeoDesc(s string) *TagUpdate {
-	tu.mutation.SetSeoDesc(s)
+// SetColor sets the "color" field.
+func (tu *TagUpdate) SetColor(s string) *TagUpdate {
+	tu.mutation.SetColor(s)
 	return tu
 }
 
-// SetNillableSeoDesc sets the "seo_desc" field if the given value is not nil.
-func (tu *TagUpdate) SetNillableSeoDesc(s *string) *TagUpdate {
+// SetNillableColor sets the "color" field if the given value is not nil.
+func (tu *TagUpdate) SetNillableColor(s *string) *TagUpdate {
 	if s != nil {
-		tu.SetSeoDesc(*s)
+		tu.SetColor(*s)
 	}
 	return tu
 }
 
-// ClearSeoDesc clears the value of the "seo_desc" field.
-func (tu *TagUpdate) ClearSeoDesc() *TagUpdate {
-	tu.mutation.ClearSeoDesc()
+// ClearColor clears the value of the "color" field.
+func (tu *TagUpdate) ClearColor() *TagUpdate {
+	tu.mutation.ClearColor()
 	return tu
 }
 
-// SetUseCount sets the "use_count" field.
-func (tu *TagUpdate) SetUseCount(i int32) *TagUpdate {
-	tu.mutation.ResetUseCount()
-	tu.mutation.SetUseCount(i)
+// SetThumbnail sets the "thumbnail" field.
+func (tu *TagUpdate) SetThumbnail(s string) *TagUpdate {
+	tu.mutation.SetThumbnail(s)
 	return tu
 }
 
-// SetNillableUseCount sets the "use_count" field if the given value is not nil.
-func (tu *TagUpdate) SetNillableUseCount(i *int32) *TagUpdate {
-	if i != nil {
-		tu.SetUseCount(*i)
+// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
+func (tu *TagUpdate) SetNillableThumbnail(s *string) *TagUpdate {
+	if s != nil {
+		tu.SetThumbnail(*s)
 	}
 	return tu
 }
 
-// AddUseCount adds i to the "use_count" field.
-func (tu *TagUpdate) AddUseCount(i int32) *TagUpdate {
-	tu.mutation.AddUseCount(i)
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (tu *TagUpdate) ClearThumbnail() *TagUpdate {
+	tu.mutation.ClearThumbnail()
 	return tu
 }
 
-// ClearUseCount clears the value of the "use_count" field.
-func (tu *TagUpdate) ClearUseCount() *TagUpdate {
-	tu.mutation.ClearUseCount()
+// SetSlugName sets the "slug_name" field.
+func (tu *TagUpdate) SetSlugName(s string) *TagUpdate {
+	tu.mutation.SetSlugName(s)
+	return tu
+}
+
+// SetNillableSlugName sets the "slug_name" field if the given value is not nil.
+func (tu *TagUpdate) SetNillableSlugName(s *string) *TagUpdate {
+	if s != nil {
+		tu.SetSlugName(*s)
+	}
+	return tu
+}
+
+// ClearSlugName clears the value of the "slug_name" field.
+func (tu *TagUpdate) ClearSlugName() *TagUpdate {
+	tu.mutation.ClearSlugName()
+	return tu
+}
+
+// SetPostCount sets the "post_count" field.
+func (tu *TagUpdate) SetPostCount(u uint32) *TagUpdate {
+	tu.mutation.ResetPostCount()
+	tu.mutation.SetPostCount(u)
+	return tu
+}
+
+// SetNillablePostCount sets the "post_count" field if the given value is not nil.
+func (tu *TagUpdate) SetNillablePostCount(u *uint32) *TagUpdate {
+	if u != nil {
+		tu.SetPostCount(*u)
+	}
+	return tu
+}
+
+// AddPostCount adds u to the "post_count" field.
+func (tu *TagUpdate) AddPostCount(u int32) *TagUpdate {
+	tu.mutation.AddPostCount(u)
+	return tu
+}
+
+// ClearPostCount clears the value of the "post_count" field.
+func (tu *TagUpdate) ClearPostCount() *TagUpdate {
+	tu.mutation.ClearPostCount()
 	return tu
 }
 
@@ -230,7 +270,7 @@ func (tu *TagUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Table:   tag.Table,
 			Columns: tag.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
+				Type:   field.TypeUint32,
 				Column: tag.FieldID,
 			},
 		},
@@ -281,50 +321,76 @@ func (tu *TagUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: tag.FieldName,
 		})
 	}
-	if value, ok := tu.mutation.DisplayName(); ok {
+	if value, ok := tu.mutation.Slug(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: tag.FieldDisplayName,
+			Column: tag.FieldSlug,
 		})
 	}
-	if tu.mutation.DisplayNameCleared() {
+	if tu.mutation.SlugCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
-			Column: tag.FieldDisplayName,
+			Column: tag.FieldSlug,
 		})
 	}
-	if value, ok := tu.mutation.SeoDesc(); ok {
+	if value, ok := tu.mutation.Color(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: tag.FieldSeoDesc,
+			Column: tag.FieldColor,
 		})
 	}
-	if tu.mutation.SeoDescCleared() {
+	if tu.mutation.ColorCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
-			Column: tag.FieldSeoDesc,
+			Column: tag.FieldColor,
 		})
 	}
-	if value, ok := tu.mutation.UseCount(); ok {
+	if value, ok := tu.mutation.Thumbnail(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
+			Type:   field.TypeString,
 			Value:  value,
-			Column: tag.FieldUseCount,
+			Column: tag.FieldThumbnail,
 		})
 	}
-	if value, ok := tu.mutation.AddedUseCount(); ok {
+	if tu.mutation.ThumbnailCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: tag.FieldThumbnail,
+		})
+	}
+	if value, ok := tu.mutation.SlugName(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: tag.FieldSlugName,
+		})
+	}
+	if tu.mutation.SlugNameCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: tag.FieldSlugName,
+		})
+	}
+	if value, ok := tu.mutation.PostCount(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: tag.FieldPostCount,
+		})
+	}
+	if value, ok := tu.mutation.AddedPostCount(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
+			Type:   field.TypeUint32,
 			Value:  value,
-			Column: tag.FieldUseCount,
+			Column: tag.FieldPostCount,
 		})
 	}
-	if tu.mutation.UseCountCleared() {
+	if tu.mutation.PostCountCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: tag.FieldUseCount,
+			Type:   field.TypeUint32,
+			Column: tag.FieldPostCount,
 		})
 	}
 	_spec.Modifiers = tu.modifiers
@@ -387,70 +453,110 @@ func (tuo *TagUpdateOne) ClearName() *TagUpdateOne {
 	return tuo
 }
 
-// SetDisplayName sets the "display_name" field.
-func (tuo *TagUpdateOne) SetDisplayName(s string) *TagUpdateOne {
-	tuo.mutation.SetDisplayName(s)
+// SetSlug sets the "slug" field.
+func (tuo *TagUpdateOne) SetSlug(s string) *TagUpdateOne {
+	tuo.mutation.SetSlug(s)
 	return tuo
 }
 
-// SetNillableDisplayName sets the "display_name" field if the given value is not nil.
-func (tuo *TagUpdateOne) SetNillableDisplayName(s *string) *TagUpdateOne {
+// SetNillableSlug sets the "slug" field if the given value is not nil.
+func (tuo *TagUpdateOne) SetNillableSlug(s *string) *TagUpdateOne {
 	if s != nil {
-		tuo.SetDisplayName(*s)
+		tuo.SetSlug(*s)
 	}
 	return tuo
 }
 
-// ClearDisplayName clears the value of the "display_name" field.
-func (tuo *TagUpdateOne) ClearDisplayName() *TagUpdateOne {
-	tuo.mutation.ClearDisplayName()
+// ClearSlug clears the value of the "slug" field.
+func (tuo *TagUpdateOne) ClearSlug() *TagUpdateOne {
+	tuo.mutation.ClearSlug()
 	return tuo
 }
 
-// SetSeoDesc sets the "seo_desc" field.
-func (tuo *TagUpdateOne) SetSeoDesc(s string) *TagUpdateOne {
-	tuo.mutation.SetSeoDesc(s)
+// SetColor sets the "color" field.
+func (tuo *TagUpdateOne) SetColor(s string) *TagUpdateOne {
+	tuo.mutation.SetColor(s)
 	return tuo
 }
 
-// SetNillableSeoDesc sets the "seo_desc" field if the given value is not nil.
-func (tuo *TagUpdateOne) SetNillableSeoDesc(s *string) *TagUpdateOne {
+// SetNillableColor sets the "color" field if the given value is not nil.
+func (tuo *TagUpdateOne) SetNillableColor(s *string) *TagUpdateOne {
 	if s != nil {
-		tuo.SetSeoDesc(*s)
+		tuo.SetColor(*s)
 	}
 	return tuo
 }
 
-// ClearSeoDesc clears the value of the "seo_desc" field.
-func (tuo *TagUpdateOne) ClearSeoDesc() *TagUpdateOne {
-	tuo.mutation.ClearSeoDesc()
+// ClearColor clears the value of the "color" field.
+func (tuo *TagUpdateOne) ClearColor() *TagUpdateOne {
+	tuo.mutation.ClearColor()
 	return tuo
 }
 
-// SetUseCount sets the "use_count" field.
-func (tuo *TagUpdateOne) SetUseCount(i int32) *TagUpdateOne {
-	tuo.mutation.ResetUseCount()
-	tuo.mutation.SetUseCount(i)
+// SetThumbnail sets the "thumbnail" field.
+func (tuo *TagUpdateOne) SetThumbnail(s string) *TagUpdateOne {
+	tuo.mutation.SetThumbnail(s)
 	return tuo
 }
 
-// SetNillableUseCount sets the "use_count" field if the given value is not nil.
-func (tuo *TagUpdateOne) SetNillableUseCount(i *int32) *TagUpdateOne {
-	if i != nil {
-		tuo.SetUseCount(*i)
+// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
+func (tuo *TagUpdateOne) SetNillableThumbnail(s *string) *TagUpdateOne {
+	if s != nil {
+		tuo.SetThumbnail(*s)
 	}
 	return tuo
 }
 
-// AddUseCount adds i to the "use_count" field.
-func (tuo *TagUpdateOne) AddUseCount(i int32) *TagUpdateOne {
-	tuo.mutation.AddUseCount(i)
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (tuo *TagUpdateOne) ClearThumbnail() *TagUpdateOne {
+	tuo.mutation.ClearThumbnail()
 	return tuo
 }
 
-// ClearUseCount clears the value of the "use_count" field.
-func (tuo *TagUpdateOne) ClearUseCount() *TagUpdateOne {
-	tuo.mutation.ClearUseCount()
+// SetSlugName sets the "slug_name" field.
+func (tuo *TagUpdateOne) SetSlugName(s string) *TagUpdateOne {
+	tuo.mutation.SetSlugName(s)
+	return tuo
+}
+
+// SetNillableSlugName sets the "slug_name" field if the given value is not nil.
+func (tuo *TagUpdateOne) SetNillableSlugName(s *string) *TagUpdateOne {
+	if s != nil {
+		tuo.SetSlugName(*s)
+	}
+	return tuo
+}
+
+// ClearSlugName clears the value of the "slug_name" field.
+func (tuo *TagUpdateOne) ClearSlugName() *TagUpdateOne {
+	tuo.mutation.ClearSlugName()
+	return tuo
+}
+
+// SetPostCount sets the "post_count" field.
+func (tuo *TagUpdateOne) SetPostCount(u uint32) *TagUpdateOne {
+	tuo.mutation.ResetPostCount()
+	tuo.mutation.SetPostCount(u)
+	return tuo
+}
+
+// SetNillablePostCount sets the "post_count" field if the given value is not nil.
+func (tuo *TagUpdateOne) SetNillablePostCount(u *uint32) *TagUpdateOne {
+	if u != nil {
+		tuo.SetPostCount(*u)
+	}
+	return tuo
+}
+
+// AddPostCount adds u to the "post_count" field.
+func (tuo *TagUpdateOne) AddPostCount(u int32) *TagUpdateOne {
+	tuo.mutation.AddPostCount(u)
+	return tuo
+}
+
+// ClearPostCount clears the value of the "post_count" field.
+func (tuo *TagUpdateOne) ClearPostCount() *TagUpdateOne {
+	tuo.mutation.ClearPostCount()
 	return tuo
 }
 
@@ -563,7 +669,7 @@ func (tuo *TagUpdateOne) sqlSave(ctx context.Context) (_node *Tag, err error) {
 			Table:   tag.Table,
 			Columns: tag.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
+				Type:   field.TypeUint32,
 				Column: tag.FieldID,
 			},
 		},
@@ -631,50 +737,76 @@ func (tuo *TagUpdateOne) sqlSave(ctx context.Context) (_node *Tag, err error) {
 			Column: tag.FieldName,
 		})
 	}
-	if value, ok := tuo.mutation.DisplayName(); ok {
+	if value, ok := tuo.mutation.Slug(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: tag.FieldDisplayName,
+			Column: tag.FieldSlug,
 		})
 	}
-	if tuo.mutation.DisplayNameCleared() {
+	if tuo.mutation.SlugCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
-			Column: tag.FieldDisplayName,
+			Column: tag.FieldSlug,
 		})
 	}
-	if value, ok := tuo.mutation.SeoDesc(); ok {
+	if value, ok := tuo.mutation.Color(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: tag.FieldSeoDesc,
+			Column: tag.FieldColor,
 		})
 	}
-	if tuo.mutation.SeoDescCleared() {
+	if tuo.mutation.ColorCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
-			Column: tag.FieldSeoDesc,
+			Column: tag.FieldColor,
 		})
 	}
-	if value, ok := tuo.mutation.UseCount(); ok {
+	if value, ok := tuo.mutation.Thumbnail(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
+			Type:   field.TypeString,
 			Value:  value,
-			Column: tag.FieldUseCount,
+			Column: tag.FieldThumbnail,
 		})
 	}
-	if value, ok := tuo.mutation.AddedUseCount(); ok {
+	if tuo.mutation.ThumbnailCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: tag.FieldThumbnail,
+		})
+	}
+	if value, ok := tuo.mutation.SlugName(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: tag.FieldSlugName,
+		})
+	}
+	if tuo.mutation.SlugNameCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: tag.FieldSlugName,
+		})
+	}
+	if value, ok := tuo.mutation.PostCount(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: tag.FieldPostCount,
+		})
+	}
+	if value, ok := tuo.mutation.AddedPostCount(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
+			Type:   field.TypeUint32,
 			Value:  value,
-			Column: tag.FieldUseCount,
+			Column: tag.FieldPostCount,
 		})
 	}
-	if tuo.mutation.UseCountCleared() {
+	if tuo.mutation.PostCountCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: tag.FieldUseCount,
+			Type:   field.TypeUint32,
+			Column: tag.FieldPostCount,
 		})
 	}
 	_spec.Modifiers = tuo.modifiers

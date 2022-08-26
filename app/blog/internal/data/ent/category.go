@@ -15,19 +15,29 @@ type Category struct {
 	config `json:"-"`
 	// ID of the ent.
 	// id
-	ID uint64 `json:"id,omitempty"`
+	ID uint32 `json:"id,omitempty"`
 	// 创建时间
 	CreateTime *int64 `json:"create_time,omitempty"`
 	// 更新时间
 	UpdateTime *int64 `json:"update_time,omitempty"`
 	// Name holds the value of the "name" field.
 	Name *string `json:"name,omitempty"`
-	// DisplayName holds the value of the "display_name" field.
-	DisplayName *string `json:"display_name,omitempty"`
-	// SeoDesc holds the value of the "seo_desc" field.
-	SeoDesc *string `json:"seo_desc,omitempty"`
+	// Slug holds the value of the "slug" field.
+	Slug *string `json:"slug,omitempty"`
+	// Description holds the value of the "description" field.
+	Description *string `json:"description,omitempty"`
+	// Thumbnail holds the value of the "thumbnail" field.
+	Thumbnail *string `json:"thumbnail,omitempty"`
+	// Password holds the value of the "password" field.
+	Password *string `json:"password,omitempty"`
+	// FullPath holds the value of the "full_path" field.
+	FullPath *string `json:"full_path,omitempty"`
 	// ParentID holds the value of the "parent_id" field.
-	ParentID *uint64 `json:"parent_id,omitempty"`
+	ParentID *uint32 `json:"parent_id,omitempty"`
+	// Priority holds the value of the "priority" field.
+	Priority *int32 `json:"priority,omitempty"`
+	// PostCount holds the value of the "post_count" field.
+	PostCount *uint32 `json:"post_count,omitempty"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -35,9 +45,9 @@ func (*Category) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case category.FieldID, category.FieldCreateTime, category.FieldUpdateTime, category.FieldParentID:
+		case category.FieldID, category.FieldCreateTime, category.FieldUpdateTime, category.FieldParentID, category.FieldPriority, category.FieldPostCount:
 			values[i] = new(sql.NullInt64)
-		case category.FieldName, category.FieldDisplayName, category.FieldSeoDesc:
+		case category.FieldName, category.FieldSlug, category.FieldDescription, category.FieldThumbnail, category.FieldPassword, category.FieldFullPath:
 			values[i] = new(sql.NullString)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type Category", columns[i])
@@ -59,7 +69,7 @@ func (c *Category) assignValues(columns []string, values []interface{}) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			c.ID = uint64(value.Int64)
+			c.ID = uint32(value.Int64)
 		case category.FieldCreateTime:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field create_time", values[i])
@@ -81,26 +91,61 @@ func (c *Category) assignValues(columns []string, values []interface{}) error {
 				c.Name = new(string)
 				*c.Name = value.String
 			}
-		case category.FieldDisplayName:
+		case category.FieldSlug:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field display_name", values[i])
+				return fmt.Errorf("unexpected type %T for field slug", values[i])
 			} else if value.Valid {
-				c.DisplayName = new(string)
-				*c.DisplayName = value.String
+				c.Slug = new(string)
+				*c.Slug = value.String
 			}
-		case category.FieldSeoDesc:
+		case category.FieldDescription:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field seo_desc", values[i])
+				return fmt.Errorf("unexpected type %T for field description", values[i])
 			} else if value.Valid {
-				c.SeoDesc = new(string)
-				*c.SeoDesc = value.String
+				c.Description = new(string)
+				*c.Description = value.String
+			}
+		case category.FieldThumbnail:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field thumbnail", values[i])
+			} else if value.Valid {
+				c.Thumbnail = new(string)
+				*c.Thumbnail = value.String
+			}
+		case category.FieldPassword:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field password", values[i])
+			} else if value.Valid {
+				c.Password = new(string)
+				*c.Password = value.String
+			}
+		case category.FieldFullPath:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field full_path", values[i])
+			} else if value.Valid {
+				c.FullPath = new(string)
+				*c.FullPath = value.String
 			}
 		case category.FieldParentID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field parent_id", values[i])
 			} else if value.Valid {
-				c.ParentID = new(uint64)
-				*c.ParentID = uint64(value.Int64)
+				c.ParentID = new(uint32)
+				*c.ParentID = uint32(value.Int64)
+			}
+		case category.FieldPriority:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field priority", values[i])
+			} else if value.Valid {
+				c.Priority = new(int32)
+				*c.Priority = int32(value.Int64)
+			}
+		case category.FieldPostCount:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field post_count", values[i])
+			} else if value.Valid {
+				c.PostCount = new(uint32)
+				*c.PostCount = uint32(value.Int64)
 			}
 		}
 	}
@@ -145,18 +190,43 @@ func (c *Category) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := c.DisplayName; v != nil {
-		builder.WriteString("display_name=")
+	if v := c.Slug; v != nil {
+		builder.WriteString("slug=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := c.SeoDesc; v != nil {
-		builder.WriteString("seo_desc=")
+	if v := c.Description; v != nil {
+		builder.WriteString("description=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := c.Thumbnail; v != nil {
+		builder.WriteString("thumbnail=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := c.Password; v != nil {
+		builder.WriteString("password=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := c.FullPath; v != nil {
+		builder.WriteString("full_path=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
 	if v := c.ParentID; v != nil {
 		builder.WriteString("parent_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := c.Priority; v != nil {
+		builder.WriteString("priority=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := c.PostCount; v != nil {
+		builder.WriteString("post_count=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteByte(')')

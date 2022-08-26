@@ -17,6 +17,10 @@ const (
 	FieldNickname = "nickname"
 	// FieldEmail holds the string denoting the email field in the database.
 	FieldEmail = "email"
+	// FieldAvatar holds the string denoting the avatar field in the database.
+	FieldAvatar = "avatar"
+	// FieldDescription holds the string denoting the description field in the database.
+	FieldDescription = "description"
 	// FieldPassword holds the string denoting the password field in the database.
 	FieldPassword = "password"
 	// Table holds the table name of the user in the database.
@@ -31,6 +35,8 @@ var Columns = []string{
 	FieldUsername,
 	FieldNickname,
 	FieldEmail,
+	FieldAvatar,
+	FieldDescription,
 	FieldPassword,
 }
 
@@ -45,6 +51,8 @@ func ValidColumn(column string) bool {
 }
 
 var (
+	// DefaultCreateTime holds the default value on creation for the "create_time" field.
+	DefaultCreateTime func() int64
 	// UpdateDefaultUpdateTime holds the default value on update for the "update_time" field.
 	UpdateDefaultUpdateTime func() int64
 	// UsernameValidator is a validator for the "username" field. It is called by the builders before save.
@@ -53,8 +61,12 @@ var (
 	NicknameValidator func(string) error
 	// EmailValidator is a validator for the "email" field. It is called by the builders before save.
 	EmailValidator func(string) error
+	// AvatarValidator is a validator for the "avatar" field. It is called by the builders before save.
+	AvatarValidator func(string) error
+	// DescriptionValidator is a validator for the "description" field. It is called by the builders before save.
+	DescriptionValidator func(string) error
 	// PasswordValidator is a validator for the "password" field. It is called by the builders before save.
 	PasswordValidator func(string) error
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
-	IDValidator func(uint64) error
+	IDValidator func(uint32) error
 )

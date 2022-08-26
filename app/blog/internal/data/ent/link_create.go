@@ -63,36 +63,78 @@ func (lc *LinkCreate) SetNillableName(s *string) *LinkCreate {
 	return lc
 }
 
-// SetLink sets the "link" field.
-func (lc *LinkCreate) SetLink(s string) *LinkCreate {
-	lc.mutation.SetLink(s)
+// SetURL sets the "url" field.
+func (lc *LinkCreate) SetURL(s string) *LinkCreate {
+	lc.mutation.SetURL(s)
 	return lc
 }
 
-// SetNillableLink sets the "link" field if the given value is not nil.
-func (lc *LinkCreate) SetNillableLink(s *string) *LinkCreate {
+// SetNillableURL sets the "url" field if the given value is not nil.
+func (lc *LinkCreate) SetNillableURL(s *string) *LinkCreate {
 	if s != nil {
-		lc.SetLink(*s)
+		lc.SetURL(*s)
 	}
 	return lc
 }
 
-// SetOrderID sets the "order_id" field.
-func (lc *LinkCreate) SetOrderID(i int32) *LinkCreate {
-	lc.mutation.SetOrderID(i)
+// SetLogo sets the "logo" field.
+func (lc *LinkCreate) SetLogo(s string) *LinkCreate {
+	lc.mutation.SetLogo(s)
 	return lc
 }
 
-// SetNillableOrderID sets the "order_id" field if the given value is not nil.
-func (lc *LinkCreate) SetNillableOrderID(i *int32) *LinkCreate {
+// SetNillableLogo sets the "logo" field if the given value is not nil.
+func (lc *LinkCreate) SetNillableLogo(s *string) *LinkCreate {
+	if s != nil {
+		lc.SetLogo(*s)
+	}
+	return lc
+}
+
+// SetDescription sets the "description" field.
+func (lc *LinkCreate) SetDescription(s string) *LinkCreate {
+	lc.mutation.SetDescription(s)
+	return lc
+}
+
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (lc *LinkCreate) SetNillableDescription(s *string) *LinkCreate {
+	if s != nil {
+		lc.SetDescription(*s)
+	}
+	return lc
+}
+
+// SetTeam sets the "team" field.
+func (lc *LinkCreate) SetTeam(s string) *LinkCreate {
+	lc.mutation.SetTeam(s)
+	return lc
+}
+
+// SetNillableTeam sets the "team" field if the given value is not nil.
+func (lc *LinkCreate) SetNillableTeam(s *string) *LinkCreate {
+	if s != nil {
+		lc.SetTeam(*s)
+	}
+	return lc
+}
+
+// SetPriority sets the "priority" field.
+func (lc *LinkCreate) SetPriority(i int32) *LinkCreate {
+	lc.mutation.SetPriority(i)
+	return lc
+}
+
+// SetNillablePriority sets the "priority" field if the given value is not nil.
+func (lc *LinkCreate) SetNillablePriority(i *int32) *LinkCreate {
 	if i != nil {
-		lc.SetOrderID(*i)
+		lc.SetPriority(*i)
 	}
 	return lc
 }
 
 // SetID sets the "id" field.
-func (lc *LinkCreate) SetID(u uint64) *LinkCreate {
+func (lc *LinkCreate) SetID(u uint32) *LinkCreate {
 	lc.mutation.SetID(u)
 	return lc
 }
@@ -108,6 +150,7 @@ func (lc *LinkCreate) Save(ctx context.Context) (*Link, error) {
 		err  error
 		node *Link
 	)
+	lc.defaults()
 	if len(lc.hooks) == 0 {
 		if err = lc.check(); err != nil {
 			return nil, err
@@ -171,11 +214,29 @@ func (lc *LinkCreate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (lc *LinkCreate) defaults() {
+	if _, ok := lc.mutation.CreateTime(); !ok {
+		v := link.DefaultCreateTime()
+		lc.mutation.SetCreateTime(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (lc *LinkCreate) check() error {
 	if v, ok := lc.mutation.Name(); ok {
 		if err := link.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Link.name": %w`, err)}
+		}
+	}
+	if v, ok := lc.mutation.URL(); ok {
+		if err := link.URLValidator(v); err != nil {
+			return &ValidationError{Name: "url", err: fmt.Errorf(`ent: validator failed for field "Link.url": %w`, err)}
+		}
+	}
+	if v, ok := lc.mutation.Logo(); ok {
+		if err := link.LogoValidator(v); err != nil {
+			return &ValidationError{Name: "logo", err: fmt.Errorf(`ent: validator failed for field "Link.logo": %w`, err)}
 		}
 	}
 	if v, ok := lc.mutation.ID(); ok {
@@ -196,7 +257,7 @@ func (lc *LinkCreate) sqlSave(ctx context.Context) (*Link, error) {
 	}
 	if _spec.ID.Value != _node.ID {
 		id := _spec.ID.Value.(int64)
-		_node.ID = uint64(id)
+		_node.ID = uint32(id)
 	}
 	return _node, nil
 }
@@ -207,7 +268,7 @@ func (lc *LinkCreate) createSpec() (*Link, *sqlgraph.CreateSpec) {
 		_spec = &sqlgraph.CreateSpec{
 			Table: link.Table,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
+				Type:   field.TypeUint32,
 				Column: link.FieldID,
 			},
 		}
@@ -241,21 +302,45 @@ func (lc *LinkCreate) createSpec() (*Link, *sqlgraph.CreateSpec) {
 		})
 		_node.Name = &value
 	}
-	if value, ok := lc.mutation.Link(); ok {
+	if value, ok := lc.mutation.URL(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: link.FieldLink,
+			Column: link.FieldURL,
 		})
-		_node.Link = &value
+		_node.URL = &value
 	}
-	if value, ok := lc.mutation.OrderID(); ok {
+	if value, ok := lc.mutation.Logo(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: link.FieldLogo,
+		})
+		_node.Logo = &value
+	}
+	if value, ok := lc.mutation.Description(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: link.FieldDescription,
+		})
+		_node.Description = &value
+	}
+	if value, ok := lc.mutation.Team(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: link.FieldTeam,
+		})
+		_node.Team = &value
+	}
+	if value, ok := lc.mutation.Priority(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt32,
 			Value:  value,
-			Column: link.FieldOrderID,
+			Column: link.FieldPriority,
 		})
-		_node.OrderID = &value
+		_node.Priority = &value
 	}
 	return _node, _spec
 }
@@ -377,45 +462,99 @@ func (u *LinkUpsert) ClearName() *LinkUpsert {
 	return u
 }
 
-// SetLink sets the "link" field.
-func (u *LinkUpsert) SetLink(v string) *LinkUpsert {
-	u.Set(link.FieldLink, v)
+// SetURL sets the "url" field.
+func (u *LinkUpsert) SetURL(v string) *LinkUpsert {
+	u.Set(link.FieldURL, v)
 	return u
 }
 
-// UpdateLink sets the "link" field to the value that was provided on create.
-func (u *LinkUpsert) UpdateLink() *LinkUpsert {
-	u.SetExcluded(link.FieldLink)
+// UpdateURL sets the "url" field to the value that was provided on create.
+func (u *LinkUpsert) UpdateURL() *LinkUpsert {
+	u.SetExcluded(link.FieldURL)
 	return u
 }
 
-// ClearLink clears the value of the "link" field.
-func (u *LinkUpsert) ClearLink() *LinkUpsert {
-	u.SetNull(link.FieldLink)
+// ClearURL clears the value of the "url" field.
+func (u *LinkUpsert) ClearURL() *LinkUpsert {
+	u.SetNull(link.FieldURL)
 	return u
 }
 
-// SetOrderID sets the "order_id" field.
-func (u *LinkUpsert) SetOrderID(v int32) *LinkUpsert {
-	u.Set(link.FieldOrderID, v)
+// SetLogo sets the "logo" field.
+func (u *LinkUpsert) SetLogo(v string) *LinkUpsert {
+	u.Set(link.FieldLogo, v)
 	return u
 }
 
-// UpdateOrderID sets the "order_id" field to the value that was provided on create.
-func (u *LinkUpsert) UpdateOrderID() *LinkUpsert {
-	u.SetExcluded(link.FieldOrderID)
+// UpdateLogo sets the "logo" field to the value that was provided on create.
+func (u *LinkUpsert) UpdateLogo() *LinkUpsert {
+	u.SetExcluded(link.FieldLogo)
 	return u
 }
 
-// AddOrderID adds v to the "order_id" field.
-func (u *LinkUpsert) AddOrderID(v int32) *LinkUpsert {
-	u.Add(link.FieldOrderID, v)
+// ClearLogo clears the value of the "logo" field.
+func (u *LinkUpsert) ClearLogo() *LinkUpsert {
+	u.SetNull(link.FieldLogo)
 	return u
 }
 
-// ClearOrderID clears the value of the "order_id" field.
-func (u *LinkUpsert) ClearOrderID() *LinkUpsert {
-	u.SetNull(link.FieldOrderID)
+// SetDescription sets the "description" field.
+func (u *LinkUpsert) SetDescription(v string) *LinkUpsert {
+	u.Set(link.FieldDescription, v)
+	return u
+}
+
+// UpdateDescription sets the "description" field to the value that was provided on create.
+func (u *LinkUpsert) UpdateDescription() *LinkUpsert {
+	u.SetExcluded(link.FieldDescription)
+	return u
+}
+
+// ClearDescription clears the value of the "description" field.
+func (u *LinkUpsert) ClearDescription() *LinkUpsert {
+	u.SetNull(link.FieldDescription)
+	return u
+}
+
+// SetTeam sets the "team" field.
+func (u *LinkUpsert) SetTeam(v string) *LinkUpsert {
+	u.Set(link.FieldTeam, v)
+	return u
+}
+
+// UpdateTeam sets the "team" field to the value that was provided on create.
+func (u *LinkUpsert) UpdateTeam() *LinkUpsert {
+	u.SetExcluded(link.FieldTeam)
+	return u
+}
+
+// ClearTeam clears the value of the "team" field.
+func (u *LinkUpsert) ClearTeam() *LinkUpsert {
+	u.SetNull(link.FieldTeam)
+	return u
+}
+
+// SetPriority sets the "priority" field.
+func (u *LinkUpsert) SetPriority(v int32) *LinkUpsert {
+	u.Set(link.FieldPriority, v)
+	return u
+}
+
+// UpdatePriority sets the "priority" field to the value that was provided on create.
+func (u *LinkUpsert) UpdatePriority() *LinkUpsert {
+	u.SetExcluded(link.FieldPriority)
+	return u
+}
+
+// AddPriority adds v to the "priority" field.
+func (u *LinkUpsert) AddPriority(v int32) *LinkUpsert {
+	u.Add(link.FieldPriority, v)
+	return u
+}
+
+// ClearPriority clears the value of the "priority" field.
+func (u *LinkUpsert) ClearPriority() *LinkUpsert {
+	u.SetNull(link.FieldPriority)
 	return u
 }
 
@@ -549,52 +688,115 @@ func (u *LinkUpsertOne) ClearName() *LinkUpsertOne {
 	})
 }
 
-// SetLink sets the "link" field.
-func (u *LinkUpsertOne) SetLink(v string) *LinkUpsertOne {
+// SetURL sets the "url" field.
+func (u *LinkUpsertOne) SetURL(v string) *LinkUpsertOne {
 	return u.Update(func(s *LinkUpsert) {
-		s.SetLink(v)
+		s.SetURL(v)
 	})
 }
 
-// UpdateLink sets the "link" field to the value that was provided on create.
-func (u *LinkUpsertOne) UpdateLink() *LinkUpsertOne {
+// UpdateURL sets the "url" field to the value that was provided on create.
+func (u *LinkUpsertOne) UpdateURL() *LinkUpsertOne {
 	return u.Update(func(s *LinkUpsert) {
-		s.UpdateLink()
+		s.UpdateURL()
 	})
 }
 
-// ClearLink clears the value of the "link" field.
-func (u *LinkUpsertOne) ClearLink() *LinkUpsertOne {
+// ClearURL clears the value of the "url" field.
+func (u *LinkUpsertOne) ClearURL() *LinkUpsertOne {
 	return u.Update(func(s *LinkUpsert) {
-		s.ClearLink()
+		s.ClearURL()
 	})
 }
 
-// SetOrderID sets the "order_id" field.
-func (u *LinkUpsertOne) SetOrderID(v int32) *LinkUpsertOne {
+// SetLogo sets the "logo" field.
+func (u *LinkUpsertOne) SetLogo(v string) *LinkUpsertOne {
 	return u.Update(func(s *LinkUpsert) {
-		s.SetOrderID(v)
+		s.SetLogo(v)
 	})
 }
 
-// AddOrderID adds v to the "order_id" field.
-func (u *LinkUpsertOne) AddOrderID(v int32) *LinkUpsertOne {
+// UpdateLogo sets the "logo" field to the value that was provided on create.
+func (u *LinkUpsertOne) UpdateLogo() *LinkUpsertOne {
 	return u.Update(func(s *LinkUpsert) {
-		s.AddOrderID(v)
+		s.UpdateLogo()
 	})
 }
 
-// UpdateOrderID sets the "order_id" field to the value that was provided on create.
-func (u *LinkUpsertOne) UpdateOrderID() *LinkUpsertOne {
+// ClearLogo clears the value of the "logo" field.
+func (u *LinkUpsertOne) ClearLogo() *LinkUpsertOne {
 	return u.Update(func(s *LinkUpsert) {
-		s.UpdateOrderID()
+		s.ClearLogo()
 	})
 }
 
-// ClearOrderID clears the value of the "order_id" field.
-func (u *LinkUpsertOne) ClearOrderID() *LinkUpsertOne {
+// SetDescription sets the "description" field.
+func (u *LinkUpsertOne) SetDescription(v string) *LinkUpsertOne {
 	return u.Update(func(s *LinkUpsert) {
-		s.ClearOrderID()
+		s.SetDescription(v)
+	})
+}
+
+// UpdateDescription sets the "description" field to the value that was provided on create.
+func (u *LinkUpsertOne) UpdateDescription() *LinkUpsertOne {
+	return u.Update(func(s *LinkUpsert) {
+		s.UpdateDescription()
+	})
+}
+
+// ClearDescription clears the value of the "description" field.
+func (u *LinkUpsertOne) ClearDescription() *LinkUpsertOne {
+	return u.Update(func(s *LinkUpsert) {
+		s.ClearDescription()
+	})
+}
+
+// SetTeam sets the "team" field.
+func (u *LinkUpsertOne) SetTeam(v string) *LinkUpsertOne {
+	return u.Update(func(s *LinkUpsert) {
+		s.SetTeam(v)
+	})
+}
+
+// UpdateTeam sets the "team" field to the value that was provided on create.
+func (u *LinkUpsertOne) UpdateTeam() *LinkUpsertOne {
+	return u.Update(func(s *LinkUpsert) {
+		s.UpdateTeam()
+	})
+}
+
+// ClearTeam clears the value of the "team" field.
+func (u *LinkUpsertOne) ClearTeam() *LinkUpsertOne {
+	return u.Update(func(s *LinkUpsert) {
+		s.ClearTeam()
+	})
+}
+
+// SetPriority sets the "priority" field.
+func (u *LinkUpsertOne) SetPriority(v int32) *LinkUpsertOne {
+	return u.Update(func(s *LinkUpsert) {
+		s.SetPriority(v)
+	})
+}
+
+// AddPriority adds v to the "priority" field.
+func (u *LinkUpsertOne) AddPriority(v int32) *LinkUpsertOne {
+	return u.Update(func(s *LinkUpsert) {
+		s.AddPriority(v)
+	})
+}
+
+// UpdatePriority sets the "priority" field to the value that was provided on create.
+func (u *LinkUpsertOne) UpdatePriority() *LinkUpsertOne {
+	return u.Update(func(s *LinkUpsert) {
+		s.UpdatePriority()
+	})
+}
+
+// ClearPriority clears the value of the "priority" field.
+func (u *LinkUpsertOne) ClearPriority() *LinkUpsertOne {
+	return u.Update(func(s *LinkUpsert) {
+		s.ClearPriority()
 	})
 }
 
@@ -614,7 +816,7 @@ func (u *LinkUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *LinkUpsertOne) ID(ctx context.Context) (id uint64, err error) {
+func (u *LinkUpsertOne) ID(ctx context.Context) (id uint32, err error) {
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -623,7 +825,7 @@ func (u *LinkUpsertOne) ID(ctx context.Context) (id uint64, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *LinkUpsertOne) IDX(ctx context.Context) uint64 {
+func (u *LinkUpsertOne) IDX(ctx context.Context) uint32 {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -646,6 +848,7 @@ func (lcb *LinkCreateBulk) Save(ctx context.Context) ([]*Link, error) {
 	for i := range lcb.builders {
 		func(i int, root context.Context) {
 			builder := lcb.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*LinkMutation)
 				if !ok {
@@ -675,7 +878,7 @@ func (lcb *LinkCreateBulk) Save(ctx context.Context) ([]*Link, error) {
 				mutation.id = &nodes[i].ID
 				if specs[i].ID.Value != nil && nodes[i].ID == 0 {
 					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = uint64(id)
+					nodes[i].ID = uint32(id)
 				}
 				mutation.done = true
 				return nodes[i], nil
@@ -892,52 +1095,115 @@ func (u *LinkUpsertBulk) ClearName() *LinkUpsertBulk {
 	})
 }
 
-// SetLink sets the "link" field.
-func (u *LinkUpsertBulk) SetLink(v string) *LinkUpsertBulk {
+// SetURL sets the "url" field.
+func (u *LinkUpsertBulk) SetURL(v string) *LinkUpsertBulk {
 	return u.Update(func(s *LinkUpsert) {
-		s.SetLink(v)
+		s.SetURL(v)
 	})
 }
 
-// UpdateLink sets the "link" field to the value that was provided on create.
-func (u *LinkUpsertBulk) UpdateLink() *LinkUpsertBulk {
+// UpdateURL sets the "url" field to the value that was provided on create.
+func (u *LinkUpsertBulk) UpdateURL() *LinkUpsertBulk {
 	return u.Update(func(s *LinkUpsert) {
-		s.UpdateLink()
+		s.UpdateURL()
 	})
 }
 
-// ClearLink clears the value of the "link" field.
-func (u *LinkUpsertBulk) ClearLink() *LinkUpsertBulk {
+// ClearURL clears the value of the "url" field.
+func (u *LinkUpsertBulk) ClearURL() *LinkUpsertBulk {
 	return u.Update(func(s *LinkUpsert) {
-		s.ClearLink()
+		s.ClearURL()
 	})
 }
 
-// SetOrderID sets the "order_id" field.
-func (u *LinkUpsertBulk) SetOrderID(v int32) *LinkUpsertBulk {
+// SetLogo sets the "logo" field.
+func (u *LinkUpsertBulk) SetLogo(v string) *LinkUpsertBulk {
 	return u.Update(func(s *LinkUpsert) {
-		s.SetOrderID(v)
+		s.SetLogo(v)
 	})
 }
 
-// AddOrderID adds v to the "order_id" field.
-func (u *LinkUpsertBulk) AddOrderID(v int32) *LinkUpsertBulk {
+// UpdateLogo sets the "logo" field to the value that was provided on create.
+func (u *LinkUpsertBulk) UpdateLogo() *LinkUpsertBulk {
 	return u.Update(func(s *LinkUpsert) {
-		s.AddOrderID(v)
+		s.UpdateLogo()
 	})
 }
 
-// UpdateOrderID sets the "order_id" field to the value that was provided on create.
-func (u *LinkUpsertBulk) UpdateOrderID() *LinkUpsertBulk {
+// ClearLogo clears the value of the "logo" field.
+func (u *LinkUpsertBulk) ClearLogo() *LinkUpsertBulk {
 	return u.Update(func(s *LinkUpsert) {
-		s.UpdateOrderID()
+		s.ClearLogo()
 	})
 }
 
-// ClearOrderID clears the value of the "order_id" field.
-func (u *LinkUpsertBulk) ClearOrderID() *LinkUpsertBulk {
+// SetDescription sets the "description" field.
+func (u *LinkUpsertBulk) SetDescription(v string) *LinkUpsertBulk {
 	return u.Update(func(s *LinkUpsert) {
-		s.ClearOrderID()
+		s.SetDescription(v)
+	})
+}
+
+// UpdateDescription sets the "description" field to the value that was provided on create.
+func (u *LinkUpsertBulk) UpdateDescription() *LinkUpsertBulk {
+	return u.Update(func(s *LinkUpsert) {
+		s.UpdateDescription()
+	})
+}
+
+// ClearDescription clears the value of the "description" field.
+func (u *LinkUpsertBulk) ClearDescription() *LinkUpsertBulk {
+	return u.Update(func(s *LinkUpsert) {
+		s.ClearDescription()
+	})
+}
+
+// SetTeam sets the "team" field.
+func (u *LinkUpsertBulk) SetTeam(v string) *LinkUpsertBulk {
+	return u.Update(func(s *LinkUpsert) {
+		s.SetTeam(v)
+	})
+}
+
+// UpdateTeam sets the "team" field to the value that was provided on create.
+func (u *LinkUpsertBulk) UpdateTeam() *LinkUpsertBulk {
+	return u.Update(func(s *LinkUpsert) {
+		s.UpdateTeam()
+	})
+}
+
+// ClearTeam clears the value of the "team" field.
+func (u *LinkUpsertBulk) ClearTeam() *LinkUpsertBulk {
+	return u.Update(func(s *LinkUpsert) {
+		s.ClearTeam()
+	})
+}
+
+// SetPriority sets the "priority" field.
+func (u *LinkUpsertBulk) SetPriority(v int32) *LinkUpsertBulk {
+	return u.Update(func(s *LinkUpsert) {
+		s.SetPriority(v)
+	})
+}
+
+// AddPriority adds v to the "priority" field.
+func (u *LinkUpsertBulk) AddPriority(v int32) *LinkUpsertBulk {
+	return u.Update(func(s *LinkUpsert) {
+		s.AddPriority(v)
+	})
+}
+
+// UpdatePriority sets the "priority" field to the value that was provided on create.
+func (u *LinkUpsertBulk) UpdatePriority() *LinkUpsertBulk {
+	return u.Update(func(s *LinkUpsert) {
+		s.UpdatePriority()
+	})
+}
+
+// ClearPriority clears the value of the "priority" field.
+func (u *LinkUpsertBulk) ClearPriority() *LinkUpsertBulk {
+	return u.Update(func(s *LinkUpsert) {
+		s.ClearPriority()
 	})
 }
 

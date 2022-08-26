@@ -36,11 +36,15 @@ service UserService {
 }
 
 message User {
-  uint64 id = 1;
+  uint32 id = 1;
   optional string userName = 2;
   optional string nickName = 3;
   optional string email = 4;
-  optional string password = 5;
+  optional string avatar = 5;
+  optional string description = 6;
+  optional string password = 7;
+  optional string createTime = 8;
+  optional string updateTime = 9;
 }
 
 // 请求 - 登录
@@ -50,13 +54,15 @@ message LoginRequest {
 }
 // 回应 - 登录
 message LoginResponse {
-  string token = 1;
-  string refreshToken = 2;
+  uint32 id = 1;
+  string userName = 2;
+  string token = 3;
+  string refreshToken = 4;
 }
 
 // 请求 - 登出
 message LogoutRequest {
-  uint64 id = 1;
+  uint32 id = 1;
 }
 
 // 请求 - 注册
@@ -65,25 +71,27 @@ message RegisterRequest {
 }
 // 回应 - 注册
 message RegisterResponse {
-  uint64 id = 1;
+  uint32 id = 1;
+  string userName = 2;
+  string token = 3;
 }
 
 
 // 请求 - 创建
 message CreateUserRequest {
   User user = 1;
-  optional uint64 operatorId = 2;
+  optional uint32 operatorId = 2;
 }
 
 // 请求 - 更新
 message UpdateUserRequest {
-  uint64 id = 1;
+  uint32 id = 1;
   User user = 2;
-  optional uint64 operatorId = 3;
+  optional uint32 operatorId = 3;
 }
 
 // 请求 - 删除标签
 message DeleteUserRequest {
-  uint64 id = 1;
-  optional uint64 operatorId = 2;
+  uint32 id = 1;
+  optional uint32 operatorId = 2;
 }

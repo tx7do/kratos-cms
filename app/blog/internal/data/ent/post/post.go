@@ -13,16 +13,46 @@ const (
 	FieldUpdateTime = "update_time"
 	// FieldTitle holds the string denoting the title field in the database.
 	FieldTitle = "title"
-	// FieldSummary holds the string denoting the summary field in the database.
-	FieldSummary = "summary"
-	// FieldOriginal holds the string denoting the original field in the database.
-	FieldOriginal = "original"
+	// FieldSlug holds the string denoting the slug field in the database.
+	FieldSlug = "slug"
+	// FieldMetaKeywords holds the string denoting the meta_keywords field in the database.
+	FieldMetaKeywords = "meta_keywords"
+	// FieldMetaDescription holds the string denoting the meta_description field in the database.
+	FieldMetaDescription = "meta_description"
+	// FieldFullPath holds the string denoting the full_path field in the database.
+	FieldFullPath = "full_path"
+	// FieldOriginalContent holds the string denoting the original_content field in the database.
+	FieldOriginalContent = "original_content"
 	// FieldContent holds the string denoting the content field in the database.
 	FieldContent = "content"
+	// FieldSummary holds the string denoting the summary field in the database.
+	FieldSummary = "summary"
+	// FieldThumbnail holds the string denoting the thumbnail field in the database.
+	FieldThumbnail = "thumbnail"
 	// FieldPassword holds the string denoting the password field in the database.
 	FieldPassword = "password"
-	// FieldUserID holds the string denoting the user_id field in the database.
-	FieldUserID = "user_id"
+	// FieldTemplate holds the string denoting the template field in the database.
+	FieldTemplate = "template"
+	// FieldCommentCount holds the string denoting the comment_count field in the database.
+	FieldCommentCount = "comment_count"
+	// FieldVisits holds the string denoting the visits field in the database.
+	FieldVisits = "visits"
+	// FieldLikes holds the string denoting the likes field in the database.
+	FieldLikes = "likes"
+	// FieldWordCount holds the string denoting the word_count field in the database.
+	FieldWordCount = "word_count"
+	// FieldTopPriority holds the string denoting the top_priority field in the database.
+	FieldTopPriority = "top_priority"
+	// FieldStatus holds the string denoting the status field in the database.
+	FieldStatus = "status"
+	// FieldEditorType holds the string denoting the editor_type field in the database.
+	FieldEditorType = "editor_type"
+	// FieldEditTime holds the string denoting the edit_time field in the database.
+	FieldEditTime = "edit_time"
+	// FieldDisallowComment holds the string denoting the disallow_comment field in the database.
+	FieldDisallowComment = "disallow_comment"
+	// FieldInProgress holds the string denoting the in_progress field in the database.
+	FieldInProgress = "in_progress"
 	// Table holds the table name of the post in the database.
 	Table = "post"
 )
@@ -33,11 +63,26 @@ var Columns = []string{
 	FieldCreateTime,
 	FieldUpdateTime,
 	FieldTitle,
-	FieldSummary,
-	FieldOriginal,
+	FieldSlug,
+	FieldMetaKeywords,
+	FieldMetaDescription,
+	FieldFullPath,
+	FieldOriginalContent,
 	FieldContent,
+	FieldSummary,
+	FieldThumbnail,
 	FieldPassword,
-	FieldUserID,
+	FieldTemplate,
+	FieldCommentCount,
+	FieldVisits,
+	FieldLikes,
+	FieldWordCount,
+	FieldTopPriority,
+	FieldStatus,
+	FieldEditorType,
+	FieldEditTime,
+	FieldDisallowComment,
+	FieldInProgress,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -51,10 +96,12 @@ func ValidColumn(column string) bool {
 }
 
 var (
+	// DefaultCreateTime holds the default value on creation for the "create_time" field.
+	DefaultCreateTime func() int64
 	// UpdateDefaultUpdateTime holds the default value on update for the "update_time" field.
 	UpdateDefaultUpdateTime func() int64
 	// TitleValidator is a validator for the "title" field. It is called by the builders before save.
 	TitleValidator func(string) error
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
-	IDValidator func(uint64) error
+	IDValidator func(uint32) error
 )

@@ -63,50 +63,120 @@ func (cc *CategoryCreate) SetNillableName(s *string) *CategoryCreate {
 	return cc
 }
 
-// SetDisplayName sets the "display_name" field.
-func (cc *CategoryCreate) SetDisplayName(s string) *CategoryCreate {
-	cc.mutation.SetDisplayName(s)
+// SetSlug sets the "slug" field.
+func (cc *CategoryCreate) SetSlug(s string) *CategoryCreate {
+	cc.mutation.SetSlug(s)
 	return cc
 }
 
-// SetNillableDisplayName sets the "display_name" field if the given value is not nil.
-func (cc *CategoryCreate) SetNillableDisplayName(s *string) *CategoryCreate {
+// SetNillableSlug sets the "slug" field if the given value is not nil.
+func (cc *CategoryCreate) SetNillableSlug(s *string) *CategoryCreate {
 	if s != nil {
-		cc.SetDisplayName(*s)
+		cc.SetSlug(*s)
 	}
 	return cc
 }
 
-// SetSeoDesc sets the "seo_desc" field.
-func (cc *CategoryCreate) SetSeoDesc(s string) *CategoryCreate {
-	cc.mutation.SetSeoDesc(s)
+// SetDescription sets the "description" field.
+func (cc *CategoryCreate) SetDescription(s string) *CategoryCreate {
+	cc.mutation.SetDescription(s)
 	return cc
 }
 
-// SetNillableSeoDesc sets the "seo_desc" field if the given value is not nil.
-func (cc *CategoryCreate) SetNillableSeoDesc(s *string) *CategoryCreate {
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (cc *CategoryCreate) SetNillableDescription(s *string) *CategoryCreate {
 	if s != nil {
-		cc.SetSeoDesc(*s)
+		cc.SetDescription(*s)
+	}
+	return cc
+}
+
+// SetThumbnail sets the "thumbnail" field.
+func (cc *CategoryCreate) SetThumbnail(s string) *CategoryCreate {
+	cc.mutation.SetThumbnail(s)
+	return cc
+}
+
+// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
+func (cc *CategoryCreate) SetNillableThumbnail(s *string) *CategoryCreate {
+	if s != nil {
+		cc.SetThumbnail(*s)
+	}
+	return cc
+}
+
+// SetPassword sets the "password" field.
+func (cc *CategoryCreate) SetPassword(s string) *CategoryCreate {
+	cc.mutation.SetPassword(s)
+	return cc
+}
+
+// SetNillablePassword sets the "password" field if the given value is not nil.
+func (cc *CategoryCreate) SetNillablePassword(s *string) *CategoryCreate {
+	if s != nil {
+		cc.SetPassword(*s)
+	}
+	return cc
+}
+
+// SetFullPath sets the "full_path" field.
+func (cc *CategoryCreate) SetFullPath(s string) *CategoryCreate {
+	cc.mutation.SetFullPath(s)
+	return cc
+}
+
+// SetNillableFullPath sets the "full_path" field if the given value is not nil.
+func (cc *CategoryCreate) SetNillableFullPath(s *string) *CategoryCreate {
+	if s != nil {
+		cc.SetFullPath(*s)
 	}
 	return cc
 }
 
 // SetParentID sets the "parent_id" field.
-func (cc *CategoryCreate) SetParentID(u uint64) *CategoryCreate {
+func (cc *CategoryCreate) SetParentID(u uint32) *CategoryCreate {
 	cc.mutation.SetParentID(u)
 	return cc
 }
 
 // SetNillableParentID sets the "parent_id" field if the given value is not nil.
-func (cc *CategoryCreate) SetNillableParentID(u *uint64) *CategoryCreate {
+func (cc *CategoryCreate) SetNillableParentID(u *uint32) *CategoryCreate {
 	if u != nil {
 		cc.SetParentID(*u)
 	}
 	return cc
 }
 
+// SetPriority sets the "priority" field.
+func (cc *CategoryCreate) SetPriority(i int32) *CategoryCreate {
+	cc.mutation.SetPriority(i)
+	return cc
+}
+
+// SetNillablePriority sets the "priority" field if the given value is not nil.
+func (cc *CategoryCreate) SetNillablePriority(i *int32) *CategoryCreate {
+	if i != nil {
+		cc.SetPriority(*i)
+	}
+	return cc
+}
+
+// SetPostCount sets the "post_count" field.
+func (cc *CategoryCreate) SetPostCount(u uint32) *CategoryCreate {
+	cc.mutation.SetPostCount(u)
+	return cc
+}
+
+// SetNillablePostCount sets the "post_count" field if the given value is not nil.
+func (cc *CategoryCreate) SetNillablePostCount(u *uint32) *CategoryCreate {
+	if u != nil {
+		cc.SetPostCount(*u)
+	}
+	return cc
+}
+
 // SetID sets the "id" field.
-func (cc *CategoryCreate) SetID(u uint64) *CategoryCreate {
+func (cc *CategoryCreate) SetID(u uint32) *CategoryCreate {
 	cc.mutation.SetID(u)
 	return cc
 }
@@ -122,6 +192,7 @@ func (cc *CategoryCreate) Save(ctx context.Context) (*Category, error) {
 		err  error
 		node *Category
 	)
+	cc.defaults()
 	if len(cc.hooks) == 0 {
 		if err = cc.check(); err != nil {
 			return nil, err
@@ -185,11 +256,29 @@ func (cc *CategoryCreate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (cc *CategoryCreate) defaults() {
+	if _, ok := cc.mutation.CreateTime(); !ok {
+		v := category.DefaultCreateTime()
+		cc.mutation.SetCreateTime(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (cc *CategoryCreate) check() error {
 	if v, ok := cc.mutation.Name(); ok {
 		if err := category.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Category.name": %w`, err)}
+		}
+	}
+	if v, ok := cc.mutation.Description(); ok {
+		if err := category.DescriptionValidator(v); err != nil {
+			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "Category.description": %w`, err)}
+		}
+	}
+	if v, ok := cc.mutation.Thumbnail(); ok {
+		if err := category.ThumbnailValidator(v); err != nil {
+			return &ValidationError{Name: "thumbnail", err: fmt.Errorf(`ent: validator failed for field "Category.thumbnail": %w`, err)}
 		}
 	}
 	if v, ok := cc.mutation.ID(); ok {
@@ -210,7 +299,7 @@ func (cc *CategoryCreate) sqlSave(ctx context.Context) (*Category, error) {
 	}
 	if _spec.ID.Value != _node.ID {
 		id := _spec.ID.Value.(int64)
-		_node.ID = uint64(id)
+		_node.ID = uint32(id)
 	}
 	return _node, nil
 }
@@ -221,7 +310,7 @@ func (cc *CategoryCreate) createSpec() (*Category, *sqlgraph.CreateSpec) {
 		_spec = &sqlgraph.CreateSpec{
 			Table: category.Table,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
+				Type:   field.TypeUint32,
 				Column: category.FieldID,
 			},
 		}
@@ -255,29 +344,69 @@ func (cc *CategoryCreate) createSpec() (*Category, *sqlgraph.CreateSpec) {
 		})
 		_node.Name = &value
 	}
-	if value, ok := cc.mutation.DisplayName(); ok {
+	if value, ok := cc.mutation.Slug(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: category.FieldDisplayName,
+			Column: category.FieldSlug,
 		})
-		_node.DisplayName = &value
+		_node.Slug = &value
 	}
-	if value, ok := cc.mutation.SeoDesc(); ok {
+	if value, ok := cc.mutation.Description(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: category.FieldSeoDesc,
+			Column: category.FieldDescription,
 		})
-		_node.SeoDesc = &value
+		_node.Description = &value
+	}
+	if value, ok := cc.mutation.Thumbnail(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: category.FieldThumbnail,
+		})
+		_node.Thumbnail = &value
+	}
+	if value, ok := cc.mutation.Password(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: category.FieldPassword,
+		})
+		_node.Password = &value
+	}
+	if value, ok := cc.mutation.FullPath(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: category.FieldFullPath,
+		})
+		_node.FullPath = &value
 	}
 	if value, ok := cc.mutation.ParentID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: category.FieldParentID,
 		})
 		_node.ParentID = &value
+	}
+	if value, ok := cc.mutation.Priority(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: category.FieldPriority,
+		})
+		_node.Priority = &value
+	}
+	if value, ok := cc.mutation.PostCount(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: category.FieldPostCount,
+		})
+		_node.PostCount = &value
 	}
 	return _node, _spec
 }
@@ -399,44 +528,98 @@ func (u *CategoryUpsert) ClearName() *CategoryUpsert {
 	return u
 }
 
-// SetDisplayName sets the "display_name" field.
-func (u *CategoryUpsert) SetDisplayName(v string) *CategoryUpsert {
-	u.Set(category.FieldDisplayName, v)
+// SetSlug sets the "slug" field.
+func (u *CategoryUpsert) SetSlug(v string) *CategoryUpsert {
+	u.Set(category.FieldSlug, v)
 	return u
 }
 
-// UpdateDisplayName sets the "display_name" field to the value that was provided on create.
-func (u *CategoryUpsert) UpdateDisplayName() *CategoryUpsert {
-	u.SetExcluded(category.FieldDisplayName)
+// UpdateSlug sets the "slug" field to the value that was provided on create.
+func (u *CategoryUpsert) UpdateSlug() *CategoryUpsert {
+	u.SetExcluded(category.FieldSlug)
 	return u
 }
 
-// ClearDisplayName clears the value of the "display_name" field.
-func (u *CategoryUpsert) ClearDisplayName() *CategoryUpsert {
-	u.SetNull(category.FieldDisplayName)
+// ClearSlug clears the value of the "slug" field.
+func (u *CategoryUpsert) ClearSlug() *CategoryUpsert {
+	u.SetNull(category.FieldSlug)
 	return u
 }
 
-// SetSeoDesc sets the "seo_desc" field.
-func (u *CategoryUpsert) SetSeoDesc(v string) *CategoryUpsert {
-	u.Set(category.FieldSeoDesc, v)
+// SetDescription sets the "description" field.
+func (u *CategoryUpsert) SetDescription(v string) *CategoryUpsert {
+	u.Set(category.FieldDescription, v)
 	return u
 }
 
-// UpdateSeoDesc sets the "seo_desc" field to the value that was provided on create.
-func (u *CategoryUpsert) UpdateSeoDesc() *CategoryUpsert {
-	u.SetExcluded(category.FieldSeoDesc)
+// UpdateDescription sets the "description" field to the value that was provided on create.
+func (u *CategoryUpsert) UpdateDescription() *CategoryUpsert {
+	u.SetExcluded(category.FieldDescription)
 	return u
 }
 
-// ClearSeoDesc clears the value of the "seo_desc" field.
-func (u *CategoryUpsert) ClearSeoDesc() *CategoryUpsert {
-	u.SetNull(category.FieldSeoDesc)
+// ClearDescription clears the value of the "description" field.
+func (u *CategoryUpsert) ClearDescription() *CategoryUpsert {
+	u.SetNull(category.FieldDescription)
+	return u
+}
+
+// SetThumbnail sets the "thumbnail" field.
+func (u *CategoryUpsert) SetThumbnail(v string) *CategoryUpsert {
+	u.Set(category.FieldThumbnail, v)
+	return u
+}
+
+// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
+func (u *CategoryUpsert) UpdateThumbnail() *CategoryUpsert {
+	u.SetExcluded(category.FieldThumbnail)
+	return u
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (u *CategoryUpsert) ClearThumbnail() *CategoryUpsert {
+	u.SetNull(category.FieldThumbnail)
+	return u
+}
+
+// SetPassword sets the "password" field.
+func (u *CategoryUpsert) SetPassword(v string) *CategoryUpsert {
+	u.Set(category.FieldPassword, v)
+	return u
+}
+
+// UpdatePassword sets the "password" field to the value that was provided on create.
+func (u *CategoryUpsert) UpdatePassword() *CategoryUpsert {
+	u.SetExcluded(category.FieldPassword)
+	return u
+}
+
+// ClearPassword clears the value of the "password" field.
+func (u *CategoryUpsert) ClearPassword() *CategoryUpsert {
+	u.SetNull(category.FieldPassword)
+	return u
+}
+
+// SetFullPath sets the "full_path" field.
+func (u *CategoryUpsert) SetFullPath(v string) *CategoryUpsert {
+	u.Set(category.FieldFullPath, v)
+	return u
+}
+
+// UpdateFullPath sets the "full_path" field to the value that was provided on create.
+func (u *CategoryUpsert) UpdateFullPath() *CategoryUpsert {
+	u.SetExcluded(category.FieldFullPath)
+	return u
+}
+
+// ClearFullPath clears the value of the "full_path" field.
+func (u *CategoryUpsert) ClearFullPath() *CategoryUpsert {
+	u.SetNull(category.FieldFullPath)
 	return u
 }
 
 // SetParentID sets the "parent_id" field.
-func (u *CategoryUpsert) SetParentID(v uint64) *CategoryUpsert {
+func (u *CategoryUpsert) SetParentID(v uint32) *CategoryUpsert {
 	u.Set(category.FieldParentID, v)
 	return u
 }
@@ -448,7 +631,7 @@ func (u *CategoryUpsert) UpdateParentID() *CategoryUpsert {
 }
 
 // AddParentID adds v to the "parent_id" field.
-func (u *CategoryUpsert) AddParentID(v uint64) *CategoryUpsert {
+func (u *CategoryUpsert) AddParentID(v uint32) *CategoryUpsert {
 	u.Add(category.FieldParentID, v)
 	return u
 }
@@ -456,6 +639,54 @@ func (u *CategoryUpsert) AddParentID(v uint64) *CategoryUpsert {
 // ClearParentID clears the value of the "parent_id" field.
 func (u *CategoryUpsert) ClearParentID() *CategoryUpsert {
 	u.SetNull(category.FieldParentID)
+	return u
+}
+
+// SetPriority sets the "priority" field.
+func (u *CategoryUpsert) SetPriority(v int32) *CategoryUpsert {
+	u.Set(category.FieldPriority, v)
+	return u
+}
+
+// UpdatePriority sets the "priority" field to the value that was provided on create.
+func (u *CategoryUpsert) UpdatePriority() *CategoryUpsert {
+	u.SetExcluded(category.FieldPriority)
+	return u
+}
+
+// AddPriority adds v to the "priority" field.
+func (u *CategoryUpsert) AddPriority(v int32) *CategoryUpsert {
+	u.Add(category.FieldPriority, v)
+	return u
+}
+
+// ClearPriority clears the value of the "priority" field.
+func (u *CategoryUpsert) ClearPriority() *CategoryUpsert {
+	u.SetNull(category.FieldPriority)
+	return u
+}
+
+// SetPostCount sets the "post_count" field.
+func (u *CategoryUpsert) SetPostCount(v uint32) *CategoryUpsert {
+	u.Set(category.FieldPostCount, v)
+	return u
+}
+
+// UpdatePostCount sets the "post_count" field to the value that was provided on create.
+func (u *CategoryUpsert) UpdatePostCount() *CategoryUpsert {
+	u.SetExcluded(category.FieldPostCount)
+	return u
+}
+
+// AddPostCount adds v to the "post_count" field.
+func (u *CategoryUpsert) AddPostCount(v uint32) *CategoryUpsert {
+	u.Add(category.FieldPostCount, v)
+	return u
+}
+
+// ClearPostCount clears the value of the "post_count" field.
+func (u *CategoryUpsert) ClearPostCount() *CategoryUpsert {
+	u.SetNull(category.FieldPostCount)
 	return u
 }
 
@@ -589,57 +820,120 @@ func (u *CategoryUpsertOne) ClearName() *CategoryUpsertOne {
 	})
 }
 
-// SetDisplayName sets the "display_name" field.
-func (u *CategoryUpsertOne) SetDisplayName(v string) *CategoryUpsertOne {
+// SetSlug sets the "slug" field.
+func (u *CategoryUpsertOne) SetSlug(v string) *CategoryUpsertOne {
 	return u.Update(func(s *CategoryUpsert) {
-		s.SetDisplayName(v)
+		s.SetSlug(v)
 	})
 }
 
-// UpdateDisplayName sets the "display_name" field to the value that was provided on create.
-func (u *CategoryUpsertOne) UpdateDisplayName() *CategoryUpsertOne {
+// UpdateSlug sets the "slug" field to the value that was provided on create.
+func (u *CategoryUpsertOne) UpdateSlug() *CategoryUpsertOne {
 	return u.Update(func(s *CategoryUpsert) {
-		s.UpdateDisplayName()
+		s.UpdateSlug()
 	})
 }
 
-// ClearDisplayName clears the value of the "display_name" field.
-func (u *CategoryUpsertOne) ClearDisplayName() *CategoryUpsertOne {
+// ClearSlug clears the value of the "slug" field.
+func (u *CategoryUpsertOne) ClearSlug() *CategoryUpsertOne {
 	return u.Update(func(s *CategoryUpsert) {
-		s.ClearDisplayName()
+		s.ClearSlug()
 	})
 }
 
-// SetSeoDesc sets the "seo_desc" field.
-func (u *CategoryUpsertOne) SetSeoDesc(v string) *CategoryUpsertOne {
+// SetDescription sets the "description" field.
+func (u *CategoryUpsertOne) SetDescription(v string) *CategoryUpsertOne {
 	return u.Update(func(s *CategoryUpsert) {
-		s.SetSeoDesc(v)
+		s.SetDescription(v)
 	})
 }
 
-// UpdateSeoDesc sets the "seo_desc" field to the value that was provided on create.
-func (u *CategoryUpsertOne) UpdateSeoDesc() *CategoryUpsertOne {
+// UpdateDescription sets the "description" field to the value that was provided on create.
+func (u *CategoryUpsertOne) UpdateDescription() *CategoryUpsertOne {
 	return u.Update(func(s *CategoryUpsert) {
-		s.UpdateSeoDesc()
+		s.UpdateDescription()
 	})
 }
 
-// ClearSeoDesc clears the value of the "seo_desc" field.
-func (u *CategoryUpsertOne) ClearSeoDesc() *CategoryUpsertOne {
+// ClearDescription clears the value of the "description" field.
+func (u *CategoryUpsertOne) ClearDescription() *CategoryUpsertOne {
 	return u.Update(func(s *CategoryUpsert) {
-		s.ClearSeoDesc()
+		s.ClearDescription()
+	})
+}
+
+// SetThumbnail sets the "thumbnail" field.
+func (u *CategoryUpsertOne) SetThumbnail(v string) *CategoryUpsertOne {
+	return u.Update(func(s *CategoryUpsert) {
+		s.SetThumbnail(v)
+	})
+}
+
+// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
+func (u *CategoryUpsertOne) UpdateThumbnail() *CategoryUpsertOne {
+	return u.Update(func(s *CategoryUpsert) {
+		s.UpdateThumbnail()
+	})
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (u *CategoryUpsertOne) ClearThumbnail() *CategoryUpsertOne {
+	return u.Update(func(s *CategoryUpsert) {
+		s.ClearThumbnail()
+	})
+}
+
+// SetPassword sets the "password" field.
+func (u *CategoryUpsertOne) SetPassword(v string) *CategoryUpsertOne {
+	return u.Update(func(s *CategoryUpsert) {
+		s.SetPassword(v)
+	})
+}
+
+// UpdatePassword sets the "password" field to the value that was provided on create.
+func (u *CategoryUpsertOne) UpdatePassword() *CategoryUpsertOne {
+	return u.Update(func(s *CategoryUpsert) {
+		s.UpdatePassword()
+	})
+}
+
+// ClearPassword clears the value of the "password" field.
+func (u *CategoryUpsertOne) ClearPassword() *CategoryUpsertOne {
+	return u.Update(func(s *CategoryUpsert) {
+		s.ClearPassword()
+	})
+}
+
+// SetFullPath sets the "full_path" field.
+func (u *CategoryUpsertOne) SetFullPath(v string) *CategoryUpsertOne {
+	return u.Update(func(s *CategoryUpsert) {
+		s.SetFullPath(v)
+	})
+}
+
+// UpdateFullPath sets the "full_path" field to the value that was provided on create.
+func (u *CategoryUpsertOne) UpdateFullPath() *CategoryUpsertOne {
+	return u.Update(func(s *CategoryUpsert) {
+		s.UpdateFullPath()
+	})
+}
+
+// ClearFullPath clears the value of the "full_path" field.
+func (u *CategoryUpsertOne) ClearFullPath() *CategoryUpsertOne {
+	return u.Update(func(s *CategoryUpsert) {
+		s.ClearFullPath()
 	})
 }
 
 // SetParentID sets the "parent_id" field.
-func (u *CategoryUpsertOne) SetParentID(v uint64) *CategoryUpsertOne {
+func (u *CategoryUpsertOne) SetParentID(v uint32) *CategoryUpsertOne {
 	return u.Update(func(s *CategoryUpsert) {
 		s.SetParentID(v)
 	})
 }
 
 // AddParentID adds v to the "parent_id" field.
-func (u *CategoryUpsertOne) AddParentID(v uint64) *CategoryUpsertOne {
+func (u *CategoryUpsertOne) AddParentID(v uint32) *CategoryUpsertOne {
 	return u.Update(func(s *CategoryUpsert) {
 		s.AddParentID(v)
 	})
@@ -659,6 +953,62 @@ func (u *CategoryUpsertOne) ClearParentID() *CategoryUpsertOne {
 	})
 }
 
+// SetPriority sets the "priority" field.
+func (u *CategoryUpsertOne) SetPriority(v int32) *CategoryUpsertOne {
+	return u.Update(func(s *CategoryUpsert) {
+		s.SetPriority(v)
+	})
+}
+
+// AddPriority adds v to the "priority" field.
+func (u *CategoryUpsertOne) AddPriority(v int32) *CategoryUpsertOne {
+	return u.Update(func(s *CategoryUpsert) {
+		s.AddPriority(v)
+	})
+}
+
+// UpdatePriority sets the "priority" field to the value that was provided on create.
+func (u *CategoryUpsertOne) UpdatePriority() *CategoryUpsertOne {
+	return u.Update(func(s *CategoryUpsert) {
+		s.UpdatePriority()
+	})
+}
+
+// ClearPriority clears the value of the "priority" field.
+func (u *CategoryUpsertOne) ClearPriority() *CategoryUpsertOne {
+	return u.Update(func(s *CategoryUpsert) {
+		s.ClearPriority()
+	})
+}
+
+// SetPostCount sets the "post_count" field.
+func (u *CategoryUpsertOne) SetPostCount(v uint32) *CategoryUpsertOne {
+	return u.Update(func(s *CategoryUpsert) {
+		s.SetPostCount(v)
+	})
+}
+
+// AddPostCount adds v to the "post_count" field.
+func (u *CategoryUpsertOne) AddPostCount(v uint32) *CategoryUpsertOne {
+	return u.Update(func(s *CategoryUpsert) {
+		s.AddPostCount(v)
+	})
+}
+
+// UpdatePostCount sets the "post_count" field to the value that was provided on create.
+func (u *CategoryUpsertOne) UpdatePostCount() *CategoryUpsertOne {
+	return u.Update(func(s *CategoryUpsert) {
+		s.UpdatePostCount()
+	})
+}
+
+// ClearPostCount clears the value of the "post_count" field.
+func (u *CategoryUpsertOne) ClearPostCount() *CategoryUpsertOne {
+	return u.Update(func(s *CategoryUpsert) {
+		s.ClearPostCount()
+	})
+}
+
 // Exec executes the query.
 func (u *CategoryUpsertOne) Exec(ctx context.Context) error {
 	if len(u.create.conflict) == 0 {
@@ -675,7 +1025,7 @@ func (u *CategoryUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *CategoryUpsertOne) ID(ctx context.Context) (id uint64, err error) {
+func (u *CategoryUpsertOne) ID(ctx context.Context) (id uint32, err error) {
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -684,7 +1034,7 @@ func (u *CategoryUpsertOne) ID(ctx context.Context) (id uint64, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *CategoryUpsertOne) IDX(ctx context.Context) uint64 {
+func (u *CategoryUpsertOne) IDX(ctx context.Context) uint32 {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -707,6 +1057,7 @@ func (ccb *CategoryCreateBulk) Save(ctx context.Context) ([]*Category, error) {
 	for i := range ccb.builders {
 		func(i int, root context.Context) {
 			builder := ccb.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*CategoryMutation)
 				if !ok {
@@ -736,7 +1087,7 @@ func (ccb *CategoryCreateBulk) Save(ctx context.Context) ([]*Category, error) {
 				mutation.id = &nodes[i].ID
 				if specs[i].ID.Value != nil && nodes[i].ID == 0 {
 					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = uint64(id)
+					nodes[i].ID = uint32(id)
 				}
 				mutation.done = true
 				return nodes[i], nil
@@ -953,57 +1304,120 @@ func (u *CategoryUpsertBulk) ClearName() *CategoryUpsertBulk {
 	})
 }
 
-// SetDisplayName sets the "display_name" field.
-func (u *CategoryUpsertBulk) SetDisplayName(v string) *CategoryUpsertBulk {
+// SetSlug sets the "slug" field.
+func (u *CategoryUpsertBulk) SetSlug(v string) *CategoryUpsertBulk {
 	return u.Update(func(s *CategoryUpsert) {
-		s.SetDisplayName(v)
+		s.SetSlug(v)
 	})
 }
 
-// UpdateDisplayName sets the "display_name" field to the value that was provided on create.
-func (u *CategoryUpsertBulk) UpdateDisplayName() *CategoryUpsertBulk {
+// UpdateSlug sets the "slug" field to the value that was provided on create.
+func (u *CategoryUpsertBulk) UpdateSlug() *CategoryUpsertBulk {
 	return u.Update(func(s *CategoryUpsert) {
-		s.UpdateDisplayName()
+		s.UpdateSlug()
 	})
 }
 
-// ClearDisplayName clears the value of the "display_name" field.
-func (u *CategoryUpsertBulk) ClearDisplayName() *CategoryUpsertBulk {
+// ClearSlug clears the value of the "slug" field.
+func (u *CategoryUpsertBulk) ClearSlug() *CategoryUpsertBulk {
 	return u.Update(func(s *CategoryUpsert) {
-		s.ClearDisplayName()
+		s.ClearSlug()
 	})
 }
 
-// SetSeoDesc sets the "seo_desc" field.
-func (u *CategoryUpsertBulk) SetSeoDesc(v string) *CategoryUpsertBulk {
+// SetDescription sets the "description" field.
+func (u *CategoryUpsertBulk) SetDescription(v string) *CategoryUpsertBulk {
 	return u.Update(func(s *CategoryUpsert) {
-		s.SetSeoDesc(v)
+		s.SetDescription(v)
 	})
 }
 
-// UpdateSeoDesc sets the "seo_desc" field to the value that was provided on create.
-func (u *CategoryUpsertBulk) UpdateSeoDesc() *CategoryUpsertBulk {
+// UpdateDescription sets the "description" field to the value that was provided on create.
+func (u *CategoryUpsertBulk) UpdateDescription() *CategoryUpsertBulk {
 	return u.Update(func(s *CategoryUpsert) {
-		s.UpdateSeoDesc()
+		s.UpdateDescription()
 	})
 }
 
-// ClearSeoDesc clears the value of the "seo_desc" field.
-func (u *CategoryUpsertBulk) ClearSeoDesc() *CategoryUpsertBulk {
+// ClearDescription clears the value of the "description" field.
+func (u *CategoryUpsertBulk) ClearDescription() *CategoryUpsertBulk {
 	return u.Update(func(s *CategoryUpsert) {
-		s.ClearSeoDesc()
+		s.ClearDescription()
+	})
+}
+
+// SetThumbnail sets the "thumbnail" field.
+func (u *CategoryUpsertBulk) SetThumbnail(v string) *CategoryUpsertBulk {
+	return u.Update(func(s *CategoryUpsert) {
+		s.SetThumbnail(v)
+	})
+}
+
+// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
+func (u *CategoryUpsertBulk) UpdateThumbnail() *CategoryUpsertBulk {
+	return u.Update(func(s *CategoryUpsert) {
+		s.UpdateThumbnail()
+	})
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (u *CategoryUpsertBulk) ClearThumbnail() *CategoryUpsertBulk {
+	return u.Update(func(s *CategoryUpsert) {
+		s.ClearThumbnail()
+	})
+}
+
+// SetPassword sets the "password" field.
+func (u *CategoryUpsertBulk) SetPassword(v string) *CategoryUpsertBulk {
+	return u.Update(func(s *CategoryUpsert) {
+		s.SetPassword(v)
+	})
+}
+
+// UpdatePassword sets the "password" field to the value that was provided on create.
+func (u *CategoryUpsertBulk) UpdatePassword() *CategoryUpsertBulk {
+	return u.Update(func(s *CategoryUpsert) {
+		s.UpdatePassword()
+	})
+}
+
+// ClearPassword clears the value of the "password" field.
+func (u *CategoryUpsertBulk) ClearPassword() *CategoryUpsertBulk {
+	return u.Update(func(s *CategoryUpsert) {
+		s.ClearPassword()
+	})
+}
+
+// SetFullPath sets the "full_path" field.
+func (u *CategoryUpsertBulk) SetFullPath(v string) *CategoryUpsertBulk {
+	return u.Update(func(s *CategoryUpsert) {
+		s.SetFullPath(v)
+	})
+}
+
+// UpdateFullPath sets the "full_path" field to the value that was provided on create.
+func (u *CategoryUpsertBulk) UpdateFullPath() *CategoryUpsertBulk {
+	return u.Update(func(s *CategoryUpsert) {
+		s.UpdateFullPath()
+	})
+}
+
+// ClearFullPath clears the value of the "full_path" field.
+func (u *CategoryUpsertBulk) ClearFullPath() *CategoryUpsertBulk {
+	return u.Update(func(s *CategoryUpsert) {
+		s.ClearFullPath()
 	})
 }
 
 // SetParentID sets the "parent_id" field.
-func (u *CategoryUpsertBulk) SetParentID(v uint64) *CategoryUpsertBulk {
+func (u *CategoryUpsertBulk) SetParentID(v uint32) *CategoryUpsertBulk {
 	return u.Update(func(s *CategoryUpsert) {
 		s.SetParentID(v)
 	})
 }
 
 // AddParentID adds v to the "parent_id" field.
-func (u *CategoryUpsertBulk) AddParentID(v uint64) *CategoryUpsertBulk {
+func (u *CategoryUpsertBulk) AddParentID(v uint32) *CategoryUpsertBulk {
 	return u.Update(func(s *CategoryUpsert) {
 		s.AddParentID(v)
 	})
@@ -1020,6 +1434,62 @@ func (u *CategoryUpsertBulk) UpdateParentID() *CategoryUpsertBulk {
 func (u *CategoryUpsertBulk) ClearParentID() *CategoryUpsertBulk {
 	return u.Update(func(s *CategoryUpsert) {
 		s.ClearParentID()
+	})
+}
+
+// SetPriority sets the "priority" field.
+func (u *CategoryUpsertBulk) SetPriority(v int32) *CategoryUpsertBulk {
+	return u.Update(func(s *CategoryUpsert) {
+		s.SetPriority(v)
+	})
+}
+
+// AddPriority adds v to the "priority" field.
+func (u *CategoryUpsertBulk) AddPriority(v int32) *CategoryUpsertBulk {
+	return u.Update(func(s *CategoryUpsert) {
+		s.AddPriority(v)
+	})
+}
+
+// UpdatePriority sets the "priority" field to the value that was provided on create.
+func (u *CategoryUpsertBulk) UpdatePriority() *CategoryUpsertBulk {
+	return u.Update(func(s *CategoryUpsert) {
+		s.UpdatePriority()
+	})
+}
+
+// ClearPriority clears the value of the "priority" field.
+func (u *CategoryUpsertBulk) ClearPriority() *CategoryUpsertBulk {
+	return u.Update(func(s *CategoryUpsert) {
+		s.ClearPriority()
+	})
+}
+
+// SetPostCount sets the "post_count" field.
+func (u *CategoryUpsertBulk) SetPostCount(v uint32) *CategoryUpsertBulk {
+	return u.Update(func(s *CategoryUpsert) {
+		s.SetPostCount(v)
+	})
+}
+
+// AddPostCount adds v to the "post_count" field.
+func (u *CategoryUpsertBulk) AddPostCount(v uint32) *CategoryUpsertBulk {
+	return u.Update(func(s *CategoryUpsert) {
+		s.AddPostCount(v)
+	})
+}
+
+// UpdatePostCount sets the "post_count" field to the value that was provided on create.
+func (u *CategoryUpsertBulk) UpdatePostCount() *CategoryUpsertBulk {
+	return u.Update(func(s *CategoryUpsert) {
+		s.UpdatePostCount()
+	})
+}
+
+// ClearPostCount clears the value of the "post_count" field.
+func (u *CategoryUpsertBulk) ClearPostCount() *CategoryUpsertBulk {
+	return u.Update(func(s *CategoryUpsert) {
+		s.ClearPostCount()
 	})
 }
 

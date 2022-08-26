@@ -43,7 +43,9 @@ func (s *UserService) Login(ctx context.Context, req *v1.LoginRequest) (*v1.Logi
 	}
 
 	return &v1.LoginResponse{
-		Token: token,
+		Token:    token,
+		Id:       user.GetId(),
+		UserName: user.GetUserName(),
 	}, nil
 }
 
@@ -63,7 +65,14 @@ func (s *UserService) Register(ctx context.Context, req *v1.RegisterRequest) (*v
 		return nil, err
 	}
 
+	token, err := s.tuc.GenerateToken(ctx, user)
+	if err != nil {
+		return &v1.RegisterResponse{}, err
+	}
+
 	return &v1.RegisterResponse{
-		Id: user.GetId(),
+		Id:       user.GetId(),
+		UserName: user.GetUserName(),
+		Token:    token,
 	}, nil
 }

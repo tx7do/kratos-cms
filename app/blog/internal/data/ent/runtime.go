@@ -3,11 +3,14 @@
 package ent
 
 import (
+	"kratos-blog/app/blog/internal/data/ent/attachment"
 	"kratos-blog/app/blog/internal/data/ent/category"
+	"kratos-blog/app/blog/internal/data/ent/comment"
 	"kratos-blog/app/blog/internal/data/ent/link"
+	"kratos-blog/app/blog/internal/data/ent/menu"
+	"kratos-blog/app/blog/internal/data/ent/photo"
 	"kratos-blog/app/blog/internal/data/ent/post"
 	"kratos-blog/app/blog/internal/data/ent/schema"
-	"kratos-blog/app/blog/internal/data/ent/system"
 	"kratos-blog/app/blog/internal/data/ent/tag"
 	"kratos-blog/app/blog/internal/data/ent/user"
 )
@@ -16,6 +19,25 @@ import (
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
+	attachmentMixin := schema.Attachment{}.Mixin()
+	attachmentMixinFields0 := attachmentMixin[0].Fields()
+	_ = attachmentMixinFields0
+	attachmentMixinFields1 := attachmentMixin[1].Fields()
+	_ = attachmentMixinFields1
+	attachmentFields := schema.Attachment{}.Fields()
+	_ = attachmentFields
+	// attachmentDescCreateTime is the schema descriptor for create_time field.
+	attachmentDescCreateTime := attachmentMixinFields1[0].Descriptor()
+	// attachment.DefaultCreateTime holds the default value on creation for the create_time field.
+	attachment.DefaultCreateTime = attachmentDescCreateTime.Default.(func() int64)
+	// attachmentDescUpdateTime is the schema descriptor for update_time field.
+	attachmentDescUpdateTime := attachmentMixinFields1[1].Descriptor()
+	// attachment.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	attachment.UpdateDefaultUpdateTime = attachmentDescUpdateTime.UpdateDefault.(func() int64)
+	// attachmentDescID is the schema descriptor for id field.
+	attachmentDescID := attachmentMixinFields0[0].Descriptor()
+	// attachment.IDValidator is a validator for the "id" field. It is called by the builders before save.
+	attachment.IDValidator = attachmentDescID.Validators[0].(func(uint32) error)
 	categoryMixin := schema.Category{}.Mixin()
 	categoryMixinFields0 := categoryMixin[0].Fields()
 	_ = categoryMixinFields0
@@ -23,6 +45,10 @@ func init() {
 	_ = categoryMixinFields1
 	categoryFields := schema.Category{}.Fields()
 	_ = categoryFields
+	// categoryDescCreateTime is the schema descriptor for create_time field.
+	categoryDescCreateTime := categoryMixinFields1[0].Descriptor()
+	// category.DefaultCreateTime holds the default value on creation for the create_time field.
+	category.DefaultCreateTime = categoryDescCreateTime.Default.(func() int64)
 	// categoryDescUpdateTime is the schema descriptor for update_time field.
 	categoryDescUpdateTime := categoryMixinFields1[1].Descriptor()
 	// category.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
@@ -31,10 +57,41 @@ func init() {
 	categoryDescName := categoryFields[0].Descriptor()
 	// category.NameValidator is a validator for the "name" field. It is called by the builders before save.
 	category.NameValidator = categoryDescName.Validators[0].(func(string) error)
+	// categoryDescDescription is the schema descriptor for description field.
+	categoryDescDescription := categoryFields[2].Descriptor()
+	// category.DescriptionValidator is a validator for the "description" field. It is called by the builders before save.
+	category.DescriptionValidator = categoryDescDescription.Validators[0].(func(string) error)
+	// categoryDescThumbnail is the schema descriptor for thumbnail field.
+	categoryDescThumbnail := categoryFields[3].Descriptor()
+	// category.ThumbnailValidator is a validator for the "thumbnail" field. It is called by the builders before save.
+	category.ThumbnailValidator = categoryDescThumbnail.Validators[0].(func(string) error)
 	// categoryDescID is the schema descriptor for id field.
 	categoryDescID := categoryMixinFields0[0].Descriptor()
 	// category.IDValidator is a validator for the "id" field. It is called by the builders before save.
-	category.IDValidator = categoryDescID.Validators[0].(func(uint64) error)
+	category.IDValidator = categoryDescID.Validators[0].(func(uint32) error)
+	commentMixin := schema.Comment{}.Mixin()
+	commentMixinFields0 := commentMixin[0].Fields()
+	_ = commentMixinFields0
+	commentMixinFields1 := commentMixin[1].Fields()
+	_ = commentMixinFields1
+	commentFields := schema.Comment{}.Fields()
+	_ = commentFields
+	// commentDescCreateTime is the schema descriptor for create_time field.
+	commentDescCreateTime := commentMixinFields1[0].Descriptor()
+	// comment.DefaultCreateTime holds the default value on creation for the create_time field.
+	comment.DefaultCreateTime = commentDescCreateTime.Default.(func() int64)
+	// commentDescUpdateTime is the schema descriptor for update_time field.
+	commentDescUpdateTime := commentMixinFields1[1].Descriptor()
+	// comment.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	comment.UpdateDefaultUpdateTime = commentDescUpdateTime.UpdateDefault.(func() int64)
+	// commentDescAuthor is the schema descriptor for author field.
+	commentDescAuthor := commentFields[0].Descriptor()
+	// comment.AuthorValidator is a validator for the "author" field. It is called by the builders before save.
+	comment.AuthorValidator = commentDescAuthor.Validators[0].(func(string) error)
+	// commentDescID is the schema descriptor for id field.
+	commentDescID := commentMixinFields0[0].Descriptor()
+	// comment.IDValidator is a validator for the "id" field. It is called by the builders before save.
+	comment.IDValidator = commentDescID.Validators[0].(func(uint32) error)
 	linkMixin := schema.Link{}.Mixin()
 	linkMixinFields0 := linkMixin[0].Fields()
 	_ = linkMixinFields0
@@ -42,6 +99,10 @@ func init() {
 	_ = linkMixinFields1
 	linkFields := schema.Link{}.Fields()
 	_ = linkFields
+	// linkDescCreateTime is the schema descriptor for create_time field.
+	linkDescCreateTime := linkMixinFields1[0].Descriptor()
+	// link.DefaultCreateTime holds the default value on creation for the create_time field.
+	link.DefaultCreateTime = linkDescCreateTime.Default.(func() int64)
 	// linkDescUpdateTime is the schema descriptor for update_time field.
 	linkDescUpdateTime := linkMixinFields1[1].Descriptor()
 	// link.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
@@ -50,10 +111,60 @@ func init() {
 	linkDescName := linkFields[0].Descriptor()
 	// link.NameValidator is a validator for the "name" field. It is called by the builders before save.
 	link.NameValidator = linkDescName.Validators[0].(func(string) error)
+	// linkDescURL is the schema descriptor for url field.
+	linkDescURL := linkFields[1].Descriptor()
+	// link.URLValidator is a validator for the "url" field. It is called by the builders before save.
+	link.URLValidator = linkDescURL.Validators[0].(func(string) error)
+	// linkDescLogo is the schema descriptor for logo field.
+	linkDescLogo := linkFields[2].Descriptor()
+	// link.LogoValidator is a validator for the "logo" field. It is called by the builders before save.
+	link.LogoValidator = linkDescLogo.Validators[0].(func(string) error)
 	// linkDescID is the schema descriptor for id field.
 	linkDescID := linkMixinFields0[0].Descriptor()
 	// link.IDValidator is a validator for the "id" field. It is called by the builders before save.
-	link.IDValidator = linkDescID.Validators[0].(func(uint64) error)
+	link.IDValidator = linkDescID.Validators[0].(func(uint32) error)
+	menuMixin := schema.Menu{}.Mixin()
+	menuMixinFields0 := menuMixin[0].Fields()
+	_ = menuMixinFields0
+	menuMixinFields1 := menuMixin[1].Fields()
+	_ = menuMixinFields1
+	menuFields := schema.Menu{}.Fields()
+	_ = menuFields
+	// menuDescCreateTime is the schema descriptor for create_time field.
+	menuDescCreateTime := menuMixinFields1[0].Descriptor()
+	// menu.DefaultCreateTime holds the default value on creation for the create_time field.
+	menu.DefaultCreateTime = menuDescCreateTime.Default.(func() int64)
+	// menuDescUpdateTime is the schema descriptor for update_time field.
+	menuDescUpdateTime := menuMixinFields1[1].Descriptor()
+	// menu.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	menu.UpdateDefaultUpdateTime = menuDescUpdateTime.UpdateDefault.(func() int64)
+	// menuDescName is the schema descriptor for name field.
+	menuDescName := menuFields[0].Descriptor()
+	// menu.NameValidator is a validator for the "name" field. It is called by the builders before save.
+	menu.NameValidator = menuDescName.Validators[0].(func(string) error)
+	// menuDescID is the schema descriptor for id field.
+	menuDescID := menuMixinFields0[0].Descriptor()
+	// menu.IDValidator is a validator for the "id" field. It is called by the builders before save.
+	menu.IDValidator = menuDescID.Validators[0].(func(uint32) error)
+	photoMixin := schema.Photo{}.Mixin()
+	photoMixinFields0 := photoMixin[0].Fields()
+	_ = photoMixinFields0
+	photoMixinFields1 := photoMixin[1].Fields()
+	_ = photoMixinFields1
+	photoFields := schema.Photo{}.Fields()
+	_ = photoFields
+	// photoDescCreateTime is the schema descriptor for create_time field.
+	photoDescCreateTime := photoMixinFields1[0].Descriptor()
+	// photo.DefaultCreateTime holds the default value on creation for the create_time field.
+	photo.DefaultCreateTime = photoDescCreateTime.Default.(func() int64)
+	// photoDescUpdateTime is the schema descriptor for update_time field.
+	photoDescUpdateTime := photoMixinFields1[1].Descriptor()
+	// photo.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	photo.UpdateDefaultUpdateTime = photoDescUpdateTime.UpdateDefault.(func() int64)
+	// photoDescID is the schema descriptor for id field.
+	photoDescID := photoMixinFields0[0].Descriptor()
+	// photo.IDValidator is a validator for the "id" field. It is called by the builders before save.
+	photo.IDValidator = photoDescID.Validators[0].(func(uint32) error)
 	postMixin := schema.Post{}.Mixin()
 	postMixinFields0 := postMixin[0].Fields()
 	_ = postMixinFields0
@@ -61,6 +172,10 @@ func init() {
 	_ = postMixinFields1
 	postFields := schema.Post{}.Fields()
 	_ = postFields
+	// postDescCreateTime is the schema descriptor for create_time field.
+	postDescCreateTime := postMixinFields1[0].Descriptor()
+	// post.DefaultCreateTime holds the default value on creation for the create_time field.
+	post.DefaultCreateTime = postDescCreateTime.Default.(func() int64)
 	// postDescUpdateTime is the schema descriptor for update_time field.
 	postDescUpdateTime := postMixinFields1[1].Descriptor()
 	// post.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
@@ -72,22 +187,7 @@ func init() {
 	// postDescID is the schema descriptor for id field.
 	postDescID := postMixinFields0[0].Descriptor()
 	// post.IDValidator is a validator for the "id" field. It is called by the builders before save.
-	post.IDValidator = postDescID.Validators[0].(func(uint64) error)
-	systemMixin := schema.System{}.Mixin()
-	systemMixinFields0 := systemMixin[0].Fields()
-	_ = systemMixinFields0
-	systemMixinFields1 := systemMixin[1].Fields()
-	_ = systemMixinFields1
-	systemFields := schema.System{}.Fields()
-	_ = systemFields
-	// systemDescUpdateTime is the schema descriptor for update_time field.
-	systemDescUpdateTime := systemMixinFields1[1].Descriptor()
-	// system.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
-	system.UpdateDefaultUpdateTime = systemDescUpdateTime.UpdateDefault.(func() int64)
-	// systemDescID is the schema descriptor for id field.
-	systemDescID := systemMixinFields0[0].Descriptor()
-	// system.IDValidator is a validator for the "id" field. It is called by the builders before save.
-	system.IDValidator = systemDescID.Validators[0].(func(uint64) error)
+	post.IDValidator = postDescID.Validators[0].(func(uint32) error)
 	tagMixin := schema.Tag{}.Mixin()
 	tagMixinFields0 := tagMixin[0].Fields()
 	_ = tagMixinFields0
@@ -95,6 +195,10 @@ func init() {
 	_ = tagMixinFields1
 	tagFields := schema.Tag{}.Fields()
 	_ = tagFields
+	// tagDescCreateTime is the schema descriptor for create_time field.
+	tagDescCreateTime := tagMixinFields1[0].Descriptor()
+	// tag.DefaultCreateTime holds the default value on creation for the create_time field.
+	tag.DefaultCreateTime = tagDescCreateTime.Default.(func() int64)
 	// tagDescUpdateTime is the schema descriptor for update_time field.
 	tagDescUpdateTime := tagMixinFields1[1].Descriptor()
 	// tag.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
@@ -106,7 +210,7 @@ func init() {
 	// tagDescID is the schema descriptor for id field.
 	tagDescID := tagMixinFields0[0].Descriptor()
 	// tag.IDValidator is a validator for the "id" field. It is called by the builders before save.
-	tag.IDValidator = tagDescID.Validators[0].(func(uint64) error)
+	tag.IDValidator = tagDescID.Validators[0].(func(uint32) error)
 	userMixin := schema.User{}.Mixin()
 	userMixinFields0 := userMixin[0].Fields()
 	_ = userMixinFields0
@@ -114,6 +218,10 @@ func init() {
 	_ = userMixinFields1
 	userFields := schema.User{}.Fields()
 	_ = userFields
+	// userDescCreateTime is the schema descriptor for create_time field.
+	userDescCreateTime := userMixinFields1[0].Descriptor()
+	// user.DefaultCreateTime holds the default value on creation for the create_time field.
+	user.DefaultCreateTime = userDescCreateTime.Default.(func() int64)
 	// userDescUpdateTime is the schema descriptor for update_time field.
 	userDescUpdateTime := userMixinFields1[1].Descriptor()
 	// user.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
@@ -145,8 +253,16 @@ func init() {
 	userDescEmail := userFields[2].Descriptor()
 	// user.EmailValidator is a validator for the "email" field. It is called by the builders before save.
 	user.EmailValidator = userDescEmail.Validators[0].(func(string) error)
+	// userDescAvatar is the schema descriptor for avatar field.
+	userDescAvatar := userFields[3].Descriptor()
+	// user.AvatarValidator is a validator for the "avatar" field. It is called by the builders before save.
+	user.AvatarValidator = userDescAvatar.Validators[0].(func(string) error)
+	// userDescDescription is the schema descriptor for description field.
+	userDescDescription := userFields[4].Descriptor()
+	// user.DescriptionValidator is a validator for the "description" field. It is called by the builders before save.
+	user.DescriptionValidator = userDescDescription.Validators[0].(func(string) error)
 	// userDescPassword is the schema descriptor for password field.
-	userDescPassword := userFields[3].Descriptor()
+	userDescPassword := userFields[5].Descriptor()
 	// user.PasswordValidator is a validator for the "password" field. It is called by the builders before save.
 	user.PasswordValidator = func() func(string) error {
 		validators := userDescPassword.Validators
@@ -166,5 +282,5 @@ func init() {
 	// userDescID is the schema descriptor for id field.
 	userDescID := userMixinFields0[0].Descriptor()
 	// user.IDValidator is a validator for the "id" field. It is called by the builders before save.
-	user.IDValidator = userDescID.Validators[0].(func(uint64) error)
+	user.IDValidator = userDescID.Validators[0].(func(uint32) error)
 }

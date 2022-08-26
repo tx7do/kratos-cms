@@ -3,10 +3,13 @@
 package ent
 
 import (
+	"kratos-blog/app/blog/internal/data/ent/attachment"
 	"kratos-blog/app/blog/internal/data/ent/category"
+	"kratos-blog/app/blog/internal/data/ent/comment"
 	"kratos-blog/app/blog/internal/data/ent/link"
+	"kratos-blog/app/blog/internal/data/ent/menu"
+	"kratos-blog/app/blog/internal/data/ent/photo"
 	"kratos-blog/app/blog/internal/data/ent/post"
-	"kratos-blog/app/blog/internal/data/ent/system"
 	"kratos-blog/app/blog/internal/data/ent/tag"
 	"kratos-blog/app/blog/internal/data/ent/user"
 
@@ -18,13 +21,38 @@ import (
 
 // schemaGraph holds a representation of ent/schema at runtime.
 var schemaGraph = func() *sqlgraph.Schema {
-	graph := &sqlgraph.Schema{Nodes: make([]*sqlgraph.Node, 6)}
+	graph := &sqlgraph.Schema{Nodes: make([]*sqlgraph.Node, 9)}
 	graph.Nodes[0] = &sqlgraph.Node{
+		NodeSpec: sqlgraph.NodeSpec{
+			Table:   attachment.Table,
+			Columns: attachment.Columns,
+			ID: &sqlgraph.FieldSpec{
+				Type:   field.TypeUint32,
+				Column: attachment.FieldID,
+			},
+		},
+		Type: "Attachment",
+		Fields: map[string]*sqlgraph.FieldSpec{
+			attachment.FieldCreateTime: {Type: field.TypeInt64, Column: attachment.FieldCreateTime},
+			attachment.FieldUpdateTime: {Type: field.TypeInt64, Column: attachment.FieldUpdateTime},
+			attachment.FieldName:       {Type: field.TypeString, Column: attachment.FieldName},
+			attachment.FieldPath:       {Type: field.TypeString, Column: attachment.FieldPath},
+			attachment.FieldFileKey:    {Type: field.TypeString, Column: attachment.FieldFileKey},
+			attachment.FieldThumbPath:  {Type: field.TypeString, Column: attachment.FieldThumbPath},
+			attachment.FieldMediaType:  {Type: field.TypeString, Column: attachment.FieldMediaType},
+			attachment.FieldSuffix:     {Type: field.TypeString, Column: attachment.FieldSuffix},
+			attachment.FieldWidth:      {Type: field.TypeInt32, Column: attachment.FieldWidth},
+			attachment.FieldHeight:     {Type: field.TypeInt32, Column: attachment.FieldHeight},
+			attachment.FieldSize:       {Type: field.TypeInt64, Column: attachment.FieldSize},
+			attachment.FieldType:       {Type: field.TypeInt32, Column: attachment.FieldType},
+		},
+	}
+	graph.Nodes[1] = &sqlgraph.Node{
 		NodeSpec: sqlgraph.NodeSpec{
 			Table:   category.Table,
 			Columns: category.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
+				Type:   field.TypeUint32,
 				Column: category.FieldID,
 			},
 		},
@@ -33,106 +61,185 @@ var schemaGraph = func() *sqlgraph.Schema {
 			category.FieldCreateTime:  {Type: field.TypeInt64, Column: category.FieldCreateTime},
 			category.FieldUpdateTime:  {Type: field.TypeInt64, Column: category.FieldUpdateTime},
 			category.FieldName:        {Type: field.TypeString, Column: category.FieldName},
-			category.FieldDisplayName: {Type: field.TypeString, Column: category.FieldDisplayName},
-			category.FieldSeoDesc:     {Type: field.TypeString, Column: category.FieldSeoDesc},
-			category.FieldParentID:    {Type: field.TypeUint64, Column: category.FieldParentID},
+			category.FieldSlug:        {Type: field.TypeString, Column: category.FieldSlug},
+			category.FieldDescription: {Type: field.TypeString, Column: category.FieldDescription},
+			category.FieldThumbnail:   {Type: field.TypeString, Column: category.FieldThumbnail},
+			category.FieldPassword:    {Type: field.TypeString, Column: category.FieldPassword},
+			category.FieldFullPath:    {Type: field.TypeString, Column: category.FieldFullPath},
+			category.FieldParentID:    {Type: field.TypeUint32, Column: category.FieldParentID},
+			category.FieldPriority:    {Type: field.TypeInt32, Column: category.FieldPriority},
+			category.FieldPostCount:   {Type: field.TypeUint32, Column: category.FieldPostCount},
 		},
 	}
-	graph.Nodes[1] = &sqlgraph.Node{
+	graph.Nodes[2] = &sqlgraph.Node{
+		NodeSpec: sqlgraph.NodeSpec{
+			Table:   comment.Table,
+			Columns: comment.Columns,
+			ID: &sqlgraph.FieldSpec{
+				Type:   field.TypeUint32,
+				Column: comment.FieldID,
+			},
+		},
+		Type: "Comment",
+		Fields: map[string]*sqlgraph.FieldSpec{
+			comment.FieldCreateTime:        {Type: field.TypeInt64, Column: comment.FieldCreateTime},
+			comment.FieldUpdateTime:        {Type: field.TypeInt64, Column: comment.FieldUpdateTime},
+			comment.FieldAuthor:            {Type: field.TypeString, Column: comment.FieldAuthor},
+			comment.FieldEmail:             {Type: field.TypeString, Column: comment.FieldEmail},
+			comment.FieldIPAddress:         {Type: field.TypeString, Column: comment.FieldIPAddress},
+			comment.FieldAuthorURL:         {Type: field.TypeString, Column: comment.FieldAuthorURL},
+			comment.FieldGravatarMd5:       {Type: field.TypeString, Column: comment.FieldGravatarMd5},
+			comment.FieldContent:           {Type: field.TypeString, Column: comment.FieldContent},
+			comment.FieldUserAgent:         {Type: field.TypeString, Column: comment.FieldUserAgent},
+			comment.FieldAvatar:            {Type: field.TypeString, Column: comment.FieldAvatar},
+			comment.FieldParentID:          {Type: field.TypeUint32, Column: comment.FieldParentID},
+			comment.FieldStatus:            {Type: field.TypeUint32, Column: comment.FieldStatus},
+			comment.FieldIsAdmin:           {Type: field.TypeBool, Column: comment.FieldIsAdmin},
+			comment.FieldAllowNotification: {Type: field.TypeBool, Column: comment.FieldAllowNotification},
+		},
+	}
+	graph.Nodes[3] = &sqlgraph.Node{
 		NodeSpec: sqlgraph.NodeSpec{
 			Table:   link.Table,
 			Columns: link.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
+				Type:   field.TypeUint32,
 				Column: link.FieldID,
 			},
 		},
 		Type: "Link",
 		Fields: map[string]*sqlgraph.FieldSpec{
-			link.FieldCreateTime: {Type: field.TypeInt64, Column: link.FieldCreateTime},
-			link.FieldUpdateTime: {Type: field.TypeInt64, Column: link.FieldUpdateTime},
-			link.FieldName:       {Type: field.TypeString, Column: link.FieldName},
-			link.FieldLink:       {Type: field.TypeString, Column: link.FieldLink},
-			link.FieldOrderID:    {Type: field.TypeInt32, Column: link.FieldOrderID},
+			link.FieldCreateTime:  {Type: field.TypeInt64, Column: link.FieldCreateTime},
+			link.FieldUpdateTime:  {Type: field.TypeInt64, Column: link.FieldUpdateTime},
+			link.FieldName:        {Type: field.TypeString, Column: link.FieldName},
+			link.FieldURL:         {Type: field.TypeString, Column: link.FieldURL},
+			link.FieldLogo:        {Type: field.TypeString, Column: link.FieldLogo},
+			link.FieldDescription: {Type: field.TypeString, Column: link.FieldDescription},
+			link.FieldTeam:        {Type: field.TypeString, Column: link.FieldTeam},
+			link.FieldPriority:    {Type: field.TypeInt32, Column: link.FieldPriority},
 		},
 	}
-	graph.Nodes[2] = &sqlgraph.Node{
+	graph.Nodes[4] = &sqlgraph.Node{
+		NodeSpec: sqlgraph.NodeSpec{
+			Table:   menu.Table,
+			Columns: menu.Columns,
+			ID: &sqlgraph.FieldSpec{
+				Type:   field.TypeUint32,
+				Column: menu.FieldID,
+			},
+		},
+		Type: "Menu",
+		Fields: map[string]*sqlgraph.FieldSpec{
+			menu.FieldCreateTime: {Type: field.TypeInt64, Column: menu.FieldCreateTime},
+			menu.FieldUpdateTime: {Type: field.TypeInt64, Column: menu.FieldUpdateTime},
+			menu.FieldName:       {Type: field.TypeString, Column: menu.FieldName},
+			menu.FieldURL:        {Type: field.TypeString, Column: menu.FieldURL},
+			menu.FieldPriority:   {Type: field.TypeInt32, Column: menu.FieldPriority},
+			menu.FieldTarget:     {Type: field.TypeString, Column: menu.FieldTarget},
+			menu.FieldIcon:       {Type: field.TypeString, Column: menu.FieldIcon},
+			menu.FieldParentID:   {Type: field.TypeUint32, Column: menu.FieldParentID},
+			menu.FieldTeam:       {Type: field.TypeString, Column: menu.FieldTeam},
+		},
+	}
+	graph.Nodes[5] = &sqlgraph.Node{
+		NodeSpec: sqlgraph.NodeSpec{
+			Table:   photo.Table,
+			Columns: photo.Columns,
+			ID: &sqlgraph.FieldSpec{
+				Type:   field.TypeUint32,
+				Column: photo.FieldID,
+			},
+		},
+		Type: "Photo",
+		Fields: map[string]*sqlgraph.FieldSpec{
+			photo.FieldCreateTime:  {Type: field.TypeInt64, Column: photo.FieldCreateTime},
+			photo.FieldUpdateTime:  {Type: field.TypeInt64, Column: photo.FieldUpdateTime},
+			photo.FieldName:        {Type: field.TypeString, Column: photo.FieldName},
+			photo.FieldThumbnail:   {Type: field.TypeString, Column: photo.FieldThumbnail},
+			photo.FieldTakeTime:    {Type: field.TypeInt64, Column: photo.FieldTakeTime},
+			photo.FieldURL:         {Type: field.TypeString, Column: photo.FieldURL},
+			photo.FieldTeam:        {Type: field.TypeString, Column: photo.FieldTeam},
+			photo.FieldLocation:    {Type: field.TypeString, Column: photo.FieldLocation},
+			photo.FieldDescription: {Type: field.TypeString, Column: photo.FieldDescription},
+			photo.FieldLikes:       {Type: field.TypeInt32, Column: photo.FieldLikes},
+		},
+	}
+	graph.Nodes[6] = &sqlgraph.Node{
 		NodeSpec: sqlgraph.NodeSpec{
 			Table:   post.Table,
 			Columns: post.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
+				Type:   field.TypeUint32,
 				Column: post.FieldID,
 			},
 		},
 		Type: "Post",
 		Fields: map[string]*sqlgraph.FieldSpec{
-			post.FieldCreateTime: {Type: field.TypeInt64, Column: post.FieldCreateTime},
-			post.FieldUpdateTime: {Type: field.TypeInt64, Column: post.FieldUpdateTime},
-			post.FieldTitle:      {Type: field.TypeString, Column: post.FieldTitle},
-			post.FieldSummary:    {Type: field.TypeString, Column: post.FieldSummary},
-			post.FieldOriginal:   {Type: field.TypeString, Column: post.FieldOriginal},
-			post.FieldContent:    {Type: field.TypeString, Column: post.FieldContent},
-			post.FieldPassword:   {Type: field.TypeString, Column: post.FieldPassword},
-			post.FieldUserID:     {Type: field.TypeInt64, Column: post.FieldUserID},
+			post.FieldCreateTime:      {Type: field.TypeInt64, Column: post.FieldCreateTime},
+			post.FieldUpdateTime:      {Type: field.TypeInt64, Column: post.FieldUpdateTime},
+			post.FieldTitle:           {Type: field.TypeString, Column: post.FieldTitle},
+			post.FieldSlug:            {Type: field.TypeString, Column: post.FieldSlug},
+			post.FieldMetaKeywords:    {Type: field.TypeString, Column: post.FieldMetaKeywords},
+			post.FieldMetaDescription: {Type: field.TypeString, Column: post.FieldMetaDescription},
+			post.FieldFullPath:        {Type: field.TypeString, Column: post.FieldFullPath},
+			post.FieldOriginalContent: {Type: field.TypeString, Column: post.FieldOriginalContent},
+			post.FieldContent:         {Type: field.TypeString, Column: post.FieldContent},
+			post.FieldSummary:         {Type: field.TypeString, Column: post.FieldSummary},
+			post.FieldThumbnail:       {Type: field.TypeString, Column: post.FieldThumbnail},
+			post.FieldPassword:        {Type: field.TypeString, Column: post.FieldPassword},
+			post.FieldTemplate:        {Type: field.TypeString, Column: post.FieldTemplate},
+			post.FieldCommentCount:    {Type: field.TypeInt32, Column: post.FieldCommentCount},
+			post.FieldVisits:          {Type: field.TypeInt32, Column: post.FieldVisits},
+			post.FieldLikes:           {Type: field.TypeInt32, Column: post.FieldLikes},
+			post.FieldWordCount:       {Type: field.TypeInt32, Column: post.FieldWordCount},
+			post.FieldTopPriority:     {Type: field.TypeInt32, Column: post.FieldTopPriority},
+			post.FieldStatus:          {Type: field.TypeInt32, Column: post.FieldStatus},
+			post.FieldEditorType:      {Type: field.TypeInt32, Column: post.FieldEditorType},
+			post.FieldEditTime:        {Type: field.TypeInt64, Column: post.FieldEditTime},
+			post.FieldDisallowComment: {Type: field.TypeBool, Column: post.FieldDisallowComment},
+			post.FieldInProgress:      {Type: field.TypeBool, Column: post.FieldInProgress},
 		},
 	}
-	graph.Nodes[3] = &sqlgraph.Node{
-		NodeSpec: sqlgraph.NodeSpec{
-			Table:   system.Table,
-			Columns: system.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
-				Column: system.FieldID,
-			},
-		},
-		Type: "System",
-		Fields: map[string]*sqlgraph.FieldSpec{
-			system.FieldCreateTime:   {Type: field.TypeInt64, Column: system.FieldCreateTime},
-			system.FieldUpdateTime:   {Type: field.TypeInt64, Column: system.FieldUpdateTime},
-			system.FieldTitle:        {Type: field.TypeString, Column: system.FieldTitle},
-			system.FieldKeywords:     {Type: field.TypeString, Column: system.FieldKeywords},
-			system.FieldDescription:  {Type: field.TypeString, Column: system.FieldDescription},
-			system.FieldRecordNumber: {Type: field.TypeString, Column: system.FieldRecordNumber},
-			system.FieldTheme:        {Type: field.TypeInt32, Column: system.FieldTheme},
-		},
-	}
-	graph.Nodes[4] = &sqlgraph.Node{
+	graph.Nodes[7] = &sqlgraph.Node{
 		NodeSpec: sqlgraph.NodeSpec{
 			Table:   tag.Table,
 			Columns: tag.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
+				Type:   field.TypeUint32,
 				Column: tag.FieldID,
 			},
 		},
 		Type: "Tag",
 		Fields: map[string]*sqlgraph.FieldSpec{
-			tag.FieldCreateTime:  {Type: field.TypeInt64, Column: tag.FieldCreateTime},
-			tag.FieldUpdateTime:  {Type: field.TypeInt64, Column: tag.FieldUpdateTime},
-			tag.FieldName:        {Type: field.TypeString, Column: tag.FieldName},
-			tag.FieldDisplayName: {Type: field.TypeString, Column: tag.FieldDisplayName},
-			tag.FieldSeoDesc:     {Type: field.TypeString, Column: tag.FieldSeoDesc},
-			tag.FieldUseCount:    {Type: field.TypeInt32, Column: tag.FieldUseCount},
+			tag.FieldCreateTime: {Type: field.TypeInt64, Column: tag.FieldCreateTime},
+			tag.FieldUpdateTime: {Type: field.TypeInt64, Column: tag.FieldUpdateTime},
+			tag.FieldName:       {Type: field.TypeString, Column: tag.FieldName},
+			tag.FieldSlug:       {Type: field.TypeString, Column: tag.FieldSlug},
+			tag.FieldColor:      {Type: field.TypeString, Column: tag.FieldColor},
+			tag.FieldThumbnail:  {Type: field.TypeString, Column: tag.FieldThumbnail},
+			tag.FieldSlugName:   {Type: field.TypeString, Column: tag.FieldSlugName},
+			tag.FieldPostCount:  {Type: field.TypeUint32, Column: tag.FieldPostCount},
 		},
 	}
-	graph.Nodes[5] = &sqlgraph.Node{
+	graph.Nodes[8] = &sqlgraph.Node{
 		NodeSpec: sqlgraph.NodeSpec{
 			Table:   user.Table,
 			Columns: user.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
+				Type:   field.TypeUint32,
 				Column: user.FieldID,
 			},
 		},
 		Type: "User",
 		Fields: map[string]*sqlgraph.FieldSpec{
-			user.FieldCreateTime: {Type: field.TypeInt64, Column: user.FieldCreateTime},
-			user.FieldUpdateTime: {Type: field.TypeInt64, Column: user.FieldUpdateTime},
-			user.FieldUsername:   {Type: field.TypeString, Column: user.FieldUsername},
-			user.FieldNickname:   {Type: field.TypeString, Column: user.FieldNickname},
-			user.FieldEmail:      {Type: field.TypeString, Column: user.FieldEmail},
-			user.FieldPassword:   {Type: field.TypeString, Column: user.FieldPassword},
+			user.FieldCreateTime:  {Type: field.TypeInt64, Column: user.FieldCreateTime},
+			user.FieldUpdateTime:  {Type: field.TypeInt64, Column: user.FieldUpdateTime},
+			user.FieldUsername:    {Type: field.TypeString, Column: user.FieldUsername},
+			user.FieldNickname:    {Type: field.TypeString, Column: user.FieldNickname},
+			user.FieldEmail:       {Type: field.TypeString, Column: user.FieldEmail},
+			user.FieldAvatar:      {Type: field.TypeString, Column: user.FieldAvatar},
+			user.FieldDescription: {Type: field.TypeString, Column: user.FieldDescription},
+			user.FieldPassword:    {Type: field.TypeString, Column: user.FieldPassword},
 		},
 	}
 	return graph
@@ -142,6 +249,106 @@ var schemaGraph = func() *sqlgraph.Schema {
 // All update, update-one and query builders implement this interface.
 type predicateAdder interface {
 	addPredicate(func(s *sql.Selector))
+}
+
+// addPredicate implements the predicateAdder interface.
+func (aq *AttachmentQuery) addPredicate(pred func(s *sql.Selector)) {
+	aq.predicates = append(aq.predicates, pred)
+}
+
+// Filter returns a Filter implementation to apply filters on the AttachmentQuery builder.
+func (aq *AttachmentQuery) Filter() *AttachmentFilter {
+	return &AttachmentFilter{config: aq.config, predicateAdder: aq}
+}
+
+// addPredicate implements the predicateAdder interface.
+func (m *AttachmentMutation) addPredicate(pred func(s *sql.Selector)) {
+	m.predicates = append(m.predicates, pred)
+}
+
+// Filter returns an entql.Where implementation to apply filters on the AttachmentMutation builder.
+func (m *AttachmentMutation) Filter() *AttachmentFilter {
+	return &AttachmentFilter{config: m.config, predicateAdder: m}
+}
+
+// AttachmentFilter provides a generic filtering capability at runtime for AttachmentQuery.
+type AttachmentFilter struct {
+	predicateAdder
+	config
+}
+
+// Where applies the entql predicate on the query filter.
+func (f *AttachmentFilter) Where(p entql.P) {
+	f.addPredicate(func(s *sql.Selector) {
+		if err := schemaGraph.EvalP(schemaGraph.Nodes[0].Type, p, s); err != nil {
+			s.AddError(err)
+		}
+	})
+}
+
+// WhereID applies the entql uint32 predicate on the id field.
+func (f *AttachmentFilter) WhereID(p entql.Uint32P) {
+	f.Where(p.Field(attachment.FieldID))
+}
+
+// WhereCreateTime applies the entql int64 predicate on the create_time field.
+func (f *AttachmentFilter) WhereCreateTime(p entql.Int64P) {
+	f.Where(p.Field(attachment.FieldCreateTime))
+}
+
+// WhereUpdateTime applies the entql int64 predicate on the update_time field.
+func (f *AttachmentFilter) WhereUpdateTime(p entql.Int64P) {
+	f.Where(p.Field(attachment.FieldUpdateTime))
+}
+
+// WhereName applies the entql string predicate on the name field.
+func (f *AttachmentFilter) WhereName(p entql.StringP) {
+	f.Where(p.Field(attachment.FieldName))
+}
+
+// WherePath applies the entql string predicate on the path field.
+func (f *AttachmentFilter) WherePath(p entql.StringP) {
+	f.Where(p.Field(attachment.FieldPath))
+}
+
+// WhereFileKey applies the entql string predicate on the file_key field.
+func (f *AttachmentFilter) WhereFileKey(p entql.StringP) {
+	f.Where(p.Field(attachment.FieldFileKey))
+}
+
+// WhereThumbPath applies the entql string predicate on the thumb_path field.
+func (f *AttachmentFilter) WhereThumbPath(p entql.StringP) {
+	f.Where(p.Field(attachment.FieldThumbPath))
+}
+
+// WhereMediaType applies the entql string predicate on the media_type field.
+func (f *AttachmentFilter) WhereMediaType(p entql.StringP) {
+	f.Where(p.Field(attachment.FieldMediaType))
+}
+
+// WhereSuffix applies the entql string predicate on the suffix field.
+func (f *AttachmentFilter) WhereSuffix(p entql.StringP) {
+	f.Where(p.Field(attachment.FieldSuffix))
+}
+
+// WhereWidth applies the entql int32 predicate on the width field.
+func (f *AttachmentFilter) WhereWidth(p entql.Int32P) {
+	f.Where(p.Field(attachment.FieldWidth))
+}
+
+// WhereHeight applies the entql int32 predicate on the height field.
+func (f *AttachmentFilter) WhereHeight(p entql.Int32P) {
+	f.Where(p.Field(attachment.FieldHeight))
+}
+
+// WhereSize applies the entql int64 predicate on the size field.
+func (f *AttachmentFilter) WhereSize(p entql.Int64P) {
+	f.Where(p.Field(attachment.FieldSize))
+}
+
+// WhereType applies the entql int32 predicate on the type field.
+func (f *AttachmentFilter) WhereType(p entql.Int32P) {
+	f.Where(p.Field(attachment.FieldType))
 }
 
 // addPredicate implements the predicateAdder interface.
@@ -173,14 +380,14 @@ type CategoryFilter struct {
 // Where applies the entql predicate on the query filter.
 func (f *CategoryFilter) Where(p entql.P) {
 	f.addPredicate(func(s *sql.Selector) {
-		if err := schemaGraph.EvalP(schemaGraph.Nodes[0].Type, p, s); err != nil {
+		if err := schemaGraph.EvalP(schemaGraph.Nodes[1].Type, p, s); err != nil {
 			s.AddError(err)
 		}
 	})
 }
 
-// WhereID applies the entql uint64 predicate on the id field.
-func (f *CategoryFilter) WhereID(p entql.Uint64P) {
+// WhereID applies the entql uint32 predicate on the id field.
+func (f *CategoryFilter) WhereID(p entql.Uint32P) {
 	f.Where(p.Field(category.FieldID))
 }
 
@@ -199,19 +406,154 @@ func (f *CategoryFilter) WhereName(p entql.StringP) {
 	f.Where(p.Field(category.FieldName))
 }
 
-// WhereDisplayName applies the entql string predicate on the display_name field.
-func (f *CategoryFilter) WhereDisplayName(p entql.StringP) {
-	f.Where(p.Field(category.FieldDisplayName))
+// WhereSlug applies the entql string predicate on the slug field.
+func (f *CategoryFilter) WhereSlug(p entql.StringP) {
+	f.Where(p.Field(category.FieldSlug))
 }
 
-// WhereSeoDesc applies the entql string predicate on the seo_desc field.
-func (f *CategoryFilter) WhereSeoDesc(p entql.StringP) {
-	f.Where(p.Field(category.FieldSeoDesc))
+// WhereDescription applies the entql string predicate on the description field.
+func (f *CategoryFilter) WhereDescription(p entql.StringP) {
+	f.Where(p.Field(category.FieldDescription))
 }
 
-// WhereParentID applies the entql uint64 predicate on the parent_id field.
-func (f *CategoryFilter) WhereParentID(p entql.Uint64P) {
+// WhereThumbnail applies the entql string predicate on the thumbnail field.
+func (f *CategoryFilter) WhereThumbnail(p entql.StringP) {
+	f.Where(p.Field(category.FieldThumbnail))
+}
+
+// WherePassword applies the entql string predicate on the password field.
+func (f *CategoryFilter) WherePassword(p entql.StringP) {
+	f.Where(p.Field(category.FieldPassword))
+}
+
+// WhereFullPath applies the entql string predicate on the full_path field.
+func (f *CategoryFilter) WhereFullPath(p entql.StringP) {
+	f.Where(p.Field(category.FieldFullPath))
+}
+
+// WhereParentID applies the entql uint32 predicate on the parent_id field.
+func (f *CategoryFilter) WhereParentID(p entql.Uint32P) {
 	f.Where(p.Field(category.FieldParentID))
+}
+
+// WherePriority applies the entql int32 predicate on the priority field.
+func (f *CategoryFilter) WherePriority(p entql.Int32P) {
+	f.Where(p.Field(category.FieldPriority))
+}
+
+// WherePostCount applies the entql uint32 predicate on the post_count field.
+func (f *CategoryFilter) WherePostCount(p entql.Uint32P) {
+	f.Where(p.Field(category.FieldPostCount))
+}
+
+// addPredicate implements the predicateAdder interface.
+func (cq *CommentQuery) addPredicate(pred func(s *sql.Selector)) {
+	cq.predicates = append(cq.predicates, pred)
+}
+
+// Filter returns a Filter implementation to apply filters on the CommentQuery builder.
+func (cq *CommentQuery) Filter() *CommentFilter {
+	return &CommentFilter{config: cq.config, predicateAdder: cq}
+}
+
+// addPredicate implements the predicateAdder interface.
+func (m *CommentMutation) addPredicate(pred func(s *sql.Selector)) {
+	m.predicates = append(m.predicates, pred)
+}
+
+// Filter returns an entql.Where implementation to apply filters on the CommentMutation builder.
+func (m *CommentMutation) Filter() *CommentFilter {
+	return &CommentFilter{config: m.config, predicateAdder: m}
+}
+
+// CommentFilter provides a generic filtering capability at runtime for CommentQuery.
+type CommentFilter struct {
+	predicateAdder
+	config
+}
+
+// Where applies the entql predicate on the query filter.
+func (f *CommentFilter) Where(p entql.P) {
+	f.addPredicate(func(s *sql.Selector) {
+		if err := schemaGraph.EvalP(schemaGraph.Nodes[2].Type, p, s); err != nil {
+			s.AddError(err)
+		}
+	})
+}
+
+// WhereID applies the entql uint32 predicate on the id field.
+func (f *CommentFilter) WhereID(p entql.Uint32P) {
+	f.Where(p.Field(comment.FieldID))
+}
+
+// WhereCreateTime applies the entql int64 predicate on the create_time field.
+func (f *CommentFilter) WhereCreateTime(p entql.Int64P) {
+	f.Where(p.Field(comment.FieldCreateTime))
+}
+
+// WhereUpdateTime applies the entql int64 predicate on the update_time field.
+func (f *CommentFilter) WhereUpdateTime(p entql.Int64P) {
+	f.Where(p.Field(comment.FieldUpdateTime))
+}
+
+// WhereAuthor applies the entql string predicate on the author field.
+func (f *CommentFilter) WhereAuthor(p entql.StringP) {
+	f.Where(p.Field(comment.FieldAuthor))
+}
+
+// WhereEmail applies the entql string predicate on the email field.
+func (f *CommentFilter) WhereEmail(p entql.StringP) {
+	f.Where(p.Field(comment.FieldEmail))
+}
+
+// WhereIPAddress applies the entql string predicate on the ip_address field.
+func (f *CommentFilter) WhereIPAddress(p entql.StringP) {
+	f.Where(p.Field(comment.FieldIPAddress))
+}
+
+// WhereAuthorURL applies the entql string predicate on the author_url field.
+func (f *CommentFilter) WhereAuthorURL(p entql.StringP) {
+	f.Where(p.Field(comment.FieldAuthorURL))
+}
+
+// WhereGravatarMd5 applies the entql string predicate on the gravatar_md5 field.
+func (f *CommentFilter) WhereGravatarMd5(p entql.StringP) {
+	f.Where(p.Field(comment.FieldGravatarMd5))
+}
+
+// WhereContent applies the entql string predicate on the content field.
+func (f *CommentFilter) WhereContent(p entql.StringP) {
+	f.Where(p.Field(comment.FieldContent))
+}
+
+// WhereUserAgent applies the entql string predicate on the user_agent field.
+func (f *CommentFilter) WhereUserAgent(p entql.StringP) {
+	f.Where(p.Field(comment.FieldUserAgent))
+}
+
+// WhereAvatar applies the entql string predicate on the avatar field.
+func (f *CommentFilter) WhereAvatar(p entql.StringP) {
+	f.Where(p.Field(comment.FieldAvatar))
+}
+
+// WhereParentID applies the entql uint32 predicate on the parent_id field.
+func (f *CommentFilter) WhereParentID(p entql.Uint32P) {
+	f.Where(p.Field(comment.FieldParentID))
+}
+
+// WhereStatus applies the entql uint32 predicate on the status field.
+func (f *CommentFilter) WhereStatus(p entql.Uint32P) {
+	f.Where(p.Field(comment.FieldStatus))
+}
+
+// WhereIsAdmin applies the entql bool predicate on the is_admin field.
+func (f *CommentFilter) WhereIsAdmin(p entql.BoolP) {
+	f.Where(p.Field(comment.FieldIsAdmin))
+}
+
+// WhereAllowNotification applies the entql bool predicate on the allow_notification field.
+func (f *CommentFilter) WhereAllowNotification(p entql.BoolP) {
+	f.Where(p.Field(comment.FieldAllowNotification))
 }
 
 // addPredicate implements the predicateAdder interface.
@@ -243,14 +585,14 @@ type LinkFilter struct {
 // Where applies the entql predicate on the query filter.
 func (f *LinkFilter) Where(p entql.P) {
 	f.addPredicate(func(s *sql.Selector) {
-		if err := schemaGraph.EvalP(schemaGraph.Nodes[1].Type, p, s); err != nil {
+		if err := schemaGraph.EvalP(schemaGraph.Nodes[3].Type, p, s); err != nil {
 			s.AddError(err)
 		}
 	})
 }
 
-// WhereID applies the entql uint64 predicate on the id field.
-func (f *LinkFilter) WhereID(p entql.Uint64P) {
+// WhereID applies the entql uint32 predicate on the id field.
+func (f *LinkFilter) WhereID(p entql.Uint32P) {
 	f.Where(p.Field(link.FieldID))
 }
 
@@ -269,14 +611,204 @@ func (f *LinkFilter) WhereName(p entql.StringP) {
 	f.Where(p.Field(link.FieldName))
 }
 
-// WhereLink applies the entql string predicate on the link field.
-func (f *LinkFilter) WhereLink(p entql.StringP) {
-	f.Where(p.Field(link.FieldLink))
+// WhereURL applies the entql string predicate on the url field.
+func (f *LinkFilter) WhereURL(p entql.StringP) {
+	f.Where(p.Field(link.FieldURL))
 }
 
-// WhereOrderID applies the entql int32 predicate on the order_id field.
-func (f *LinkFilter) WhereOrderID(p entql.Int32P) {
-	f.Where(p.Field(link.FieldOrderID))
+// WhereLogo applies the entql string predicate on the logo field.
+func (f *LinkFilter) WhereLogo(p entql.StringP) {
+	f.Where(p.Field(link.FieldLogo))
+}
+
+// WhereDescription applies the entql string predicate on the description field.
+func (f *LinkFilter) WhereDescription(p entql.StringP) {
+	f.Where(p.Field(link.FieldDescription))
+}
+
+// WhereTeam applies the entql string predicate on the team field.
+func (f *LinkFilter) WhereTeam(p entql.StringP) {
+	f.Where(p.Field(link.FieldTeam))
+}
+
+// WherePriority applies the entql int32 predicate on the priority field.
+func (f *LinkFilter) WherePriority(p entql.Int32P) {
+	f.Where(p.Field(link.FieldPriority))
+}
+
+// addPredicate implements the predicateAdder interface.
+func (mq *MenuQuery) addPredicate(pred func(s *sql.Selector)) {
+	mq.predicates = append(mq.predicates, pred)
+}
+
+// Filter returns a Filter implementation to apply filters on the MenuQuery builder.
+func (mq *MenuQuery) Filter() *MenuFilter {
+	return &MenuFilter{config: mq.config, predicateAdder: mq}
+}
+
+// addPredicate implements the predicateAdder interface.
+func (m *MenuMutation) addPredicate(pred func(s *sql.Selector)) {
+	m.predicates = append(m.predicates, pred)
+}
+
+// Filter returns an entql.Where implementation to apply filters on the MenuMutation builder.
+func (m *MenuMutation) Filter() *MenuFilter {
+	return &MenuFilter{config: m.config, predicateAdder: m}
+}
+
+// MenuFilter provides a generic filtering capability at runtime for MenuQuery.
+type MenuFilter struct {
+	predicateAdder
+	config
+}
+
+// Where applies the entql predicate on the query filter.
+func (f *MenuFilter) Where(p entql.P) {
+	f.addPredicate(func(s *sql.Selector) {
+		if err := schemaGraph.EvalP(schemaGraph.Nodes[4].Type, p, s); err != nil {
+			s.AddError(err)
+		}
+	})
+}
+
+// WhereID applies the entql uint32 predicate on the id field.
+func (f *MenuFilter) WhereID(p entql.Uint32P) {
+	f.Where(p.Field(menu.FieldID))
+}
+
+// WhereCreateTime applies the entql int64 predicate on the create_time field.
+func (f *MenuFilter) WhereCreateTime(p entql.Int64P) {
+	f.Where(p.Field(menu.FieldCreateTime))
+}
+
+// WhereUpdateTime applies the entql int64 predicate on the update_time field.
+func (f *MenuFilter) WhereUpdateTime(p entql.Int64P) {
+	f.Where(p.Field(menu.FieldUpdateTime))
+}
+
+// WhereName applies the entql string predicate on the name field.
+func (f *MenuFilter) WhereName(p entql.StringP) {
+	f.Where(p.Field(menu.FieldName))
+}
+
+// WhereURL applies the entql string predicate on the url field.
+func (f *MenuFilter) WhereURL(p entql.StringP) {
+	f.Where(p.Field(menu.FieldURL))
+}
+
+// WherePriority applies the entql int32 predicate on the priority field.
+func (f *MenuFilter) WherePriority(p entql.Int32P) {
+	f.Where(p.Field(menu.FieldPriority))
+}
+
+// WhereTarget applies the entql string predicate on the target field.
+func (f *MenuFilter) WhereTarget(p entql.StringP) {
+	f.Where(p.Field(menu.FieldTarget))
+}
+
+// WhereIcon applies the entql string predicate on the icon field.
+func (f *MenuFilter) WhereIcon(p entql.StringP) {
+	f.Where(p.Field(menu.FieldIcon))
+}
+
+// WhereParentID applies the entql uint32 predicate on the parent_id field.
+func (f *MenuFilter) WhereParentID(p entql.Uint32P) {
+	f.Where(p.Field(menu.FieldParentID))
+}
+
+// WhereTeam applies the entql string predicate on the team field.
+func (f *MenuFilter) WhereTeam(p entql.StringP) {
+	f.Where(p.Field(menu.FieldTeam))
+}
+
+// addPredicate implements the predicateAdder interface.
+func (pq *PhotoQuery) addPredicate(pred func(s *sql.Selector)) {
+	pq.predicates = append(pq.predicates, pred)
+}
+
+// Filter returns a Filter implementation to apply filters on the PhotoQuery builder.
+func (pq *PhotoQuery) Filter() *PhotoFilter {
+	return &PhotoFilter{config: pq.config, predicateAdder: pq}
+}
+
+// addPredicate implements the predicateAdder interface.
+func (m *PhotoMutation) addPredicate(pred func(s *sql.Selector)) {
+	m.predicates = append(m.predicates, pred)
+}
+
+// Filter returns an entql.Where implementation to apply filters on the PhotoMutation builder.
+func (m *PhotoMutation) Filter() *PhotoFilter {
+	return &PhotoFilter{config: m.config, predicateAdder: m}
+}
+
+// PhotoFilter provides a generic filtering capability at runtime for PhotoQuery.
+type PhotoFilter struct {
+	predicateAdder
+	config
+}
+
+// Where applies the entql predicate on the query filter.
+func (f *PhotoFilter) Where(p entql.P) {
+	f.addPredicate(func(s *sql.Selector) {
+		if err := schemaGraph.EvalP(schemaGraph.Nodes[5].Type, p, s); err != nil {
+			s.AddError(err)
+		}
+	})
+}
+
+// WhereID applies the entql uint32 predicate on the id field.
+func (f *PhotoFilter) WhereID(p entql.Uint32P) {
+	f.Where(p.Field(photo.FieldID))
+}
+
+// WhereCreateTime applies the entql int64 predicate on the create_time field.
+func (f *PhotoFilter) WhereCreateTime(p entql.Int64P) {
+	f.Where(p.Field(photo.FieldCreateTime))
+}
+
+// WhereUpdateTime applies the entql int64 predicate on the update_time field.
+func (f *PhotoFilter) WhereUpdateTime(p entql.Int64P) {
+	f.Where(p.Field(photo.FieldUpdateTime))
+}
+
+// WhereName applies the entql string predicate on the name field.
+func (f *PhotoFilter) WhereName(p entql.StringP) {
+	f.Where(p.Field(photo.FieldName))
+}
+
+// WhereThumbnail applies the entql string predicate on the thumbnail field.
+func (f *PhotoFilter) WhereThumbnail(p entql.StringP) {
+	f.Where(p.Field(photo.FieldThumbnail))
+}
+
+// WhereTakeTime applies the entql int64 predicate on the take_time field.
+func (f *PhotoFilter) WhereTakeTime(p entql.Int64P) {
+	f.Where(p.Field(photo.FieldTakeTime))
+}
+
+// WhereURL applies the entql string predicate on the url field.
+func (f *PhotoFilter) WhereURL(p entql.StringP) {
+	f.Where(p.Field(photo.FieldURL))
+}
+
+// WhereTeam applies the entql string predicate on the team field.
+func (f *PhotoFilter) WhereTeam(p entql.StringP) {
+	f.Where(p.Field(photo.FieldTeam))
+}
+
+// WhereLocation applies the entql string predicate on the location field.
+func (f *PhotoFilter) WhereLocation(p entql.StringP) {
+	f.Where(p.Field(photo.FieldLocation))
+}
+
+// WhereDescription applies the entql string predicate on the description field.
+func (f *PhotoFilter) WhereDescription(p entql.StringP) {
+	f.Where(p.Field(photo.FieldDescription))
+}
+
+// WhereLikes applies the entql int32 predicate on the likes field.
+func (f *PhotoFilter) WhereLikes(p entql.Int32P) {
+	f.Where(p.Field(photo.FieldLikes))
 }
 
 // addPredicate implements the predicateAdder interface.
@@ -308,14 +840,14 @@ type PostFilter struct {
 // Where applies the entql predicate on the query filter.
 func (f *PostFilter) Where(p entql.P) {
 	f.addPredicate(func(s *sql.Selector) {
-		if err := schemaGraph.EvalP(schemaGraph.Nodes[2].Type, p, s); err != nil {
+		if err := schemaGraph.EvalP(schemaGraph.Nodes[6].Type, p, s); err != nil {
 			s.AddError(err)
 		}
 	})
 }
 
-// WhereID applies the entql uint64 predicate on the id field.
-func (f *PostFilter) WhereID(p entql.Uint64P) {
+// WhereID applies the entql uint32 predicate on the id field.
+func (f *PostFilter) WhereID(p entql.Uint32P) {
 	f.Where(p.Field(post.FieldID))
 }
 
@@ -334,14 +866,29 @@ func (f *PostFilter) WhereTitle(p entql.StringP) {
 	f.Where(p.Field(post.FieldTitle))
 }
 
-// WhereSummary applies the entql string predicate on the summary field.
-func (f *PostFilter) WhereSummary(p entql.StringP) {
-	f.Where(p.Field(post.FieldSummary))
+// WhereSlug applies the entql string predicate on the slug field.
+func (f *PostFilter) WhereSlug(p entql.StringP) {
+	f.Where(p.Field(post.FieldSlug))
 }
 
-// WhereOriginal applies the entql string predicate on the original field.
-func (f *PostFilter) WhereOriginal(p entql.StringP) {
-	f.Where(p.Field(post.FieldOriginal))
+// WhereMetaKeywords applies the entql string predicate on the meta_keywords field.
+func (f *PostFilter) WhereMetaKeywords(p entql.StringP) {
+	f.Where(p.Field(post.FieldMetaKeywords))
+}
+
+// WhereMetaDescription applies the entql string predicate on the meta_description field.
+func (f *PostFilter) WhereMetaDescription(p entql.StringP) {
+	f.Where(p.Field(post.FieldMetaDescription))
+}
+
+// WhereFullPath applies the entql string predicate on the full_path field.
+func (f *PostFilter) WhereFullPath(p entql.StringP) {
+	f.Where(p.Field(post.FieldFullPath))
+}
+
+// WhereOriginalContent applies the entql string predicate on the original_content field.
+func (f *PostFilter) WhereOriginalContent(p entql.StringP) {
+	f.Where(p.Field(post.FieldOriginalContent))
 }
 
 // WhereContent applies the entql string predicate on the content field.
@@ -349,89 +896,74 @@ func (f *PostFilter) WhereContent(p entql.StringP) {
 	f.Where(p.Field(post.FieldContent))
 }
 
+// WhereSummary applies the entql string predicate on the summary field.
+func (f *PostFilter) WhereSummary(p entql.StringP) {
+	f.Where(p.Field(post.FieldSummary))
+}
+
+// WhereThumbnail applies the entql string predicate on the thumbnail field.
+func (f *PostFilter) WhereThumbnail(p entql.StringP) {
+	f.Where(p.Field(post.FieldThumbnail))
+}
+
 // WherePassword applies the entql string predicate on the password field.
 func (f *PostFilter) WherePassword(p entql.StringP) {
 	f.Where(p.Field(post.FieldPassword))
 }
 
-// WhereUserID applies the entql int64 predicate on the user_id field.
-func (f *PostFilter) WhereUserID(p entql.Int64P) {
-	f.Where(p.Field(post.FieldUserID))
+// WhereTemplate applies the entql string predicate on the template field.
+func (f *PostFilter) WhereTemplate(p entql.StringP) {
+	f.Where(p.Field(post.FieldTemplate))
 }
 
-// addPredicate implements the predicateAdder interface.
-func (sq *SystemQuery) addPredicate(pred func(s *sql.Selector)) {
-	sq.predicates = append(sq.predicates, pred)
+// WhereCommentCount applies the entql int32 predicate on the comment_count field.
+func (f *PostFilter) WhereCommentCount(p entql.Int32P) {
+	f.Where(p.Field(post.FieldCommentCount))
 }
 
-// Filter returns a Filter implementation to apply filters on the SystemQuery builder.
-func (sq *SystemQuery) Filter() *SystemFilter {
-	return &SystemFilter{config: sq.config, predicateAdder: sq}
+// WhereVisits applies the entql int32 predicate on the visits field.
+func (f *PostFilter) WhereVisits(p entql.Int32P) {
+	f.Where(p.Field(post.FieldVisits))
 }
 
-// addPredicate implements the predicateAdder interface.
-func (m *SystemMutation) addPredicate(pred func(s *sql.Selector)) {
-	m.predicates = append(m.predicates, pred)
+// WhereLikes applies the entql int32 predicate on the likes field.
+func (f *PostFilter) WhereLikes(p entql.Int32P) {
+	f.Where(p.Field(post.FieldLikes))
 }
 
-// Filter returns an entql.Where implementation to apply filters on the SystemMutation builder.
-func (m *SystemMutation) Filter() *SystemFilter {
-	return &SystemFilter{config: m.config, predicateAdder: m}
+// WhereWordCount applies the entql int32 predicate on the word_count field.
+func (f *PostFilter) WhereWordCount(p entql.Int32P) {
+	f.Where(p.Field(post.FieldWordCount))
 }
 
-// SystemFilter provides a generic filtering capability at runtime for SystemQuery.
-type SystemFilter struct {
-	predicateAdder
-	config
+// WhereTopPriority applies the entql int32 predicate on the top_priority field.
+func (f *PostFilter) WhereTopPriority(p entql.Int32P) {
+	f.Where(p.Field(post.FieldTopPriority))
 }
 
-// Where applies the entql predicate on the query filter.
-func (f *SystemFilter) Where(p entql.P) {
-	f.addPredicate(func(s *sql.Selector) {
-		if err := schemaGraph.EvalP(schemaGraph.Nodes[3].Type, p, s); err != nil {
-			s.AddError(err)
-		}
-	})
+// WhereStatus applies the entql int32 predicate on the status field.
+func (f *PostFilter) WhereStatus(p entql.Int32P) {
+	f.Where(p.Field(post.FieldStatus))
 }
 
-// WhereID applies the entql uint64 predicate on the id field.
-func (f *SystemFilter) WhereID(p entql.Uint64P) {
-	f.Where(p.Field(system.FieldID))
+// WhereEditorType applies the entql int32 predicate on the editor_type field.
+func (f *PostFilter) WhereEditorType(p entql.Int32P) {
+	f.Where(p.Field(post.FieldEditorType))
 }
 
-// WhereCreateTime applies the entql int64 predicate on the create_time field.
-func (f *SystemFilter) WhereCreateTime(p entql.Int64P) {
-	f.Where(p.Field(system.FieldCreateTime))
+// WhereEditTime applies the entql int64 predicate on the edit_time field.
+func (f *PostFilter) WhereEditTime(p entql.Int64P) {
+	f.Where(p.Field(post.FieldEditTime))
 }
 
-// WhereUpdateTime applies the entql int64 predicate on the update_time field.
-func (f *SystemFilter) WhereUpdateTime(p entql.Int64P) {
-	f.Where(p.Field(system.FieldUpdateTime))
+// WhereDisallowComment applies the entql bool predicate on the disallow_comment field.
+func (f *PostFilter) WhereDisallowComment(p entql.BoolP) {
+	f.Where(p.Field(post.FieldDisallowComment))
 }
 
-// WhereTitle applies the entql string predicate on the title field.
-func (f *SystemFilter) WhereTitle(p entql.StringP) {
-	f.Where(p.Field(system.FieldTitle))
-}
-
-// WhereKeywords applies the entql string predicate on the keywords field.
-func (f *SystemFilter) WhereKeywords(p entql.StringP) {
-	f.Where(p.Field(system.FieldKeywords))
-}
-
-// WhereDescription applies the entql string predicate on the description field.
-func (f *SystemFilter) WhereDescription(p entql.StringP) {
-	f.Where(p.Field(system.FieldDescription))
-}
-
-// WhereRecordNumber applies the entql string predicate on the record_number field.
-func (f *SystemFilter) WhereRecordNumber(p entql.StringP) {
-	f.Where(p.Field(system.FieldRecordNumber))
-}
-
-// WhereTheme applies the entql int32 predicate on the Theme field.
-func (f *SystemFilter) WhereTheme(p entql.Int32P) {
-	f.Where(p.Field(system.FieldTheme))
+// WhereInProgress applies the entql bool predicate on the in_progress field.
+func (f *PostFilter) WhereInProgress(p entql.BoolP) {
+	f.Where(p.Field(post.FieldInProgress))
 }
 
 // addPredicate implements the predicateAdder interface.
@@ -463,14 +995,14 @@ type TagFilter struct {
 // Where applies the entql predicate on the query filter.
 func (f *TagFilter) Where(p entql.P) {
 	f.addPredicate(func(s *sql.Selector) {
-		if err := schemaGraph.EvalP(schemaGraph.Nodes[4].Type, p, s); err != nil {
+		if err := schemaGraph.EvalP(schemaGraph.Nodes[7].Type, p, s); err != nil {
 			s.AddError(err)
 		}
 	})
 }
 
-// WhereID applies the entql uint64 predicate on the id field.
-func (f *TagFilter) WhereID(p entql.Uint64P) {
+// WhereID applies the entql uint32 predicate on the id field.
+func (f *TagFilter) WhereID(p entql.Uint32P) {
 	f.Where(p.Field(tag.FieldID))
 }
 
@@ -489,19 +1021,29 @@ func (f *TagFilter) WhereName(p entql.StringP) {
 	f.Where(p.Field(tag.FieldName))
 }
 
-// WhereDisplayName applies the entql string predicate on the display_name field.
-func (f *TagFilter) WhereDisplayName(p entql.StringP) {
-	f.Where(p.Field(tag.FieldDisplayName))
+// WhereSlug applies the entql string predicate on the slug field.
+func (f *TagFilter) WhereSlug(p entql.StringP) {
+	f.Where(p.Field(tag.FieldSlug))
 }
 
-// WhereSeoDesc applies the entql string predicate on the seo_desc field.
-func (f *TagFilter) WhereSeoDesc(p entql.StringP) {
-	f.Where(p.Field(tag.FieldSeoDesc))
+// WhereColor applies the entql string predicate on the color field.
+func (f *TagFilter) WhereColor(p entql.StringP) {
+	f.Where(p.Field(tag.FieldColor))
 }
 
-// WhereUseCount applies the entql int32 predicate on the use_count field.
-func (f *TagFilter) WhereUseCount(p entql.Int32P) {
-	f.Where(p.Field(tag.FieldUseCount))
+// WhereThumbnail applies the entql string predicate on the thumbnail field.
+func (f *TagFilter) WhereThumbnail(p entql.StringP) {
+	f.Where(p.Field(tag.FieldThumbnail))
+}
+
+// WhereSlugName applies the entql string predicate on the slug_name field.
+func (f *TagFilter) WhereSlugName(p entql.StringP) {
+	f.Where(p.Field(tag.FieldSlugName))
+}
+
+// WherePostCount applies the entql uint32 predicate on the post_count field.
+func (f *TagFilter) WherePostCount(p entql.Uint32P) {
+	f.Where(p.Field(tag.FieldPostCount))
 }
 
 // addPredicate implements the predicateAdder interface.
@@ -533,14 +1075,14 @@ type UserFilter struct {
 // Where applies the entql predicate on the query filter.
 func (f *UserFilter) Where(p entql.P) {
 	f.addPredicate(func(s *sql.Selector) {
-		if err := schemaGraph.EvalP(schemaGraph.Nodes[5].Type, p, s); err != nil {
+		if err := schemaGraph.EvalP(schemaGraph.Nodes[8].Type, p, s); err != nil {
 			s.AddError(err)
 		}
 	})
 }
 
-// WhereID applies the entql uint64 predicate on the id field.
-func (f *UserFilter) WhereID(p entql.Uint64P) {
+// WhereID applies the entql uint32 predicate on the id field.
+func (f *UserFilter) WhereID(p entql.Uint32P) {
 	f.Where(p.Field(user.FieldID))
 }
 
@@ -567,6 +1109,16 @@ func (f *UserFilter) WhereNickname(p entql.StringP) {
 // WhereEmail applies the entql string predicate on the email field.
 func (f *UserFilter) WhereEmail(p entql.StringP) {
 	f.Where(p.Field(user.FieldEmail))
+}
+
+// WhereAvatar applies the entql string predicate on the avatar field.
+func (f *UserFilter) WhereAvatar(p entql.StringP) {
+	f.Where(p.Field(user.FieldAvatar))
+}
+
+// WhereDescription applies the entql string predicate on the description field.
+func (f *UserFilter) WhereDescription(p entql.StringP) {
+	f.Where(p.Field(user.FieldDescription))
 }
 
 // WherePassword applies the entql string predicate on the password field.

@@ -6,10 +6,13 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"kratos-blog/app/blog/internal/data/ent/attachment"
 	"kratos-blog/app/blog/internal/data/ent/category"
+	"kratos-blog/app/blog/internal/data/ent/comment"
 	"kratos-blog/app/blog/internal/data/ent/link"
+	"kratos-blog/app/blog/internal/data/ent/menu"
+	"kratos-blog/app/blog/internal/data/ent/photo"
 	"kratos-blog/app/blog/internal/data/ent/post"
-	"kratos-blog/app/blog/internal/data/ent/system"
 	"kratos-blog/app/blog/internal/data/ent/tag"
 	"kratos-blog/app/blog/internal/data/ent/user"
 
@@ -36,12 +39,15 @@ type OrderFunc func(*sql.Selector)
 // columnChecker returns a function indicates if the column exists in the given column.
 func columnChecker(table string) func(string) error {
 	checks := map[string]func(string) bool{
-		category.Table: category.ValidColumn,
-		link.Table:     link.ValidColumn,
-		post.Table:     post.ValidColumn,
-		system.Table:   system.ValidColumn,
-		tag.Table:      tag.ValidColumn,
-		user.Table:     user.ValidColumn,
+		attachment.Table: attachment.ValidColumn,
+		category.Table:   category.ValidColumn,
+		comment.Table:    comment.ValidColumn,
+		link.Table:       link.ValidColumn,
+		menu.Table:       menu.ValidColumn,
+		photo.Table:      photo.ValidColumn,
+		post.Table:       post.ValidColumn,
+		tag.Table:        tag.ValidColumn,
+		user.Table:       user.ValidColumn,
 	}
 	check, ok := checks[table]
 	if !ok {

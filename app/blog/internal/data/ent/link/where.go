@@ -9,28 +9,28 @@ import (
 )
 
 // ID filters vertices based on their ID field.
-func ID(id uint64) predicate.Link {
+func ID(id uint32) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldID), id))
 	})
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id uint64) predicate.Link {
+func IDEQ(id uint32) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldID), id))
 	})
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id uint64) predicate.Link {
+func IDNEQ(id uint32) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldID), id))
 	})
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...uint64) predicate.Link {
+func IDIn(ids ...uint32) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
 		v := make([]interface{}, len(ids))
 		for i := range v {
@@ -41,7 +41,7 @@ func IDIn(ids ...uint64) predicate.Link {
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...uint64) predicate.Link {
+func IDNotIn(ids ...uint32) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
 		v := make([]interface{}, len(ids))
 		for i := range v {
@@ -52,28 +52,28 @@ func IDNotIn(ids ...uint64) predicate.Link {
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id uint64) predicate.Link {
+func IDGT(id uint32) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldID), id))
 	})
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id uint64) predicate.Link {
+func IDGTE(id uint32) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldID), id))
 	})
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id uint64) predicate.Link {
+func IDLT(id uint32) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldID), id))
 	})
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id uint64) predicate.Link {
+func IDLTE(id uint32) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldID), id))
 	})
@@ -100,17 +100,38 @@ func Name(v string) predicate.Link {
 	})
 }
 
-// Link applies equality check predicate on the "link" field. It's identical to LinkEQ.
-func Link(v string) predicate.Link {
+// URL applies equality check predicate on the "url" field. It's identical to URLEQ.
+func URL(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldLink), v))
+		s.Where(sql.EQ(s.C(FieldURL), v))
 	})
 }
 
-// OrderID applies equality check predicate on the "order_id" field. It's identical to OrderIDEQ.
-func OrderID(v int32) predicate.Link {
+// Logo applies equality check predicate on the "logo" field. It's identical to LogoEQ.
+func Logo(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldOrderID), v))
+		s.Where(sql.EQ(s.C(FieldLogo), v))
+	})
+}
+
+// Description applies equality check predicate on the "description" field. It's identical to DescriptionEQ.
+func Description(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldDescription), v))
+	})
+}
+
+// Team applies equality check predicate on the "team" field. It's identical to TeamEQ.
+func Team(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTeam), v))
+	})
+}
+
+// Priority applies equality check predicate on the "priority" field. It's identical to PriorityEQ.
+func Priority(v int32) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPriority), v))
 	})
 }
 
@@ -383,194 +404,533 @@ func NameContainsFold(v string) predicate.Link {
 	})
 }
 
-// LinkEQ applies the EQ predicate on the "link" field.
-func LinkEQ(v string) predicate.Link {
+// URLEQ applies the EQ predicate on the "url" field.
+func URLEQ(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldLink), v))
+		s.Where(sql.EQ(s.C(FieldURL), v))
 	})
 }
 
-// LinkNEQ applies the NEQ predicate on the "link" field.
-func LinkNEQ(v string) predicate.Link {
+// URLNEQ applies the NEQ predicate on the "url" field.
+func URLNEQ(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldLink), v))
+		s.Where(sql.NEQ(s.C(FieldURL), v))
 	})
 }
 
-// LinkIn applies the In predicate on the "link" field.
-func LinkIn(vs ...string) predicate.Link {
+// URLIn applies the In predicate on the "url" field.
+func URLIn(vs ...string) predicate.Link {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.In(s.C(FieldLink), v...))
+		s.Where(sql.In(s.C(FieldURL), v...))
 	})
 }
 
-// LinkNotIn applies the NotIn predicate on the "link" field.
-func LinkNotIn(vs ...string) predicate.Link {
+// URLNotIn applies the NotIn predicate on the "url" field.
+func URLNotIn(vs ...string) predicate.Link {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.NotIn(s.C(FieldLink), v...))
+		s.Where(sql.NotIn(s.C(FieldURL), v...))
 	})
 }
 
-// LinkGT applies the GT predicate on the "link" field.
-func LinkGT(v string) predicate.Link {
+// URLGT applies the GT predicate on the "url" field.
+func URLGT(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldLink), v))
+		s.Where(sql.GT(s.C(FieldURL), v))
 	})
 }
 
-// LinkGTE applies the GTE predicate on the "link" field.
-func LinkGTE(v string) predicate.Link {
+// URLGTE applies the GTE predicate on the "url" field.
+func URLGTE(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldLink), v))
+		s.Where(sql.GTE(s.C(FieldURL), v))
 	})
 }
 
-// LinkLT applies the LT predicate on the "link" field.
-func LinkLT(v string) predicate.Link {
+// URLLT applies the LT predicate on the "url" field.
+func URLLT(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldLink), v))
+		s.Where(sql.LT(s.C(FieldURL), v))
 	})
 }
 
-// LinkLTE applies the LTE predicate on the "link" field.
-func LinkLTE(v string) predicate.Link {
+// URLLTE applies the LTE predicate on the "url" field.
+func URLLTE(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldLink), v))
+		s.Where(sql.LTE(s.C(FieldURL), v))
 	})
 }
 
-// LinkContains applies the Contains predicate on the "link" field.
-func LinkContains(v string) predicate.Link {
+// URLContains applies the Contains predicate on the "url" field.
+func URLContains(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldLink), v))
+		s.Where(sql.Contains(s.C(FieldURL), v))
 	})
 }
 
-// LinkHasPrefix applies the HasPrefix predicate on the "link" field.
-func LinkHasPrefix(v string) predicate.Link {
+// URLHasPrefix applies the HasPrefix predicate on the "url" field.
+func URLHasPrefix(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldLink), v))
+		s.Where(sql.HasPrefix(s.C(FieldURL), v))
 	})
 }
 
-// LinkHasSuffix applies the HasSuffix predicate on the "link" field.
-func LinkHasSuffix(v string) predicate.Link {
+// URLHasSuffix applies the HasSuffix predicate on the "url" field.
+func URLHasSuffix(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldLink), v))
+		s.Where(sql.HasSuffix(s.C(FieldURL), v))
 	})
 }
 
-// LinkIsNil applies the IsNil predicate on the "link" field.
-func LinkIsNil() predicate.Link {
+// URLIsNil applies the IsNil predicate on the "url" field.
+func URLIsNil() predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldLink)))
+		s.Where(sql.IsNull(s.C(FieldURL)))
 	})
 }
 
-// LinkNotNil applies the NotNil predicate on the "link" field.
-func LinkNotNil() predicate.Link {
+// URLNotNil applies the NotNil predicate on the "url" field.
+func URLNotNil() predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldLink)))
+		s.Where(sql.NotNull(s.C(FieldURL)))
 	})
 }
 
-// LinkEqualFold applies the EqualFold predicate on the "link" field.
-func LinkEqualFold(v string) predicate.Link {
+// URLEqualFold applies the EqualFold predicate on the "url" field.
+func URLEqualFold(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldLink), v))
+		s.Where(sql.EqualFold(s.C(FieldURL), v))
 	})
 }
 
-// LinkContainsFold applies the ContainsFold predicate on the "link" field.
-func LinkContainsFold(v string) predicate.Link {
+// URLContainsFold applies the ContainsFold predicate on the "url" field.
+func URLContainsFold(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldLink), v))
+		s.Where(sql.ContainsFold(s.C(FieldURL), v))
 	})
 }
 
-// OrderIDEQ applies the EQ predicate on the "order_id" field.
-func OrderIDEQ(v int32) predicate.Link {
+// LogoEQ applies the EQ predicate on the "logo" field.
+func LogoEQ(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldOrderID), v))
+		s.Where(sql.EQ(s.C(FieldLogo), v))
 	})
 }
 
-// OrderIDNEQ applies the NEQ predicate on the "order_id" field.
-func OrderIDNEQ(v int32) predicate.Link {
+// LogoNEQ applies the NEQ predicate on the "logo" field.
+func LogoNEQ(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldOrderID), v))
+		s.Where(sql.NEQ(s.C(FieldLogo), v))
 	})
 }
 
-// OrderIDIn applies the In predicate on the "order_id" field.
-func OrderIDIn(vs ...int32) predicate.Link {
+// LogoIn applies the In predicate on the "logo" field.
+func LogoIn(vs ...string) predicate.Link {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.In(s.C(FieldOrderID), v...))
+		s.Where(sql.In(s.C(FieldLogo), v...))
 	})
 }
 
-// OrderIDNotIn applies the NotIn predicate on the "order_id" field.
-func OrderIDNotIn(vs ...int32) predicate.Link {
+// LogoNotIn applies the NotIn predicate on the "logo" field.
+func LogoNotIn(vs ...string) predicate.Link {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.NotIn(s.C(FieldOrderID), v...))
+		s.Where(sql.NotIn(s.C(FieldLogo), v...))
 	})
 }
 
-// OrderIDGT applies the GT predicate on the "order_id" field.
-func OrderIDGT(v int32) predicate.Link {
+// LogoGT applies the GT predicate on the "logo" field.
+func LogoGT(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldOrderID), v))
+		s.Where(sql.GT(s.C(FieldLogo), v))
 	})
 }
 
-// OrderIDGTE applies the GTE predicate on the "order_id" field.
-func OrderIDGTE(v int32) predicate.Link {
+// LogoGTE applies the GTE predicate on the "logo" field.
+func LogoGTE(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldOrderID), v))
+		s.Where(sql.GTE(s.C(FieldLogo), v))
 	})
 }
 
-// OrderIDLT applies the LT predicate on the "order_id" field.
-func OrderIDLT(v int32) predicate.Link {
+// LogoLT applies the LT predicate on the "logo" field.
+func LogoLT(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldOrderID), v))
+		s.Where(sql.LT(s.C(FieldLogo), v))
 	})
 }
 
-// OrderIDLTE applies the LTE predicate on the "order_id" field.
-func OrderIDLTE(v int32) predicate.Link {
+// LogoLTE applies the LTE predicate on the "logo" field.
+func LogoLTE(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldOrderID), v))
+		s.Where(sql.LTE(s.C(FieldLogo), v))
 	})
 }
 
-// OrderIDIsNil applies the IsNil predicate on the "order_id" field.
-func OrderIDIsNil() predicate.Link {
+// LogoContains applies the Contains predicate on the "logo" field.
+func LogoContains(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldOrderID)))
+		s.Where(sql.Contains(s.C(FieldLogo), v))
 	})
 }
 
-// OrderIDNotNil applies the NotNil predicate on the "order_id" field.
-func OrderIDNotNil() predicate.Link {
+// LogoHasPrefix applies the HasPrefix predicate on the "logo" field.
+func LogoHasPrefix(v string) predicate.Link {
 	return predicate.Link(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldOrderID)))
+		s.Where(sql.HasPrefix(s.C(FieldLogo), v))
+	})
+}
+
+// LogoHasSuffix applies the HasSuffix predicate on the "logo" field.
+func LogoHasSuffix(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldLogo), v))
+	})
+}
+
+// LogoIsNil applies the IsNil predicate on the "logo" field.
+func LogoIsNil() predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldLogo)))
+	})
+}
+
+// LogoNotNil applies the NotNil predicate on the "logo" field.
+func LogoNotNil() predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldLogo)))
+	})
+}
+
+// LogoEqualFold applies the EqualFold predicate on the "logo" field.
+func LogoEqualFold(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldLogo), v))
+	})
+}
+
+// LogoContainsFold applies the ContainsFold predicate on the "logo" field.
+func LogoContainsFold(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldLogo), v))
+	})
+}
+
+// DescriptionEQ applies the EQ predicate on the "description" field.
+func DescriptionEQ(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldDescription), v))
+	})
+}
+
+// DescriptionNEQ applies the NEQ predicate on the "description" field.
+func DescriptionNEQ(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldDescription), v))
+	})
+}
+
+// DescriptionIn applies the In predicate on the "description" field.
+func DescriptionIn(vs ...string) predicate.Link {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldDescription), v...))
+	})
+}
+
+// DescriptionNotIn applies the NotIn predicate on the "description" field.
+func DescriptionNotIn(vs ...string) predicate.Link {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldDescription), v...))
+	})
+}
+
+// DescriptionGT applies the GT predicate on the "description" field.
+func DescriptionGT(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldDescription), v))
+	})
+}
+
+// DescriptionGTE applies the GTE predicate on the "description" field.
+func DescriptionGTE(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldDescription), v))
+	})
+}
+
+// DescriptionLT applies the LT predicate on the "description" field.
+func DescriptionLT(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldDescription), v))
+	})
+}
+
+// DescriptionLTE applies the LTE predicate on the "description" field.
+func DescriptionLTE(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldDescription), v))
+	})
+}
+
+// DescriptionContains applies the Contains predicate on the "description" field.
+func DescriptionContains(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldDescription), v))
+	})
+}
+
+// DescriptionHasPrefix applies the HasPrefix predicate on the "description" field.
+func DescriptionHasPrefix(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldDescription), v))
+	})
+}
+
+// DescriptionHasSuffix applies the HasSuffix predicate on the "description" field.
+func DescriptionHasSuffix(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldDescription), v))
+	})
+}
+
+// DescriptionIsNil applies the IsNil predicate on the "description" field.
+func DescriptionIsNil() predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldDescription)))
+	})
+}
+
+// DescriptionNotNil applies the NotNil predicate on the "description" field.
+func DescriptionNotNil() predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldDescription)))
+	})
+}
+
+// DescriptionEqualFold applies the EqualFold predicate on the "description" field.
+func DescriptionEqualFold(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldDescription), v))
+	})
+}
+
+// DescriptionContainsFold applies the ContainsFold predicate on the "description" field.
+func DescriptionContainsFold(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldDescription), v))
+	})
+}
+
+// TeamEQ applies the EQ predicate on the "team" field.
+func TeamEQ(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTeam), v))
+	})
+}
+
+// TeamNEQ applies the NEQ predicate on the "team" field.
+func TeamNEQ(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldTeam), v))
+	})
+}
+
+// TeamIn applies the In predicate on the "team" field.
+func TeamIn(vs ...string) predicate.Link {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldTeam), v...))
+	})
+}
+
+// TeamNotIn applies the NotIn predicate on the "team" field.
+func TeamNotIn(vs ...string) predicate.Link {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldTeam), v...))
+	})
+}
+
+// TeamGT applies the GT predicate on the "team" field.
+func TeamGT(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldTeam), v))
+	})
+}
+
+// TeamGTE applies the GTE predicate on the "team" field.
+func TeamGTE(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldTeam), v))
+	})
+}
+
+// TeamLT applies the LT predicate on the "team" field.
+func TeamLT(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldTeam), v))
+	})
+}
+
+// TeamLTE applies the LTE predicate on the "team" field.
+func TeamLTE(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldTeam), v))
+	})
+}
+
+// TeamContains applies the Contains predicate on the "team" field.
+func TeamContains(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldTeam), v))
+	})
+}
+
+// TeamHasPrefix applies the HasPrefix predicate on the "team" field.
+func TeamHasPrefix(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldTeam), v))
+	})
+}
+
+// TeamHasSuffix applies the HasSuffix predicate on the "team" field.
+func TeamHasSuffix(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldTeam), v))
+	})
+}
+
+// TeamIsNil applies the IsNil predicate on the "team" field.
+func TeamIsNil() predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldTeam)))
+	})
+}
+
+// TeamNotNil applies the NotNil predicate on the "team" field.
+func TeamNotNil() predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldTeam)))
+	})
+}
+
+// TeamEqualFold applies the EqualFold predicate on the "team" field.
+func TeamEqualFold(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldTeam), v))
+	})
+}
+
+// TeamContainsFold applies the ContainsFold predicate on the "team" field.
+func TeamContainsFold(v string) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldTeam), v))
+	})
+}
+
+// PriorityEQ applies the EQ predicate on the "priority" field.
+func PriorityEQ(v int32) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPriority), v))
+	})
+}
+
+// PriorityNEQ applies the NEQ predicate on the "priority" field.
+func PriorityNEQ(v int32) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldPriority), v))
+	})
+}
+
+// PriorityIn applies the In predicate on the "priority" field.
+func PriorityIn(vs ...int32) predicate.Link {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldPriority), v...))
+	})
+}
+
+// PriorityNotIn applies the NotIn predicate on the "priority" field.
+func PriorityNotIn(vs ...int32) predicate.Link {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldPriority), v...))
+	})
+}
+
+// PriorityGT applies the GT predicate on the "priority" field.
+func PriorityGT(v int32) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldPriority), v))
+	})
+}
+
+// PriorityGTE applies the GTE predicate on the "priority" field.
+func PriorityGTE(v int32) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldPriority), v))
+	})
+}
+
+// PriorityLT applies the LT predicate on the "priority" field.
+func PriorityLT(v int32) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldPriority), v))
+	})
+}
+
+// PriorityLTE applies the LTE predicate on the "priority" field.
+func PriorityLTE(v int32) predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldPriority), v))
+	})
+}
+
+// PriorityIsNil applies the IsNil predicate on the "priority" field.
+func PriorityIsNil() predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldPriority)))
+	})
+}
+
+// PriorityNotNil applies the NotNil predicate on the "priority" field.
+func PriorityNotNil() predicate.Link {
+	return predicate.Link(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldPriority)))
 	})
 }
 

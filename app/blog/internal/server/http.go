@@ -46,7 +46,16 @@ func NewMiddleware(ac *conf.Auth, logger log.Logger) http.ServerOption {
 }
 
 // NewHTTPServer new an HTTP server.
-func NewHTTPServer(c *conf.Server, ac *conf.Auth, logger log.Logger, userSvc *service.UserService, postSvc *service.PostService, linkSvc *service.LinkService, cateSvc *service.CategoryService, tagSvc *service.TagService) *http.Server {
+func NewHTTPServer(
+	c *conf.Server, ac *conf.Auth, logger log.Logger,
+	userSvc *service.UserService,
+	postSvc *service.PostService,
+	linkSvc *service.LinkService,
+	cateSvc *service.CategoryService,
+	commentSvc *service.CommentService,
+	tagSvc *service.TagService,
+	attachmentSvc *service.AttachmentService,
+) *http.Server {
 	var opts = []http.ServerOption{
 		NewMiddleware(ac, logger),
 		http.Filter(handlers.CORS(
@@ -75,6 +84,8 @@ func NewHTTPServer(c *conf.Server, ac *conf.Auth, logger log.Logger, userSvc *se
 	v1.RegisterCategoryServiceHTTPServer(srv, cateSvc)
 	v1.RegisterTagServiceHTTPServer(srv, tagSvc)
 	v1.RegisterLinkServiceHTTPServer(srv, linkSvc)
+	v1.RegisterAttachmentServiceHTTPServer(srv, attachmentSvc)
+	v1.RegisterCommentServiceHTTPServer(srv, commentSvc)
 
 	return srv
 }

@@ -35,10 +35,18 @@ func (r *CategoryRepo) convertEntToProto(in *ent.Category) *v1.Category {
 		return nil
 	}
 	return &v1.Category{
-		Id:       in.ID,
-		Name:     in.Name,
-		SeoDesc:  in.SeoDesc,
-		ParentId: in.ParentID,
+		Id:          in.ID,
+		ParentId:    in.ParentID,
+		Name:        in.Name,
+		Slug:        in.Slug,
+		Description: in.Description,
+		Thumbnail:   in.Thumbnail,
+		Password:    in.Password,
+		FullPath:    in.FullPath,
+		Priority:    in.Priority,
+		PostCount:   in.PostCount,
+		CreateTime:  entgo.UnixMilliToStringPtr(in.CreateTime),
+		UpdateTime:  entgo.UnixMilliToStringPtr(in.UpdateTime),
 	}
 }
 
@@ -108,7 +116,13 @@ func (r *CategoryRepo) Create(ctx context.Context, req *v1.CreateCategoryRequest
 	po, err := r.data.db.Category.Create().
 		SetNillableName(req.Category.Name).
 		SetNillableParentID(req.Category.ParentId).
-		SetNillableSeoDesc(req.Category.SeoDesc).
+		SetNillableSlug(req.Category.Slug).
+		SetNillableDescription(req.Category.Description).
+		SetNillableThumbnail(req.Category.Thumbnail).
+		SetNillablePassword(req.Category.Password).
+		SetNillableFullPath(req.Category.FullPath).
+		SetNillablePriority(req.Category.Priority).
+		SetNillablePostCount(req.Category.PostCount).
 		Save(ctx)
 	if err != nil {
 		return nil, err
@@ -121,7 +135,13 @@ func (r *CategoryRepo) Update(ctx context.Context, req *v1.UpdateCategoryRequest
 	builder := r.data.db.Category.UpdateOneID(req.Id).
 		SetNillableName(req.Category.Name).
 		SetNillableParentID(req.Category.ParentId).
-		SetNillableSeoDesc(req.Category.SeoDesc)
+		SetNillableSlug(req.Category.Slug).
+		SetNillableDescription(req.Category.Description).
+		SetNillableThumbnail(req.Category.Thumbnail).
+		SetNillablePassword(req.Category.Password).
+		SetNillableFullPath(req.Category.FullPath).
+		SetNillablePriority(req.Category.Priority).
+		SetNillablePostCount(req.Category.PostCount)
 
 	po, err := builder.Save(ctx)
 	if err != nil {

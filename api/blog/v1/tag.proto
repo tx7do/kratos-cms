@@ -50,10 +50,16 @@ service TagService {
 }
 
 message Tag {
-  uint64 id = 1;
+  uint32 id = 1;
   optional string name = 2;
-  optional string displayName = 3;
-  optional string seoDesc = 4;
+  optional string slug = 3;
+  optional string slugName = 4;
+  optional string color = 5;
+  optional string thumbnail = 6;
+  optional string createTime = 7;
+  optional string updateTime = 8;
+  optional uint32 postCount = 9;
+  optional string fullPath = 10;
 }
 
 // 回应 - 标签列表
@@ -64,24 +70,24 @@ message ListTagResponse {
 
 // 请求 - 标签数据
 message GetTagRequest {
-  uint64 id = 1;
+  uint32 id = 1;
 }
 
 // 请求 - 创建标签
 message CreateTagRequest {
   Tag tag = 1;
-  optional uint64 operatorId = 2;
+  optional uint32 operatorId = 2;
 }
 
 // 请求 - 更新标签
 message UpdateTagRequest {
-  uint64 id = 1;
+  uint32 id = 1;
   Tag tag = 2;
-  optional uint64 operatorId = 3;
+  optional uint32 operatorId = 3;
 }
 
 // 请求 - 删除标签
 message DeleteTagRequest {
-  uint64 id = 1;
-  optional uint64 operatorId = 2;
+  uint32 id = 1;
+  optional uint32 operatorId = 2;
 }

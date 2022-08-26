@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+package blog.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "pagination/pagination.proto";
+
+option go_package = "kratos-blog/api/blog/v1;v1";
+
+// 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
+
+service AttachmentService {
+  // 获取附件列表
+  rpc ListAttachment (pagination.PagingRequest) returns (ListAttachmentResponse) {
+    option (google.api.http) = {
+      get: "/blog/v1/attachments"
+    };
+  }
+
+  // 获取附件数据
+  rpc GetAttachment (GetAttachmentRequest) returns (Attachment) {
+    option (google.api.http) = {
+      get: "/blog/v1/attachments/{id}"
+    };
+  }
+
+  // 创建附件
+  rpc CreateAttachment (CreateAttachmentRequest) returns (Attachment) {
+    option (google.api.http) = {
+      post: "/blog/v1/attachments"
+      body: "*"
+    };
+  }
+
+  // 更新附件
+  rpc UpdateAttachment (UpdateAttachmentRequest) returns (Attachment) {
+    option (google.api.http) = {
+      put: "/blog/v1/attachments/{id}"
+      body: "attachment"
+    };
+  }
+
+  // 删除附件
+  rpc DeleteAttachment (DeleteAttachmentRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/blog/v1/attachments/{id}"
+    };
+  }
+}
+
+message Attachment {
+  uint32 id = 1;
+  optional string name = 2;
+  optional string path = 3;
+  optional string fileKey = 4;
+  optional string thumbPath = 5;
+  optional string mediaType = 6;
+  optional string suffix = 7;
+  optional int32 width = 8;
+  optional int32 height = 9;
+  optional int64 size = 10;
+  optional int32 type = 11;
+  optional string createTime = 12;
+}
+
+// 回应 - 附件列表
+message ListAttachmentResponse {
+  repeated Attachment items = 1;
+  int32 total = 2;
+}
+
+// 请求 - 附件数据
+message GetAttachmentRequest {
+  uint32 id = 1;
+}
+
+// 请求 - 创建附件
+message CreateAttachmentRequest {
+  Attachment attachment = 1;
+  optional uint32 operatorId = 2;
+}
+
+// 请求 - 更新附件
+message UpdateAttachmentRequest {
+  uint32 id = 1;
+  Attachment attachment = 2;
+  optional uint32 operatorId = 3;
+}
+
+// 请求 - 删除附件
+message DeleteAttachmentRequest {
+  uint32 id = 1;
+  optional uint32 operatorId = 2;
+}

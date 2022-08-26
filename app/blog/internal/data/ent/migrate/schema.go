@@ -9,15 +9,49 @@ import (
 )
 
 var (
+	// AttachmentColumns holds the columns for the "attachment" table.
+	AttachmentColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUint32, Increment: true, SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
+		{Name: "create_time", Type: field.TypeInt64, Nullable: true},
+		{Name: "update_time", Type: field.TypeInt64, Nullable: true},
+		{Name: "name", Type: field.TypeString, Nullable: true},
+		{Name: "path", Type: field.TypeString, Nullable: true},
+		{Name: "file_key", Type: field.TypeString, Nullable: true},
+		{Name: "thumb_path", Type: field.TypeString, Nullable: true},
+		{Name: "media_type", Type: field.TypeString, Nullable: true},
+		{Name: "suffix", Type: field.TypeString, Nullable: true},
+		{Name: "width", Type: field.TypeInt32, Nullable: true},
+		{Name: "height", Type: field.TypeInt32, Nullable: true},
+		{Name: "size", Type: field.TypeInt64, Nullable: true},
+		{Name: "type", Type: field.TypeInt32, Nullable: true},
+	}
+	// AttachmentTable holds the schema information for the "attachment" table.
+	AttachmentTable = &schema.Table{
+		Name:       "attachment",
+		Columns:    AttachmentColumns,
+		PrimaryKey: []*schema.Column{AttachmentColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "attachment_id",
+				Unique:  false,
+				Columns: []*schema.Column{AttachmentColumns[0]},
+			},
+		},
+	}
 	// CategoryColumns holds the columns for the "category" table.
 	CategoryColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUint64, Increment: true, SchemaType: map[string]string{"mysql": "bigint", "postgres": "bigserial"}},
-		{Name: "create_time", Type: field.TypeInt64, Nullable: true, Default: "((EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) * 1000)::BIGINT)"},
-		{Name: "update_time", Type: field.TypeInt64, Nullable: true, Default: "((EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) * 1000)::BIGINT)"},
+		{Name: "id", Type: field.TypeUint32, Increment: true, SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
+		{Name: "create_time", Type: field.TypeInt64, Nullable: true},
+		{Name: "update_time", Type: field.TypeInt64, Nullable: true},
 		{Name: "name", Type: field.TypeString, Unique: true, Nullable: true},
-		{Name: "display_name", Type: field.TypeString, Nullable: true},
-		{Name: "seo_desc", Type: field.TypeString, Nullable: true},
-		{Name: "parent_id", Type: field.TypeUint64, Nullable: true},
+		{Name: "slug", Type: field.TypeString, Nullable: true},
+		{Name: "description", Type: field.TypeString, Nullable: true, Size: 100},
+		{Name: "thumbnail", Type: field.TypeString, Nullable: true, Size: 1023},
+		{Name: "password", Type: field.TypeString, Nullable: true},
+		{Name: "full_path", Type: field.TypeString, Nullable: true},
+		{Name: "parent_id", Type: field.TypeUint32, Nullable: true},
+		{Name: "priority", Type: field.TypeInt32, Nullable: true},
+		{Name: "post_count", Type: field.TypeUint32, Nullable: true},
 	}
 	// CategoryTable holds the schema information for the "category" table.
 	CategoryTable = &schema.Table{
@@ -30,21 +64,50 @@ var (
 				Unique:  false,
 				Columns: []*schema.Column{CategoryColumns[0]},
 			},
+		},
+	}
+	// CommentColumns holds the columns for the "comment" table.
+	CommentColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUint32, Increment: true, SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
+		{Name: "create_time", Type: field.TypeInt64, Nullable: true},
+		{Name: "update_time", Type: field.TypeInt64, Nullable: true},
+		{Name: "author", Type: field.TypeString, Nullable: true},
+		{Name: "email", Type: field.TypeString, Nullable: true},
+		{Name: "ip_address", Type: field.TypeString, Nullable: true},
+		{Name: "author_url", Type: field.TypeString, Nullable: true},
+		{Name: "gravatar_md5", Type: field.TypeString, Nullable: true},
+		{Name: "content", Type: field.TypeString, Nullable: true},
+		{Name: "user_agent", Type: field.TypeString, Nullable: true},
+		{Name: "avatar", Type: field.TypeString, Nullable: true},
+		{Name: "parent_id", Type: field.TypeUint32, Nullable: true},
+		{Name: "status", Type: field.TypeUint32, Nullable: true},
+		{Name: "is_admin", Type: field.TypeBool, Nullable: true},
+		{Name: "allow_notification", Type: field.TypeBool, Nullable: true},
+	}
+	// CommentTable holds the schema information for the "comment" table.
+	CommentTable = &schema.Table{
+		Name:       "comment",
+		Columns:    CommentColumns,
+		PrimaryKey: []*schema.Column{CommentColumns[0]},
+		Indexes: []*schema.Index{
 			{
-				Name:    "category_pkey",
+				Name:    "comment_id",
 				Unique:  false,
-				Columns: []*schema.Column{CategoryColumns[0]},
+				Columns: []*schema.Column{CommentColumns[0]},
 			},
 		},
 	}
 	// LinkColumns holds the columns for the "link" table.
 	LinkColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUint64, Increment: true, SchemaType: map[string]string{"mysql": "bigint", "postgres": "bigserial"}},
-		{Name: "create_time", Type: field.TypeInt64, Nullable: true, Default: "((EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) * 1000)::BIGINT)"},
-		{Name: "update_time", Type: field.TypeInt64, Nullable: true, Default: "((EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) * 1000)::BIGINT)"},
+		{Name: "id", Type: field.TypeUint32, Increment: true, SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
+		{Name: "create_time", Type: field.TypeInt64, Nullable: true},
+		{Name: "update_time", Type: field.TypeInt64, Nullable: true},
 		{Name: "name", Type: field.TypeString, Unique: true, Nullable: true},
-		{Name: "link", Type: field.TypeString, Nullable: true},
-		{Name: "order_id", Type: field.TypeInt32, Nullable: true},
+		{Name: "url", Type: field.TypeString, Nullable: true, Size: 1023},
+		{Name: "logo", Type: field.TypeString, Nullable: true, Size: 1023},
+		{Name: "description", Type: field.TypeString, Nullable: true},
+		{Name: "team", Type: field.TypeString, Nullable: true},
+		{Name: "priority", Type: field.TypeInt32, Nullable: true},
 	}
 	// LinkTable holds the schema information for the "link" table.
 	LinkTable = &schema.Table{
@@ -57,24 +120,87 @@ var (
 				Unique:  false,
 				Columns: []*schema.Column{LinkColumns[0]},
 			},
+		},
+	}
+	// MenuColumns holds the columns for the "menu" table.
+	MenuColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUint32, Increment: true, SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
+		{Name: "create_time", Type: field.TypeInt64, Nullable: true},
+		{Name: "update_time", Type: field.TypeInt64, Nullable: true},
+		{Name: "name", Type: field.TypeString, Unique: true, Nullable: true},
+		{Name: "url", Type: field.TypeString, Nullable: true},
+		{Name: "priority", Type: field.TypeInt32, Nullable: true},
+		{Name: "target", Type: field.TypeString, Nullable: true},
+		{Name: "icon", Type: field.TypeString, Nullable: true},
+		{Name: "parent_id", Type: field.TypeUint32, Nullable: true},
+		{Name: "team", Type: field.TypeString, Nullable: true},
+	}
+	// MenuTable holds the schema information for the "menu" table.
+	MenuTable = &schema.Table{
+		Name:       "menu",
+		Columns:    MenuColumns,
+		PrimaryKey: []*schema.Column{MenuColumns[0]},
+		Indexes: []*schema.Index{
 			{
-				Name:    "link_pkey",
+				Name:    "menu_id",
 				Unique:  false,
-				Columns: []*schema.Column{LinkColumns[0]},
+				Columns: []*schema.Column{MenuColumns[0]},
+			},
+		},
+	}
+	// PhotoColumns holds the columns for the "photo" table.
+	PhotoColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUint32, Increment: true, SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
+		{Name: "create_time", Type: field.TypeInt64, Nullable: true},
+		{Name: "update_time", Type: field.TypeInt64, Nullable: true},
+		{Name: "name", Type: field.TypeString, Nullable: true},
+		{Name: "thumbnail", Type: field.TypeString, Nullable: true},
+		{Name: "take_time", Type: field.TypeInt64, Nullable: true},
+		{Name: "url", Type: field.TypeString, Nullable: true},
+		{Name: "team", Type: field.TypeString, Nullable: true},
+		{Name: "location", Type: field.TypeString, Nullable: true},
+		{Name: "description", Type: field.TypeString, Nullable: true},
+		{Name: "likes", Type: field.TypeInt32, Nullable: true},
+	}
+	// PhotoTable holds the schema information for the "photo" table.
+	PhotoTable = &schema.Table{
+		Name:       "photo",
+		Columns:    PhotoColumns,
+		PrimaryKey: []*schema.Column{PhotoColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "photo_id",
+				Unique:  false,
+				Columns: []*schema.Column{PhotoColumns[0]},
 			},
 		},
 	}
 	// PostColumns holds the columns for the "post" table.
 	PostColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUint64, Increment: true, SchemaType: map[string]string{"mysql": "bigint", "postgres": "bigserial"}},
-		{Name: "create_time", Type: field.TypeInt64, Nullable: true, Default: "((EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) * 1000)::BIGINT)"},
-		{Name: "update_time", Type: field.TypeInt64, Nullable: true, Default: "((EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) * 1000)::BIGINT)"},
+		{Name: "id", Type: field.TypeUint32, Increment: true, SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
+		{Name: "create_time", Type: field.TypeInt64, Nullable: true},
+		{Name: "update_time", Type: field.TypeInt64, Nullable: true},
 		{Name: "title", Type: field.TypeString, Nullable: true},
-		{Name: "summary", Type: field.TypeString, Nullable: true},
-		{Name: "original", Type: field.TypeString, Nullable: true},
+		{Name: "slug", Type: field.TypeString, Nullable: true},
+		{Name: "meta_keywords", Type: field.TypeString, Nullable: true},
+		{Name: "meta_description", Type: field.TypeString, Nullable: true},
+		{Name: "full_path", Type: field.TypeString, Nullable: true},
+		{Name: "original_content", Type: field.TypeString, Nullable: true},
 		{Name: "content", Type: field.TypeString, Nullable: true},
+		{Name: "summary", Type: field.TypeString, Nullable: true},
+		{Name: "thumbnail", Type: field.TypeString, Nullable: true},
 		{Name: "password", Type: field.TypeString, Nullable: true},
-		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
+		{Name: "template", Type: field.TypeString, Nullable: true},
+		{Name: "comment_count", Type: field.TypeInt32, Nullable: true},
+		{Name: "visits", Type: field.TypeInt32, Nullable: true},
+		{Name: "likes", Type: field.TypeInt32, Nullable: true},
+		{Name: "word_count", Type: field.TypeInt32, Nullable: true},
+		{Name: "top_priority", Type: field.TypeInt32, Nullable: true},
+		{Name: "status", Type: field.TypeInt32, Nullable: true},
+		{Name: "editor_type", Type: field.TypeInt32, Nullable: true},
+		{Name: "edit_time", Type: field.TypeInt64, Nullable: true},
+		{Name: "disallow_comment", Type: field.TypeBool, Nullable: true},
+		{Name: "in_progress", Type: field.TypeBool, Nullable: true},
 	}
 	// PostTable holds the schema information for the "post" table.
 	PostTable = &schema.Table{
@@ -87,51 +213,19 @@ var (
 				Unique:  false,
 				Columns: []*schema.Column{PostColumns[0]},
 			},
-			{
-				Name:    "post_pkey",
-				Unique:  false,
-				Columns: []*schema.Column{PostColumns[0]},
-			},
-		},
-	}
-	// SystemColumns holds the columns for the "system" table.
-	SystemColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUint64, Increment: true, SchemaType: map[string]string{"mysql": "bigint", "postgres": "bigserial"}},
-		{Name: "create_time", Type: field.TypeInt64, Nullable: true, Default: "((EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) * 1000)::BIGINT)"},
-		{Name: "update_time", Type: field.TypeInt64, Nullable: true, Default: "((EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) * 1000)::BIGINT)"},
-		{Name: "title", Type: field.TypeString, Nullable: true},
-		{Name: "keywords", Type: field.TypeString, Nullable: true},
-		{Name: "description", Type: field.TypeString, Nullable: true},
-		{Name: "record_number", Type: field.TypeString, Nullable: true},
-		{Name: "theme", Type: field.TypeInt32, Nullable: true},
-	}
-	// SystemTable holds the schema information for the "system" table.
-	SystemTable = &schema.Table{
-		Name:       "system",
-		Columns:    SystemColumns,
-		PrimaryKey: []*schema.Column{SystemColumns[0]},
-		Indexes: []*schema.Index{
-			{
-				Name:    "system_id",
-				Unique:  false,
-				Columns: []*schema.Column{SystemColumns[0]},
-			},
-			{
-				Name:    "system_pkey",
-				Unique:  false,
-				Columns: []*schema.Column{SystemColumns[0]},
-			},
 		},
 	}
 	// TagColumns holds the columns for the "tag" table.
 	TagColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUint64, Increment: true, SchemaType: map[string]string{"mysql": "bigint", "postgres": "bigserial"}},
-		{Name: "create_time", Type: field.TypeInt64, Nullable: true, Default: "((EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) * 1000)::BIGINT)"},
-		{Name: "update_time", Type: field.TypeInt64, Nullable: true, Default: "((EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) * 1000)::BIGINT)"},
+		{Name: "id", Type: field.TypeUint32, Increment: true, SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
+		{Name: "create_time", Type: field.TypeInt64, Nullable: true},
+		{Name: "update_time", Type: field.TypeInt64, Nullable: true},
 		{Name: "name", Type: field.TypeString, Unique: true, Nullable: true},
-		{Name: "display_name", Type: field.TypeString, Nullable: true},
-		{Name: "seo_desc", Type: field.TypeString, Nullable: true},
-		{Name: "use_count", Type: field.TypeInt32, Nullable: true},
+		{Name: "slug", Type: field.TypeString, Nullable: true},
+		{Name: "color", Type: field.TypeString, Nullable: true},
+		{Name: "thumbnail", Type: field.TypeString, Nullable: true},
+		{Name: "slug_name", Type: field.TypeString, Nullable: true},
+		{Name: "post_count", Type: field.TypeUint32, Nullable: true},
 	}
 	// TagTable holds the schema information for the "tag" table.
 	TagTable = &schema.Table{
@@ -144,21 +238,18 @@ var (
 				Unique:  false,
 				Columns: []*schema.Column{TagColumns[0]},
 			},
-			{
-				Name:    "tag_pkey",
-				Unique:  false,
-				Columns: []*schema.Column{TagColumns[0]},
-			},
 		},
 	}
 	// UserColumns holds the columns for the "user" table.
 	UserColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUint64, Increment: true, SchemaType: map[string]string{"mysql": "bigint", "postgres": "bigserial"}},
-		{Name: "create_time", Type: field.TypeInt64, Nullable: true, Default: "((EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) * 1000)::BIGINT)"},
-		{Name: "update_time", Type: field.TypeInt64, Nullable: true, Default: "((EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) * 1000)::BIGINT)"},
-		{Name: "username", Type: field.TypeString, Unique: true, Nullable: true, Size: 128},
+		{Name: "id", Type: field.TypeUint32, Increment: true, SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
+		{Name: "create_time", Type: field.TypeInt64, Nullable: true},
+		{Name: "update_time", Type: field.TypeInt64, Nullable: true},
+		{Name: "username", Type: field.TypeString, Unique: true, Nullable: true, Size: 50},
 		{Name: "nickname", Type: field.TypeString, Nullable: true, Size: 128},
-		{Name: "email", Type: field.TypeString, Nullable: true, Size: 254},
+		{Name: "email", Type: field.TypeString, Nullable: true, Size: 127},
+		{Name: "avatar", Type: field.TypeString, Nullable: true, Size: 1023},
+		{Name: "description", Type: field.TypeString, Nullable: true, Size: 1023},
 		{Name: "password", Type: field.TypeString, Unique: true, Nullable: true, Size: 255},
 	}
 	// UserTable holds the schema information for the "user" table.
@@ -173,11 +264,6 @@ var (
 				Columns: []*schema.Column{UserColumns[0]},
 			},
 			{
-				Name:    "user_pkey",
-				Unique:  false,
-				Columns: []*schema.Column{UserColumns[0]},
-			},
-			{
 				Name:    "user_id_username",
 				Unique:  true,
 				Columns: []*schema.Column{UserColumns[0], UserColumns[3]},
@@ -186,18 +272,31 @@ var (
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
+		AttachmentTable,
 		CategoryTable,
+		CommentTable,
 		LinkTable,
+		MenuTable,
+		PhotoTable,
 		PostTable,
-		SystemTable,
 		TagTable,
 		UserTable,
 	}
 )
 
 func init() {
+	AttachmentTable.Annotation = &entsql.Annotation{
+		Table:     "attachment",
+		Charset:   "utf8mb4",
+		Collation: "utf8mb4_bin",
+	}
 	CategoryTable.Annotation = &entsql.Annotation{
 		Table:     "category",
+		Charset:   "utf8mb4",
+		Collation: "utf8mb4_bin",
+	}
+	CommentTable.Annotation = &entsql.Annotation{
+		Table:     "comment",
 		Charset:   "utf8mb4",
 		Collation: "utf8mb4_bin",
 	}
@@ -206,13 +305,18 @@ func init() {
 		Charset:   "utf8mb4",
 		Collation: "utf8mb4_bin",
 	}
-	PostTable.Annotation = &entsql.Annotation{
-		Table:     "post",
+	MenuTable.Annotation = &entsql.Annotation{
+		Table:     "menu",
 		Charset:   "utf8mb4",
 		Collation: "utf8mb4_bin",
 	}
-	SystemTable.Annotation = &entsql.Annotation{
-		Table:     "system",
+	PhotoTable.Annotation = &entsql.Annotation{
+		Table:     "photo",
+		Charset:   "utf8mb4",
+		Collation: "utf8mb4_bin",
+	}
+	PostTable.Annotation = &entsql.Annotation{
+		Table:     "post",
 		Charset:   "utf8mb4",
 		Collation: "utf8mb4_bin",
 	}

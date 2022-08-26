@@ -50,10 +50,18 @@ service CategoryService {
 }
 
 message Category {
-  uint64 id = 1;
-  optional uint64 parentId = 2;
+  uint32 id = 1;
+  optional uint32 parentId = 2;
   optional string name = 3;
-  optional string seoDesc = 4;
+  optional string slug = 4;
+  optional string description = 5;
+  optional string thumbnail = 6;
+  optional string password = 7;
+  optional string fullPath = 8;
+  optional int32 priority = 9;
+  optional string createTime = 10;
+  optional string updateTime = 11;
+  optional uint32 postCount = 12;
 }
 
 // 回应 - 类别列表
@@ -64,24 +72,24 @@ message ListCategoryResponse {
 
 // 请求 - 类别数据
 message GetCategoryRequest {
-  uint64 id = 1;
+  uint32 id = 1;
 }
 
 // 请求 - 创建类别
 message CreateCategoryRequest {
   Category category = 1;
-  optional uint64 operatorId = 2;
+  optional uint32 operatorId = 2;
 }
 
 // 请求 - 更新类别
 message UpdateCategoryRequest {
-  uint64 id = 1;
+  uint32 id = 1;
   Category category = 2;
-  optional uint64 operatorId = 3;
+  optional uint32 operatorId = 3;
 }
 
 // 请求 - 删除类别
 message DeleteCategoryRequest {
-  uint64 id = 1;
-  optional uint64 operatorId = 2;
+  uint32 id = 1;
+  optional uint32 operatorId = 2;
 }

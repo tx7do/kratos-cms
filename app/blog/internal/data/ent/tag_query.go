@@ -84,8 +84,8 @@ func (tq *TagQuery) FirstX(ctx context.Context) *Tag {
 
 // FirstID returns the first Tag ID from the query.
 // Returns a *NotFoundError when no Tag ID was found.
-func (tq *TagQuery) FirstID(ctx context.Context) (id uint64, err error) {
-	var ids []uint64
+func (tq *TagQuery) FirstID(ctx context.Context) (id uint32, err error) {
+	var ids []uint32
 	if ids, err = tq.Limit(1).IDs(ctx); err != nil {
 		return
 	}
@@ -97,7 +97,7 @@ func (tq *TagQuery) FirstID(ctx context.Context) (id uint64, err error) {
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (tq *TagQuery) FirstIDX(ctx context.Context) uint64 {
+func (tq *TagQuery) FirstIDX(ctx context.Context) uint32 {
 	id, err := tq.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -135,8 +135,8 @@ func (tq *TagQuery) OnlyX(ctx context.Context) *Tag {
 // OnlyID is like Only, but returns the only Tag ID in the query.
 // Returns a *NotSingularError when more than one Tag ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (tq *TagQuery) OnlyID(ctx context.Context) (id uint64, err error) {
-	var ids []uint64
+func (tq *TagQuery) OnlyID(ctx context.Context) (id uint32, err error) {
+	var ids []uint32
 	if ids, err = tq.Limit(2).IDs(ctx); err != nil {
 		return
 	}
@@ -152,7 +152,7 @@ func (tq *TagQuery) OnlyID(ctx context.Context) (id uint64, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (tq *TagQuery) OnlyIDX(ctx context.Context) uint64 {
+func (tq *TagQuery) OnlyIDX(ctx context.Context) uint32 {
 	id, err := tq.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -178,8 +178,8 @@ func (tq *TagQuery) AllX(ctx context.Context) []*Tag {
 }
 
 // IDs executes the query and returns a list of Tag IDs.
-func (tq *TagQuery) IDs(ctx context.Context) ([]uint64, error) {
-	var ids []uint64
+func (tq *TagQuery) IDs(ctx context.Context) ([]uint32, error) {
+	var ids []uint32
 	if err := tq.Select(tag.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -187,7 +187,7 @@ func (tq *TagQuery) IDs(ctx context.Context) ([]uint64, error) {
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (tq *TagQuery) IDsX(ctx context.Context) []uint64 {
+func (tq *TagQuery) IDsX(ctx context.Context) []uint32 {
 	ids, err := tq.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -368,7 +368,7 @@ func (tq *TagQuery) querySpec() *sqlgraph.QuerySpec {
 			Table:   tag.Table,
 			Columns: tag.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
+				Type:   field.TypeUint32,
 				Column: tag.FieldID,
 			},
 		},

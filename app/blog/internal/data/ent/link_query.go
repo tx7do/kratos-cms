@@ -84,8 +84,8 @@ func (lq *LinkQuery) FirstX(ctx context.Context) *Link {
 
 // FirstID returns the first Link ID from the query.
 // Returns a *NotFoundError when no Link ID was found.
-func (lq *LinkQuery) FirstID(ctx context.Context) (id uint64, err error) {
-	var ids []uint64
+func (lq *LinkQuery) FirstID(ctx context.Context) (id uint32, err error) {
+	var ids []uint32
 	if ids, err = lq.Limit(1).IDs(ctx); err != nil {
 		return
 	}
@@ -97,7 +97,7 @@ func (lq *LinkQuery) FirstID(ctx context.Context) (id uint64, err error) {
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (lq *LinkQuery) FirstIDX(ctx context.Context) uint64 {
+func (lq *LinkQuery) FirstIDX(ctx context.Context) uint32 {
 	id, err := lq.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -135,8 +135,8 @@ func (lq *LinkQuery) OnlyX(ctx context.Context) *Link {
 // OnlyID is like Only, but returns the only Link ID in the query.
 // Returns a *NotSingularError when more than one Link ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (lq *LinkQuery) OnlyID(ctx context.Context) (id uint64, err error) {
-	var ids []uint64
+func (lq *LinkQuery) OnlyID(ctx context.Context) (id uint32, err error) {
+	var ids []uint32
 	if ids, err = lq.Limit(2).IDs(ctx); err != nil {
 		return
 	}
@@ -152,7 +152,7 @@ func (lq *LinkQuery) OnlyID(ctx context.Context) (id uint64, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (lq *LinkQuery) OnlyIDX(ctx context.Context) uint64 {
+func (lq *LinkQuery) OnlyIDX(ctx context.Context) uint32 {
 	id, err := lq.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -178,8 +178,8 @@ func (lq *LinkQuery) AllX(ctx context.Context) []*Link {
 }
 
 // IDs executes the query and returns a list of Link IDs.
-func (lq *LinkQuery) IDs(ctx context.Context) ([]uint64, error) {
-	var ids []uint64
+func (lq *LinkQuery) IDs(ctx context.Context) ([]uint32, error) {
+	var ids []uint32
 	if err := lq.Select(link.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -187,7 +187,7 @@ func (lq *LinkQuery) IDs(ctx context.Context) ([]uint64, error) {
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (lq *LinkQuery) IDsX(ctx context.Context) []uint64 {
+func (lq *LinkQuery) IDsX(ctx context.Context) []uint32 {
 	ids, err := lq.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -368,7 +368,7 @@ func (lq *LinkQuery) querySpec() *sqlgraph.QuerySpec {
 			Table:   link.Table,
 			Columns: link.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
+				Type:   field.TypeUint32,
 				Column: link.FieldID,
 			},
 		},

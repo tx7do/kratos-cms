@@ -10,4 +10,6 @@ var ProviderSet = wire.NewSet(
 	NewLinkUseCase,
 	NewTagUseCase,
 	NewUserAuthUseCase,
+	NewCommentUseCase,
+	NewAttachmentUseCase,
 )

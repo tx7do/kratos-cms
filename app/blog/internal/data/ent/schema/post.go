@@ -5,7 +5,6 @@ import (
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/field"
-	"entgo.io/ent/schema/index"
 	"kratos-blog/pkg/util/entgo/mixin"
 )
 
@@ -32,11 +31,23 @@ func (Post) Fields() []ent.Field {
 			Optional().
 			Nillable(),
 
-		field.String("summary").
+		field.String("slug").
 			Optional().
 			Nillable(),
 
-		field.String("original").
+		field.String("meta_keywords").
+			Optional().
+			Nillable(),
+
+		field.String("meta_description").
+			Optional().
+			Nillable(),
+
+		field.String("full_path").
+			Optional().
+			Nillable(),
+
+		field.String("original_content").
 			Optional().
 			Nillable(),
 
@@ -44,11 +55,60 @@ func (Post) Fields() []ent.Field {
 			Optional().
 			Nillable(),
 
+		field.String("summary").
+			Optional().
+			Nillable(),
+
+		field.String("thumbnail").
+			Optional().
+			Nillable(),
+
 		field.String("password").
 			Optional().
 			Nillable(),
 
-		field.Int64("user_id").
+		field.String("template").
+			Optional().
+			Nillable(),
+
+		field.Int32("comment_count").
+			Optional().
+			Nillable(),
+
+		field.Int32("visits").
+			Optional().
+			Nillable(),
+
+		field.Int32("likes").
+			Optional().
+			Nillable(),
+
+		field.Int32("word_count").
+			Optional().
+			Nillable(),
+
+		field.Int32("top_priority").
+			Optional().
+			Nillable(),
+
+		field.Int32("status").
+			Optional().
+			Nillable(),
+
+		field.Int32("editor_type").
+			Optional().
+			Nillable(),
+
+		field.Int64("edit_time").
+			Comment("编辑时间").
+			Optional().
+			Nillable(),
+
+		field.Bool("disallow_comment").
+			Optional().
+			Nillable(),
+
+		field.Bool("in_progress").
 			Optional().
 			Nillable(),
 	}
@@ -65,11 +125,4 @@ func (Post) Mixin() []ent.Mixin {
 // Edges of the Post.
 func (Post) Edges() []ent.Edge {
 	return nil
-}
-
-// Indexes of the Post.
-func (Post) Indexes() []ent.Index {
-	return []ent.Index{
-		index.Fields("id").StorageKey("post_pkey"),
-	}
 }

@@ -87,6 +87,46 @@ func (uu *UserUpdate) ClearEmail() *UserUpdate {
 	return uu
 }
 
+// SetAvatar sets the "avatar" field.
+func (uu *UserUpdate) SetAvatar(s string) *UserUpdate {
+	uu.mutation.SetAvatar(s)
+	return uu
+}
+
+// SetNillableAvatar sets the "avatar" field if the given value is not nil.
+func (uu *UserUpdate) SetNillableAvatar(s *string) *UserUpdate {
+	if s != nil {
+		uu.SetAvatar(*s)
+	}
+	return uu
+}
+
+// ClearAvatar clears the value of the "avatar" field.
+func (uu *UserUpdate) ClearAvatar() *UserUpdate {
+	uu.mutation.ClearAvatar()
+	return uu
+}
+
+// SetDescription sets the "description" field.
+func (uu *UserUpdate) SetDescription(s string) *UserUpdate {
+	uu.mutation.SetDescription(s)
+	return uu
+}
+
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (uu *UserUpdate) SetNillableDescription(s *string) *UserUpdate {
+	if s != nil {
+		uu.SetDescription(*s)
+	}
+	return uu
+}
+
+// ClearDescription clears the value of the "description" field.
+func (uu *UserUpdate) ClearDescription() *UserUpdate {
+	uu.mutation.ClearDescription()
+	return uu
+}
+
 // SetPassword sets the "password" field.
 func (uu *UserUpdate) SetPassword(s string) *UserUpdate {
 	uu.mutation.SetPassword(s)
@@ -193,6 +233,16 @@ func (uu *UserUpdate) check() error {
 			return &ValidationError{Name: "email", err: fmt.Errorf(`ent: validator failed for field "User.email": %w`, err)}
 		}
 	}
+	if v, ok := uu.mutation.Avatar(); ok {
+		if err := user.AvatarValidator(v); err != nil {
+			return &ValidationError{Name: "avatar", err: fmt.Errorf(`ent: validator failed for field "User.avatar": %w`, err)}
+		}
+	}
+	if v, ok := uu.mutation.Description(); ok {
+		if err := user.DescriptionValidator(v); err != nil {
+			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "User.description": %w`, err)}
+		}
+	}
 	if v, ok := uu.mutation.Password(); ok {
 		if err := user.PasswordValidator(v); err != nil {
 			return &ValidationError{Name: "password", err: fmt.Errorf(`ent: validator failed for field "User.password": %w`, err)}
@@ -213,7 +263,7 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Table:   user.Table,
 			Columns: user.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
+				Type:   field.TypeUint32,
 				Column: user.FieldID,
 			},
 		},
@@ -281,6 +331,32 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: user.FieldEmail,
+		})
+	}
+	if value, ok := uu.mutation.Avatar(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: user.FieldAvatar,
+		})
+	}
+	if uu.mutation.AvatarCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: user.FieldAvatar,
+		})
+	}
+	if value, ok := uu.mutation.Description(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: user.FieldDescription,
+		})
+	}
+	if uu.mutation.DescriptionCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: user.FieldDescription,
 		})
 	}
 	if value, ok := uu.mutation.Password(); ok {
@@ -373,6 +449,46 @@ func (uuo *UserUpdateOne) SetNillableEmail(s *string) *UserUpdateOne {
 // ClearEmail clears the value of the "email" field.
 func (uuo *UserUpdateOne) ClearEmail() *UserUpdateOne {
 	uuo.mutation.ClearEmail()
+	return uuo
+}
+
+// SetAvatar sets the "avatar" field.
+func (uuo *UserUpdateOne) SetAvatar(s string) *UserUpdateOne {
+	uuo.mutation.SetAvatar(s)
+	return uuo
+}
+
+// SetNillableAvatar sets the "avatar" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableAvatar(s *string) *UserUpdateOne {
+	if s != nil {
+		uuo.SetAvatar(*s)
+	}
+	return uuo
+}
+
+// ClearAvatar clears the value of the "avatar" field.
+func (uuo *UserUpdateOne) ClearAvatar() *UserUpdateOne {
+	uuo.mutation.ClearAvatar()
+	return uuo
+}
+
+// SetDescription sets the "description" field.
+func (uuo *UserUpdateOne) SetDescription(s string) *UserUpdateOne {
+	uuo.mutation.SetDescription(s)
+	return uuo
+}
+
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableDescription(s *string) *UserUpdateOne {
+	if s != nil {
+		uuo.SetDescription(*s)
+	}
+	return uuo
+}
+
+// ClearDescription clears the value of the "description" field.
+func (uuo *UserUpdateOne) ClearDescription() *UserUpdateOne {
+	uuo.mutation.ClearDescription()
 	return uuo
 }
 
@@ -495,6 +611,16 @@ func (uuo *UserUpdateOne) check() error {
 			return &ValidationError{Name: "email", err: fmt.Errorf(`ent: validator failed for field "User.email": %w`, err)}
 		}
 	}
+	if v, ok := uuo.mutation.Avatar(); ok {
+		if err := user.AvatarValidator(v); err != nil {
+			return &ValidationError{Name: "avatar", err: fmt.Errorf(`ent: validator failed for field "User.avatar": %w`, err)}
+		}
+	}
+	if v, ok := uuo.mutation.Description(); ok {
+		if err := user.DescriptionValidator(v); err != nil {
+			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "User.description": %w`, err)}
+		}
+	}
 	if v, ok := uuo.mutation.Password(); ok {
 		if err := user.PasswordValidator(v); err != nil {
 			return &ValidationError{Name: "password", err: fmt.Errorf(`ent: validator failed for field "User.password": %w`, err)}
@@ -515,7 +641,7 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 			Table:   user.Table,
 			Columns: user.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
+				Type:   field.TypeUint32,
 				Column: user.FieldID,
 			},
 		},
@@ -600,6 +726,32 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: user.FieldEmail,
+		})
+	}
+	if value, ok := uuo.mutation.Avatar(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: user.FieldAvatar,
+		})
+	}
+	if uuo.mutation.AvatarCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: user.FieldAvatar,
+		})
+	}
+	if value, ok := uuo.mutation.Description(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: user.FieldDescription,
+		})
+	}
+	if uuo.mutation.DescriptionCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: user.FieldDescription,
 		})
 	}
 	if value, ok := uuo.mutation.Password(); ok {

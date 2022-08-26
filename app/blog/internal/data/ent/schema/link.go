@@ -5,7 +5,6 @@ import (
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/field"
-	"entgo.io/ent/schema/index"
 	"kratos-blog/pkg/util/entgo/mixin"
 )
 
@@ -33,11 +32,26 @@ func (Link) Fields() []ent.Field {
 			Optional().
 			Nillable(),
 
-		field.String("link").
+		field.String("url").
+			MaxLen(1023).
 			Optional().
 			Nillable(),
 
-		field.Int32("order_id").
+		field.String("logo").
+			MaxLen(1023).
+			Optional().
+			Nillable(),
+
+		field.String("description").
+			Comment("说明").
+			Optional().
+			Nillable(),
+
+		field.String("team").
+			Optional().
+			Nillable(),
+
+		field.Int32("priority").
 			Optional().
 			Nillable(),
 	}
@@ -54,11 +68,4 @@ func (Link) Mixin() []ent.Mixin {
 // Edges of the Link.
 func (Link) Edges() []ent.Edge {
 	return nil
-}
-
-// Indexes of the Link.
-func (Link) Indexes() []ent.Index {
-	return []ent.Index{
-		index.Fields("id").StorageKey("link_pkey"),
-	}
 }

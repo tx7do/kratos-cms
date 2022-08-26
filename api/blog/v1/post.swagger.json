@@ -118,8 +118,8 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "uint64"
+            "type": "integer",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -148,15 +148,15 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "uint64"
+            "type": "integer",
+            "format": "int64"
           },
           {
             "name": "operatorId",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "uint64"
+            "type": "integer",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -185,8 +185,8 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "uint64"
+            "type": "integer",
+            "format": "int64"
           },
           {
             "name": "post",
@@ -200,8 +200,8 @@
             "name": "operatorId",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "uint64"
+            "type": "integer",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -247,8 +247,8 @@
           "$ref": "#/definitions/v1Post"
         },
         "operatorId": {
-          "type": "string",
-          "format": "uint64"
+          "type": "integer",
+          "format": "int64"
         }
       },
       "title": "请求 - 创建帖子"
@@ -273,28 +273,84 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "format": "uint64"
+          "type": "integer",
+          "format": "int64"
         },
         "title": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "editorType": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "metaKeywords": {
+          "type": "string"
+        },
+        "metaDescription": {
+          "type": "string"
+        },
+        "fullPath": {
           "type": "string"
         },
         "summary": {
           "type": "string"
         },
+        "thumbnail": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "template": {
+          "type": "string"
+        },
         "content": {
           "type": "string"
         },
-        "category": {
+        "originalContent": {
+          "type": "string"
+        },
+        "visits": {
           "type": "integer",
           "format": "int32"
         },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "integer",
-            "format": "int32"
-          }
+        "topPriority": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "likes": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "wordCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "commentCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "disallowComment": {
+          "type": "boolean"
+        },
+        "inProgress": {
+          "type": "boolean"
+        },
+        "createTime": {
+          "type": "string"
+        },
+        "updateTime": {
+          "type": "string"
+        },
+        "editTime": {
+          "type": "string"
         }
       }
     }

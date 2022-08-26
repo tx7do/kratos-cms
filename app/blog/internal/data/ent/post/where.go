@@ -9,28 +9,28 @@ import (
 )
 
 // ID filters vertices based on their ID field.
-func ID(id uint64) predicate.Post {
+func ID(id uint32) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldID), id))
 	})
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id uint64) predicate.Post {
+func IDEQ(id uint32) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldID), id))
 	})
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id uint64) predicate.Post {
+func IDNEQ(id uint32) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldID), id))
 	})
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...uint64) predicate.Post {
+func IDIn(ids ...uint32) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
 		v := make([]interface{}, len(ids))
 		for i := range v {
@@ -41,7 +41,7 @@ func IDIn(ids ...uint64) predicate.Post {
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...uint64) predicate.Post {
+func IDNotIn(ids ...uint32) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
 		v := make([]interface{}, len(ids))
 		for i := range v {
@@ -52,28 +52,28 @@ func IDNotIn(ids ...uint64) predicate.Post {
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id uint64) predicate.Post {
+func IDGT(id uint32) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldID), id))
 	})
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id uint64) predicate.Post {
+func IDGTE(id uint32) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldID), id))
 	})
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id uint64) predicate.Post {
+func IDLT(id uint32) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldID), id))
 	})
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id uint64) predicate.Post {
+func IDLTE(id uint32) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldID), id))
 	})
@@ -100,17 +100,38 @@ func Title(v string) predicate.Post {
 	})
 }
 
-// Summary applies equality check predicate on the "summary" field. It's identical to SummaryEQ.
-func Summary(v string) predicate.Post {
+// Slug applies equality check predicate on the "slug" field. It's identical to SlugEQ.
+func Slug(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldSummary), v))
+		s.Where(sql.EQ(s.C(FieldSlug), v))
 	})
 }
 
-// Original applies equality check predicate on the "original" field. It's identical to OriginalEQ.
-func Original(v string) predicate.Post {
+// MetaKeywords applies equality check predicate on the "meta_keywords" field. It's identical to MetaKeywordsEQ.
+func MetaKeywords(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldOriginal), v))
+		s.Where(sql.EQ(s.C(FieldMetaKeywords), v))
+	})
+}
+
+// MetaDescription applies equality check predicate on the "meta_description" field. It's identical to MetaDescriptionEQ.
+func MetaDescription(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldMetaDescription), v))
+	})
+}
+
+// FullPath applies equality check predicate on the "full_path" field. It's identical to FullPathEQ.
+func FullPath(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldFullPath), v))
+	})
+}
+
+// OriginalContent applies equality check predicate on the "original_content" field. It's identical to OriginalContentEQ.
+func OriginalContent(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldOriginalContent), v))
 	})
 }
 
@@ -121,6 +142,20 @@ func Content(v string) predicate.Post {
 	})
 }
 
+// Summary applies equality check predicate on the "summary" field. It's identical to SummaryEQ.
+func Summary(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldSummary), v))
+	})
+}
+
+// Thumbnail applies equality check predicate on the "thumbnail" field. It's identical to ThumbnailEQ.
+func Thumbnail(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldThumbnail), v))
+	})
+}
+
 // Password applies equality check predicate on the "password" field. It's identical to PasswordEQ.
 func Password(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
@@ -128,10 +163,80 @@ func Password(v string) predicate.Post {
 	})
 }
 
-// UserID applies equality check predicate on the "user_id" field. It's identical to UserIDEQ.
-func UserID(v int64) predicate.Post {
+// Template applies equality check predicate on the "template" field. It's identical to TemplateEQ.
+func Template(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldUserID), v))
+		s.Where(sql.EQ(s.C(FieldTemplate), v))
+	})
+}
+
+// CommentCount applies equality check predicate on the "comment_count" field. It's identical to CommentCountEQ.
+func CommentCount(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldCommentCount), v))
+	})
+}
+
+// Visits applies equality check predicate on the "visits" field. It's identical to VisitsEQ.
+func Visits(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldVisits), v))
+	})
+}
+
+// Likes applies equality check predicate on the "likes" field. It's identical to LikesEQ.
+func Likes(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldLikes), v))
+	})
+}
+
+// WordCount applies equality check predicate on the "word_count" field. It's identical to WordCountEQ.
+func WordCount(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldWordCount), v))
+	})
+}
+
+// TopPriority applies equality check predicate on the "top_priority" field. It's identical to TopPriorityEQ.
+func TopPriority(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTopPriority), v))
+	})
+}
+
+// Status applies equality check predicate on the "status" field. It's identical to StatusEQ.
+func Status(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldStatus), v))
+	})
+}
+
+// EditorType applies equality check predicate on the "editor_type" field. It's identical to EditorTypeEQ.
+func EditorType(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldEditorType), v))
+	})
+}
+
+// EditTime applies equality check predicate on the "edit_time" field. It's identical to EditTimeEQ.
+func EditTime(v int64) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldEditTime), v))
+	})
+}
+
+// DisallowComment applies equality check predicate on the "disallow_comment" field. It's identical to DisallowCommentEQ.
+func DisallowComment(v bool) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldDisallowComment), v))
+	})
+}
+
+// InProgress applies equality check predicate on the "in_progress" field. It's identical to InProgressEQ.
+func InProgress(v bool) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldInProgress), v))
 	})
 }
 
@@ -404,229 +509,568 @@ func TitleContainsFold(v string) predicate.Post {
 	})
 }
 
-// SummaryEQ applies the EQ predicate on the "summary" field.
-func SummaryEQ(v string) predicate.Post {
+// SlugEQ applies the EQ predicate on the "slug" field.
+func SlugEQ(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldSummary), v))
+		s.Where(sql.EQ(s.C(FieldSlug), v))
 	})
 }
 
-// SummaryNEQ applies the NEQ predicate on the "summary" field.
-func SummaryNEQ(v string) predicate.Post {
+// SlugNEQ applies the NEQ predicate on the "slug" field.
+func SlugNEQ(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldSummary), v))
+		s.Where(sql.NEQ(s.C(FieldSlug), v))
 	})
 }
 
-// SummaryIn applies the In predicate on the "summary" field.
-func SummaryIn(vs ...string) predicate.Post {
+// SlugIn applies the In predicate on the "slug" field.
+func SlugIn(vs ...string) predicate.Post {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.In(s.C(FieldSummary), v...))
+		s.Where(sql.In(s.C(FieldSlug), v...))
 	})
 }
 
-// SummaryNotIn applies the NotIn predicate on the "summary" field.
-func SummaryNotIn(vs ...string) predicate.Post {
+// SlugNotIn applies the NotIn predicate on the "slug" field.
+func SlugNotIn(vs ...string) predicate.Post {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.NotIn(s.C(FieldSummary), v...))
+		s.Where(sql.NotIn(s.C(FieldSlug), v...))
 	})
 }
 
-// SummaryGT applies the GT predicate on the "summary" field.
-func SummaryGT(v string) predicate.Post {
+// SlugGT applies the GT predicate on the "slug" field.
+func SlugGT(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldSummary), v))
+		s.Where(sql.GT(s.C(FieldSlug), v))
 	})
 }
 
-// SummaryGTE applies the GTE predicate on the "summary" field.
-func SummaryGTE(v string) predicate.Post {
+// SlugGTE applies the GTE predicate on the "slug" field.
+func SlugGTE(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldSummary), v))
+		s.Where(sql.GTE(s.C(FieldSlug), v))
 	})
 }
 
-// SummaryLT applies the LT predicate on the "summary" field.
-func SummaryLT(v string) predicate.Post {
+// SlugLT applies the LT predicate on the "slug" field.
+func SlugLT(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldSummary), v))
+		s.Where(sql.LT(s.C(FieldSlug), v))
 	})
 }
 
-// SummaryLTE applies the LTE predicate on the "summary" field.
-func SummaryLTE(v string) predicate.Post {
+// SlugLTE applies the LTE predicate on the "slug" field.
+func SlugLTE(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldSummary), v))
+		s.Where(sql.LTE(s.C(FieldSlug), v))
 	})
 }
 
-// SummaryContains applies the Contains predicate on the "summary" field.
-func SummaryContains(v string) predicate.Post {
+// SlugContains applies the Contains predicate on the "slug" field.
+func SlugContains(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldSummary), v))
+		s.Where(sql.Contains(s.C(FieldSlug), v))
 	})
 }
 
-// SummaryHasPrefix applies the HasPrefix predicate on the "summary" field.
-func SummaryHasPrefix(v string) predicate.Post {
+// SlugHasPrefix applies the HasPrefix predicate on the "slug" field.
+func SlugHasPrefix(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldSummary), v))
+		s.Where(sql.HasPrefix(s.C(FieldSlug), v))
 	})
 }
 
-// SummaryHasSuffix applies the HasSuffix predicate on the "summary" field.
-func SummaryHasSuffix(v string) predicate.Post {
+// SlugHasSuffix applies the HasSuffix predicate on the "slug" field.
+func SlugHasSuffix(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldSummary), v))
+		s.Where(sql.HasSuffix(s.C(FieldSlug), v))
 	})
 }
 
-// SummaryIsNil applies the IsNil predicate on the "summary" field.
-func SummaryIsNil() predicate.Post {
+// SlugIsNil applies the IsNil predicate on the "slug" field.
+func SlugIsNil() predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldSummary)))
+		s.Where(sql.IsNull(s.C(FieldSlug)))
 	})
 }
 
-// SummaryNotNil applies the NotNil predicate on the "summary" field.
-func SummaryNotNil() predicate.Post {
+// SlugNotNil applies the NotNil predicate on the "slug" field.
+func SlugNotNil() predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldSummary)))
+		s.Where(sql.NotNull(s.C(FieldSlug)))
 	})
 }
 
-// SummaryEqualFold applies the EqualFold predicate on the "summary" field.
-func SummaryEqualFold(v string) predicate.Post {
+// SlugEqualFold applies the EqualFold predicate on the "slug" field.
+func SlugEqualFold(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldSummary), v))
+		s.Where(sql.EqualFold(s.C(FieldSlug), v))
 	})
 }
 
-// SummaryContainsFold applies the ContainsFold predicate on the "summary" field.
-func SummaryContainsFold(v string) predicate.Post {
+// SlugContainsFold applies the ContainsFold predicate on the "slug" field.
+func SlugContainsFold(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldSummary), v))
+		s.Where(sql.ContainsFold(s.C(FieldSlug), v))
 	})
 }
 
-// OriginalEQ applies the EQ predicate on the "original" field.
-func OriginalEQ(v string) predicate.Post {
+// MetaKeywordsEQ applies the EQ predicate on the "meta_keywords" field.
+func MetaKeywordsEQ(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldOriginal), v))
+		s.Where(sql.EQ(s.C(FieldMetaKeywords), v))
 	})
 }
 
-// OriginalNEQ applies the NEQ predicate on the "original" field.
-func OriginalNEQ(v string) predicate.Post {
+// MetaKeywordsNEQ applies the NEQ predicate on the "meta_keywords" field.
+func MetaKeywordsNEQ(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldOriginal), v))
+		s.Where(sql.NEQ(s.C(FieldMetaKeywords), v))
 	})
 }
 
-// OriginalIn applies the In predicate on the "original" field.
-func OriginalIn(vs ...string) predicate.Post {
+// MetaKeywordsIn applies the In predicate on the "meta_keywords" field.
+func MetaKeywordsIn(vs ...string) predicate.Post {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.In(s.C(FieldOriginal), v...))
+		s.Where(sql.In(s.C(FieldMetaKeywords), v...))
 	})
 }
 
-// OriginalNotIn applies the NotIn predicate on the "original" field.
-func OriginalNotIn(vs ...string) predicate.Post {
+// MetaKeywordsNotIn applies the NotIn predicate on the "meta_keywords" field.
+func MetaKeywordsNotIn(vs ...string) predicate.Post {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.NotIn(s.C(FieldOriginal), v...))
+		s.Where(sql.NotIn(s.C(FieldMetaKeywords), v...))
 	})
 }
 
-// OriginalGT applies the GT predicate on the "original" field.
-func OriginalGT(v string) predicate.Post {
+// MetaKeywordsGT applies the GT predicate on the "meta_keywords" field.
+func MetaKeywordsGT(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldOriginal), v))
+		s.Where(sql.GT(s.C(FieldMetaKeywords), v))
 	})
 }
 
-// OriginalGTE applies the GTE predicate on the "original" field.
-func OriginalGTE(v string) predicate.Post {
+// MetaKeywordsGTE applies the GTE predicate on the "meta_keywords" field.
+func MetaKeywordsGTE(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldOriginal), v))
+		s.Where(sql.GTE(s.C(FieldMetaKeywords), v))
 	})
 }
 
-// OriginalLT applies the LT predicate on the "original" field.
-func OriginalLT(v string) predicate.Post {
+// MetaKeywordsLT applies the LT predicate on the "meta_keywords" field.
+func MetaKeywordsLT(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldOriginal), v))
+		s.Where(sql.LT(s.C(FieldMetaKeywords), v))
 	})
 }
 
-// OriginalLTE applies the LTE predicate on the "original" field.
-func OriginalLTE(v string) predicate.Post {
+// MetaKeywordsLTE applies the LTE predicate on the "meta_keywords" field.
+func MetaKeywordsLTE(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldOriginal), v))
+		s.Where(sql.LTE(s.C(FieldMetaKeywords), v))
 	})
 }
 
-// OriginalContains applies the Contains predicate on the "original" field.
-func OriginalContains(v string) predicate.Post {
+// MetaKeywordsContains applies the Contains predicate on the "meta_keywords" field.
+func MetaKeywordsContains(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldOriginal), v))
+		s.Where(sql.Contains(s.C(FieldMetaKeywords), v))
 	})
 }
 
-// OriginalHasPrefix applies the HasPrefix predicate on the "original" field.
-func OriginalHasPrefix(v string) predicate.Post {
+// MetaKeywordsHasPrefix applies the HasPrefix predicate on the "meta_keywords" field.
+func MetaKeywordsHasPrefix(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldOriginal), v))
+		s.Where(sql.HasPrefix(s.C(FieldMetaKeywords), v))
 	})
 }
 
-// OriginalHasSuffix applies the HasSuffix predicate on the "original" field.
-func OriginalHasSuffix(v string) predicate.Post {
+// MetaKeywordsHasSuffix applies the HasSuffix predicate on the "meta_keywords" field.
+func MetaKeywordsHasSuffix(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldOriginal), v))
+		s.Where(sql.HasSuffix(s.C(FieldMetaKeywords), v))
 	})
 }
 
-// OriginalIsNil applies the IsNil predicate on the "original" field.
-func OriginalIsNil() predicate.Post {
+// MetaKeywordsIsNil applies the IsNil predicate on the "meta_keywords" field.
+func MetaKeywordsIsNil() predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldOriginal)))
+		s.Where(sql.IsNull(s.C(FieldMetaKeywords)))
 	})
 }
 
-// OriginalNotNil applies the NotNil predicate on the "original" field.
-func OriginalNotNil() predicate.Post {
+// MetaKeywordsNotNil applies the NotNil predicate on the "meta_keywords" field.
+func MetaKeywordsNotNil() predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldOriginal)))
+		s.Where(sql.NotNull(s.C(FieldMetaKeywords)))
 	})
 }
 
-// OriginalEqualFold applies the EqualFold predicate on the "original" field.
-func OriginalEqualFold(v string) predicate.Post {
+// MetaKeywordsEqualFold applies the EqualFold predicate on the "meta_keywords" field.
+func MetaKeywordsEqualFold(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldOriginal), v))
+		s.Where(sql.EqualFold(s.C(FieldMetaKeywords), v))
 	})
 }
 
-// OriginalContainsFold applies the ContainsFold predicate on the "original" field.
-func OriginalContainsFold(v string) predicate.Post {
+// MetaKeywordsContainsFold applies the ContainsFold predicate on the "meta_keywords" field.
+func MetaKeywordsContainsFold(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldOriginal), v))
+		s.Where(sql.ContainsFold(s.C(FieldMetaKeywords), v))
+	})
+}
+
+// MetaDescriptionEQ applies the EQ predicate on the "meta_description" field.
+func MetaDescriptionEQ(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldMetaDescription), v))
+	})
+}
+
+// MetaDescriptionNEQ applies the NEQ predicate on the "meta_description" field.
+func MetaDescriptionNEQ(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldMetaDescription), v))
+	})
+}
+
+// MetaDescriptionIn applies the In predicate on the "meta_description" field.
+func MetaDescriptionIn(vs ...string) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldMetaDescription), v...))
+	})
+}
+
+// MetaDescriptionNotIn applies the NotIn predicate on the "meta_description" field.
+func MetaDescriptionNotIn(vs ...string) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldMetaDescription), v...))
+	})
+}
+
+// MetaDescriptionGT applies the GT predicate on the "meta_description" field.
+func MetaDescriptionGT(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldMetaDescription), v))
+	})
+}
+
+// MetaDescriptionGTE applies the GTE predicate on the "meta_description" field.
+func MetaDescriptionGTE(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldMetaDescription), v))
+	})
+}
+
+// MetaDescriptionLT applies the LT predicate on the "meta_description" field.
+func MetaDescriptionLT(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldMetaDescription), v))
+	})
+}
+
+// MetaDescriptionLTE applies the LTE predicate on the "meta_description" field.
+func MetaDescriptionLTE(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldMetaDescription), v))
+	})
+}
+
+// MetaDescriptionContains applies the Contains predicate on the "meta_description" field.
+func MetaDescriptionContains(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldMetaDescription), v))
+	})
+}
+
+// MetaDescriptionHasPrefix applies the HasPrefix predicate on the "meta_description" field.
+func MetaDescriptionHasPrefix(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldMetaDescription), v))
+	})
+}
+
+// MetaDescriptionHasSuffix applies the HasSuffix predicate on the "meta_description" field.
+func MetaDescriptionHasSuffix(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldMetaDescription), v))
+	})
+}
+
+// MetaDescriptionIsNil applies the IsNil predicate on the "meta_description" field.
+func MetaDescriptionIsNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldMetaDescription)))
+	})
+}
+
+// MetaDescriptionNotNil applies the NotNil predicate on the "meta_description" field.
+func MetaDescriptionNotNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldMetaDescription)))
+	})
+}
+
+// MetaDescriptionEqualFold applies the EqualFold predicate on the "meta_description" field.
+func MetaDescriptionEqualFold(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldMetaDescription), v))
+	})
+}
+
+// MetaDescriptionContainsFold applies the ContainsFold predicate on the "meta_description" field.
+func MetaDescriptionContainsFold(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldMetaDescription), v))
+	})
+}
+
+// FullPathEQ applies the EQ predicate on the "full_path" field.
+func FullPathEQ(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldFullPath), v))
+	})
+}
+
+// FullPathNEQ applies the NEQ predicate on the "full_path" field.
+func FullPathNEQ(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldFullPath), v))
+	})
+}
+
+// FullPathIn applies the In predicate on the "full_path" field.
+func FullPathIn(vs ...string) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldFullPath), v...))
+	})
+}
+
+// FullPathNotIn applies the NotIn predicate on the "full_path" field.
+func FullPathNotIn(vs ...string) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldFullPath), v...))
+	})
+}
+
+// FullPathGT applies the GT predicate on the "full_path" field.
+func FullPathGT(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldFullPath), v))
+	})
+}
+
+// FullPathGTE applies the GTE predicate on the "full_path" field.
+func FullPathGTE(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldFullPath), v))
+	})
+}
+
+// FullPathLT applies the LT predicate on the "full_path" field.
+func FullPathLT(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldFullPath), v))
+	})
+}
+
+// FullPathLTE applies the LTE predicate on the "full_path" field.
+func FullPathLTE(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldFullPath), v))
+	})
+}
+
+// FullPathContains applies the Contains predicate on the "full_path" field.
+func FullPathContains(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldFullPath), v))
+	})
+}
+
+// FullPathHasPrefix applies the HasPrefix predicate on the "full_path" field.
+func FullPathHasPrefix(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldFullPath), v))
+	})
+}
+
+// FullPathHasSuffix applies the HasSuffix predicate on the "full_path" field.
+func FullPathHasSuffix(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldFullPath), v))
+	})
+}
+
+// FullPathIsNil applies the IsNil predicate on the "full_path" field.
+func FullPathIsNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldFullPath)))
+	})
+}
+
+// FullPathNotNil applies the NotNil predicate on the "full_path" field.
+func FullPathNotNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldFullPath)))
+	})
+}
+
+// FullPathEqualFold applies the EqualFold predicate on the "full_path" field.
+func FullPathEqualFold(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldFullPath), v))
+	})
+}
+
+// FullPathContainsFold applies the ContainsFold predicate on the "full_path" field.
+func FullPathContainsFold(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldFullPath), v))
+	})
+}
+
+// OriginalContentEQ applies the EQ predicate on the "original_content" field.
+func OriginalContentEQ(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldOriginalContent), v))
+	})
+}
+
+// OriginalContentNEQ applies the NEQ predicate on the "original_content" field.
+func OriginalContentNEQ(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldOriginalContent), v))
+	})
+}
+
+// OriginalContentIn applies the In predicate on the "original_content" field.
+func OriginalContentIn(vs ...string) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldOriginalContent), v...))
+	})
+}
+
+// OriginalContentNotIn applies the NotIn predicate on the "original_content" field.
+func OriginalContentNotIn(vs ...string) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldOriginalContent), v...))
+	})
+}
+
+// OriginalContentGT applies the GT predicate on the "original_content" field.
+func OriginalContentGT(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldOriginalContent), v))
+	})
+}
+
+// OriginalContentGTE applies the GTE predicate on the "original_content" field.
+func OriginalContentGTE(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldOriginalContent), v))
+	})
+}
+
+// OriginalContentLT applies the LT predicate on the "original_content" field.
+func OriginalContentLT(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldOriginalContent), v))
+	})
+}
+
+// OriginalContentLTE applies the LTE predicate on the "original_content" field.
+func OriginalContentLTE(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldOriginalContent), v))
+	})
+}
+
+// OriginalContentContains applies the Contains predicate on the "original_content" field.
+func OriginalContentContains(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldOriginalContent), v))
+	})
+}
+
+// OriginalContentHasPrefix applies the HasPrefix predicate on the "original_content" field.
+func OriginalContentHasPrefix(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldOriginalContent), v))
+	})
+}
+
+// OriginalContentHasSuffix applies the HasSuffix predicate on the "original_content" field.
+func OriginalContentHasSuffix(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldOriginalContent), v))
+	})
+}
+
+// OriginalContentIsNil applies the IsNil predicate on the "original_content" field.
+func OriginalContentIsNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldOriginalContent)))
+	})
+}
+
+// OriginalContentNotNil applies the NotNil predicate on the "original_content" field.
+func OriginalContentNotNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldOriginalContent)))
+	})
+}
+
+// OriginalContentEqualFold applies the EqualFold predicate on the "original_content" field.
+func OriginalContentEqualFold(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldOriginalContent), v))
+	})
+}
+
+// OriginalContentContainsFold applies the ContainsFold predicate on the "original_content" field.
+func OriginalContentContainsFold(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldOriginalContent), v))
 	})
 }
 
@@ -743,6 +1187,232 @@ func ContentContainsFold(v string) predicate.Post {
 	})
 }
 
+// SummaryEQ applies the EQ predicate on the "summary" field.
+func SummaryEQ(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldSummary), v))
+	})
+}
+
+// SummaryNEQ applies the NEQ predicate on the "summary" field.
+func SummaryNEQ(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldSummary), v))
+	})
+}
+
+// SummaryIn applies the In predicate on the "summary" field.
+func SummaryIn(vs ...string) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldSummary), v...))
+	})
+}
+
+// SummaryNotIn applies the NotIn predicate on the "summary" field.
+func SummaryNotIn(vs ...string) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldSummary), v...))
+	})
+}
+
+// SummaryGT applies the GT predicate on the "summary" field.
+func SummaryGT(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldSummary), v))
+	})
+}
+
+// SummaryGTE applies the GTE predicate on the "summary" field.
+func SummaryGTE(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldSummary), v))
+	})
+}
+
+// SummaryLT applies the LT predicate on the "summary" field.
+func SummaryLT(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldSummary), v))
+	})
+}
+
+// SummaryLTE applies the LTE predicate on the "summary" field.
+func SummaryLTE(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldSummary), v))
+	})
+}
+
+// SummaryContains applies the Contains predicate on the "summary" field.
+func SummaryContains(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldSummary), v))
+	})
+}
+
+// SummaryHasPrefix applies the HasPrefix predicate on the "summary" field.
+func SummaryHasPrefix(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldSummary), v))
+	})
+}
+
+// SummaryHasSuffix applies the HasSuffix predicate on the "summary" field.
+func SummaryHasSuffix(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldSummary), v))
+	})
+}
+
+// SummaryIsNil applies the IsNil predicate on the "summary" field.
+func SummaryIsNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldSummary)))
+	})
+}
+
+// SummaryNotNil applies the NotNil predicate on the "summary" field.
+func SummaryNotNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldSummary)))
+	})
+}
+
+// SummaryEqualFold applies the EqualFold predicate on the "summary" field.
+func SummaryEqualFold(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldSummary), v))
+	})
+}
+
+// SummaryContainsFold applies the ContainsFold predicate on the "summary" field.
+func SummaryContainsFold(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldSummary), v))
+	})
+}
+
+// ThumbnailEQ applies the EQ predicate on the "thumbnail" field.
+func ThumbnailEQ(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldThumbnail), v))
+	})
+}
+
+// ThumbnailNEQ applies the NEQ predicate on the "thumbnail" field.
+func ThumbnailNEQ(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldThumbnail), v))
+	})
+}
+
+// ThumbnailIn applies the In predicate on the "thumbnail" field.
+func ThumbnailIn(vs ...string) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldThumbnail), v...))
+	})
+}
+
+// ThumbnailNotIn applies the NotIn predicate on the "thumbnail" field.
+func ThumbnailNotIn(vs ...string) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldThumbnail), v...))
+	})
+}
+
+// ThumbnailGT applies the GT predicate on the "thumbnail" field.
+func ThumbnailGT(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldThumbnail), v))
+	})
+}
+
+// ThumbnailGTE applies the GTE predicate on the "thumbnail" field.
+func ThumbnailGTE(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldThumbnail), v))
+	})
+}
+
+// ThumbnailLT applies the LT predicate on the "thumbnail" field.
+func ThumbnailLT(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldThumbnail), v))
+	})
+}
+
+// ThumbnailLTE applies the LTE predicate on the "thumbnail" field.
+func ThumbnailLTE(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldThumbnail), v))
+	})
+}
+
+// ThumbnailContains applies the Contains predicate on the "thumbnail" field.
+func ThumbnailContains(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldThumbnail), v))
+	})
+}
+
+// ThumbnailHasPrefix applies the HasPrefix predicate on the "thumbnail" field.
+func ThumbnailHasPrefix(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldThumbnail), v))
+	})
+}
+
+// ThumbnailHasSuffix applies the HasSuffix predicate on the "thumbnail" field.
+func ThumbnailHasSuffix(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldThumbnail), v))
+	})
+}
+
+// ThumbnailIsNil applies the IsNil predicate on the "thumbnail" field.
+func ThumbnailIsNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldThumbnail)))
+	})
+}
+
+// ThumbnailNotNil applies the NotNil predicate on the "thumbnail" field.
+func ThumbnailNotNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldThumbnail)))
+	})
+}
+
+// ThumbnailEqualFold applies the EqualFold predicate on the "thumbnail" field.
+func ThumbnailEqualFold(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldThumbnail), v))
+	})
+}
+
+// ThumbnailContainsFold applies the ContainsFold predicate on the "thumbnail" field.
+func ThumbnailContainsFold(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldThumbnail), v))
+	})
+}
+
 // PasswordEQ applies the EQ predicate on the "password" field.
 func PasswordEQ(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
@@ -856,81 +1526,796 @@ func PasswordContainsFold(v string) predicate.Post {
 	})
 }
 
-// UserIDEQ applies the EQ predicate on the "user_id" field.
-func UserIDEQ(v int64) predicate.Post {
+// TemplateEQ applies the EQ predicate on the "template" field.
+func TemplateEQ(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldUserID), v))
+		s.Where(sql.EQ(s.C(FieldTemplate), v))
 	})
 }
 
-// UserIDNEQ applies the NEQ predicate on the "user_id" field.
-func UserIDNEQ(v int64) predicate.Post {
+// TemplateNEQ applies the NEQ predicate on the "template" field.
+func TemplateNEQ(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldUserID), v))
+		s.Where(sql.NEQ(s.C(FieldTemplate), v))
 	})
 }
 
-// UserIDIn applies the In predicate on the "user_id" field.
-func UserIDIn(vs ...int64) predicate.Post {
+// TemplateIn applies the In predicate on the "template" field.
+func TemplateIn(vs ...string) predicate.Post {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.In(s.C(FieldUserID), v...))
+		s.Where(sql.In(s.C(FieldTemplate), v...))
 	})
 }
 
-// UserIDNotIn applies the NotIn predicate on the "user_id" field.
-func UserIDNotIn(vs ...int64) predicate.Post {
+// TemplateNotIn applies the NotIn predicate on the "template" field.
+func TemplateNotIn(vs ...string) predicate.Post {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.NotIn(s.C(FieldUserID), v...))
+		s.Where(sql.NotIn(s.C(FieldTemplate), v...))
 	})
 }
 
-// UserIDGT applies the GT predicate on the "user_id" field.
-func UserIDGT(v int64) predicate.Post {
+// TemplateGT applies the GT predicate on the "template" field.
+func TemplateGT(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldUserID), v))
+		s.Where(sql.GT(s.C(FieldTemplate), v))
 	})
 }
 
-// UserIDGTE applies the GTE predicate on the "user_id" field.
-func UserIDGTE(v int64) predicate.Post {
+// TemplateGTE applies the GTE predicate on the "template" field.
+func TemplateGTE(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldUserID), v))
+		s.Where(sql.GTE(s.C(FieldTemplate), v))
 	})
 }
 
-// UserIDLT applies the LT predicate on the "user_id" field.
-func UserIDLT(v int64) predicate.Post {
+// TemplateLT applies the LT predicate on the "template" field.
+func TemplateLT(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldUserID), v))
+		s.Where(sql.LT(s.C(FieldTemplate), v))
 	})
 }
 
-// UserIDLTE applies the LTE predicate on the "user_id" field.
-func UserIDLTE(v int64) predicate.Post {
+// TemplateLTE applies the LTE predicate on the "template" field.
+func TemplateLTE(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldUserID), v))
+		s.Where(sql.LTE(s.C(FieldTemplate), v))
 	})
 }
 
-// UserIDIsNil applies the IsNil predicate on the "user_id" field.
-func UserIDIsNil() predicate.Post {
+// TemplateContains applies the Contains predicate on the "template" field.
+func TemplateContains(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldUserID)))
+		s.Where(sql.Contains(s.C(FieldTemplate), v))
 	})
 }
 
-// UserIDNotNil applies the NotNil predicate on the "user_id" field.
-func UserIDNotNil() predicate.Post {
+// TemplateHasPrefix applies the HasPrefix predicate on the "template" field.
+func TemplateHasPrefix(v string) predicate.Post {
 	return predicate.Post(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldUserID)))
+		s.Where(sql.HasPrefix(s.C(FieldTemplate), v))
+	})
+}
+
+// TemplateHasSuffix applies the HasSuffix predicate on the "template" field.
+func TemplateHasSuffix(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldTemplate), v))
+	})
+}
+
+// TemplateIsNil applies the IsNil predicate on the "template" field.
+func TemplateIsNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldTemplate)))
+	})
+}
+
+// TemplateNotNil applies the NotNil predicate on the "template" field.
+func TemplateNotNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldTemplate)))
+	})
+}
+
+// TemplateEqualFold applies the EqualFold predicate on the "template" field.
+func TemplateEqualFold(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldTemplate), v))
+	})
+}
+
+// TemplateContainsFold applies the ContainsFold predicate on the "template" field.
+func TemplateContainsFold(v string) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldTemplate), v))
+	})
+}
+
+// CommentCountEQ applies the EQ predicate on the "comment_count" field.
+func CommentCountEQ(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldCommentCount), v))
+	})
+}
+
+// CommentCountNEQ applies the NEQ predicate on the "comment_count" field.
+func CommentCountNEQ(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldCommentCount), v))
+	})
+}
+
+// CommentCountIn applies the In predicate on the "comment_count" field.
+func CommentCountIn(vs ...int32) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldCommentCount), v...))
+	})
+}
+
+// CommentCountNotIn applies the NotIn predicate on the "comment_count" field.
+func CommentCountNotIn(vs ...int32) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldCommentCount), v...))
+	})
+}
+
+// CommentCountGT applies the GT predicate on the "comment_count" field.
+func CommentCountGT(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldCommentCount), v))
+	})
+}
+
+// CommentCountGTE applies the GTE predicate on the "comment_count" field.
+func CommentCountGTE(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldCommentCount), v))
+	})
+}
+
+// CommentCountLT applies the LT predicate on the "comment_count" field.
+func CommentCountLT(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldCommentCount), v))
+	})
+}
+
+// CommentCountLTE applies the LTE predicate on the "comment_count" field.
+func CommentCountLTE(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldCommentCount), v))
+	})
+}
+
+// CommentCountIsNil applies the IsNil predicate on the "comment_count" field.
+func CommentCountIsNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldCommentCount)))
+	})
+}
+
+// CommentCountNotNil applies the NotNil predicate on the "comment_count" field.
+func CommentCountNotNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldCommentCount)))
+	})
+}
+
+// VisitsEQ applies the EQ predicate on the "visits" field.
+func VisitsEQ(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldVisits), v))
+	})
+}
+
+// VisitsNEQ applies the NEQ predicate on the "visits" field.
+func VisitsNEQ(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldVisits), v))
+	})
+}
+
+// VisitsIn applies the In predicate on the "visits" field.
+func VisitsIn(vs ...int32) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldVisits), v...))
+	})
+}
+
+// VisitsNotIn applies the NotIn predicate on the "visits" field.
+func VisitsNotIn(vs ...int32) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldVisits), v...))
+	})
+}
+
+// VisitsGT applies the GT predicate on the "visits" field.
+func VisitsGT(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldVisits), v))
+	})
+}
+
+// VisitsGTE applies the GTE predicate on the "visits" field.
+func VisitsGTE(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldVisits), v))
+	})
+}
+
+// VisitsLT applies the LT predicate on the "visits" field.
+func VisitsLT(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldVisits), v))
+	})
+}
+
+// VisitsLTE applies the LTE predicate on the "visits" field.
+func VisitsLTE(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldVisits), v))
+	})
+}
+
+// VisitsIsNil applies the IsNil predicate on the "visits" field.
+func VisitsIsNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldVisits)))
+	})
+}
+
+// VisitsNotNil applies the NotNil predicate on the "visits" field.
+func VisitsNotNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldVisits)))
+	})
+}
+
+// LikesEQ applies the EQ predicate on the "likes" field.
+func LikesEQ(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldLikes), v))
+	})
+}
+
+// LikesNEQ applies the NEQ predicate on the "likes" field.
+func LikesNEQ(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldLikes), v))
+	})
+}
+
+// LikesIn applies the In predicate on the "likes" field.
+func LikesIn(vs ...int32) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldLikes), v...))
+	})
+}
+
+// LikesNotIn applies the NotIn predicate on the "likes" field.
+func LikesNotIn(vs ...int32) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldLikes), v...))
+	})
+}
+
+// LikesGT applies the GT predicate on the "likes" field.
+func LikesGT(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldLikes), v))
+	})
+}
+
+// LikesGTE applies the GTE predicate on the "likes" field.
+func LikesGTE(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldLikes), v))
+	})
+}
+
+// LikesLT applies the LT predicate on the "likes" field.
+func LikesLT(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldLikes), v))
+	})
+}
+
+// LikesLTE applies the LTE predicate on the "likes" field.
+func LikesLTE(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldLikes), v))
+	})
+}
+
+// LikesIsNil applies the IsNil predicate on the "likes" field.
+func LikesIsNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldLikes)))
+	})
+}
+
+// LikesNotNil applies the NotNil predicate on the "likes" field.
+func LikesNotNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldLikes)))
+	})
+}
+
+// WordCountEQ applies the EQ predicate on the "word_count" field.
+func WordCountEQ(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldWordCount), v))
+	})
+}
+
+// WordCountNEQ applies the NEQ predicate on the "word_count" field.
+func WordCountNEQ(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldWordCount), v))
+	})
+}
+
+// WordCountIn applies the In predicate on the "word_count" field.
+func WordCountIn(vs ...int32) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldWordCount), v...))
+	})
+}
+
+// WordCountNotIn applies the NotIn predicate on the "word_count" field.
+func WordCountNotIn(vs ...int32) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldWordCount), v...))
+	})
+}
+
+// WordCountGT applies the GT predicate on the "word_count" field.
+func WordCountGT(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldWordCount), v))
+	})
+}
+
+// WordCountGTE applies the GTE predicate on the "word_count" field.
+func WordCountGTE(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldWordCount), v))
+	})
+}
+
+// WordCountLT applies the LT predicate on the "word_count" field.
+func WordCountLT(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldWordCount), v))
+	})
+}
+
+// WordCountLTE applies the LTE predicate on the "word_count" field.
+func WordCountLTE(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldWordCount), v))
+	})
+}
+
+// WordCountIsNil applies the IsNil predicate on the "word_count" field.
+func WordCountIsNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldWordCount)))
+	})
+}
+
+// WordCountNotNil applies the NotNil predicate on the "word_count" field.
+func WordCountNotNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldWordCount)))
+	})
+}
+
+// TopPriorityEQ applies the EQ predicate on the "top_priority" field.
+func TopPriorityEQ(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTopPriority), v))
+	})
+}
+
+// TopPriorityNEQ applies the NEQ predicate on the "top_priority" field.
+func TopPriorityNEQ(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldTopPriority), v))
+	})
+}
+
+// TopPriorityIn applies the In predicate on the "top_priority" field.
+func TopPriorityIn(vs ...int32) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldTopPriority), v...))
+	})
+}
+
+// TopPriorityNotIn applies the NotIn predicate on the "top_priority" field.
+func TopPriorityNotIn(vs ...int32) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldTopPriority), v...))
+	})
+}
+
+// TopPriorityGT applies the GT predicate on the "top_priority" field.
+func TopPriorityGT(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldTopPriority), v))
+	})
+}
+
+// TopPriorityGTE applies the GTE predicate on the "top_priority" field.
+func TopPriorityGTE(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldTopPriority), v))
+	})
+}
+
+// TopPriorityLT applies the LT predicate on the "top_priority" field.
+func TopPriorityLT(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldTopPriority), v))
+	})
+}
+
+// TopPriorityLTE applies the LTE predicate on the "top_priority" field.
+func TopPriorityLTE(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldTopPriority), v))
+	})
+}
+
+// TopPriorityIsNil applies the IsNil predicate on the "top_priority" field.
+func TopPriorityIsNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldTopPriority)))
+	})
+}
+
+// TopPriorityNotNil applies the NotNil predicate on the "top_priority" field.
+func TopPriorityNotNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldTopPriority)))
+	})
+}
+
+// StatusEQ applies the EQ predicate on the "status" field.
+func StatusEQ(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldStatus), v))
+	})
+}
+
+// StatusNEQ applies the NEQ predicate on the "status" field.
+func StatusNEQ(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldStatus), v))
+	})
+}
+
+// StatusIn applies the In predicate on the "status" field.
+func StatusIn(vs ...int32) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldStatus), v...))
+	})
+}
+
+// StatusNotIn applies the NotIn predicate on the "status" field.
+func StatusNotIn(vs ...int32) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldStatus), v...))
+	})
+}
+
+// StatusGT applies the GT predicate on the "status" field.
+func StatusGT(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldStatus), v))
+	})
+}
+
+// StatusGTE applies the GTE predicate on the "status" field.
+func StatusGTE(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldStatus), v))
+	})
+}
+
+// StatusLT applies the LT predicate on the "status" field.
+func StatusLT(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldStatus), v))
+	})
+}
+
+// StatusLTE applies the LTE predicate on the "status" field.
+func StatusLTE(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldStatus), v))
+	})
+}
+
+// StatusIsNil applies the IsNil predicate on the "status" field.
+func StatusIsNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldStatus)))
+	})
+}
+
+// StatusNotNil applies the NotNil predicate on the "status" field.
+func StatusNotNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldStatus)))
+	})
+}
+
+// EditorTypeEQ applies the EQ predicate on the "editor_type" field.
+func EditorTypeEQ(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldEditorType), v))
+	})
+}
+
+// EditorTypeNEQ applies the NEQ predicate on the "editor_type" field.
+func EditorTypeNEQ(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldEditorType), v))
+	})
+}
+
+// EditorTypeIn applies the In predicate on the "editor_type" field.
+func EditorTypeIn(vs ...int32) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldEditorType), v...))
+	})
+}
+
+// EditorTypeNotIn applies the NotIn predicate on the "editor_type" field.
+func EditorTypeNotIn(vs ...int32) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldEditorType), v...))
+	})
+}
+
+// EditorTypeGT applies the GT predicate on the "editor_type" field.
+func EditorTypeGT(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldEditorType), v))
+	})
+}
+
+// EditorTypeGTE applies the GTE predicate on the "editor_type" field.
+func EditorTypeGTE(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldEditorType), v))
+	})
+}
+
+// EditorTypeLT applies the LT predicate on the "editor_type" field.
+func EditorTypeLT(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldEditorType), v))
+	})
+}
+
+// EditorTypeLTE applies the LTE predicate on the "editor_type" field.
+func EditorTypeLTE(v int32) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldEditorType), v))
+	})
+}
+
+// EditorTypeIsNil applies the IsNil predicate on the "editor_type" field.
+func EditorTypeIsNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldEditorType)))
+	})
+}
+
+// EditorTypeNotNil applies the NotNil predicate on the "editor_type" field.
+func EditorTypeNotNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldEditorType)))
+	})
+}
+
+// EditTimeEQ applies the EQ predicate on the "edit_time" field.
+func EditTimeEQ(v int64) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldEditTime), v))
+	})
+}
+
+// EditTimeNEQ applies the NEQ predicate on the "edit_time" field.
+func EditTimeNEQ(v int64) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldEditTime), v))
+	})
+}
+
+// EditTimeIn applies the In predicate on the "edit_time" field.
+func EditTimeIn(vs ...int64) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldEditTime), v...))
+	})
+}
+
+// EditTimeNotIn applies the NotIn predicate on the "edit_time" field.
+func EditTimeNotIn(vs ...int64) predicate.Post {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldEditTime), v...))
+	})
+}
+
+// EditTimeGT applies the GT predicate on the "edit_time" field.
+func EditTimeGT(v int64) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldEditTime), v))
+	})
+}
+
+// EditTimeGTE applies the GTE predicate on the "edit_time" field.
+func EditTimeGTE(v int64) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldEditTime), v))
+	})
+}
+
+// EditTimeLT applies the LT predicate on the "edit_time" field.
+func EditTimeLT(v int64) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldEditTime), v))
+	})
+}
+
+// EditTimeLTE applies the LTE predicate on the "edit_time" field.
+func EditTimeLTE(v int64) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldEditTime), v))
+	})
+}
+
+// EditTimeIsNil applies the IsNil predicate on the "edit_time" field.
+func EditTimeIsNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldEditTime)))
+	})
+}
+
+// EditTimeNotNil applies the NotNil predicate on the "edit_time" field.
+func EditTimeNotNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldEditTime)))
+	})
+}
+
+// DisallowCommentEQ applies the EQ predicate on the "disallow_comment" field.
+func DisallowCommentEQ(v bool) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldDisallowComment), v))
+	})
+}
+
+// DisallowCommentNEQ applies the NEQ predicate on the "disallow_comment" field.
+func DisallowCommentNEQ(v bool) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldDisallowComment), v))
+	})
+}
+
+// DisallowCommentIsNil applies the IsNil predicate on the "disallow_comment" field.
+func DisallowCommentIsNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldDisallowComment)))
+	})
+}
+
+// DisallowCommentNotNil applies the NotNil predicate on the "disallow_comment" field.
+func DisallowCommentNotNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldDisallowComment)))
+	})
+}
+
+// InProgressEQ applies the EQ predicate on the "in_progress" field.
+func InProgressEQ(v bool) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldInProgress), v))
+	})
+}
+
+// InProgressNEQ applies the NEQ predicate on the "in_progress" field.
+func InProgressNEQ(v bool) predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldInProgress), v))
+	})
+}
+
+// InProgressIsNil applies the IsNil predicate on the "in_progress" field.
+func InProgressIsNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldInProgress)))
+	})
+}
+
+// InProgressNotNil applies the NotNil predicate on the "in_progress" field.
+func InProgressNotNil() predicate.Post {
+	return predicate.Post(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldInProgress)))
 	})
 }
 

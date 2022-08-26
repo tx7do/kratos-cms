@@ -67,50 +67,110 @@ func (lu *LinkUpdate) ClearName() *LinkUpdate {
 	return lu
 }
 
-// SetLink sets the "link" field.
-func (lu *LinkUpdate) SetLink(s string) *LinkUpdate {
-	lu.mutation.SetLink(s)
+// SetURL sets the "url" field.
+func (lu *LinkUpdate) SetURL(s string) *LinkUpdate {
+	lu.mutation.SetURL(s)
 	return lu
 }
 
-// SetNillableLink sets the "link" field if the given value is not nil.
-func (lu *LinkUpdate) SetNillableLink(s *string) *LinkUpdate {
+// SetNillableURL sets the "url" field if the given value is not nil.
+func (lu *LinkUpdate) SetNillableURL(s *string) *LinkUpdate {
 	if s != nil {
-		lu.SetLink(*s)
+		lu.SetURL(*s)
 	}
 	return lu
 }
 
-// ClearLink clears the value of the "link" field.
-func (lu *LinkUpdate) ClearLink() *LinkUpdate {
-	lu.mutation.ClearLink()
+// ClearURL clears the value of the "url" field.
+func (lu *LinkUpdate) ClearURL() *LinkUpdate {
+	lu.mutation.ClearURL()
 	return lu
 }
 
-// SetOrderID sets the "order_id" field.
-func (lu *LinkUpdate) SetOrderID(i int32) *LinkUpdate {
-	lu.mutation.ResetOrderID()
-	lu.mutation.SetOrderID(i)
+// SetLogo sets the "logo" field.
+func (lu *LinkUpdate) SetLogo(s string) *LinkUpdate {
+	lu.mutation.SetLogo(s)
 	return lu
 }
 
-// SetNillableOrderID sets the "order_id" field if the given value is not nil.
-func (lu *LinkUpdate) SetNillableOrderID(i *int32) *LinkUpdate {
+// SetNillableLogo sets the "logo" field if the given value is not nil.
+func (lu *LinkUpdate) SetNillableLogo(s *string) *LinkUpdate {
+	if s != nil {
+		lu.SetLogo(*s)
+	}
+	return lu
+}
+
+// ClearLogo clears the value of the "logo" field.
+func (lu *LinkUpdate) ClearLogo() *LinkUpdate {
+	lu.mutation.ClearLogo()
+	return lu
+}
+
+// SetDescription sets the "description" field.
+func (lu *LinkUpdate) SetDescription(s string) *LinkUpdate {
+	lu.mutation.SetDescription(s)
+	return lu
+}
+
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (lu *LinkUpdate) SetNillableDescription(s *string) *LinkUpdate {
+	if s != nil {
+		lu.SetDescription(*s)
+	}
+	return lu
+}
+
+// ClearDescription clears the value of the "description" field.
+func (lu *LinkUpdate) ClearDescription() *LinkUpdate {
+	lu.mutation.ClearDescription()
+	return lu
+}
+
+// SetTeam sets the "team" field.
+func (lu *LinkUpdate) SetTeam(s string) *LinkUpdate {
+	lu.mutation.SetTeam(s)
+	return lu
+}
+
+// SetNillableTeam sets the "team" field if the given value is not nil.
+func (lu *LinkUpdate) SetNillableTeam(s *string) *LinkUpdate {
+	if s != nil {
+		lu.SetTeam(*s)
+	}
+	return lu
+}
+
+// ClearTeam clears the value of the "team" field.
+func (lu *LinkUpdate) ClearTeam() *LinkUpdate {
+	lu.mutation.ClearTeam()
+	return lu
+}
+
+// SetPriority sets the "priority" field.
+func (lu *LinkUpdate) SetPriority(i int32) *LinkUpdate {
+	lu.mutation.ResetPriority()
+	lu.mutation.SetPriority(i)
+	return lu
+}
+
+// SetNillablePriority sets the "priority" field if the given value is not nil.
+func (lu *LinkUpdate) SetNillablePriority(i *int32) *LinkUpdate {
 	if i != nil {
-		lu.SetOrderID(*i)
+		lu.SetPriority(*i)
 	}
 	return lu
 }
 
-// AddOrderID adds i to the "order_id" field.
-func (lu *LinkUpdate) AddOrderID(i int32) *LinkUpdate {
-	lu.mutation.AddOrderID(i)
+// AddPriority adds i to the "priority" field.
+func (lu *LinkUpdate) AddPriority(i int32) *LinkUpdate {
+	lu.mutation.AddPriority(i)
 	return lu
 }
 
-// ClearOrderID clears the value of the "order_id" field.
-func (lu *LinkUpdate) ClearOrderID() *LinkUpdate {
-	lu.mutation.ClearOrderID()
+// ClearPriority clears the value of the "priority" field.
+func (lu *LinkUpdate) ClearPriority() *LinkUpdate {
+	lu.mutation.ClearPriority()
 	return lu
 }
 
@@ -195,6 +255,16 @@ func (lu *LinkUpdate) check() error {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Link.name": %w`, err)}
 		}
 	}
+	if v, ok := lu.mutation.URL(); ok {
+		if err := link.URLValidator(v); err != nil {
+			return &ValidationError{Name: "url", err: fmt.Errorf(`ent: validator failed for field "Link.url": %w`, err)}
+		}
+	}
+	if v, ok := lu.mutation.Logo(); ok {
+		if err := link.LogoValidator(v); err != nil {
+			return &ValidationError{Name: "logo", err: fmt.Errorf(`ent: validator failed for field "Link.logo": %w`, err)}
+		}
+	}
 	return nil
 }
 
@@ -210,7 +280,7 @@ func (lu *LinkUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Table:   link.Table,
 			Columns: link.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
+				Type:   field.TypeUint32,
 				Column: link.FieldID,
 			},
 		},
@@ -261,37 +331,76 @@ func (lu *LinkUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: link.FieldName,
 		})
 	}
-	if value, ok := lu.mutation.Link(); ok {
+	if value, ok := lu.mutation.URL(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: link.FieldLink,
+			Column: link.FieldURL,
 		})
 	}
-	if lu.mutation.LinkCleared() {
+	if lu.mutation.URLCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
-			Column: link.FieldLink,
+			Column: link.FieldURL,
 		})
 	}
-	if value, ok := lu.mutation.OrderID(); ok {
+	if value, ok := lu.mutation.Logo(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: link.FieldLogo,
+		})
+	}
+	if lu.mutation.LogoCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: link.FieldLogo,
+		})
+	}
+	if value, ok := lu.mutation.Description(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: link.FieldDescription,
+		})
+	}
+	if lu.mutation.DescriptionCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: link.FieldDescription,
+		})
+	}
+	if value, ok := lu.mutation.Team(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: link.FieldTeam,
+		})
+	}
+	if lu.mutation.TeamCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: link.FieldTeam,
+		})
+	}
+	if value, ok := lu.mutation.Priority(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt32,
 			Value:  value,
-			Column: link.FieldOrderID,
+			Column: link.FieldPriority,
 		})
 	}
-	if value, ok := lu.mutation.AddedOrderID(); ok {
+	if value, ok := lu.mutation.AddedPriority(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt32,
 			Value:  value,
-			Column: link.FieldOrderID,
+			Column: link.FieldPriority,
 		})
 	}
-	if lu.mutation.OrderIDCleared() {
+	if lu.mutation.PriorityCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt32,
-			Column: link.FieldOrderID,
+			Column: link.FieldPriority,
 		})
 	}
 	_spec.Modifiers = lu.modifiers
@@ -354,50 +463,110 @@ func (luo *LinkUpdateOne) ClearName() *LinkUpdateOne {
 	return luo
 }
 
-// SetLink sets the "link" field.
-func (luo *LinkUpdateOne) SetLink(s string) *LinkUpdateOne {
-	luo.mutation.SetLink(s)
+// SetURL sets the "url" field.
+func (luo *LinkUpdateOne) SetURL(s string) *LinkUpdateOne {
+	luo.mutation.SetURL(s)
 	return luo
 }
 
-// SetNillableLink sets the "link" field if the given value is not nil.
-func (luo *LinkUpdateOne) SetNillableLink(s *string) *LinkUpdateOne {
+// SetNillableURL sets the "url" field if the given value is not nil.
+func (luo *LinkUpdateOne) SetNillableURL(s *string) *LinkUpdateOne {
 	if s != nil {
-		luo.SetLink(*s)
+		luo.SetURL(*s)
 	}
 	return luo
 }
 
-// ClearLink clears the value of the "link" field.
-func (luo *LinkUpdateOne) ClearLink() *LinkUpdateOne {
-	luo.mutation.ClearLink()
+// ClearURL clears the value of the "url" field.
+func (luo *LinkUpdateOne) ClearURL() *LinkUpdateOne {
+	luo.mutation.ClearURL()
 	return luo
 }
 
-// SetOrderID sets the "order_id" field.
-func (luo *LinkUpdateOne) SetOrderID(i int32) *LinkUpdateOne {
-	luo.mutation.ResetOrderID()
-	luo.mutation.SetOrderID(i)
+// SetLogo sets the "logo" field.
+func (luo *LinkUpdateOne) SetLogo(s string) *LinkUpdateOne {
+	luo.mutation.SetLogo(s)
 	return luo
 }
 
-// SetNillableOrderID sets the "order_id" field if the given value is not nil.
-func (luo *LinkUpdateOne) SetNillableOrderID(i *int32) *LinkUpdateOne {
+// SetNillableLogo sets the "logo" field if the given value is not nil.
+func (luo *LinkUpdateOne) SetNillableLogo(s *string) *LinkUpdateOne {
+	if s != nil {
+		luo.SetLogo(*s)
+	}
+	return luo
+}
+
+// ClearLogo clears the value of the "logo" field.
+func (luo *LinkUpdateOne) ClearLogo() *LinkUpdateOne {
+	luo.mutation.ClearLogo()
+	return luo
+}
+
+// SetDescription sets the "description" field.
+func (luo *LinkUpdateOne) SetDescription(s string) *LinkUpdateOne {
+	luo.mutation.SetDescription(s)
+	return luo
+}
+
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (luo *LinkUpdateOne) SetNillableDescription(s *string) *LinkUpdateOne {
+	if s != nil {
+		luo.SetDescription(*s)
+	}
+	return luo
+}
+
+// ClearDescription clears the value of the "description" field.
+func (luo *LinkUpdateOne) ClearDescription() *LinkUpdateOne {
+	luo.mutation.ClearDescription()
+	return luo
+}
+
+// SetTeam sets the "team" field.
+func (luo *LinkUpdateOne) SetTeam(s string) *LinkUpdateOne {
+	luo.mutation.SetTeam(s)
+	return luo
+}
+
+// SetNillableTeam sets the "team" field if the given value is not nil.
+func (luo *LinkUpdateOne) SetNillableTeam(s *string) *LinkUpdateOne {
+	if s != nil {
+		luo.SetTeam(*s)
+	}
+	return luo
+}
+
+// ClearTeam clears the value of the "team" field.
+func (luo *LinkUpdateOne) ClearTeam() *LinkUpdateOne {
+	luo.mutation.ClearTeam()
+	return luo
+}
+
+// SetPriority sets the "priority" field.
+func (luo *LinkUpdateOne) SetPriority(i int32) *LinkUpdateOne {
+	luo.mutation.ResetPriority()
+	luo.mutation.SetPriority(i)
+	return luo
+}
+
+// SetNillablePriority sets the "priority" field if the given value is not nil.
+func (luo *LinkUpdateOne) SetNillablePriority(i *int32) *LinkUpdateOne {
 	if i != nil {
-		luo.SetOrderID(*i)
+		luo.SetPriority(*i)
 	}
 	return luo
 }
 
-// AddOrderID adds i to the "order_id" field.
-func (luo *LinkUpdateOne) AddOrderID(i int32) *LinkUpdateOne {
-	luo.mutation.AddOrderID(i)
+// AddPriority adds i to the "priority" field.
+func (luo *LinkUpdateOne) AddPriority(i int32) *LinkUpdateOne {
+	luo.mutation.AddPriority(i)
 	return luo
 }
 
-// ClearOrderID clears the value of the "order_id" field.
-func (luo *LinkUpdateOne) ClearOrderID() *LinkUpdateOne {
-	luo.mutation.ClearOrderID()
+// ClearPriority clears the value of the "priority" field.
+func (luo *LinkUpdateOne) ClearPriority() *LinkUpdateOne {
+	luo.mutation.ClearPriority()
 	return luo
 }
 
@@ -495,6 +664,16 @@ func (luo *LinkUpdateOne) check() error {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Link.name": %w`, err)}
 		}
 	}
+	if v, ok := luo.mutation.URL(); ok {
+		if err := link.URLValidator(v); err != nil {
+			return &ValidationError{Name: "url", err: fmt.Errorf(`ent: validator failed for field "Link.url": %w`, err)}
+		}
+	}
+	if v, ok := luo.mutation.Logo(); ok {
+		if err := link.LogoValidator(v); err != nil {
+			return &ValidationError{Name: "logo", err: fmt.Errorf(`ent: validator failed for field "Link.logo": %w`, err)}
+		}
+	}
 	return nil
 }
 
@@ -510,7 +689,7 @@ func (luo *LinkUpdateOne) sqlSave(ctx context.Context) (_node *Link, err error) 
 			Table:   link.Table,
 			Columns: link.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
+				Type:   field.TypeUint32,
 				Column: link.FieldID,
 			},
 		},
@@ -578,37 +757,76 @@ func (luo *LinkUpdateOne) sqlSave(ctx context.Context) (_node *Link, err error) 
 			Column: link.FieldName,
 		})
 	}
-	if value, ok := luo.mutation.Link(); ok {
+	if value, ok := luo.mutation.URL(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: link.FieldLink,
+			Column: link.FieldURL,
 		})
 	}
-	if luo.mutation.LinkCleared() {
+	if luo.mutation.URLCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
-			Column: link.FieldLink,
+			Column: link.FieldURL,
 		})
 	}
-	if value, ok := luo.mutation.OrderID(); ok {
+	if value, ok := luo.mutation.Logo(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: link.FieldLogo,
+		})
+	}
+	if luo.mutation.LogoCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: link.FieldLogo,
+		})
+	}
+	if value, ok := luo.mutation.Description(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: link.FieldDescription,
+		})
+	}
+	if luo.mutation.DescriptionCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: link.FieldDescription,
+		})
+	}
+	if value, ok := luo.mutation.Team(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: link.FieldTeam,
+		})
+	}
+	if luo.mutation.TeamCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: link.FieldTeam,
+		})
+	}
+	if value, ok := luo.mutation.Priority(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt32,
 			Value:  value,
-			Column: link.FieldOrderID,
+			Column: link.FieldPriority,
 		})
 	}
-	if value, ok := luo.mutation.AddedOrderID(); ok {
+	if value, ok := luo.mutation.AddedPriority(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt32,
 			Value:  value,
-			Column: link.FieldOrderID,
+			Column: link.FieldPriority,
 		})
 	}
-	if luo.mutation.OrderIDCleared() {
+	if luo.mutation.PriorityCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt32,
-			Column: link.FieldOrderID,
+			Column: link.FieldPriority,
 		})
 	}
 	_spec.Modifiers = luo.modifiers

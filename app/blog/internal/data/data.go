@@ -31,8 +31,9 @@ var ProviderSet = wire.NewSet(
 	NewCategoryRepo,
 	NewLinkRepo,
 	NewTagRepo,
-	NewSystemRepo,
 	NewUserTokenRepo,
+	NewCommentRepo,
+	NewAttachmentRepo,
 )
 
 // Data .
@@ -96,7 +97,7 @@ func NewEntClient(conf *conf.Data, logger log.Logger) *ent.Client {
 	}
 
 	// 运行数据库迁移工具
-	if false {
+	if true {
 		if err := client.Schema.Create(context.Background(), migrate.WithForeignKeys(false)); err != nil {
 			l.Fatalf("failed creating schema resources: %v", err)
 		}

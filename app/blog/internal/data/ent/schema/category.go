@@ -5,7 +5,6 @@ import (
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/field"
-	"entgo.io/ent/schema/index"
 	"kratos-blog/pkg/util/entgo/mixin"
 )
 
@@ -33,15 +32,37 @@ func (Category) Fields() []ent.Field {
 			Optional().
 			Nillable(),
 
-		field.String("display_name").
+		field.String("slug").
 			Optional().
 			Nillable(),
 
-		field.String("seo_desc").
+		field.String("description").
+			MaxLen(100).
 			Optional().
 			Nillable(),
 
-		field.Uint64("parent_id").
+		field.String("thumbnail").
+			MaxLen(1023).
+			Optional().
+			Nillable(),
+
+		field.String("password").
+			Optional().
+			Nillable(),
+
+		field.String("full_path").
+			Optional().
+			Nillable(),
+
+		field.Uint32("parent_id").
+			Optional().
+			Nillable(),
+
+		field.Int32("priority").
+			Optional().
+			Nillable(),
+
+		field.Uint32("post_count").
 			Optional().
 			Nillable(),
 	}
@@ -58,11 +79,4 @@ func (Category) Mixin() []ent.Mixin {
 // Edges of the Category.
 func (Category) Edges() []ent.Edge {
 	return nil
-}
-
-// Indexes of the Category.
-func (Category) Indexes() []ent.Index {
-	return []ent.Index{
-		index.Fields("id").StorageKey("category_pkey"),
-	}
 }

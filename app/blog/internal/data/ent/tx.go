@@ -12,14 +12,20 @@ import (
 // Tx is a transactional client that is created by calling Client.Tx().
 type Tx struct {
 	config
+	// Attachment is the client for interacting with the Attachment builders.
+	Attachment *AttachmentClient
 	// Category is the client for interacting with the Category builders.
 	Category *CategoryClient
+	// Comment is the client for interacting with the Comment builders.
+	Comment *CommentClient
 	// Link is the client for interacting with the Link builders.
 	Link *LinkClient
+	// Menu is the client for interacting with the Menu builders.
+	Menu *MenuClient
+	// Photo is the client for interacting with the Photo builders.
+	Photo *PhotoClient
 	// Post is the client for interacting with the Post builders.
 	Post *PostClient
-	// System is the client for interacting with the System builders.
-	System *SystemClient
 	// Tag is the client for interacting with the Tag builders.
 	Tag *TagClient
 	// User is the client for interacting with the User builders.
@@ -159,10 +165,13 @@ func (tx *Tx) Client() *Client {
 }
 
 func (tx *Tx) init() {
+	tx.Attachment = NewAttachmentClient(tx.config)
 	tx.Category = NewCategoryClient(tx.config)
+	tx.Comment = NewCommentClient(tx.config)
 	tx.Link = NewLinkClient(tx.config)
+	tx.Menu = NewMenuClient(tx.config)
+	tx.Photo = NewPhotoClient(tx.config)
 	tx.Post = NewPostClient(tx.config)
-	tx.System = NewSystemClient(tx.config)
 	tx.Tag = NewTagClient(tx.config)
 	tx.User = NewUserClient(tx.config)
 }
@@ -174,7 +183,7 @@ func (tx *Tx) init() {
 // of them in order to commit or rollback the transaction.
 //
 // If a closed transaction is embedded in one of the generated entities, and the entity
-// applies a query, for example: Category.QueryXXX(), the query will be executed
+// applies a query, for example: Attachment.QueryXXX(), the query will be executed
 // through the driver which created this transaction.
 //
 // Note that txDriver is not goroutine safe.

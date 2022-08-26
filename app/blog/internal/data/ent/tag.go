@@ -15,19 +15,23 @@ type Tag struct {
 	config `json:"-"`
 	// ID of the ent.
 	// id
-	ID uint64 `json:"id,omitempty"`
+	ID uint32 `json:"id,omitempty"`
 	// 创建时间
 	CreateTime *int64 `json:"create_time,omitempty"`
 	// 更新时间
 	UpdateTime *int64 `json:"update_time,omitempty"`
 	// Name holds the value of the "name" field.
 	Name *string `json:"name,omitempty"`
-	// DisplayName holds the value of the "display_name" field.
-	DisplayName *string `json:"display_name,omitempty"`
-	// SeoDesc holds the value of the "seo_desc" field.
-	SeoDesc *string `json:"seo_desc,omitempty"`
-	// UseCount holds the value of the "use_count" field.
-	UseCount *int32 `json:"use_count,omitempty"`
+	// Slug holds the value of the "slug" field.
+	Slug *string `json:"slug,omitempty"`
+	// Color holds the value of the "color" field.
+	Color *string `json:"color,omitempty"`
+	// Thumbnail holds the value of the "thumbnail" field.
+	Thumbnail *string `json:"thumbnail,omitempty"`
+	// SlugName holds the value of the "slug_name" field.
+	SlugName *string `json:"slug_name,omitempty"`
+	// PostCount holds the value of the "post_count" field.
+	PostCount *uint32 `json:"post_count,omitempty"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -35,9 +39,9 @@ func (*Tag) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case tag.FieldID, tag.FieldCreateTime, tag.FieldUpdateTime, tag.FieldUseCount:
+		case tag.FieldID, tag.FieldCreateTime, tag.FieldUpdateTime, tag.FieldPostCount:
 			values[i] = new(sql.NullInt64)
-		case tag.FieldName, tag.FieldDisplayName, tag.FieldSeoDesc:
+		case tag.FieldName, tag.FieldSlug, tag.FieldColor, tag.FieldThumbnail, tag.FieldSlugName:
 			values[i] = new(sql.NullString)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type Tag", columns[i])
@@ -59,7 +63,7 @@ func (t *Tag) assignValues(columns []string, values []interface{}) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			t.ID = uint64(value.Int64)
+			t.ID = uint32(value.Int64)
 		case tag.FieldCreateTime:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field create_time", values[i])
@@ -81,26 +85,40 @@ func (t *Tag) assignValues(columns []string, values []interface{}) error {
 				t.Name = new(string)
 				*t.Name = value.String
 			}
-		case tag.FieldDisplayName:
+		case tag.FieldSlug:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field display_name", values[i])
+				return fmt.Errorf("unexpected type %T for field slug", values[i])
 			} else if value.Valid {
-				t.DisplayName = new(string)
-				*t.DisplayName = value.String
+				t.Slug = new(string)
+				*t.Slug = value.String
 			}
-		case tag.FieldSeoDesc:
+		case tag.FieldColor:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field seo_desc", values[i])
+				return fmt.Errorf("unexpected type %T for field color", values[i])
 			} else if value.Valid {
-				t.SeoDesc = new(string)
-				*t.SeoDesc = value.String
+				t.Color = new(string)
+				*t.Color = value.String
 			}
-		case tag.FieldUseCount:
+		case tag.FieldThumbnail:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field thumbnail", values[i])
+			} else if value.Valid {
+				t.Thumbnail = new(string)
+				*t.Thumbnail = value.String
+			}
+		case tag.FieldSlugName:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field slug_name", values[i])
+			} else if value.Valid {
+				t.SlugName = new(string)
+				*t.SlugName = value.String
+			}
+		case tag.FieldPostCount:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field use_count", values[i])
+				return fmt.Errorf("unexpected type %T for field post_count", values[i])
 			} else if value.Valid {
-				t.UseCount = new(int32)
-				*t.UseCount = int32(value.Int64)
+				t.PostCount = new(uint32)
+				*t.PostCount = uint32(value.Int64)
 			}
 		}
 	}
@@ -145,18 +163,28 @@ func (t *Tag) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := t.DisplayName; v != nil {
-		builder.WriteString("display_name=")
+	if v := t.Slug; v != nil {
+		builder.WriteString("slug=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := t.SeoDesc; v != nil {
-		builder.WriteString("seo_desc=")
+	if v := t.Color; v != nil {
+		builder.WriteString("color=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := t.UseCount; v != nil {
-		builder.WriteString("use_count=")
+	if v := t.Thumbnail; v != nil {
+		builder.WriteString("thumbnail=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := t.SlugName; v != nil {
+		builder.WriteString("slug_name=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := t.PostCount; v != nil {
+		builder.WriteString("post_count=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteByte(')')

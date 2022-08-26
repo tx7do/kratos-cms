@@ -63,30 +63,72 @@ func (pc *PostCreate) SetNillableTitle(s *string) *PostCreate {
 	return pc
 }
 
-// SetSummary sets the "summary" field.
-func (pc *PostCreate) SetSummary(s string) *PostCreate {
-	pc.mutation.SetSummary(s)
+// SetSlug sets the "slug" field.
+func (pc *PostCreate) SetSlug(s string) *PostCreate {
+	pc.mutation.SetSlug(s)
 	return pc
 }
 
-// SetNillableSummary sets the "summary" field if the given value is not nil.
-func (pc *PostCreate) SetNillableSummary(s *string) *PostCreate {
+// SetNillableSlug sets the "slug" field if the given value is not nil.
+func (pc *PostCreate) SetNillableSlug(s *string) *PostCreate {
 	if s != nil {
-		pc.SetSummary(*s)
+		pc.SetSlug(*s)
 	}
 	return pc
 }
 
-// SetOriginal sets the "original" field.
-func (pc *PostCreate) SetOriginal(s string) *PostCreate {
-	pc.mutation.SetOriginal(s)
+// SetMetaKeywords sets the "meta_keywords" field.
+func (pc *PostCreate) SetMetaKeywords(s string) *PostCreate {
+	pc.mutation.SetMetaKeywords(s)
 	return pc
 }
 
-// SetNillableOriginal sets the "original" field if the given value is not nil.
-func (pc *PostCreate) SetNillableOriginal(s *string) *PostCreate {
+// SetNillableMetaKeywords sets the "meta_keywords" field if the given value is not nil.
+func (pc *PostCreate) SetNillableMetaKeywords(s *string) *PostCreate {
 	if s != nil {
-		pc.SetOriginal(*s)
+		pc.SetMetaKeywords(*s)
+	}
+	return pc
+}
+
+// SetMetaDescription sets the "meta_description" field.
+func (pc *PostCreate) SetMetaDescription(s string) *PostCreate {
+	pc.mutation.SetMetaDescription(s)
+	return pc
+}
+
+// SetNillableMetaDescription sets the "meta_description" field if the given value is not nil.
+func (pc *PostCreate) SetNillableMetaDescription(s *string) *PostCreate {
+	if s != nil {
+		pc.SetMetaDescription(*s)
+	}
+	return pc
+}
+
+// SetFullPath sets the "full_path" field.
+func (pc *PostCreate) SetFullPath(s string) *PostCreate {
+	pc.mutation.SetFullPath(s)
+	return pc
+}
+
+// SetNillableFullPath sets the "full_path" field if the given value is not nil.
+func (pc *PostCreate) SetNillableFullPath(s *string) *PostCreate {
+	if s != nil {
+		pc.SetFullPath(*s)
+	}
+	return pc
+}
+
+// SetOriginalContent sets the "original_content" field.
+func (pc *PostCreate) SetOriginalContent(s string) *PostCreate {
+	pc.mutation.SetOriginalContent(s)
+	return pc
+}
+
+// SetNillableOriginalContent sets the "original_content" field if the given value is not nil.
+func (pc *PostCreate) SetNillableOriginalContent(s *string) *PostCreate {
+	if s != nil {
+		pc.SetOriginalContent(*s)
 	}
 	return pc
 }
@@ -105,6 +147,34 @@ func (pc *PostCreate) SetNillableContent(s *string) *PostCreate {
 	return pc
 }
 
+// SetSummary sets the "summary" field.
+func (pc *PostCreate) SetSummary(s string) *PostCreate {
+	pc.mutation.SetSummary(s)
+	return pc
+}
+
+// SetNillableSummary sets the "summary" field if the given value is not nil.
+func (pc *PostCreate) SetNillableSummary(s *string) *PostCreate {
+	if s != nil {
+		pc.SetSummary(*s)
+	}
+	return pc
+}
+
+// SetThumbnail sets the "thumbnail" field.
+func (pc *PostCreate) SetThumbnail(s string) *PostCreate {
+	pc.mutation.SetThumbnail(s)
+	return pc
+}
+
+// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
+func (pc *PostCreate) SetNillableThumbnail(s *string) *PostCreate {
+	if s != nil {
+		pc.SetThumbnail(*s)
+	}
+	return pc
+}
+
 // SetPassword sets the "password" field.
 func (pc *PostCreate) SetPassword(s string) *PostCreate {
 	pc.mutation.SetPassword(s)
@@ -119,22 +189,162 @@ func (pc *PostCreate) SetNillablePassword(s *string) *PostCreate {
 	return pc
 }
 
-// SetUserID sets the "user_id" field.
-func (pc *PostCreate) SetUserID(i int64) *PostCreate {
-	pc.mutation.SetUserID(i)
+// SetTemplate sets the "template" field.
+func (pc *PostCreate) SetTemplate(s string) *PostCreate {
+	pc.mutation.SetTemplate(s)
 	return pc
 }
 
-// SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (pc *PostCreate) SetNillableUserID(i *int64) *PostCreate {
+// SetNillableTemplate sets the "template" field if the given value is not nil.
+func (pc *PostCreate) SetNillableTemplate(s *string) *PostCreate {
+	if s != nil {
+		pc.SetTemplate(*s)
+	}
+	return pc
+}
+
+// SetCommentCount sets the "comment_count" field.
+func (pc *PostCreate) SetCommentCount(i int32) *PostCreate {
+	pc.mutation.SetCommentCount(i)
+	return pc
+}
+
+// SetNillableCommentCount sets the "comment_count" field if the given value is not nil.
+func (pc *PostCreate) SetNillableCommentCount(i *int32) *PostCreate {
 	if i != nil {
-		pc.SetUserID(*i)
+		pc.SetCommentCount(*i)
+	}
+	return pc
+}
+
+// SetVisits sets the "visits" field.
+func (pc *PostCreate) SetVisits(i int32) *PostCreate {
+	pc.mutation.SetVisits(i)
+	return pc
+}
+
+// SetNillableVisits sets the "visits" field if the given value is not nil.
+func (pc *PostCreate) SetNillableVisits(i *int32) *PostCreate {
+	if i != nil {
+		pc.SetVisits(*i)
+	}
+	return pc
+}
+
+// SetLikes sets the "likes" field.
+func (pc *PostCreate) SetLikes(i int32) *PostCreate {
+	pc.mutation.SetLikes(i)
+	return pc
+}
+
+// SetNillableLikes sets the "likes" field if the given value is not nil.
+func (pc *PostCreate) SetNillableLikes(i *int32) *PostCreate {
+	if i != nil {
+		pc.SetLikes(*i)
+	}
+	return pc
+}
+
+// SetWordCount sets the "word_count" field.
+func (pc *PostCreate) SetWordCount(i int32) *PostCreate {
+	pc.mutation.SetWordCount(i)
+	return pc
+}
+
+// SetNillableWordCount sets the "word_count" field if the given value is not nil.
+func (pc *PostCreate) SetNillableWordCount(i *int32) *PostCreate {
+	if i != nil {
+		pc.SetWordCount(*i)
+	}
+	return pc
+}
+
+// SetTopPriority sets the "top_priority" field.
+func (pc *PostCreate) SetTopPriority(i int32) *PostCreate {
+	pc.mutation.SetTopPriority(i)
+	return pc
+}
+
+// SetNillableTopPriority sets the "top_priority" field if the given value is not nil.
+func (pc *PostCreate) SetNillableTopPriority(i *int32) *PostCreate {
+	if i != nil {
+		pc.SetTopPriority(*i)
+	}
+	return pc
+}
+
+// SetStatus sets the "status" field.
+func (pc *PostCreate) SetStatus(i int32) *PostCreate {
+	pc.mutation.SetStatus(i)
+	return pc
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (pc *PostCreate) SetNillableStatus(i *int32) *PostCreate {
+	if i != nil {
+		pc.SetStatus(*i)
+	}
+	return pc
+}
+
+// SetEditorType sets the "editor_type" field.
+func (pc *PostCreate) SetEditorType(i int32) *PostCreate {
+	pc.mutation.SetEditorType(i)
+	return pc
+}
+
+// SetNillableEditorType sets the "editor_type" field if the given value is not nil.
+func (pc *PostCreate) SetNillableEditorType(i *int32) *PostCreate {
+	if i != nil {
+		pc.SetEditorType(*i)
+	}
+	return pc
+}
+
+// SetEditTime sets the "edit_time" field.
+func (pc *PostCreate) SetEditTime(i int64) *PostCreate {
+	pc.mutation.SetEditTime(i)
+	return pc
+}
+
+// SetNillableEditTime sets the "edit_time" field if the given value is not nil.
+func (pc *PostCreate) SetNillableEditTime(i *int64) *PostCreate {
+	if i != nil {
+		pc.SetEditTime(*i)
+	}
+	return pc
+}
+
+// SetDisallowComment sets the "disallow_comment" field.
+func (pc *PostCreate) SetDisallowComment(b bool) *PostCreate {
+	pc.mutation.SetDisallowComment(b)
+	return pc
+}
+
+// SetNillableDisallowComment sets the "disallow_comment" field if the given value is not nil.
+func (pc *PostCreate) SetNillableDisallowComment(b *bool) *PostCreate {
+	if b != nil {
+		pc.SetDisallowComment(*b)
+	}
+	return pc
+}
+
+// SetInProgress sets the "in_progress" field.
+func (pc *PostCreate) SetInProgress(b bool) *PostCreate {
+	pc.mutation.SetInProgress(b)
+	return pc
+}
+
+// SetNillableInProgress sets the "in_progress" field if the given value is not nil.
+func (pc *PostCreate) SetNillableInProgress(b *bool) *PostCreate {
+	if b != nil {
+		pc.SetInProgress(*b)
 	}
 	return pc
 }
 
 // SetID sets the "id" field.
-func (pc *PostCreate) SetID(u uint64) *PostCreate {
+func (pc *PostCreate) SetID(u uint32) *PostCreate {
 	pc.mutation.SetID(u)
 	return pc
 }
@@ -150,6 +360,7 @@ func (pc *PostCreate) Save(ctx context.Context) (*Post, error) {
 		err  error
 		node *Post
 	)
+	pc.defaults()
 	if len(pc.hooks) == 0 {
 		if err = pc.check(); err != nil {
 			return nil, err
@@ -213,6 +424,14 @@ func (pc *PostCreate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (pc *PostCreate) defaults() {
+	if _, ok := pc.mutation.CreateTime(); !ok {
+		v := post.DefaultCreateTime()
+		pc.mutation.SetCreateTime(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (pc *PostCreate) check() error {
 	if v, ok := pc.mutation.Title(); ok {
@@ -238,7 +457,7 @@ func (pc *PostCreate) sqlSave(ctx context.Context) (*Post, error) {
 	}
 	if _spec.ID.Value != _node.ID {
 		id := _spec.ID.Value.(int64)
-		_node.ID = uint64(id)
+		_node.ID = uint32(id)
 	}
 	return _node, nil
 }
@@ -249,7 +468,7 @@ func (pc *PostCreate) createSpec() (*Post, *sqlgraph.CreateSpec) {
 		_spec = &sqlgraph.CreateSpec{
 			Table: post.Table,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
+				Type:   field.TypeUint32,
 				Column: post.FieldID,
 			},
 		}
@@ -283,21 +502,45 @@ func (pc *PostCreate) createSpec() (*Post, *sqlgraph.CreateSpec) {
 		})
 		_node.Title = &value
 	}
-	if value, ok := pc.mutation.Summary(); ok {
+	if value, ok := pc.mutation.Slug(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: post.FieldSummary,
+			Column: post.FieldSlug,
 		})
-		_node.Summary = &value
+		_node.Slug = &value
 	}
-	if value, ok := pc.mutation.Original(); ok {
+	if value, ok := pc.mutation.MetaKeywords(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: post.FieldOriginal,
+			Column: post.FieldMetaKeywords,
 		})
-		_node.Original = &value
+		_node.MetaKeywords = &value
+	}
+	if value, ok := pc.mutation.MetaDescription(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: post.FieldMetaDescription,
+		})
+		_node.MetaDescription = &value
+	}
+	if value, ok := pc.mutation.FullPath(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: post.FieldFullPath,
+		})
+		_node.FullPath = &value
+	}
+	if value, ok := pc.mutation.OriginalContent(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: post.FieldOriginalContent,
+		})
+		_node.OriginalContent = &value
 	}
 	if value, ok := pc.mutation.Content(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -307,6 +550,22 @@ func (pc *PostCreate) createSpec() (*Post, *sqlgraph.CreateSpec) {
 		})
 		_node.Content = &value
 	}
+	if value, ok := pc.mutation.Summary(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: post.FieldSummary,
+		})
+		_node.Summary = &value
+	}
+	if value, ok := pc.mutation.Thumbnail(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: post.FieldThumbnail,
+		})
+		_node.Thumbnail = &value
+	}
 	if value, ok := pc.mutation.Password(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -315,13 +574,93 @@ func (pc *PostCreate) createSpec() (*Post, *sqlgraph.CreateSpec) {
 		})
 		_node.Password = &value
 	}
-	if value, ok := pc.mutation.UserID(); ok {
+	if value, ok := pc.mutation.Template(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: post.FieldTemplate,
+		})
+		_node.Template = &value
+	}
+	if value, ok := pc.mutation.CommentCount(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: post.FieldCommentCount,
+		})
+		_node.CommentCount = &value
+	}
+	if value, ok := pc.mutation.Visits(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: post.FieldVisits,
+		})
+		_node.Visits = &value
+	}
+	if value, ok := pc.mutation.Likes(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: post.FieldLikes,
+		})
+		_node.Likes = &value
+	}
+	if value, ok := pc.mutation.WordCount(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: post.FieldWordCount,
+		})
+		_node.WordCount = &value
+	}
+	if value, ok := pc.mutation.TopPriority(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: post.FieldTopPriority,
+		})
+		_node.TopPriority = &value
+	}
+	if value, ok := pc.mutation.Status(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: post.FieldStatus,
+		})
+		_node.Status = &value
+	}
+	if value, ok := pc.mutation.EditorType(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: post.FieldEditorType,
+		})
+		_node.EditorType = &value
+	}
+	if value, ok := pc.mutation.EditTime(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Value:  value,
-			Column: post.FieldUserID,
+			Column: post.FieldEditTime,
 		})
-		_node.UserID = &value
+		_node.EditTime = &value
+	}
+	if value, ok := pc.mutation.DisallowComment(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: post.FieldDisallowComment,
+		})
+		_node.DisallowComment = &value
+	}
+	if value, ok := pc.mutation.InProgress(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: post.FieldInProgress,
+		})
+		_node.InProgress = &value
 	}
 	return _node, _spec
 }
@@ -443,39 +782,93 @@ func (u *PostUpsert) ClearTitle() *PostUpsert {
 	return u
 }
 
-// SetSummary sets the "summary" field.
-func (u *PostUpsert) SetSummary(v string) *PostUpsert {
-	u.Set(post.FieldSummary, v)
+// SetSlug sets the "slug" field.
+func (u *PostUpsert) SetSlug(v string) *PostUpsert {
+	u.Set(post.FieldSlug, v)
 	return u
 }
 
-// UpdateSummary sets the "summary" field to the value that was provided on create.
-func (u *PostUpsert) UpdateSummary() *PostUpsert {
-	u.SetExcluded(post.FieldSummary)
+// UpdateSlug sets the "slug" field to the value that was provided on create.
+func (u *PostUpsert) UpdateSlug() *PostUpsert {
+	u.SetExcluded(post.FieldSlug)
 	return u
 }
 
-// ClearSummary clears the value of the "summary" field.
-func (u *PostUpsert) ClearSummary() *PostUpsert {
-	u.SetNull(post.FieldSummary)
+// ClearSlug clears the value of the "slug" field.
+func (u *PostUpsert) ClearSlug() *PostUpsert {
+	u.SetNull(post.FieldSlug)
 	return u
 }
 
-// SetOriginal sets the "original" field.
-func (u *PostUpsert) SetOriginal(v string) *PostUpsert {
-	u.Set(post.FieldOriginal, v)
+// SetMetaKeywords sets the "meta_keywords" field.
+func (u *PostUpsert) SetMetaKeywords(v string) *PostUpsert {
+	u.Set(post.FieldMetaKeywords, v)
 	return u
 }
 
-// UpdateOriginal sets the "original" field to the value that was provided on create.
-func (u *PostUpsert) UpdateOriginal() *PostUpsert {
-	u.SetExcluded(post.FieldOriginal)
+// UpdateMetaKeywords sets the "meta_keywords" field to the value that was provided on create.
+func (u *PostUpsert) UpdateMetaKeywords() *PostUpsert {
+	u.SetExcluded(post.FieldMetaKeywords)
 	return u
 }
 
-// ClearOriginal clears the value of the "original" field.
-func (u *PostUpsert) ClearOriginal() *PostUpsert {
-	u.SetNull(post.FieldOriginal)
+// ClearMetaKeywords clears the value of the "meta_keywords" field.
+func (u *PostUpsert) ClearMetaKeywords() *PostUpsert {
+	u.SetNull(post.FieldMetaKeywords)
+	return u
+}
+
+// SetMetaDescription sets the "meta_description" field.
+func (u *PostUpsert) SetMetaDescription(v string) *PostUpsert {
+	u.Set(post.FieldMetaDescription, v)
+	return u
+}
+
+// UpdateMetaDescription sets the "meta_description" field to the value that was provided on create.
+func (u *PostUpsert) UpdateMetaDescription() *PostUpsert {
+	u.SetExcluded(post.FieldMetaDescription)
+	return u
+}
+
+// ClearMetaDescription clears the value of the "meta_description" field.
+func (u *PostUpsert) ClearMetaDescription() *PostUpsert {
+	u.SetNull(post.FieldMetaDescription)
+	return u
+}
+
+// SetFullPath sets the "full_path" field.
+func (u *PostUpsert) SetFullPath(v string) *PostUpsert {
+	u.Set(post.FieldFullPath, v)
+	return u
+}
+
+// UpdateFullPath sets the "full_path" field to the value that was provided on create.
+func (u *PostUpsert) UpdateFullPath() *PostUpsert {
+	u.SetExcluded(post.FieldFullPath)
+	return u
+}
+
+// ClearFullPath clears the value of the "full_path" field.
+func (u *PostUpsert) ClearFullPath() *PostUpsert {
+	u.SetNull(post.FieldFullPath)
+	return u
+}
+
+// SetOriginalContent sets the "original_content" field.
+func (u *PostUpsert) SetOriginalContent(v string) *PostUpsert {
+	u.Set(post.FieldOriginalContent, v)
+	return u
+}
+
+// UpdateOriginalContent sets the "original_content" field to the value that was provided on create.
+func (u *PostUpsert) UpdateOriginalContent() *PostUpsert {
+	u.SetExcluded(post.FieldOriginalContent)
+	return u
+}
+
+// ClearOriginalContent clears the value of the "original_content" field.
+func (u *PostUpsert) ClearOriginalContent() *PostUpsert {
+	u.SetNull(post.FieldOriginalContent)
 	return u
 }
 
@@ -497,6 +890,42 @@ func (u *PostUpsert) ClearContent() *PostUpsert {
 	return u
 }
 
+// SetSummary sets the "summary" field.
+func (u *PostUpsert) SetSummary(v string) *PostUpsert {
+	u.Set(post.FieldSummary, v)
+	return u
+}
+
+// UpdateSummary sets the "summary" field to the value that was provided on create.
+func (u *PostUpsert) UpdateSummary() *PostUpsert {
+	u.SetExcluded(post.FieldSummary)
+	return u
+}
+
+// ClearSummary clears the value of the "summary" field.
+func (u *PostUpsert) ClearSummary() *PostUpsert {
+	u.SetNull(post.FieldSummary)
+	return u
+}
+
+// SetThumbnail sets the "thumbnail" field.
+func (u *PostUpsert) SetThumbnail(v string) *PostUpsert {
+	u.Set(post.FieldThumbnail, v)
+	return u
+}
+
+// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
+func (u *PostUpsert) UpdateThumbnail() *PostUpsert {
+	u.SetExcluded(post.FieldThumbnail)
+	return u
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (u *PostUpsert) ClearThumbnail() *PostUpsert {
+	u.SetNull(post.FieldThumbnail)
+	return u
+}
+
 // SetPassword sets the "password" field.
 func (u *PostUpsert) SetPassword(v string) *PostUpsert {
 	u.Set(post.FieldPassword, v)
@@ -515,27 +944,249 @@ func (u *PostUpsert) ClearPassword() *PostUpsert {
 	return u
 }
 
-// SetUserID sets the "user_id" field.
-func (u *PostUpsert) SetUserID(v int64) *PostUpsert {
-	u.Set(post.FieldUserID, v)
+// SetTemplate sets the "template" field.
+func (u *PostUpsert) SetTemplate(v string) *PostUpsert {
+	u.Set(post.FieldTemplate, v)
 	return u
 }
 
-// UpdateUserID sets the "user_id" field to the value that was provided on create.
-func (u *PostUpsert) UpdateUserID() *PostUpsert {
-	u.SetExcluded(post.FieldUserID)
+// UpdateTemplate sets the "template" field to the value that was provided on create.
+func (u *PostUpsert) UpdateTemplate() *PostUpsert {
+	u.SetExcluded(post.FieldTemplate)
 	return u
 }
 
-// AddUserID adds v to the "user_id" field.
-func (u *PostUpsert) AddUserID(v int64) *PostUpsert {
-	u.Add(post.FieldUserID, v)
+// ClearTemplate clears the value of the "template" field.
+func (u *PostUpsert) ClearTemplate() *PostUpsert {
+	u.SetNull(post.FieldTemplate)
 	return u
 }
 
-// ClearUserID clears the value of the "user_id" field.
-func (u *PostUpsert) ClearUserID() *PostUpsert {
-	u.SetNull(post.FieldUserID)
+// SetCommentCount sets the "comment_count" field.
+func (u *PostUpsert) SetCommentCount(v int32) *PostUpsert {
+	u.Set(post.FieldCommentCount, v)
+	return u
+}
+
+// UpdateCommentCount sets the "comment_count" field to the value that was provided on create.
+func (u *PostUpsert) UpdateCommentCount() *PostUpsert {
+	u.SetExcluded(post.FieldCommentCount)
+	return u
+}
+
+// AddCommentCount adds v to the "comment_count" field.
+func (u *PostUpsert) AddCommentCount(v int32) *PostUpsert {
+	u.Add(post.FieldCommentCount, v)
+	return u
+}
+
+// ClearCommentCount clears the value of the "comment_count" field.
+func (u *PostUpsert) ClearCommentCount() *PostUpsert {
+	u.SetNull(post.FieldCommentCount)
+	return u
+}
+
+// SetVisits sets the "visits" field.
+func (u *PostUpsert) SetVisits(v int32) *PostUpsert {
+	u.Set(post.FieldVisits, v)
+	return u
+}
+
+// UpdateVisits sets the "visits" field to the value that was provided on create.
+func (u *PostUpsert) UpdateVisits() *PostUpsert {
+	u.SetExcluded(post.FieldVisits)
+	return u
+}
+
+// AddVisits adds v to the "visits" field.
+func (u *PostUpsert) AddVisits(v int32) *PostUpsert {
+	u.Add(post.FieldVisits, v)
+	return u
+}
+
+// ClearVisits clears the value of the "visits" field.
+func (u *PostUpsert) ClearVisits() *PostUpsert {
+	u.SetNull(post.FieldVisits)
+	return u
+}
+
+// SetLikes sets the "likes" field.
+func (u *PostUpsert) SetLikes(v int32) *PostUpsert {
+	u.Set(post.FieldLikes, v)
+	return u
+}
+
+// UpdateLikes sets the "likes" field to the value that was provided on create.
+func (u *PostUpsert) UpdateLikes() *PostUpsert {
+	u.SetExcluded(post.FieldLikes)
+	return u
+}
+
+// AddLikes adds v to the "likes" field.
+func (u *PostUpsert) AddLikes(v int32) *PostUpsert {
+	u.Add(post.FieldLikes, v)
+	return u
+}
+
+// ClearLikes clears the value of the "likes" field.
+func (u *PostUpsert) ClearLikes() *PostUpsert {
+	u.SetNull(post.FieldLikes)
+	return u
+}
+
+// SetWordCount sets the "word_count" field.
+func (u *PostUpsert) SetWordCount(v int32) *PostUpsert {
+	u.Set(post.FieldWordCount, v)
+	return u
+}
+
+// UpdateWordCount sets the "word_count" field to the value that was provided on create.
+func (u *PostUpsert) UpdateWordCount() *PostUpsert {
+	u.SetExcluded(post.FieldWordCount)
+	return u
+}
+
+// AddWordCount adds v to the "word_count" field.
+func (u *PostUpsert) AddWordCount(v int32) *PostUpsert {
+	u.Add(post.FieldWordCount, v)
+	return u
+}
+
+// ClearWordCount clears the value of the "word_count" field.
+func (u *PostUpsert) ClearWordCount() *PostUpsert {
+	u.SetNull(post.FieldWordCount)
+	return u
+}
+
+// SetTopPriority sets the "top_priority" field.
+func (u *PostUpsert) SetTopPriority(v int32) *PostUpsert {
+	u.Set(post.FieldTopPriority, v)
+	return u
+}
+
+// UpdateTopPriority sets the "top_priority" field to the value that was provided on create.
+func (u *PostUpsert) UpdateTopPriority() *PostUpsert {
+	u.SetExcluded(post.FieldTopPriority)
+	return u
+}
+
+// AddTopPriority adds v to the "top_priority" field.
+func (u *PostUpsert) AddTopPriority(v int32) *PostUpsert {
+	u.Add(post.FieldTopPriority, v)
+	return u
+}
+
+// ClearTopPriority clears the value of the "top_priority" field.
+func (u *PostUpsert) ClearTopPriority() *PostUpsert {
+	u.SetNull(post.FieldTopPriority)
+	return u
+}
+
+// SetStatus sets the "status" field.
+func (u *PostUpsert) SetStatus(v int32) *PostUpsert {
+	u.Set(post.FieldStatus, v)
+	return u
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *PostUpsert) UpdateStatus() *PostUpsert {
+	u.SetExcluded(post.FieldStatus)
+	return u
+}
+
+// AddStatus adds v to the "status" field.
+func (u *PostUpsert) AddStatus(v int32) *PostUpsert {
+	u.Add(post.FieldStatus, v)
+	return u
+}
+
+// ClearStatus clears the value of the "status" field.
+func (u *PostUpsert) ClearStatus() *PostUpsert {
+	u.SetNull(post.FieldStatus)
+	return u
+}
+
+// SetEditorType sets the "editor_type" field.
+func (u *PostUpsert) SetEditorType(v int32) *PostUpsert {
+	u.Set(post.FieldEditorType, v)
+	return u
+}
+
+// UpdateEditorType sets the "editor_type" field to the value that was provided on create.
+func (u *PostUpsert) UpdateEditorType() *PostUpsert {
+	u.SetExcluded(post.FieldEditorType)
+	return u
+}
+
+// AddEditorType adds v to the "editor_type" field.
+func (u *PostUpsert) AddEditorType(v int32) *PostUpsert {
+	u.Add(post.FieldEditorType, v)
+	return u
+}
+
+// ClearEditorType clears the value of the "editor_type" field.
+func (u *PostUpsert) ClearEditorType() *PostUpsert {
+	u.SetNull(post.FieldEditorType)
+	return u
+}
+
+// SetEditTime sets the "edit_time" field.
+func (u *PostUpsert) SetEditTime(v int64) *PostUpsert {
+	u.Set(post.FieldEditTime, v)
+	return u
+}
+
+// UpdateEditTime sets the "edit_time" field to the value that was provided on create.
+func (u *PostUpsert) UpdateEditTime() *PostUpsert {
+	u.SetExcluded(post.FieldEditTime)
+	return u
+}
+
+// AddEditTime adds v to the "edit_time" field.
+func (u *PostUpsert) AddEditTime(v int64) *PostUpsert {
+	u.Add(post.FieldEditTime, v)
+	return u
+}
+
+// ClearEditTime clears the value of the "edit_time" field.
+func (u *PostUpsert) ClearEditTime() *PostUpsert {
+	u.SetNull(post.FieldEditTime)
+	return u
+}
+
+// SetDisallowComment sets the "disallow_comment" field.
+func (u *PostUpsert) SetDisallowComment(v bool) *PostUpsert {
+	u.Set(post.FieldDisallowComment, v)
+	return u
+}
+
+// UpdateDisallowComment sets the "disallow_comment" field to the value that was provided on create.
+func (u *PostUpsert) UpdateDisallowComment() *PostUpsert {
+	u.SetExcluded(post.FieldDisallowComment)
+	return u
+}
+
+// ClearDisallowComment clears the value of the "disallow_comment" field.
+func (u *PostUpsert) ClearDisallowComment() *PostUpsert {
+	u.SetNull(post.FieldDisallowComment)
+	return u
+}
+
+// SetInProgress sets the "in_progress" field.
+func (u *PostUpsert) SetInProgress(v bool) *PostUpsert {
+	u.Set(post.FieldInProgress, v)
+	return u
+}
+
+// UpdateInProgress sets the "in_progress" field to the value that was provided on create.
+func (u *PostUpsert) UpdateInProgress() *PostUpsert {
+	u.SetExcluded(post.FieldInProgress)
+	return u
+}
+
+// ClearInProgress clears the value of the "in_progress" field.
+func (u *PostUpsert) ClearInProgress() *PostUpsert {
+	u.SetNull(post.FieldInProgress)
 	return u
 }
 
@@ -669,45 +1320,108 @@ func (u *PostUpsertOne) ClearTitle() *PostUpsertOne {
 	})
 }
 
-// SetSummary sets the "summary" field.
-func (u *PostUpsertOne) SetSummary(v string) *PostUpsertOne {
+// SetSlug sets the "slug" field.
+func (u *PostUpsertOne) SetSlug(v string) *PostUpsertOne {
 	return u.Update(func(s *PostUpsert) {
-		s.SetSummary(v)
+		s.SetSlug(v)
 	})
 }
 
-// UpdateSummary sets the "summary" field to the value that was provided on create.
-func (u *PostUpsertOne) UpdateSummary() *PostUpsertOne {
+// UpdateSlug sets the "slug" field to the value that was provided on create.
+func (u *PostUpsertOne) UpdateSlug() *PostUpsertOne {
 	return u.Update(func(s *PostUpsert) {
-		s.UpdateSummary()
+		s.UpdateSlug()
 	})
 }
 
-// ClearSummary clears the value of the "summary" field.
-func (u *PostUpsertOne) ClearSummary() *PostUpsertOne {
+// ClearSlug clears the value of the "slug" field.
+func (u *PostUpsertOne) ClearSlug() *PostUpsertOne {
 	return u.Update(func(s *PostUpsert) {
-		s.ClearSummary()
+		s.ClearSlug()
 	})
 }
 
-// SetOriginal sets the "original" field.
-func (u *PostUpsertOne) SetOriginal(v string) *PostUpsertOne {
+// SetMetaKeywords sets the "meta_keywords" field.
+func (u *PostUpsertOne) SetMetaKeywords(v string) *PostUpsertOne {
 	return u.Update(func(s *PostUpsert) {
-		s.SetOriginal(v)
+		s.SetMetaKeywords(v)
 	})
 }
 
-// UpdateOriginal sets the "original" field to the value that was provided on create.
-func (u *PostUpsertOne) UpdateOriginal() *PostUpsertOne {
+// UpdateMetaKeywords sets the "meta_keywords" field to the value that was provided on create.
+func (u *PostUpsertOne) UpdateMetaKeywords() *PostUpsertOne {
 	return u.Update(func(s *PostUpsert) {
-		s.UpdateOriginal()
+		s.UpdateMetaKeywords()
 	})
 }
 
-// ClearOriginal clears the value of the "original" field.
-func (u *PostUpsertOne) ClearOriginal() *PostUpsertOne {
+// ClearMetaKeywords clears the value of the "meta_keywords" field.
+func (u *PostUpsertOne) ClearMetaKeywords() *PostUpsertOne {
 	return u.Update(func(s *PostUpsert) {
-		s.ClearOriginal()
+		s.ClearMetaKeywords()
+	})
+}
+
+// SetMetaDescription sets the "meta_description" field.
+func (u *PostUpsertOne) SetMetaDescription(v string) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.SetMetaDescription(v)
+	})
+}
+
+// UpdateMetaDescription sets the "meta_description" field to the value that was provided on create.
+func (u *PostUpsertOne) UpdateMetaDescription() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateMetaDescription()
+	})
+}
+
+// ClearMetaDescription clears the value of the "meta_description" field.
+func (u *PostUpsertOne) ClearMetaDescription() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearMetaDescription()
+	})
+}
+
+// SetFullPath sets the "full_path" field.
+func (u *PostUpsertOne) SetFullPath(v string) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.SetFullPath(v)
+	})
+}
+
+// UpdateFullPath sets the "full_path" field to the value that was provided on create.
+func (u *PostUpsertOne) UpdateFullPath() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateFullPath()
+	})
+}
+
+// ClearFullPath clears the value of the "full_path" field.
+func (u *PostUpsertOne) ClearFullPath() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearFullPath()
+	})
+}
+
+// SetOriginalContent sets the "original_content" field.
+func (u *PostUpsertOne) SetOriginalContent(v string) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.SetOriginalContent(v)
+	})
+}
+
+// UpdateOriginalContent sets the "original_content" field to the value that was provided on create.
+func (u *PostUpsertOne) UpdateOriginalContent() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateOriginalContent()
+	})
+}
+
+// ClearOriginalContent clears the value of the "original_content" field.
+func (u *PostUpsertOne) ClearOriginalContent() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearOriginalContent()
 	})
 }
 
@@ -732,6 +1446,48 @@ func (u *PostUpsertOne) ClearContent() *PostUpsertOne {
 	})
 }
 
+// SetSummary sets the "summary" field.
+func (u *PostUpsertOne) SetSummary(v string) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.SetSummary(v)
+	})
+}
+
+// UpdateSummary sets the "summary" field to the value that was provided on create.
+func (u *PostUpsertOne) UpdateSummary() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateSummary()
+	})
+}
+
+// ClearSummary clears the value of the "summary" field.
+func (u *PostUpsertOne) ClearSummary() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearSummary()
+	})
+}
+
+// SetThumbnail sets the "thumbnail" field.
+func (u *PostUpsertOne) SetThumbnail(v string) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.SetThumbnail(v)
+	})
+}
+
+// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
+func (u *PostUpsertOne) UpdateThumbnail() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateThumbnail()
+	})
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (u *PostUpsertOne) ClearThumbnail() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearThumbnail()
+	})
+}
+
 // SetPassword sets the "password" field.
 func (u *PostUpsertOne) SetPassword(v string) *PostUpsertOne {
 	return u.Update(func(s *PostUpsert) {
@@ -753,31 +1509,290 @@ func (u *PostUpsertOne) ClearPassword() *PostUpsertOne {
 	})
 }
 
-// SetUserID sets the "user_id" field.
-func (u *PostUpsertOne) SetUserID(v int64) *PostUpsertOne {
+// SetTemplate sets the "template" field.
+func (u *PostUpsertOne) SetTemplate(v string) *PostUpsertOne {
 	return u.Update(func(s *PostUpsert) {
-		s.SetUserID(v)
+		s.SetTemplate(v)
 	})
 }
 
-// AddUserID adds v to the "user_id" field.
-func (u *PostUpsertOne) AddUserID(v int64) *PostUpsertOne {
+// UpdateTemplate sets the "template" field to the value that was provided on create.
+func (u *PostUpsertOne) UpdateTemplate() *PostUpsertOne {
 	return u.Update(func(s *PostUpsert) {
-		s.AddUserID(v)
+		s.UpdateTemplate()
 	})
 }
 
-// UpdateUserID sets the "user_id" field to the value that was provided on create.
-func (u *PostUpsertOne) UpdateUserID() *PostUpsertOne {
+// ClearTemplate clears the value of the "template" field.
+func (u *PostUpsertOne) ClearTemplate() *PostUpsertOne {
 	return u.Update(func(s *PostUpsert) {
-		s.UpdateUserID()
+		s.ClearTemplate()
 	})
 }
 
-// ClearUserID clears the value of the "user_id" field.
-func (u *PostUpsertOne) ClearUserID() *PostUpsertOne {
+// SetCommentCount sets the "comment_count" field.
+func (u *PostUpsertOne) SetCommentCount(v int32) *PostUpsertOne {
 	return u.Update(func(s *PostUpsert) {
-		s.ClearUserID()
+		s.SetCommentCount(v)
+	})
+}
+
+// AddCommentCount adds v to the "comment_count" field.
+func (u *PostUpsertOne) AddCommentCount(v int32) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.AddCommentCount(v)
+	})
+}
+
+// UpdateCommentCount sets the "comment_count" field to the value that was provided on create.
+func (u *PostUpsertOne) UpdateCommentCount() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateCommentCount()
+	})
+}
+
+// ClearCommentCount clears the value of the "comment_count" field.
+func (u *PostUpsertOne) ClearCommentCount() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearCommentCount()
+	})
+}
+
+// SetVisits sets the "visits" field.
+func (u *PostUpsertOne) SetVisits(v int32) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.SetVisits(v)
+	})
+}
+
+// AddVisits adds v to the "visits" field.
+func (u *PostUpsertOne) AddVisits(v int32) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.AddVisits(v)
+	})
+}
+
+// UpdateVisits sets the "visits" field to the value that was provided on create.
+func (u *PostUpsertOne) UpdateVisits() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateVisits()
+	})
+}
+
+// ClearVisits clears the value of the "visits" field.
+func (u *PostUpsertOne) ClearVisits() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearVisits()
+	})
+}
+
+// SetLikes sets the "likes" field.
+func (u *PostUpsertOne) SetLikes(v int32) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.SetLikes(v)
+	})
+}
+
+// AddLikes adds v to the "likes" field.
+func (u *PostUpsertOne) AddLikes(v int32) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.AddLikes(v)
+	})
+}
+
+// UpdateLikes sets the "likes" field to the value that was provided on create.
+func (u *PostUpsertOne) UpdateLikes() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateLikes()
+	})
+}
+
+// ClearLikes clears the value of the "likes" field.
+func (u *PostUpsertOne) ClearLikes() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearLikes()
+	})
+}
+
+// SetWordCount sets the "word_count" field.
+func (u *PostUpsertOne) SetWordCount(v int32) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.SetWordCount(v)
+	})
+}
+
+// AddWordCount adds v to the "word_count" field.
+func (u *PostUpsertOne) AddWordCount(v int32) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.AddWordCount(v)
+	})
+}
+
+// UpdateWordCount sets the "word_count" field to the value that was provided on create.
+func (u *PostUpsertOne) UpdateWordCount() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateWordCount()
+	})
+}
+
+// ClearWordCount clears the value of the "word_count" field.
+func (u *PostUpsertOne) ClearWordCount() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearWordCount()
+	})
+}
+
+// SetTopPriority sets the "top_priority" field.
+func (u *PostUpsertOne) SetTopPriority(v int32) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.SetTopPriority(v)
+	})
+}
+
+// AddTopPriority adds v to the "top_priority" field.
+func (u *PostUpsertOne) AddTopPriority(v int32) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.AddTopPriority(v)
+	})
+}
+
+// UpdateTopPriority sets the "top_priority" field to the value that was provided on create.
+func (u *PostUpsertOne) UpdateTopPriority() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateTopPriority()
+	})
+}
+
+// ClearTopPriority clears the value of the "top_priority" field.
+func (u *PostUpsertOne) ClearTopPriority() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearTopPriority()
+	})
+}
+
+// SetStatus sets the "status" field.
+func (u *PostUpsertOne) SetStatus(v int32) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.SetStatus(v)
+	})
+}
+
+// AddStatus adds v to the "status" field.
+func (u *PostUpsertOne) AddStatus(v int32) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.AddStatus(v)
+	})
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *PostUpsertOne) UpdateStatus() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateStatus()
+	})
+}
+
+// ClearStatus clears the value of the "status" field.
+func (u *PostUpsertOne) ClearStatus() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearStatus()
+	})
+}
+
+// SetEditorType sets the "editor_type" field.
+func (u *PostUpsertOne) SetEditorType(v int32) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.SetEditorType(v)
+	})
+}
+
+// AddEditorType adds v to the "editor_type" field.
+func (u *PostUpsertOne) AddEditorType(v int32) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.AddEditorType(v)
+	})
+}
+
+// UpdateEditorType sets the "editor_type" field to the value that was provided on create.
+func (u *PostUpsertOne) UpdateEditorType() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateEditorType()
+	})
+}
+
+// ClearEditorType clears the value of the "editor_type" field.
+func (u *PostUpsertOne) ClearEditorType() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearEditorType()
+	})
+}
+
+// SetEditTime sets the "edit_time" field.
+func (u *PostUpsertOne) SetEditTime(v int64) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.SetEditTime(v)
+	})
+}
+
+// AddEditTime adds v to the "edit_time" field.
+func (u *PostUpsertOne) AddEditTime(v int64) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.AddEditTime(v)
+	})
+}
+
+// UpdateEditTime sets the "edit_time" field to the value that was provided on create.
+func (u *PostUpsertOne) UpdateEditTime() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateEditTime()
+	})
+}
+
+// ClearEditTime clears the value of the "edit_time" field.
+func (u *PostUpsertOne) ClearEditTime() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearEditTime()
+	})
+}
+
+// SetDisallowComment sets the "disallow_comment" field.
+func (u *PostUpsertOne) SetDisallowComment(v bool) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.SetDisallowComment(v)
+	})
+}
+
+// UpdateDisallowComment sets the "disallow_comment" field to the value that was provided on create.
+func (u *PostUpsertOne) UpdateDisallowComment() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateDisallowComment()
+	})
+}
+
+// ClearDisallowComment clears the value of the "disallow_comment" field.
+func (u *PostUpsertOne) ClearDisallowComment() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearDisallowComment()
+	})
+}
+
+// SetInProgress sets the "in_progress" field.
+func (u *PostUpsertOne) SetInProgress(v bool) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.SetInProgress(v)
+	})
+}
+
+// UpdateInProgress sets the "in_progress" field to the value that was provided on create.
+func (u *PostUpsertOne) UpdateInProgress() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateInProgress()
+	})
+}
+
+// ClearInProgress clears the value of the "in_progress" field.
+func (u *PostUpsertOne) ClearInProgress() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearInProgress()
 	})
 }
 
@@ -797,7 +1812,7 @@ func (u *PostUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *PostUpsertOne) ID(ctx context.Context) (id uint64, err error) {
+func (u *PostUpsertOne) ID(ctx context.Context) (id uint32, err error) {
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -806,7 +1821,7 @@ func (u *PostUpsertOne) ID(ctx context.Context) (id uint64, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *PostUpsertOne) IDX(ctx context.Context) uint64 {
+func (u *PostUpsertOne) IDX(ctx context.Context) uint32 {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -829,6 +1844,7 @@ func (pcb *PostCreateBulk) Save(ctx context.Context) ([]*Post, error) {
 	for i := range pcb.builders {
 		func(i int, root context.Context) {
 			builder := pcb.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*PostMutation)
 				if !ok {
@@ -858,7 +1874,7 @@ func (pcb *PostCreateBulk) Save(ctx context.Context) ([]*Post, error) {
 				mutation.id = &nodes[i].ID
 				if specs[i].ID.Value != nil && nodes[i].ID == 0 {
 					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = uint64(id)
+					nodes[i].ID = uint32(id)
 				}
 				mutation.done = true
 				return nodes[i], nil
@@ -1075,45 +2091,108 @@ func (u *PostUpsertBulk) ClearTitle() *PostUpsertBulk {
 	})
 }
 
-// SetSummary sets the "summary" field.
-func (u *PostUpsertBulk) SetSummary(v string) *PostUpsertBulk {
+// SetSlug sets the "slug" field.
+func (u *PostUpsertBulk) SetSlug(v string) *PostUpsertBulk {
 	return u.Update(func(s *PostUpsert) {
-		s.SetSummary(v)
+		s.SetSlug(v)
 	})
 }
 
-// UpdateSummary sets the "summary" field to the value that was provided on create.
-func (u *PostUpsertBulk) UpdateSummary() *PostUpsertBulk {
+// UpdateSlug sets the "slug" field to the value that was provided on create.
+func (u *PostUpsertBulk) UpdateSlug() *PostUpsertBulk {
 	return u.Update(func(s *PostUpsert) {
-		s.UpdateSummary()
+		s.UpdateSlug()
 	})
 }
 
-// ClearSummary clears the value of the "summary" field.
-func (u *PostUpsertBulk) ClearSummary() *PostUpsertBulk {
+// ClearSlug clears the value of the "slug" field.
+func (u *PostUpsertBulk) ClearSlug() *PostUpsertBulk {
 	return u.Update(func(s *PostUpsert) {
-		s.ClearSummary()
+		s.ClearSlug()
 	})
 }
 
-// SetOriginal sets the "original" field.
-func (u *PostUpsertBulk) SetOriginal(v string) *PostUpsertBulk {
+// SetMetaKeywords sets the "meta_keywords" field.
+func (u *PostUpsertBulk) SetMetaKeywords(v string) *PostUpsertBulk {
 	return u.Update(func(s *PostUpsert) {
-		s.SetOriginal(v)
+		s.SetMetaKeywords(v)
 	})
 }
 
-// UpdateOriginal sets the "original" field to the value that was provided on create.
-func (u *PostUpsertBulk) UpdateOriginal() *PostUpsertBulk {
+// UpdateMetaKeywords sets the "meta_keywords" field to the value that was provided on create.
+func (u *PostUpsertBulk) UpdateMetaKeywords() *PostUpsertBulk {
 	return u.Update(func(s *PostUpsert) {
-		s.UpdateOriginal()
+		s.UpdateMetaKeywords()
 	})
 }
 
-// ClearOriginal clears the value of the "original" field.
-func (u *PostUpsertBulk) ClearOriginal() *PostUpsertBulk {
+// ClearMetaKeywords clears the value of the "meta_keywords" field.
+func (u *PostUpsertBulk) ClearMetaKeywords() *PostUpsertBulk {
 	return u.Update(func(s *PostUpsert) {
-		s.ClearOriginal()
+		s.ClearMetaKeywords()
+	})
+}
+
+// SetMetaDescription sets the "meta_description" field.
+func (u *PostUpsertBulk) SetMetaDescription(v string) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.SetMetaDescription(v)
+	})
+}
+
+// UpdateMetaDescription sets the "meta_description" field to the value that was provided on create.
+func (u *PostUpsertBulk) UpdateMetaDescription() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateMetaDescription()
+	})
+}
+
+// ClearMetaDescription clears the value of the "meta_description" field.
+func (u *PostUpsertBulk) ClearMetaDescription() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearMetaDescription()
+	})
+}
+
+// SetFullPath sets the "full_path" field.
+func (u *PostUpsertBulk) SetFullPath(v string) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.SetFullPath(v)
+	})
+}
+
+// UpdateFullPath sets the "full_path" field to the value that was provided on create.
+func (u *PostUpsertBulk) UpdateFullPath() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateFullPath()
+	})
+}
+
+// ClearFullPath clears the value of the "full_path" field.
+func (u *PostUpsertBulk) ClearFullPath() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearFullPath()
+	})
+}
+
+// SetOriginalContent sets the "original_content" field.
+func (u *PostUpsertBulk) SetOriginalContent(v string) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.SetOriginalContent(v)
+	})
+}
+
+// UpdateOriginalContent sets the "original_content" field to the value that was provided on create.
+func (u *PostUpsertBulk) UpdateOriginalContent() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateOriginalContent()
+	})
+}
+
+// ClearOriginalContent clears the value of the "original_content" field.
+func (u *PostUpsertBulk) ClearOriginalContent() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearOriginalContent()
 	})
 }
 
@@ -1138,6 +2217,48 @@ func (u *PostUpsertBulk) ClearContent() *PostUpsertBulk {
 	})
 }
 
+// SetSummary sets the "summary" field.
+func (u *PostUpsertBulk) SetSummary(v string) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.SetSummary(v)
+	})
+}
+
+// UpdateSummary sets the "summary" field to the value that was provided on create.
+func (u *PostUpsertBulk) UpdateSummary() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateSummary()
+	})
+}
+
+// ClearSummary clears the value of the "summary" field.
+func (u *PostUpsertBulk) ClearSummary() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearSummary()
+	})
+}
+
+// SetThumbnail sets the "thumbnail" field.
+func (u *PostUpsertBulk) SetThumbnail(v string) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.SetThumbnail(v)
+	})
+}
+
+// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
+func (u *PostUpsertBulk) UpdateThumbnail() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateThumbnail()
+	})
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (u *PostUpsertBulk) ClearThumbnail() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearThumbnail()
+	})
+}
+
 // SetPassword sets the "password" field.
 func (u *PostUpsertBulk) SetPassword(v string) *PostUpsertBulk {
 	return u.Update(func(s *PostUpsert) {
@@ -1159,31 +2280,290 @@ func (u *PostUpsertBulk) ClearPassword() *PostUpsertBulk {
 	})
 }
 
-// SetUserID sets the "user_id" field.
-func (u *PostUpsertBulk) SetUserID(v int64) *PostUpsertBulk {
+// SetTemplate sets the "template" field.
+func (u *PostUpsertBulk) SetTemplate(v string) *PostUpsertBulk {
 	return u.Update(func(s *PostUpsert) {
-		s.SetUserID(v)
+		s.SetTemplate(v)
 	})
 }
 
-// AddUserID adds v to the "user_id" field.
-func (u *PostUpsertBulk) AddUserID(v int64) *PostUpsertBulk {
+// UpdateTemplate sets the "template" field to the value that was provided on create.
+func (u *PostUpsertBulk) UpdateTemplate() *PostUpsertBulk {
 	return u.Update(func(s *PostUpsert) {
-		s.AddUserID(v)
+		s.UpdateTemplate()
 	})
 }
 
-// UpdateUserID sets the "user_id" field to the value that was provided on create.
-func (u *PostUpsertBulk) UpdateUserID() *PostUpsertBulk {
+// ClearTemplate clears the value of the "template" field.
+func (u *PostUpsertBulk) ClearTemplate() *PostUpsertBulk {
 	return u.Update(func(s *PostUpsert) {
-		s.UpdateUserID()
+		s.ClearTemplate()
 	})
 }
 
-// ClearUserID clears the value of the "user_id" field.
-func (u *PostUpsertBulk) ClearUserID() *PostUpsertBulk {
+// SetCommentCount sets the "comment_count" field.
+func (u *PostUpsertBulk) SetCommentCount(v int32) *PostUpsertBulk {
 	return u.Update(func(s *PostUpsert) {
-		s.ClearUserID()
+		s.SetCommentCount(v)
+	})
+}
+
+// AddCommentCount adds v to the "comment_count" field.
+func (u *PostUpsertBulk) AddCommentCount(v int32) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.AddCommentCount(v)
+	})
+}
+
+// UpdateCommentCount sets the "comment_count" field to the value that was provided on create.
+func (u *PostUpsertBulk) UpdateCommentCount() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateCommentCount()
+	})
+}
+
+// ClearCommentCount clears the value of the "comment_count" field.
+func (u *PostUpsertBulk) ClearCommentCount() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearCommentCount()
+	})
+}
+
+// SetVisits sets the "visits" field.
+func (u *PostUpsertBulk) SetVisits(v int32) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.SetVisits(v)
+	})
+}
+
+// AddVisits adds v to the "visits" field.
+func (u *PostUpsertBulk) AddVisits(v int32) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.AddVisits(v)
+	})
+}
+
+// UpdateVisits sets the "visits" field to the value that was provided on create.
+func (u *PostUpsertBulk) UpdateVisits() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateVisits()
+	})
+}
+
+// ClearVisits clears the value of the "visits" field.
+func (u *PostUpsertBulk) ClearVisits() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearVisits()
+	})
+}
+
+// SetLikes sets the "likes" field.
+func (u *PostUpsertBulk) SetLikes(v int32) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.SetLikes(v)
+	})
+}
+
+// AddLikes adds v to the "likes" field.
+func (u *PostUpsertBulk) AddLikes(v int32) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.AddLikes(v)
+	})
+}
+
+// UpdateLikes sets the "likes" field to the value that was provided on create.
+func (u *PostUpsertBulk) UpdateLikes() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateLikes()
+	})
+}
+
+// ClearLikes clears the value of the "likes" field.
+func (u *PostUpsertBulk) ClearLikes() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearLikes()
+	})
+}
+
+// SetWordCount sets the "word_count" field.
+func (u *PostUpsertBulk) SetWordCount(v int32) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.SetWordCount(v)
+	})
+}
+
+// AddWordCount adds v to the "word_count" field.
+func (u *PostUpsertBulk) AddWordCount(v int32) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.AddWordCount(v)
+	})
+}
+
+// UpdateWordCount sets the "word_count" field to the value that was provided on create.
+func (u *PostUpsertBulk) UpdateWordCount() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateWordCount()
+	})
+}
+
+// ClearWordCount clears the value of the "word_count" field.
+func (u *PostUpsertBulk) ClearWordCount() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearWordCount()
+	})
+}
+
+// SetTopPriority sets the "top_priority" field.
+func (u *PostUpsertBulk) SetTopPriority(v int32) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.SetTopPriority(v)
+	})
+}
+
+// AddTopPriority adds v to the "top_priority" field.
+func (u *PostUpsertBulk) AddTopPriority(v int32) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.AddTopPriority(v)
+	})
+}
+
+// UpdateTopPriority sets the "top_priority" field to the value that was provided on create.
+func (u *PostUpsertBulk) UpdateTopPriority() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateTopPriority()
+	})
+}
+
+// ClearTopPriority clears the value of the "top_priority" field.
+func (u *PostUpsertBulk) ClearTopPriority() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearTopPriority()
+	})
+}
+
+// SetStatus sets the "status" field.
+func (u *PostUpsertBulk) SetStatus(v int32) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.SetStatus(v)
+	})
+}
+
+// AddStatus adds v to the "status" field.
+func (u *PostUpsertBulk) AddStatus(v int32) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.AddStatus(v)
+	})
+}
+
+// UpdateStatus sets the "status" field to the value that was provided on create.
+func (u *PostUpsertBulk) UpdateStatus() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateStatus()
+	})
+}
+
+// ClearStatus clears the value of the "status" field.
+func (u *PostUpsertBulk) ClearStatus() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearStatus()
+	})
+}
+
+// SetEditorType sets the "editor_type" field.
+func (u *PostUpsertBulk) SetEditorType(v int32) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.SetEditorType(v)
+	})
+}
+
+// AddEditorType adds v to the "editor_type" field.
+func (u *PostUpsertBulk) AddEditorType(v int32) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.AddEditorType(v)
+	})
+}
+
+// UpdateEditorType sets the "editor_type" field to the value that was provided on create.
+func (u *PostUpsertBulk) UpdateEditorType() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateEditorType()
+	})
+}
+
+// ClearEditorType clears the value of the "editor_type" field.
+func (u *PostUpsertBulk) ClearEditorType() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearEditorType()
+	})
+}
+
+// SetEditTime sets the "edit_time" field.
+func (u *PostUpsertBulk) SetEditTime(v int64) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.SetEditTime(v)
+	})
+}
+
+// AddEditTime adds v to the "edit_time" field.
+func (u *PostUpsertBulk) AddEditTime(v int64) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.AddEditTime(v)
+	})
+}
+
+// UpdateEditTime sets the "edit_time" field to the value that was provided on create.
+func (u *PostUpsertBulk) UpdateEditTime() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateEditTime()
+	})
+}
+
+// ClearEditTime clears the value of the "edit_time" field.
+func (u *PostUpsertBulk) ClearEditTime() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearEditTime()
+	})
+}
+
+// SetDisallowComment sets the "disallow_comment" field.
+func (u *PostUpsertBulk) SetDisallowComment(v bool) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.SetDisallowComment(v)
+	})
+}
+
+// UpdateDisallowComment sets the "disallow_comment" field to the value that was provided on create.
+func (u *PostUpsertBulk) UpdateDisallowComment() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateDisallowComment()
+	})
+}
+
+// ClearDisallowComment clears the value of the "disallow_comment" field.
+func (u *PostUpsertBulk) ClearDisallowComment() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearDisallowComment()
+	})
+}
+
+// SetInProgress sets the "in_progress" field.
+func (u *PostUpsertBulk) SetInProgress(v bool) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.SetInProgress(v)
+	})
+}
+
+// UpdateInProgress sets the "in_progress" field to the value that was provided on create.
+func (u *PostUpsertBulk) UpdateInProgress() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateInProgress()
+	})
+}
+
+// ClearInProgress clears the value of the "in_progress" field.
+func (u *PostUpsertBulk) ClearInProgress() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearInProgress()
 	})
 }
 

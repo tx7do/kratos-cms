@@ -118,8 +118,8 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "uint64"
+            "type": "integer",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -148,15 +148,15 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "uint64"
+            "type": "integer",
+            "format": "int64"
           },
           {
             "name": "operatorId",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "uint64"
+            "type": "integer",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -185,8 +185,8 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "uint64"
+            "type": "integer",
+            "format": "int64"
           },
           {
             "name": "tag",
@@ -200,8 +200,8 @@
             "name": "operatorId",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "uint64"
+            "type": "integer",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -247,8 +247,8 @@
           "$ref": "#/definitions/v1Tag"
         },
         "operatorId": {
-          "type": "string",
-          "format": "uint64"
+          "type": "integer",
+          "format": "int64"
         }
       },
       "title": "请求 - 创建标签"
@@ -273,16 +273,35 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "format": "uint64"
+          "type": "integer",
+          "format": "int64"
         },
         "name": {
           "type": "string"
         },
-        "displayName": {
+        "slug": {
           "type": "string"
         },
-        "seoDesc": {
+        "slugName": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        },
+        "thumbnail": {
+          "type": "string"
+        },
+        "createTime": {
+          "type": "string"
+        },
+        "updateTime": {
+          "type": "string"
+        },
+        "postCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "fullPath": {
           "type": "string"
         }
       }

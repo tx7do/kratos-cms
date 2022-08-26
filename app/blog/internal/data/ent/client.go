@@ -10,10 +10,13 @@ import (
 
 	"kratos-blog/app/blog/internal/data/ent/migrate"
 
+	"kratos-blog/app/blog/internal/data/ent/attachment"
 	"kratos-blog/app/blog/internal/data/ent/category"
+	"kratos-blog/app/blog/internal/data/ent/comment"
 	"kratos-blog/app/blog/internal/data/ent/link"
+	"kratos-blog/app/blog/internal/data/ent/menu"
+	"kratos-blog/app/blog/internal/data/ent/photo"
 	"kratos-blog/app/blog/internal/data/ent/post"
-	"kratos-blog/app/blog/internal/data/ent/system"
 	"kratos-blog/app/blog/internal/data/ent/tag"
 	"kratos-blog/app/blog/internal/data/ent/user"
 
@@ -26,14 +29,20 @@ type Client struct {
 	config
 	// Schema is the client for creating, migrating and dropping schema.
 	Schema *migrate.Schema
+	// Attachment is the client for interacting with the Attachment builders.
+	Attachment *AttachmentClient
 	// Category is the client for interacting with the Category builders.
 	Category *CategoryClient
+	// Comment is the client for interacting with the Comment builders.
+	Comment *CommentClient
 	// Link is the client for interacting with the Link builders.
 	Link *LinkClient
+	// Menu is the client for interacting with the Menu builders.
+	Menu *MenuClient
+	// Photo is the client for interacting with the Photo builders.
+	Photo *PhotoClient
 	// Post is the client for interacting with the Post builders.
 	Post *PostClient
-	// System is the client for interacting with the System builders.
-	System *SystemClient
 	// Tag is the client for interacting with the Tag builders.
 	Tag *TagClient
 	// User is the client for interacting with the User builders.
@@ -51,10 +60,13 @@ func NewClient(opts ...Option) *Client {
 
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
+	c.Attachment = NewAttachmentClient(c.config)
 	c.Category = NewCategoryClient(c.config)
+	c.Comment = NewCommentClient(c.config)
 	c.Link = NewLinkClient(c.config)
+	c.Menu = NewMenuClient(c.config)
+	c.Photo = NewPhotoClient(c.config)
 	c.Post = NewPostClient(c.config)
-	c.System = NewSystemClient(c.config)
 	c.Tag = NewTagClient(c.config)
 	c.User = NewUserClient(c.config)
 }
@@ -88,14 +100,17 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	cfg := c.config
 	cfg.driver = tx
 	return &Tx{
-		ctx:      ctx,
-		config:   cfg,
-		Category: NewCategoryClient(cfg),
-		Link:     NewLinkClient(cfg),
-		Post:     NewPostClient(cfg),
-		System:   NewSystemClient(cfg),
-		Tag:      NewTagClient(cfg),
-		User:     NewUserClient(cfg),
+		ctx:        ctx,
+		config:     cfg,
+		Attachment: NewAttachmentClient(cfg),
+		Category:   NewCategoryClient(cfg),
+		Comment:    NewCommentClient(cfg),
+		Link:       NewLinkClient(cfg),
+		Menu:       NewMenuClient(cfg),
+		Photo:      NewPhotoClient(cfg),
+		Post:       NewPostClient(cfg),
+		Tag:        NewTagClient(cfg),
+		User:       NewUserClient(cfg),
 	}, nil
 }
 
@@ -113,21 +128,24 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	cfg := c.config
 	cfg.driver = &txDriver{tx: tx, drv: c.driver}
 	return &Tx{
-		ctx:      ctx,
-		config:   cfg,
-		Category: NewCategoryClient(cfg),
-		Link:     NewLinkClient(cfg),
-		Post:     NewPostClient(cfg),
-		System:   NewSystemClient(cfg),
-		Tag:      NewTagClient(cfg),
-		User:     NewUserClient(cfg),
+		ctx:        ctx,
+		config:     cfg,
+		Attachment: NewAttachmentClient(cfg),
+		Category:   NewCategoryClient(cfg),
+		Comment:    NewCommentClient(cfg),
+		Link:       NewLinkClient(cfg),
+		Menu:       NewMenuClient(cfg),
+		Photo:      NewPhotoClient(cfg),
+		Post:       NewPostClient(cfg),
+		Tag:        NewTagClient(cfg),
+		User:       NewUserClient(cfg),
 	}, nil
 }
 
 // Debug returns a new debug-client. It's used to get verbose logging on specific operations.
 //
 //	client.Debug().
-//		Category.
+//		Attachment.
 //		Query().
 //		Count(ctx)
 //
@@ -150,12 +168,105 @@ func (c *Client) Close() error {
 // Use adds the mutation hooks to all the entity clients.
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
+	c.Attachment.Use(hooks...)
 	c.Category.Use(hooks...)
+	c.Comment.Use(hooks...)
 	c.Link.Use(hooks...)
+	c.Menu.Use(hooks...)
+	c.Photo.Use(hooks...)
 	c.Post.Use(hooks...)
-	c.System.Use(hooks...)
 	c.Tag.Use(hooks...)
 	c.User.Use(hooks...)
+}
+
+// AttachmentClient is a client for the Attachment schema.
+type AttachmentClient struct {
+	config
+}
+
+// NewAttachmentClient returns a client for the Attachment from the given config.
+func NewAttachmentClient(c config) *AttachmentClient {
+	return &AttachmentClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `attachment.Hooks(f(g(h())))`.
+func (c *AttachmentClient) Use(hooks ...Hook) {
+	c.hooks.Attachment = append(c.hooks.Attachment, hooks...)
+}
+
+// Create returns a builder for creating a Attachment entity.
+func (c *AttachmentClient) Create() *AttachmentCreate {
+	mutation := newAttachmentMutation(c.config, OpCreate)
+	return &AttachmentCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of Attachment entities.
+func (c *AttachmentClient) CreateBulk(builders ...*AttachmentCreate) *AttachmentCreateBulk {
+	return &AttachmentCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for Attachment.
+func (c *AttachmentClient) Update() *AttachmentUpdate {
+	mutation := newAttachmentMutation(c.config, OpUpdate)
+	return &AttachmentUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *AttachmentClient) UpdateOne(a *Attachment) *AttachmentUpdateOne {
+	mutation := newAttachmentMutation(c.config, OpUpdateOne, withAttachment(a))
+	return &AttachmentUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *AttachmentClient) UpdateOneID(id uint32) *AttachmentUpdateOne {
+	mutation := newAttachmentMutation(c.config, OpUpdateOne, withAttachmentID(id))
+	return &AttachmentUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Attachment.
+func (c *AttachmentClient) Delete() *AttachmentDelete {
+	mutation := newAttachmentMutation(c.config, OpDelete)
+	return &AttachmentDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *AttachmentClient) DeleteOne(a *Attachment) *AttachmentDeleteOne {
+	return c.DeleteOneID(a.ID)
+}
+
+// DeleteOne returns a builder for deleting the given entity by its id.
+func (c *AttachmentClient) DeleteOneID(id uint32) *AttachmentDeleteOne {
+	builder := c.Delete().Where(attachment.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &AttachmentDeleteOne{builder}
+}
+
+// Query returns a query builder for Attachment.
+func (c *AttachmentClient) Query() *AttachmentQuery {
+	return &AttachmentQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a Attachment entity by its id.
+func (c *AttachmentClient) Get(ctx context.Context, id uint32) (*Attachment, error) {
+	return c.Query().Where(attachment.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *AttachmentClient) GetX(ctx context.Context, id uint32) *Attachment {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *AttachmentClient) Hooks() []Hook {
+	return c.hooks.Attachment
 }
 
 // CategoryClient is a client for the Category schema.
@@ -198,7 +309,7 @@ func (c *CategoryClient) UpdateOne(ca *Category) *CategoryUpdateOne {
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *CategoryClient) UpdateOneID(id uint64) *CategoryUpdateOne {
+func (c *CategoryClient) UpdateOneID(id uint32) *CategoryUpdateOne {
 	mutation := newCategoryMutation(c.config, OpUpdateOne, withCategoryID(id))
 	return &CategoryUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -215,7 +326,7 @@ func (c *CategoryClient) DeleteOne(ca *Category) *CategoryDeleteOne {
 }
 
 // DeleteOne returns a builder for deleting the given entity by its id.
-func (c *CategoryClient) DeleteOneID(id uint64) *CategoryDeleteOne {
+func (c *CategoryClient) DeleteOneID(id uint32) *CategoryDeleteOne {
 	builder := c.Delete().Where(category.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -230,12 +341,12 @@ func (c *CategoryClient) Query() *CategoryQuery {
 }
 
 // Get returns a Category entity by its id.
-func (c *CategoryClient) Get(ctx context.Context, id uint64) (*Category, error) {
+func (c *CategoryClient) Get(ctx context.Context, id uint32) (*Category, error) {
 	return c.Query().Where(category.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *CategoryClient) GetX(ctx context.Context, id uint64) *Category {
+func (c *CategoryClient) GetX(ctx context.Context, id uint32) *Category {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
@@ -246,6 +357,96 @@ func (c *CategoryClient) GetX(ctx context.Context, id uint64) *Category {
 // Hooks returns the client hooks.
 func (c *CategoryClient) Hooks() []Hook {
 	return c.hooks.Category
+}
+
+// CommentClient is a client for the Comment schema.
+type CommentClient struct {
+	config
+}
+
+// NewCommentClient returns a client for the Comment from the given config.
+func NewCommentClient(c config) *CommentClient {
+	return &CommentClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `comment.Hooks(f(g(h())))`.
+func (c *CommentClient) Use(hooks ...Hook) {
+	c.hooks.Comment = append(c.hooks.Comment, hooks...)
+}
+
+// Create returns a builder for creating a Comment entity.
+func (c *CommentClient) Create() *CommentCreate {
+	mutation := newCommentMutation(c.config, OpCreate)
+	return &CommentCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of Comment entities.
+func (c *CommentClient) CreateBulk(builders ...*CommentCreate) *CommentCreateBulk {
+	return &CommentCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for Comment.
+func (c *CommentClient) Update() *CommentUpdate {
+	mutation := newCommentMutation(c.config, OpUpdate)
+	return &CommentUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *CommentClient) UpdateOne(co *Comment) *CommentUpdateOne {
+	mutation := newCommentMutation(c.config, OpUpdateOne, withComment(co))
+	return &CommentUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *CommentClient) UpdateOneID(id uint32) *CommentUpdateOne {
+	mutation := newCommentMutation(c.config, OpUpdateOne, withCommentID(id))
+	return &CommentUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Comment.
+func (c *CommentClient) Delete() *CommentDelete {
+	mutation := newCommentMutation(c.config, OpDelete)
+	return &CommentDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *CommentClient) DeleteOne(co *Comment) *CommentDeleteOne {
+	return c.DeleteOneID(co.ID)
+}
+
+// DeleteOne returns a builder for deleting the given entity by its id.
+func (c *CommentClient) DeleteOneID(id uint32) *CommentDeleteOne {
+	builder := c.Delete().Where(comment.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &CommentDeleteOne{builder}
+}
+
+// Query returns a query builder for Comment.
+func (c *CommentClient) Query() *CommentQuery {
+	return &CommentQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a Comment entity by its id.
+func (c *CommentClient) Get(ctx context.Context, id uint32) (*Comment, error) {
+	return c.Query().Where(comment.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *CommentClient) GetX(ctx context.Context, id uint32) *Comment {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *CommentClient) Hooks() []Hook {
+	return c.hooks.Comment
 }
 
 // LinkClient is a client for the Link schema.
@@ -288,7 +489,7 @@ func (c *LinkClient) UpdateOne(l *Link) *LinkUpdateOne {
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *LinkClient) UpdateOneID(id uint64) *LinkUpdateOne {
+func (c *LinkClient) UpdateOneID(id uint32) *LinkUpdateOne {
 	mutation := newLinkMutation(c.config, OpUpdateOne, withLinkID(id))
 	return &LinkUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -305,7 +506,7 @@ func (c *LinkClient) DeleteOne(l *Link) *LinkDeleteOne {
 }
 
 // DeleteOne returns a builder for deleting the given entity by its id.
-func (c *LinkClient) DeleteOneID(id uint64) *LinkDeleteOne {
+func (c *LinkClient) DeleteOneID(id uint32) *LinkDeleteOne {
 	builder := c.Delete().Where(link.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -320,12 +521,12 @@ func (c *LinkClient) Query() *LinkQuery {
 }
 
 // Get returns a Link entity by its id.
-func (c *LinkClient) Get(ctx context.Context, id uint64) (*Link, error) {
+func (c *LinkClient) Get(ctx context.Context, id uint32) (*Link, error) {
 	return c.Query().Where(link.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *LinkClient) GetX(ctx context.Context, id uint64) *Link {
+func (c *LinkClient) GetX(ctx context.Context, id uint32) *Link {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
@@ -336,6 +537,186 @@ func (c *LinkClient) GetX(ctx context.Context, id uint64) *Link {
 // Hooks returns the client hooks.
 func (c *LinkClient) Hooks() []Hook {
 	return c.hooks.Link
+}
+
+// MenuClient is a client for the Menu schema.
+type MenuClient struct {
+	config
+}
+
+// NewMenuClient returns a client for the Menu from the given config.
+func NewMenuClient(c config) *MenuClient {
+	return &MenuClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `menu.Hooks(f(g(h())))`.
+func (c *MenuClient) Use(hooks ...Hook) {
+	c.hooks.Menu = append(c.hooks.Menu, hooks...)
+}
+
+// Create returns a builder for creating a Menu entity.
+func (c *MenuClient) Create() *MenuCreate {
+	mutation := newMenuMutation(c.config, OpCreate)
+	return &MenuCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of Menu entities.
+func (c *MenuClient) CreateBulk(builders ...*MenuCreate) *MenuCreateBulk {
+	return &MenuCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for Menu.
+func (c *MenuClient) Update() *MenuUpdate {
+	mutation := newMenuMutation(c.config, OpUpdate)
+	return &MenuUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *MenuClient) UpdateOne(m *Menu) *MenuUpdateOne {
+	mutation := newMenuMutation(c.config, OpUpdateOne, withMenu(m))
+	return &MenuUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *MenuClient) UpdateOneID(id uint32) *MenuUpdateOne {
+	mutation := newMenuMutation(c.config, OpUpdateOne, withMenuID(id))
+	return &MenuUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Menu.
+func (c *MenuClient) Delete() *MenuDelete {
+	mutation := newMenuMutation(c.config, OpDelete)
+	return &MenuDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *MenuClient) DeleteOne(m *Menu) *MenuDeleteOne {
+	return c.DeleteOneID(m.ID)
+}
+
+// DeleteOne returns a builder for deleting the given entity by its id.
+func (c *MenuClient) DeleteOneID(id uint32) *MenuDeleteOne {
+	builder := c.Delete().Where(menu.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &MenuDeleteOne{builder}
+}
+
+// Query returns a query builder for Menu.
+func (c *MenuClient) Query() *MenuQuery {
+	return &MenuQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a Menu entity by its id.
+func (c *MenuClient) Get(ctx context.Context, id uint32) (*Menu, error) {
+	return c.Query().Where(menu.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *MenuClient) GetX(ctx context.Context, id uint32) *Menu {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *MenuClient) Hooks() []Hook {
+	return c.hooks.Menu
+}
+
+// PhotoClient is a client for the Photo schema.
+type PhotoClient struct {
+	config
+}
+
+// NewPhotoClient returns a client for the Photo from the given config.
+func NewPhotoClient(c config) *PhotoClient {
+	return &PhotoClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `photo.Hooks(f(g(h())))`.
+func (c *PhotoClient) Use(hooks ...Hook) {
+	c.hooks.Photo = append(c.hooks.Photo, hooks...)
+}
+
+// Create returns a builder for creating a Photo entity.
+func (c *PhotoClient) Create() *PhotoCreate {
+	mutation := newPhotoMutation(c.config, OpCreate)
+	return &PhotoCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of Photo entities.
+func (c *PhotoClient) CreateBulk(builders ...*PhotoCreate) *PhotoCreateBulk {
+	return &PhotoCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for Photo.
+func (c *PhotoClient) Update() *PhotoUpdate {
+	mutation := newPhotoMutation(c.config, OpUpdate)
+	return &PhotoUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *PhotoClient) UpdateOne(ph *Photo) *PhotoUpdateOne {
+	mutation := newPhotoMutation(c.config, OpUpdateOne, withPhoto(ph))
+	return &PhotoUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *PhotoClient) UpdateOneID(id uint32) *PhotoUpdateOne {
+	mutation := newPhotoMutation(c.config, OpUpdateOne, withPhotoID(id))
+	return &PhotoUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Photo.
+func (c *PhotoClient) Delete() *PhotoDelete {
+	mutation := newPhotoMutation(c.config, OpDelete)
+	return &PhotoDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *PhotoClient) DeleteOne(ph *Photo) *PhotoDeleteOne {
+	return c.DeleteOneID(ph.ID)
+}
+
+// DeleteOne returns a builder for deleting the given entity by its id.
+func (c *PhotoClient) DeleteOneID(id uint32) *PhotoDeleteOne {
+	builder := c.Delete().Where(photo.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &PhotoDeleteOne{builder}
+}
+
+// Query returns a query builder for Photo.
+func (c *PhotoClient) Query() *PhotoQuery {
+	return &PhotoQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a Photo entity by its id.
+func (c *PhotoClient) Get(ctx context.Context, id uint32) (*Photo, error) {
+	return c.Query().Where(photo.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *PhotoClient) GetX(ctx context.Context, id uint32) *Photo {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *PhotoClient) Hooks() []Hook {
+	return c.hooks.Photo
 }
 
 // PostClient is a client for the Post schema.
@@ -378,7 +759,7 @@ func (c *PostClient) UpdateOne(po *Post) *PostUpdateOne {
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *PostClient) UpdateOneID(id uint64) *PostUpdateOne {
+func (c *PostClient) UpdateOneID(id uint32) *PostUpdateOne {
 	mutation := newPostMutation(c.config, OpUpdateOne, withPostID(id))
 	return &PostUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -395,7 +776,7 @@ func (c *PostClient) DeleteOne(po *Post) *PostDeleteOne {
 }
 
 // DeleteOne returns a builder for deleting the given entity by its id.
-func (c *PostClient) DeleteOneID(id uint64) *PostDeleteOne {
+func (c *PostClient) DeleteOneID(id uint32) *PostDeleteOne {
 	builder := c.Delete().Where(post.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -410,12 +791,12 @@ func (c *PostClient) Query() *PostQuery {
 }
 
 // Get returns a Post entity by its id.
-func (c *PostClient) Get(ctx context.Context, id uint64) (*Post, error) {
+func (c *PostClient) Get(ctx context.Context, id uint32) (*Post, error) {
 	return c.Query().Where(post.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *PostClient) GetX(ctx context.Context, id uint64) *Post {
+func (c *PostClient) GetX(ctx context.Context, id uint32) *Post {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
@@ -426,96 +807,6 @@ func (c *PostClient) GetX(ctx context.Context, id uint64) *Post {
 // Hooks returns the client hooks.
 func (c *PostClient) Hooks() []Hook {
 	return c.hooks.Post
-}
-
-// SystemClient is a client for the System schema.
-type SystemClient struct {
-	config
-}
-
-// NewSystemClient returns a client for the System from the given config.
-func NewSystemClient(c config) *SystemClient {
-	return &SystemClient{config: c}
-}
-
-// Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `system.Hooks(f(g(h())))`.
-func (c *SystemClient) Use(hooks ...Hook) {
-	c.hooks.System = append(c.hooks.System, hooks...)
-}
-
-// Create returns a builder for creating a System entity.
-func (c *SystemClient) Create() *SystemCreate {
-	mutation := newSystemMutation(c.config, OpCreate)
-	return &SystemCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// CreateBulk returns a builder for creating a bulk of System entities.
-func (c *SystemClient) CreateBulk(builders ...*SystemCreate) *SystemCreateBulk {
-	return &SystemCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for System.
-func (c *SystemClient) Update() *SystemUpdate {
-	mutation := newSystemMutation(c.config, OpUpdate)
-	return &SystemUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOne returns an update builder for the given entity.
-func (c *SystemClient) UpdateOne(s *System) *SystemUpdateOne {
-	mutation := newSystemMutation(c.config, OpUpdateOne, withSystem(s))
-	return &SystemUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOneID returns an update builder for the given id.
-func (c *SystemClient) UpdateOneID(id uint64) *SystemUpdateOne {
-	mutation := newSystemMutation(c.config, OpUpdateOne, withSystemID(id))
-	return &SystemUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// Delete returns a delete builder for System.
-func (c *SystemClient) Delete() *SystemDelete {
-	mutation := newSystemMutation(c.config, OpDelete)
-	return &SystemDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// DeleteOne returns a builder for deleting the given entity.
-func (c *SystemClient) DeleteOne(s *System) *SystemDeleteOne {
-	return c.DeleteOneID(s.ID)
-}
-
-// DeleteOne returns a builder for deleting the given entity by its id.
-func (c *SystemClient) DeleteOneID(id uint64) *SystemDeleteOne {
-	builder := c.Delete().Where(system.ID(id))
-	builder.mutation.id = &id
-	builder.mutation.op = OpDeleteOne
-	return &SystemDeleteOne{builder}
-}
-
-// Query returns a query builder for System.
-func (c *SystemClient) Query() *SystemQuery {
-	return &SystemQuery{
-		config: c.config,
-	}
-}
-
-// Get returns a System entity by its id.
-func (c *SystemClient) Get(ctx context.Context, id uint64) (*System, error) {
-	return c.Query().Where(system.ID(id)).Only(ctx)
-}
-
-// GetX is like Get, but panics if an error occurs.
-func (c *SystemClient) GetX(ctx context.Context, id uint64) *System {
-	obj, err := c.Get(ctx, id)
-	if err != nil {
-		panic(err)
-	}
-	return obj
-}
-
-// Hooks returns the client hooks.
-func (c *SystemClient) Hooks() []Hook {
-	return c.hooks.System
 }
 
 // TagClient is a client for the Tag schema.
@@ -558,7 +849,7 @@ func (c *TagClient) UpdateOne(t *Tag) *TagUpdateOne {
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *TagClient) UpdateOneID(id uint64) *TagUpdateOne {
+func (c *TagClient) UpdateOneID(id uint32) *TagUpdateOne {
 	mutation := newTagMutation(c.config, OpUpdateOne, withTagID(id))
 	return &TagUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -575,7 +866,7 @@ func (c *TagClient) DeleteOne(t *Tag) *TagDeleteOne {
 }
 
 // DeleteOne returns a builder for deleting the given entity by its id.
-func (c *TagClient) DeleteOneID(id uint64) *TagDeleteOne {
+func (c *TagClient) DeleteOneID(id uint32) *TagDeleteOne {
 	builder := c.Delete().Where(tag.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -590,12 +881,12 @@ func (c *TagClient) Query() *TagQuery {
 }
 
 // Get returns a Tag entity by its id.
-func (c *TagClient) Get(ctx context.Context, id uint64) (*Tag, error) {
+func (c *TagClient) Get(ctx context.Context, id uint32) (*Tag, error) {
 	return c.Query().Where(tag.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *TagClient) GetX(ctx context.Context, id uint64) *Tag {
+func (c *TagClient) GetX(ctx context.Context, id uint32) *Tag {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
@@ -648,7 +939,7 @@ func (c *UserClient) UpdateOne(u *User) *UserUpdateOne {
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *UserClient) UpdateOneID(id uint64) *UserUpdateOne {
+func (c *UserClient) UpdateOneID(id uint32) *UserUpdateOne {
 	mutation := newUserMutation(c.config, OpUpdateOne, withUserID(id))
 	return &UserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -665,7 +956,7 @@ func (c *UserClient) DeleteOne(u *User) *UserDeleteOne {
 }
 
 // DeleteOne returns a builder for deleting the given entity by its id.
-func (c *UserClient) DeleteOneID(id uint64) *UserDeleteOne {
+func (c *UserClient) DeleteOneID(id uint32) *UserDeleteOne {
 	builder := c.Delete().Where(user.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -680,12 +971,12 @@ func (c *UserClient) Query() *UserQuery {
 }
 
 // Get returns a User entity by its id.
-func (c *UserClient) Get(ctx context.Context, id uint64) (*User, error) {
+func (c *UserClient) Get(ctx context.Context, id uint32) (*User, error) {
 	return c.Query().Where(user.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *UserClient) GetX(ctx context.Context, id uint64) *User {
+func (c *UserClient) GetX(ctx context.Context, id uint32) *User {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)

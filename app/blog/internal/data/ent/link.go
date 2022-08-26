@@ -15,17 +15,23 @@ type Link struct {
 	config `json:"-"`
 	// ID of the ent.
 	// id
-	ID uint64 `json:"id,omitempty"`
+	ID uint32 `json:"id,omitempty"`
 	// 创建时间
 	CreateTime *int64 `json:"create_time,omitempty"`
 	// 更新时间
 	UpdateTime *int64 `json:"update_time,omitempty"`
 	// Name holds the value of the "name" field.
 	Name *string `json:"name,omitempty"`
-	// Link holds the value of the "link" field.
-	Link *string `json:"link,omitempty"`
-	// OrderID holds the value of the "order_id" field.
-	OrderID *int32 `json:"order_id,omitempty"`
+	// URL holds the value of the "url" field.
+	URL *string `json:"url,omitempty"`
+	// Logo holds the value of the "logo" field.
+	Logo *string `json:"logo,omitempty"`
+	// 说明
+	Description *string `json:"description,omitempty"`
+	// Team holds the value of the "team" field.
+	Team *string `json:"team,omitempty"`
+	// Priority holds the value of the "priority" field.
+	Priority *int32 `json:"priority,omitempty"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -33,9 +39,9 @@ func (*Link) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case link.FieldID, link.FieldCreateTime, link.FieldUpdateTime, link.FieldOrderID:
+		case link.FieldID, link.FieldCreateTime, link.FieldUpdateTime, link.FieldPriority:
 			values[i] = new(sql.NullInt64)
-		case link.FieldName, link.FieldLink:
+		case link.FieldName, link.FieldURL, link.FieldLogo, link.FieldDescription, link.FieldTeam:
 			values[i] = new(sql.NullString)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type Link", columns[i])
@@ -57,7 +63,7 @@ func (l *Link) assignValues(columns []string, values []interface{}) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			l.ID = uint64(value.Int64)
+			l.ID = uint32(value.Int64)
 		case link.FieldCreateTime:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field create_time", values[i])
@@ -79,19 +85,40 @@ func (l *Link) assignValues(columns []string, values []interface{}) error {
 				l.Name = new(string)
 				*l.Name = value.String
 			}
-		case link.FieldLink:
+		case link.FieldURL:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field link", values[i])
+				return fmt.Errorf("unexpected type %T for field url", values[i])
 			} else if value.Valid {
-				l.Link = new(string)
-				*l.Link = value.String
+				l.URL = new(string)
+				*l.URL = value.String
 			}
-		case link.FieldOrderID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field order_id", values[i])
+		case link.FieldLogo:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field logo", values[i])
 			} else if value.Valid {
-				l.OrderID = new(int32)
-				*l.OrderID = int32(value.Int64)
+				l.Logo = new(string)
+				*l.Logo = value.String
+			}
+		case link.FieldDescription:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field description", values[i])
+			} else if value.Valid {
+				l.Description = new(string)
+				*l.Description = value.String
+			}
+		case link.FieldTeam:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field team", values[i])
+			} else if value.Valid {
+				l.Team = new(string)
+				*l.Team = value.String
+			}
+		case link.FieldPriority:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field priority", values[i])
+			} else if value.Valid {
+				l.Priority = new(int32)
+				*l.Priority = int32(value.Int64)
 			}
 		}
 	}
@@ -136,13 +163,28 @@ func (l *Link) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := l.Link; v != nil {
-		builder.WriteString("link=")
+	if v := l.URL; v != nil {
+		builder.WriteString("url=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := l.OrderID; v != nil {
-		builder.WriteString("order_id=")
+	if v := l.Logo; v != nil {
+		builder.WriteString("logo=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := l.Description; v != nil {
+		builder.WriteString("description=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := l.Team; v != nil {
+		builder.WriteString("team=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := l.Priority; v != nil {
+		builder.WriteString("priority=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteByte(')')

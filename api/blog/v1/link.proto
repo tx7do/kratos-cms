@@ -50,10 +50,15 @@ service LinkService {
 }
 
 message Link {
-  uint64 id = 1;
+  uint32 id = 1;
   optional string name = 2;
-  optional string link = 3;
-  optional int32 orderId = 4;
+  optional string url = 3;
+  optional string logo = 4;
+  optional string description = 5;
+  optional string team = 6;
+  optional int32 priority = 7;
+  optional string createTime = 8;
+  optional string updateTime = 9;
 }
 
 // 回应 - 链接列表
@@ -64,24 +69,24 @@ message ListLinkResponse {
 
 // 请求 - 链接数据
 message GetLinkRequest {
-  uint64 id = 1;
+  uint32 id = 1;
 }
 
 // 请求 - 创建链接
 message CreateLinkRequest {
   Link link = 1;
-  optional uint64 operatorId = 2;
+  optional uint32 operatorId = 2;
 }
 
 // 请求 - 更新链接
 message UpdateLinkRequest {
-  uint64 id = 1;
+  uint32 id = 1;
   Link link = 2;
-  optional uint64 operatorId = 3;
+  optional uint32 operatorId = 3;
 }
 
 // 请求 - 删除链接
 message DeleteLinkRequest {
-  uint64 id = 1;
-  optional uint64 operatorId = 2;
+  uint32 id = 1;
+  optional uint32 operatorId = 2;
 }

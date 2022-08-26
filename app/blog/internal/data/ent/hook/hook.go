@@ -8,6 +8,19 @@ import (
 	"kratos-blog/app/blog/internal/data/ent"
 )
 
+// The AttachmentFunc type is an adapter to allow the use of ordinary
+// function as Attachment mutator.
+type AttachmentFunc func(context.Context, *ent.AttachmentMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f AttachmentFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.AttachmentMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.AttachmentMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // The CategoryFunc type is an adapter to allow the use of ordinary
 // function as Category mutator.
 type CategoryFunc func(context.Context, *ent.CategoryMutation) (ent.Value, error)
@@ -17,6 +30,19 @@ func (f CategoryFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, er
 	mv, ok := m.(*ent.CategoryMutation)
 	if !ok {
 		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.CategoryMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The CommentFunc type is an adapter to allow the use of ordinary
+// function as Comment mutator.
+type CommentFunc func(context.Context, *ent.CommentMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f CommentFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.CommentMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.CommentMutation", m)
 	}
 	return f(ctx, mv)
 }
@@ -34,6 +60,32 @@ func (f LinkFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error)
 	return f(ctx, mv)
 }
 
+// The MenuFunc type is an adapter to allow the use of ordinary
+// function as Menu mutator.
+type MenuFunc func(context.Context, *ent.MenuMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f MenuFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.MenuMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.MenuMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The PhotoFunc type is an adapter to allow the use of ordinary
+// function as Photo mutator.
+type PhotoFunc func(context.Context, *ent.PhotoMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f PhotoFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.PhotoMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.PhotoMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // The PostFunc type is an adapter to allow the use of ordinary
 // function as Post mutator.
 type PostFunc func(context.Context, *ent.PostMutation) (ent.Value, error)
@@ -43,19 +95,6 @@ func (f PostFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error)
 	mv, ok := m.(*ent.PostMutation)
 	if !ok {
 		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.PostMutation", m)
-	}
-	return f(ctx, mv)
-}
-
-// The SystemFunc type is an adapter to allow the use of ordinary
-// function as System mutator.
-type SystemFunc func(context.Context, *ent.SystemMutation) (ent.Value, error)
-
-// Mutate calls f(ctx, m).
-func (f SystemFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.SystemMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SystemMutation", m)
 	}
 	return f(ctx, mv)
 }

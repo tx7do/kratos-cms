@@ -11,7 +11,7 @@ type UserRepo interface {
 	Update(ctx context.Context, req *v1.UpdateUserRequest) (*v1.User, error)
 	Delete(ctx context.Context, req *v1.DeleteUserRequest) (bool, error)
 
-	Get(ctx context.Context, req uint64) (*v1.User, error)
+	Get(ctx context.Context, req uint32) (*v1.User, error)
 	GetUserByUserName(ctx context.Context, userName string) (*v1.User, error)
 
 	VerifyPassword(ctx context.Context, req *v1.LoginRequest) (bool, error)
@@ -30,7 +30,7 @@ func NewUserUseCase(repo UserRepo, logger log.Logger) *UserUseCase {
 	}
 }
 
-func (uc *UserUseCase) Get(ctx context.Context, req uint64) (*v1.User, error) {
+func (uc *UserUseCase) Get(ctx context.Context, req uint32) (*v1.User, error) {
 	return uc.repo.Get(ctx, req)
 }
 

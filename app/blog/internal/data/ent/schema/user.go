@@ -31,7 +31,7 @@ func (User) Fields() []ent.Field {
 		field.String("username").
 			Comment("用户名").
 			Unique().
-			MaxLen(128).
+			MaxLen(50).
 			NotEmpty().
 			Immutable().
 			Optional().
@@ -46,7 +46,19 @@ func (User) Fields() []ent.Field {
 
 		field.String("email").
 			Comment("电子邮箱").
-			MaxLen(254).
+			MaxLen(127).
+			Optional().
+			Nillable(),
+
+		field.String("avatar").
+			Comment("头像").
+			MaxLen(1023).
+			Optional().
+			Nillable(),
+
+		field.String("description").
+			Comment("个人说明").
+			MaxLen(1023).
 			Optional().
 			Nillable(),
 
@@ -75,7 +87,6 @@ func (User) Edges() []ent.Edge {
 // Indexes of the User.
 func (User) Indexes() []ent.Index {
 	return []ent.Index{
-		index.Fields("id").StorageKey("user_pkey"),
 		index.Fields("id", "username").Unique(),
 	}
 }

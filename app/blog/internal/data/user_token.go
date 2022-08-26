@@ -48,13 +48,13 @@ func NewUserTokenRepo(data *Data, conf *conf.Auth, logger log.Logger) biz.UserTo
 	}
 }
 
-func (r *userTokenRepo) createAccessJwtToken(username string, userId uint64) string {
+func (r *userTokenRepo) createAccessJwtToken(username string, userId uint32) string {
 	nowTime := time.Now()
 
 	claims := jwtV4.NewWithClaims(jwtV4.SigningMethodHS256,
 		jwtV4.MapClaims{
 			ClaimSubject:  username,
-			ClaimUserId:   strconv.FormatUint(userId, 10),
+			ClaimUserId:   strconv.FormatUint(uint64(userId), 10),
 			ClaimIssuedAt: nowTime.Unix(),
 		})
 
@@ -66,7 +66,7 @@ func (r *userTokenRepo) createAccessJwtToken(username string, userId uint64) str
 	return signedToken
 }
 
-func (r *userTokenRepo) parseAccessJwtTokenFromString(token string) (string, uint64, error) {
+func (r *userTokenRepo) parseAccessJwtTokenFromString(token string) (string, uint32, error) {
 	parseAuth, err := jwtV4.Parse(token, func(*jwtV4.Token) (interface{}, error) {
 		return r.key, nil
 	})
@@ -87,7 +87,7 @@ func (r *userTokenRepo) parseAccessJwtTokenFromString(token string) (string, uin
 	return userName, userId, nil
 }
 
-func (r *userTokenRepo) parseAccessJwtToken(claims jwtV4.Claims) (string, uint64, error) {
+func (r *userTokenRepo) parseAccessJwtToken(claims jwtV4.Claims) (string, uint32, error) {
 	if claims == nil {
 		return "", 0, errors.New("claims is nil")
 	}
@@ -103,14 +103,14 @@ func (r *userTokenRepo) parseAccessJwtToken(claims jwtV4.Claims) (string, uint64
 		strUserName = userName.(string)
 	}
 
-	var userId uint64
+	var userId uint32
 	strUserId, ok := mc[ClaimUserId]
 	if ok {
 		userId_, err := strconv.ParseUint(strUserId.(string), 10, 64)
 		if err != nil {
 			return "", 0, err
 		}
-		userId = userId_
+		userId = uint32(userId_)
 	}
 
 	return strUserName, userId, nil
@@ -130,7 +130,7 @@ func (r *userTokenRepo) GenerateToken(ctx context.Context, user *v1.User) (strin
 	return token, nil
 }
 
-func (r *userTokenRepo) GetToken(ctx context.Context, userId uint64) string {
+func (r *userTokenRepo) GetToken(ctx context.Context, userId uint32) string {
 	return r.getToken(ctx, userId)
 }
 
@@ -148,7 +148,7 @@ func (r *userTokenRepo) ValidateToken(ctx context.Context, token string) error {
 	return nil
 }
 
-func (r *userTokenRepo) RemoveToken(ctx context.Context, userId uint64) error {
+func (r *userTokenRepo) RemoveToken(ctx context.Context, userId uint32) error {
 	validToken := r.getToken(ctx, userId)
 	if validToken == "" {
 		return v1.ErrorTokenNotExist("令牌不存在")
@@ -157,7 +157,7 @@ func (r *userTokenRepo) RemoveToken(ctx context.Context, userId uint64) error {
 	return r.deleteToken(ctx, userId)
 }
 
-func (r *userTokenRepo) RemoveUserToken(ctx context.Context, userId uint64) error {
+func (r *userTokenRepo) RemoveUserToken(ctx context.Context, userId uint32) error {
 	validToken := r.getToken(ctx, userId)
 	if validToken == "" {
 		return v1.ErrorTokenNotExist("令牌不存在")
@@ -168,12 +168,12 @@ func (r *userTokenRepo) RemoveUserToken(ctx context.Context, userId uint64) erro
 
 const userTokenKeyPrefix = "ut_"
 
-func (r *userTokenRepo) setToken(ctx context.Context, userId uint64, token string) error {
+func (r *userTokenRepo) setToken(ctx context.Context, userId uint32, token string) error {
 	key := fmt.Sprintf("%s%d", userTokenKeyPrefix, userId)
 	return r.data.rdb.Set(ctx, key, token, 0).Err()
 }
 
-func (r *userTokenRepo) getToken(ctx context.Context, userId uint64) string {
+func (r *userTokenRepo) getToken(ctx context.Context, userId uint32) string {
 	key := fmt.Sprintf("%s%d", userTokenKeyPrefix, userId)
 	result, err := r.data.rdb.Get(ctx, key).Result()
 	if err != nil {
@@ -185,7 +185,7 @@ func (r *userTokenRepo) getToken(ctx context.Context, userId uint64) string {
 	return result
 }
 
-func (r *userTokenRepo) deleteToken(ctx context.Context, userId uint64) error {
+func (r *userTokenRepo) deleteToken(ctx context.Context, userId uint32) error {
 	key := fmt.Sprintf("%s%d", userTokenKeyPrefix, userId)
 	return r.data.rdb.Del(ctx, key).Err()
 }

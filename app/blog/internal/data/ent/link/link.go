@@ -13,10 +13,16 @@ const (
 	FieldUpdateTime = "update_time"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
-	// FieldLink holds the string denoting the link field in the database.
-	FieldLink = "link"
-	// FieldOrderID holds the string denoting the order_id field in the database.
-	FieldOrderID = "order_id"
+	// FieldURL holds the string denoting the url field in the database.
+	FieldURL = "url"
+	// FieldLogo holds the string denoting the logo field in the database.
+	FieldLogo = "logo"
+	// FieldDescription holds the string denoting the description field in the database.
+	FieldDescription = "description"
+	// FieldTeam holds the string denoting the team field in the database.
+	FieldTeam = "team"
+	// FieldPriority holds the string denoting the priority field in the database.
+	FieldPriority = "priority"
 	// Table holds the table name of the link in the database.
 	Table = "link"
 )
@@ -27,8 +33,11 @@ var Columns = []string{
 	FieldCreateTime,
 	FieldUpdateTime,
 	FieldName,
-	FieldLink,
-	FieldOrderID,
+	FieldURL,
+	FieldLogo,
+	FieldDescription,
+	FieldTeam,
+	FieldPriority,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -42,10 +51,16 @@ func ValidColumn(column string) bool {
 }
 
 var (
+	// DefaultCreateTime holds the default value on creation for the "create_time" field.
+	DefaultCreateTime func() int64
 	// UpdateDefaultUpdateTime holds the default value on update for the "update_time" field.
 	UpdateDefaultUpdateTime func() int64
 	// NameValidator is a validator for the "name" field. It is called by the builders before save.
 	NameValidator func(string) error
+	// URLValidator is a validator for the "url" field. It is called by the builders before save.
+	URLValidator func(string) error
+	// LogoValidator is a validator for the "logo" field. It is called by the builders before save.
+	LogoValidator func(string) error
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
-	IDValidator func(uint64) error
+	IDValidator func(uint32) error
 )

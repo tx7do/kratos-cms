@@ -35,10 +35,15 @@ func (r *TagRepo) convertEntToProto(in *ent.Tag) *v1.Tag {
 		return nil
 	}
 	return &v1.Tag{
-		Id:          in.ID,
-		Name:        in.Name,
-		DisplayName: in.DisplayName,
-		SeoDesc:     in.SeoDesc,
+		Id:         in.ID,
+		Name:       in.Name,
+		Slug:       in.Slug,
+		Color:      in.Color,
+		Thumbnail:  in.Thumbnail,
+		SlugName:   in.SlugName,
+		PostCount:  in.PostCount,
+		CreateTime: entgo.UnixMilliToStringPtr(in.CreateTime),
+		UpdateTime: entgo.UnixMilliToStringPtr(in.UpdateTime),
 	}
 }
 
@@ -107,8 +112,11 @@ func (r *TagRepo) Get(ctx context.Context, req *v1.GetTagRequest) (*v1.Tag, erro
 func (r *TagRepo) Create(ctx context.Context, req *v1.CreateTagRequest) (*v1.Tag, error) {
 	po, err := r.data.db.Tag.Create().
 		SetNillableName(req.Tag.Name).
-		SetNillableDisplayName(req.Tag.DisplayName).
-		SetNillableSeoDesc(req.Tag.SeoDesc).
+		SetNillableSlug(req.Tag.Slug).
+		SetNillableColor(req.Tag.Color).
+		SetNillableThumbnail(req.Tag.Thumbnail).
+		SetNillableSlugName(req.Tag.SlugName).
+		SetNillablePostCount(req.Tag.PostCount).
 		Save(ctx)
 	if err != nil {
 		return nil, err
@@ -120,8 +128,11 @@ func (r *TagRepo) Create(ctx context.Context, req *v1.CreateTagRequest) (*v1.Tag
 func (r *TagRepo) Update(ctx context.Context, req *v1.UpdateTagRequest) (*v1.Tag, error) {
 	builder := r.data.db.Tag.UpdateOneID(req.Id).
 		SetNillableName(req.Tag.Name).
-		SetNillableDisplayName(req.Tag.DisplayName).
-		SetNillableSeoDesc(req.Tag.SeoDesc)
+		SetNillableSlug(req.Tag.Slug).
+		SetNillableColor(req.Tag.Color).
+		SetNillableThumbnail(req.Tag.Thumbnail).
+		SetNillableSlugName(req.Tag.SlugName).
+		SetNillablePostCount(req.Tag.PostCount)
 
 	po, err := builder.Save(ctx)
 	if err != nil {

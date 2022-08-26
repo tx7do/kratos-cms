@@ -63,50 +63,78 @@ func (tc *TagCreate) SetNillableName(s *string) *TagCreate {
 	return tc
 }
 
-// SetDisplayName sets the "display_name" field.
-func (tc *TagCreate) SetDisplayName(s string) *TagCreate {
-	tc.mutation.SetDisplayName(s)
+// SetSlug sets the "slug" field.
+func (tc *TagCreate) SetSlug(s string) *TagCreate {
+	tc.mutation.SetSlug(s)
 	return tc
 }
 
-// SetNillableDisplayName sets the "display_name" field if the given value is not nil.
-func (tc *TagCreate) SetNillableDisplayName(s *string) *TagCreate {
+// SetNillableSlug sets the "slug" field if the given value is not nil.
+func (tc *TagCreate) SetNillableSlug(s *string) *TagCreate {
 	if s != nil {
-		tc.SetDisplayName(*s)
+		tc.SetSlug(*s)
 	}
 	return tc
 }
 
-// SetSeoDesc sets the "seo_desc" field.
-func (tc *TagCreate) SetSeoDesc(s string) *TagCreate {
-	tc.mutation.SetSeoDesc(s)
+// SetColor sets the "color" field.
+func (tc *TagCreate) SetColor(s string) *TagCreate {
+	tc.mutation.SetColor(s)
 	return tc
 }
 
-// SetNillableSeoDesc sets the "seo_desc" field if the given value is not nil.
-func (tc *TagCreate) SetNillableSeoDesc(s *string) *TagCreate {
+// SetNillableColor sets the "color" field if the given value is not nil.
+func (tc *TagCreate) SetNillableColor(s *string) *TagCreate {
 	if s != nil {
-		tc.SetSeoDesc(*s)
+		tc.SetColor(*s)
 	}
 	return tc
 }
 
-// SetUseCount sets the "use_count" field.
-func (tc *TagCreate) SetUseCount(i int32) *TagCreate {
-	tc.mutation.SetUseCount(i)
+// SetThumbnail sets the "thumbnail" field.
+func (tc *TagCreate) SetThumbnail(s string) *TagCreate {
+	tc.mutation.SetThumbnail(s)
 	return tc
 }
 
-// SetNillableUseCount sets the "use_count" field if the given value is not nil.
-func (tc *TagCreate) SetNillableUseCount(i *int32) *TagCreate {
-	if i != nil {
-		tc.SetUseCount(*i)
+// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
+func (tc *TagCreate) SetNillableThumbnail(s *string) *TagCreate {
+	if s != nil {
+		tc.SetThumbnail(*s)
+	}
+	return tc
+}
+
+// SetSlugName sets the "slug_name" field.
+func (tc *TagCreate) SetSlugName(s string) *TagCreate {
+	tc.mutation.SetSlugName(s)
+	return tc
+}
+
+// SetNillableSlugName sets the "slug_name" field if the given value is not nil.
+func (tc *TagCreate) SetNillableSlugName(s *string) *TagCreate {
+	if s != nil {
+		tc.SetSlugName(*s)
+	}
+	return tc
+}
+
+// SetPostCount sets the "post_count" field.
+func (tc *TagCreate) SetPostCount(u uint32) *TagCreate {
+	tc.mutation.SetPostCount(u)
+	return tc
+}
+
+// SetNillablePostCount sets the "post_count" field if the given value is not nil.
+func (tc *TagCreate) SetNillablePostCount(u *uint32) *TagCreate {
+	if u != nil {
+		tc.SetPostCount(*u)
 	}
 	return tc
 }
 
 // SetID sets the "id" field.
-func (tc *TagCreate) SetID(u uint64) *TagCreate {
+func (tc *TagCreate) SetID(u uint32) *TagCreate {
 	tc.mutation.SetID(u)
 	return tc
 }
@@ -122,6 +150,7 @@ func (tc *TagCreate) Save(ctx context.Context) (*Tag, error) {
 		err  error
 		node *Tag
 	)
+	tc.defaults()
 	if len(tc.hooks) == 0 {
 		if err = tc.check(); err != nil {
 			return nil, err
@@ -185,6 +214,14 @@ func (tc *TagCreate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (tc *TagCreate) defaults() {
+	if _, ok := tc.mutation.CreateTime(); !ok {
+		v := tag.DefaultCreateTime()
+		tc.mutation.SetCreateTime(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (tc *TagCreate) check() error {
 	if v, ok := tc.mutation.Name(); ok {
@@ -210,7 +247,7 @@ func (tc *TagCreate) sqlSave(ctx context.Context) (*Tag, error) {
 	}
 	if _spec.ID.Value != _node.ID {
 		id := _spec.ID.Value.(int64)
-		_node.ID = uint64(id)
+		_node.ID = uint32(id)
 	}
 	return _node, nil
 }
@@ -221,7 +258,7 @@ func (tc *TagCreate) createSpec() (*Tag, *sqlgraph.CreateSpec) {
 		_spec = &sqlgraph.CreateSpec{
 			Table: tag.Table,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
+				Type:   field.TypeUint32,
 				Column: tag.FieldID,
 			},
 		}
@@ -255,29 +292,45 @@ func (tc *TagCreate) createSpec() (*Tag, *sqlgraph.CreateSpec) {
 		})
 		_node.Name = &value
 	}
-	if value, ok := tc.mutation.DisplayName(); ok {
+	if value, ok := tc.mutation.Slug(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: tag.FieldDisplayName,
+			Column: tag.FieldSlug,
 		})
-		_node.DisplayName = &value
+		_node.Slug = &value
 	}
-	if value, ok := tc.mutation.SeoDesc(); ok {
+	if value, ok := tc.mutation.Color(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: tag.FieldSeoDesc,
+			Column: tag.FieldColor,
 		})
-		_node.SeoDesc = &value
+		_node.Color = &value
 	}
-	if value, ok := tc.mutation.UseCount(); ok {
+	if value, ok := tc.mutation.Thumbnail(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
+			Type:   field.TypeString,
 			Value:  value,
-			Column: tag.FieldUseCount,
+			Column: tag.FieldThumbnail,
 		})
-		_node.UseCount = &value
+		_node.Thumbnail = &value
+	}
+	if value, ok := tc.mutation.SlugName(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: tag.FieldSlugName,
+		})
+		_node.SlugName = &value
+	}
+	if value, ok := tc.mutation.PostCount(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: tag.FieldPostCount,
+		})
+		_node.PostCount = &value
 	}
 	return _node, _spec
 }
@@ -399,63 +452,99 @@ func (u *TagUpsert) ClearName() *TagUpsert {
 	return u
 }
 
-// SetDisplayName sets the "display_name" field.
-func (u *TagUpsert) SetDisplayName(v string) *TagUpsert {
-	u.Set(tag.FieldDisplayName, v)
+// SetSlug sets the "slug" field.
+func (u *TagUpsert) SetSlug(v string) *TagUpsert {
+	u.Set(tag.FieldSlug, v)
 	return u
 }
 
-// UpdateDisplayName sets the "display_name" field to the value that was provided on create.
-func (u *TagUpsert) UpdateDisplayName() *TagUpsert {
-	u.SetExcluded(tag.FieldDisplayName)
+// UpdateSlug sets the "slug" field to the value that was provided on create.
+func (u *TagUpsert) UpdateSlug() *TagUpsert {
+	u.SetExcluded(tag.FieldSlug)
 	return u
 }
 
-// ClearDisplayName clears the value of the "display_name" field.
-func (u *TagUpsert) ClearDisplayName() *TagUpsert {
-	u.SetNull(tag.FieldDisplayName)
+// ClearSlug clears the value of the "slug" field.
+func (u *TagUpsert) ClearSlug() *TagUpsert {
+	u.SetNull(tag.FieldSlug)
 	return u
 }
 
-// SetSeoDesc sets the "seo_desc" field.
-func (u *TagUpsert) SetSeoDesc(v string) *TagUpsert {
-	u.Set(tag.FieldSeoDesc, v)
+// SetColor sets the "color" field.
+func (u *TagUpsert) SetColor(v string) *TagUpsert {
+	u.Set(tag.FieldColor, v)
 	return u
 }
 
-// UpdateSeoDesc sets the "seo_desc" field to the value that was provided on create.
-func (u *TagUpsert) UpdateSeoDesc() *TagUpsert {
-	u.SetExcluded(tag.FieldSeoDesc)
+// UpdateColor sets the "color" field to the value that was provided on create.
+func (u *TagUpsert) UpdateColor() *TagUpsert {
+	u.SetExcluded(tag.FieldColor)
 	return u
 }
 
-// ClearSeoDesc clears the value of the "seo_desc" field.
-func (u *TagUpsert) ClearSeoDesc() *TagUpsert {
-	u.SetNull(tag.FieldSeoDesc)
+// ClearColor clears the value of the "color" field.
+func (u *TagUpsert) ClearColor() *TagUpsert {
+	u.SetNull(tag.FieldColor)
 	return u
 }
 
-// SetUseCount sets the "use_count" field.
-func (u *TagUpsert) SetUseCount(v int32) *TagUpsert {
-	u.Set(tag.FieldUseCount, v)
+// SetThumbnail sets the "thumbnail" field.
+func (u *TagUpsert) SetThumbnail(v string) *TagUpsert {
+	u.Set(tag.FieldThumbnail, v)
 	return u
 }
 
-// UpdateUseCount sets the "use_count" field to the value that was provided on create.
-func (u *TagUpsert) UpdateUseCount() *TagUpsert {
-	u.SetExcluded(tag.FieldUseCount)
+// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
+func (u *TagUpsert) UpdateThumbnail() *TagUpsert {
+	u.SetExcluded(tag.FieldThumbnail)
 	return u
 }
 
-// AddUseCount adds v to the "use_count" field.
-func (u *TagUpsert) AddUseCount(v int32) *TagUpsert {
-	u.Add(tag.FieldUseCount, v)
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (u *TagUpsert) ClearThumbnail() *TagUpsert {
+	u.SetNull(tag.FieldThumbnail)
 	return u
 }
 
-// ClearUseCount clears the value of the "use_count" field.
-func (u *TagUpsert) ClearUseCount() *TagUpsert {
-	u.SetNull(tag.FieldUseCount)
+// SetSlugName sets the "slug_name" field.
+func (u *TagUpsert) SetSlugName(v string) *TagUpsert {
+	u.Set(tag.FieldSlugName, v)
+	return u
+}
+
+// UpdateSlugName sets the "slug_name" field to the value that was provided on create.
+func (u *TagUpsert) UpdateSlugName() *TagUpsert {
+	u.SetExcluded(tag.FieldSlugName)
+	return u
+}
+
+// ClearSlugName clears the value of the "slug_name" field.
+func (u *TagUpsert) ClearSlugName() *TagUpsert {
+	u.SetNull(tag.FieldSlugName)
+	return u
+}
+
+// SetPostCount sets the "post_count" field.
+func (u *TagUpsert) SetPostCount(v uint32) *TagUpsert {
+	u.Set(tag.FieldPostCount, v)
+	return u
+}
+
+// UpdatePostCount sets the "post_count" field to the value that was provided on create.
+func (u *TagUpsert) UpdatePostCount() *TagUpsert {
+	u.SetExcluded(tag.FieldPostCount)
+	return u
+}
+
+// AddPostCount adds v to the "post_count" field.
+func (u *TagUpsert) AddPostCount(v uint32) *TagUpsert {
+	u.Add(tag.FieldPostCount, v)
+	return u
+}
+
+// ClearPostCount clears the value of the "post_count" field.
+func (u *TagUpsert) ClearPostCount() *TagUpsert {
+	u.SetNull(tag.FieldPostCount)
 	return u
 }
 
@@ -589,73 +678,115 @@ func (u *TagUpsertOne) ClearName() *TagUpsertOne {
 	})
 }
 
-// SetDisplayName sets the "display_name" field.
-func (u *TagUpsertOne) SetDisplayName(v string) *TagUpsertOne {
+// SetSlug sets the "slug" field.
+func (u *TagUpsertOne) SetSlug(v string) *TagUpsertOne {
 	return u.Update(func(s *TagUpsert) {
-		s.SetDisplayName(v)
+		s.SetSlug(v)
 	})
 }
 
-// UpdateDisplayName sets the "display_name" field to the value that was provided on create.
-func (u *TagUpsertOne) UpdateDisplayName() *TagUpsertOne {
+// UpdateSlug sets the "slug" field to the value that was provided on create.
+func (u *TagUpsertOne) UpdateSlug() *TagUpsertOne {
 	return u.Update(func(s *TagUpsert) {
-		s.UpdateDisplayName()
+		s.UpdateSlug()
 	})
 }
 
-// ClearDisplayName clears the value of the "display_name" field.
-func (u *TagUpsertOne) ClearDisplayName() *TagUpsertOne {
+// ClearSlug clears the value of the "slug" field.
+func (u *TagUpsertOne) ClearSlug() *TagUpsertOne {
 	return u.Update(func(s *TagUpsert) {
-		s.ClearDisplayName()
+		s.ClearSlug()
 	})
 }
 
-// SetSeoDesc sets the "seo_desc" field.
-func (u *TagUpsertOne) SetSeoDesc(v string) *TagUpsertOne {
+// SetColor sets the "color" field.
+func (u *TagUpsertOne) SetColor(v string) *TagUpsertOne {
 	return u.Update(func(s *TagUpsert) {
-		s.SetSeoDesc(v)
+		s.SetColor(v)
 	})
 }
 
-// UpdateSeoDesc sets the "seo_desc" field to the value that was provided on create.
-func (u *TagUpsertOne) UpdateSeoDesc() *TagUpsertOne {
+// UpdateColor sets the "color" field to the value that was provided on create.
+func (u *TagUpsertOne) UpdateColor() *TagUpsertOne {
 	return u.Update(func(s *TagUpsert) {
-		s.UpdateSeoDesc()
+		s.UpdateColor()
 	})
 }
 
-// ClearSeoDesc clears the value of the "seo_desc" field.
-func (u *TagUpsertOne) ClearSeoDesc() *TagUpsertOne {
+// ClearColor clears the value of the "color" field.
+func (u *TagUpsertOne) ClearColor() *TagUpsertOne {
 	return u.Update(func(s *TagUpsert) {
-		s.ClearSeoDesc()
+		s.ClearColor()
 	})
 }
 
-// SetUseCount sets the "use_count" field.
-func (u *TagUpsertOne) SetUseCount(v int32) *TagUpsertOne {
+// SetThumbnail sets the "thumbnail" field.
+func (u *TagUpsertOne) SetThumbnail(v string) *TagUpsertOne {
 	return u.Update(func(s *TagUpsert) {
-		s.SetUseCount(v)
+		s.SetThumbnail(v)
 	})
 }
 
-// AddUseCount adds v to the "use_count" field.
-func (u *TagUpsertOne) AddUseCount(v int32) *TagUpsertOne {
+// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
+func (u *TagUpsertOne) UpdateThumbnail() *TagUpsertOne {
 	return u.Update(func(s *TagUpsert) {
-		s.AddUseCount(v)
+		s.UpdateThumbnail()
 	})
 }
 
-// UpdateUseCount sets the "use_count" field to the value that was provided on create.
-func (u *TagUpsertOne) UpdateUseCount() *TagUpsertOne {
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (u *TagUpsertOne) ClearThumbnail() *TagUpsertOne {
 	return u.Update(func(s *TagUpsert) {
-		s.UpdateUseCount()
+		s.ClearThumbnail()
 	})
 }
 
-// ClearUseCount clears the value of the "use_count" field.
-func (u *TagUpsertOne) ClearUseCount() *TagUpsertOne {
+// SetSlugName sets the "slug_name" field.
+func (u *TagUpsertOne) SetSlugName(v string) *TagUpsertOne {
 	return u.Update(func(s *TagUpsert) {
-		s.ClearUseCount()
+		s.SetSlugName(v)
+	})
+}
+
+// UpdateSlugName sets the "slug_name" field to the value that was provided on create.
+func (u *TagUpsertOne) UpdateSlugName() *TagUpsertOne {
+	return u.Update(func(s *TagUpsert) {
+		s.UpdateSlugName()
+	})
+}
+
+// ClearSlugName clears the value of the "slug_name" field.
+func (u *TagUpsertOne) ClearSlugName() *TagUpsertOne {
+	return u.Update(func(s *TagUpsert) {
+		s.ClearSlugName()
+	})
+}
+
+// SetPostCount sets the "post_count" field.
+func (u *TagUpsertOne) SetPostCount(v uint32) *TagUpsertOne {
+	return u.Update(func(s *TagUpsert) {
+		s.SetPostCount(v)
+	})
+}
+
+// AddPostCount adds v to the "post_count" field.
+func (u *TagUpsertOne) AddPostCount(v uint32) *TagUpsertOne {
+	return u.Update(func(s *TagUpsert) {
+		s.AddPostCount(v)
+	})
+}
+
+// UpdatePostCount sets the "post_count" field to the value that was provided on create.
+func (u *TagUpsertOne) UpdatePostCount() *TagUpsertOne {
+	return u.Update(func(s *TagUpsert) {
+		s.UpdatePostCount()
+	})
+}
+
+// ClearPostCount clears the value of the "post_count" field.
+func (u *TagUpsertOne) ClearPostCount() *TagUpsertOne {
+	return u.Update(func(s *TagUpsert) {
+		s.ClearPostCount()
 	})
 }
 
@@ -675,7 +806,7 @@ func (u *TagUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *TagUpsertOne) ID(ctx context.Context) (id uint64, err error) {
+func (u *TagUpsertOne) ID(ctx context.Context) (id uint32, err error) {
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -684,7 +815,7 @@ func (u *TagUpsertOne) ID(ctx context.Context) (id uint64, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *TagUpsertOne) IDX(ctx context.Context) uint64 {
+func (u *TagUpsertOne) IDX(ctx context.Context) uint32 {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -707,6 +838,7 @@ func (tcb *TagCreateBulk) Save(ctx context.Context) ([]*Tag, error) {
 	for i := range tcb.builders {
 		func(i int, root context.Context) {
 			builder := tcb.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*TagMutation)
 				if !ok {
@@ -736,7 +868,7 @@ func (tcb *TagCreateBulk) Save(ctx context.Context) ([]*Tag, error) {
 				mutation.id = &nodes[i].ID
 				if specs[i].ID.Value != nil && nodes[i].ID == 0 {
 					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = uint64(id)
+					nodes[i].ID = uint32(id)
 				}
 				mutation.done = true
 				return nodes[i], nil
@@ -953,73 +1085,115 @@ func (u *TagUpsertBulk) ClearName() *TagUpsertBulk {
 	})
 }
 
-// SetDisplayName sets the "display_name" field.
-func (u *TagUpsertBulk) SetDisplayName(v string) *TagUpsertBulk {
+// SetSlug sets the "slug" field.
+func (u *TagUpsertBulk) SetSlug(v string) *TagUpsertBulk {
 	return u.Update(func(s *TagUpsert) {
-		s.SetDisplayName(v)
+		s.SetSlug(v)
 	})
 }
 
-// UpdateDisplayName sets the "display_name" field to the value that was provided on create.
-func (u *TagUpsertBulk) UpdateDisplayName() *TagUpsertBulk {
+// UpdateSlug sets the "slug" field to the value that was provided on create.
+func (u *TagUpsertBulk) UpdateSlug() *TagUpsertBulk {
 	return u.Update(func(s *TagUpsert) {
-		s.UpdateDisplayName()
+		s.UpdateSlug()
 	})
 }
 
-// ClearDisplayName clears the value of the "display_name" field.
-func (u *TagUpsertBulk) ClearDisplayName() *TagUpsertBulk {
+// ClearSlug clears the value of the "slug" field.
+func (u *TagUpsertBulk) ClearSlug() *TagUpsertBulk {
 	return u.Update(func(s *TagUpsert) {
-		s.ClearDisplayName()
+		s.ClearSlug()
 	})
 }
 
-// SetSeoDesc sets the "seo_desc" field.
-func (u *TagUpsertBulk) SetSeoDesc(v string) *TagUpsertBulk {
+// SetColor sets the "color" field.
+func (u *TagUpsertBulk) SetColor(v string) *TagUpsertBulk {
 	return u.Update(func(s *TagUpsert) {
-		s.SetSeoDesc(v)
+		s.SetColor(v)
 	})
 }
 
-// UpdateSeoDesc sets the "seo_desc" field to the value that was provided on create.
-func (u *TagUpsertBulk) UpdateSeoDesc() *TagUpsertBulk {
+// UpdateColor sets the "color" field to the value that was provided on create.
+func (u *TagUpsertBulk) UpdateColor() *TagUpsertBulk {
 	return u.Update(func(s *TagUpsert) {
-		s.UpdateSeoDesc()
+		s.UpdateColor()
 	})
 }
 
-// ClearSeoDesc clears the value of the "seo_desc" field.
-func (u *TagUpsertBulk) ClearSeoDesc() *TagUpsertBulk {
+// ClearColor clears the value of the "color" field.
+func (u *TagUpsertBulk) ClearColor() *TagUpsertBulk {
 	return u.Update(func(s *TagUpsert) {
-		s.ClearSeoDesc()
+		s.ClearColor()
 	})
 }
 
-// SetUseCount sets the "use_count" field.
-func (u *TagUpsertBulk) SetUseCount(v int32) *TagUpsertBulk {
+// SetThumbnail sets the "thumbnail" field.
+func (u *TagUpsertBulk) SetThumbnail(v string) *TagUpsertBulk {
 	return u.Update(func(s *TagUpsert) {
-		s.SetUseCount(v)
+		s.SetThumbnail(v)
 	})
 }
 
-// AddUseCount adds v to the "use_count" field.
-func (u *TagUpsertBulk) AddUseCount(v int32) *TagUpsertBulk {
+// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
+func (u *TagUpsertBulk) UpdateThumbnail() *TagUpsertBulk {
 	return u.Update(func(s *TagUpsert) {
-		s.AddUseCount(v)
+		s.UpdateThumbnail()
 	})
 }
 
-// UpdateUseCount sets the "use_count" field to the value that was provided on create.
-func (u *TagUpsertBulk) UpdateUseCount() *TagUpsertBulk {
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (u *TagUpsertBulk) ClearThumbnail() *TagUpsertBulk {
 	return u.Update(func(s *TagUpsert) {
-		s.UpdateUseCount()
+		s.ClearThumbnail()
 	})
 }
 
-// ClearUseCount clears the value of the "use_count" field.
-func (u *TagUpsertBulk) ClearUseCount() *TagUpsertBulk {
+// SetSlugName sets the "slug_name" field.
+func (u *TagUpsertBulk) SetSlugName(v string) *TagUpsertBulk {
 	return u.Update(func(s *TagUpsert) {
-		s.ClearUseCount()
+		s.SetSlugName(v)
+	})
+}
+
+// UpdateSlugName sets the "slug_name" field to the value that was provided on create.
+func (u *TagUpsertBulk) UpdateSlugName() *TagUpsertBulk {
+	return u.Update(func(s *TagUpsert) {
+		s.UpdateSlugName()
+	})
+}
+
+// ClearSlugName clears the value of the "slug_name" field.
+func (u *TagUpsertBulk) ClearSlugName() *TagUpsertBulk {
+	return u.Update(func(s *TagUpsert) {
+		s.ClearSlugName()
+	})
+}
+
+// SetPostCount sets the "post_count" field.
+func (u *TagUpsertBulk) SetPostCount(v uint32) *TagUpsertBulk {
+	return u.Update(func(s *TagUpsert) {
+		s.SetPostCount(v)
+	})
+}
+
+// AddPostCount adds v to the "post_count" field.
+func (u *TagUpsertBulk) AddPostCount(v uint32) *TagUpsertBulk {
+	return u.Update(func(s *TagUpsert) {
+		s.AddPostCount(v)
+	})
+}
+
+// UpdatePostCount sets the "post_count" field to the value that was provided on create.
+func (u *TagUpsertBulk) UpdatePostCount() *TagUpsertBulk {
+	return u.Update(func(s *TagUpsert) {
+		s.UpdatePostCount()
+	})
+}
+
+// ClearPostCount clears the value of the "post_count" field.
+func (u *TagUpsertBulk) ClearPostCount() *TagUpsertBulk {
+	return u.Update(func(s *TagUpsert) {
+		s.ClearPostCount()
 	})
 }
 

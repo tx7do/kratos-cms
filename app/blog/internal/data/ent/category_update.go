@@ -67,55 +67,115 @@ func (cu *CategoryUpdate) ClearName() *CategoryUpdate {
 	return cu
 }
 
-// SetDisplayName sets the "display_name" field.
-func (cu *CategoryUpdate) SetDisplayName(s string) *CategoryUpdate {
-	cu.mutation.SetDisplayName(s)
+// SetSlug sets the "slug" field.
+func (cu *CategoryUpdate) SetSlug(s string) *CategoryUpdate {
+	cu.mutation.SetSlug(s)
 	return cu
 }
 
-// SetNillableDisplayName sets the "display_name" field if the given value is not nil.
-func (cu *CategoryUpdate) SetNillableDisplayName(s *string) *CategoryUpdate {
+// SetNillableSlug sets the "slug" field if the given value is not nil.
+func (cu *CategoryUpdate) SetNillableSlug(s *string) *CategoryUpdate {
 	if s != nil {
-		cu.SetDisplayName(*s)
+		cu.SetSlug(*s)
 	}
 	return cu
 }
 
-// ClearDisplayName clears the value of the "display_name" field.
-func (cu *CategoryUpdate) ClearDisplayName() *CategoryUpdate {
-	cu.mutation.ClearDisplayName()
+// ClearSlug clears the value of the "slug" field.
+func (cu *CategoryUpdate) ClearSlug() *CategoryUpdate {
+	cu.mutation.ClearSlug()
 	return cu
 }
 
-// SetSeoDesc sets the "seo_desc" field.
-func (cu *CategoryUpdate) SetSeoDesc(s string) *CategoryUpdate {
-	cu.mutation.SetSeoDesc(s)
+// SetDescription sets the "description" field.
+func (cu *CategoryUpdate) SetDescription(s string) *CategoryUpdate {
+	cu.mutation.SetDescription(s)
 	return cu
 }
 
-// SetNillableSeoDesc sets the "seo_desc" field if the given value is not nil.
-func (cu *CategoryUpdate) SetNillableSeoDesc(s *string) *CategoryUpdate {
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (cu *CategoryUpdate) SetNillableDescription(s *string) *CategoryUpdate {
 	if s != nil {
-		cu.SetSeoDesc(*s)
+		cu.SetDescription(*s)
 	}
 	return cu
 }
 
-// ClearSeoDesc clears the value of the "seo_desc" field.
-func (cu *CategoryUpdate) ClearSeoDesc() *CategoryUpdate {
-	cu.mutation.ClearSeoDesc()
+// ClearDescription clears the value of the "description" field.
+func (cu *CategoryUpdate) ClearDescription() *CategoryUpdate {
+	cu.mutation.ClearDescription()
+	return cu
+}
+
+// SetThumbnail sets the "thumbnail" field.
+func (cu *CategoryUpdate) SetThumbnail(s string) *CategoryUpdate {
+	cu.mutation.SetThumbnail(s)
+	return cu
+}
+
+// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
+func (cu *CategoryUpdate) SetNillableThumbnail(s *string) *CategoryUpdate {
+	if s != nil {
+		cu.SetThumbnail(*s)
+	}
+	return cu
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (cu *CategoryUpdate) ClearThumbnail() *CategoryUpdate {
+	cu.mutation.ClearThumbnail()
+	return cu
+}
+
+// SetPassword sets the "password" field.
+func (cu *CategoryUpdate) SetPassword(s string) *CategoryUpdate {
+	cu.mutation.SetPassword(s)
+	return cu
+}
+
+// SetNillablePassword sets the "password" field if the given value is not nil.
+func (cu *CategoryUpdate) SetNillablePassword(s *string) *CategoryUpdate {
+	if s != nil {
+		cu.SetPassword(*s)
+	}
+	return cu
+}
+
+// ClearPassword clears the value of the "password" field.
+func (cu *CategoryUpdate) ClearPassword() *CategoryUpdate {
+	cu.mutation.ClearPassword()
+	return cu
+}
+
+// SetFullPath sets the "full_path" field.
+func (cu *CategoryUpdate) SetFullPath(s string) *CategoryUpdate {
+	cu.mutation.SetFullPath(s)
+	return cu
+}
+
+// SetNillableFullPath sets the "full_path" field if the given value is not nil.
+func (cu *CategoryUpdate) SetNillableFullPath(s *string) *CategoryUpdate {
+	if s != nil {
+		cu.SetFullPath(*s)
+	}
+	return cu
+}
+
+// ClearFullPath clears the value of the "full_path" field.
+func (cu *CategoryUpdate) ClearFullPath() *CategoryUpdate {
+	cu.mutation.ClearFullPath()
 	return cu
 }
 
 // SetParentID sets the "parent_id" field.
-func (cu *CategoryUpdate) SetParentID(u uint64) *CategoryUpdate {
+func (cu *CategoryUpdate) SetParentID(u uint32) *CategoryUpdate {
 	cu.mutation.ResetParentID()
 	cu.mutation.SetParentID(u)
 	return cu
 }
 
 // SetNillableParentID sets the "parent_id" field if the given value is not nil.
-func (cu *CategoryUpdate) SetNillableParentID(u *uint64) *CategoryUpdate {
+func (cu *CategoryUpdate) SetNillableParentID(u *uint32) *CategoryUpdate {
 	if u != nil {
 		cu.SetParentID(*u)
 	}
@@ -123,7 +183,7 @@ func (cu *CategoryUpdate) SetNillableParentID(u *uint64) *CategoryUpdate {
 }
 
 // AddParentID adds u to the "parent_id" field.
-func (cu *CategoryUpdate) AddParentID(u int64) *CategoryUpdate {
+func (cu *CategoryUpdate) AddParentID(u int32) *CategoryUpdate {
 	cu.mutation.AddParentID(u)
 	return cu
 }
@@ -131,6 +191,60 @@ func (cu *CategoryUpdate) AddParentID(u int64) *CategoryUpdate {
 // ClearParentID clears the value of the "parent_id" field.
 func (cu *CategoryUpdate) ClearParentID() *CategoryUpdate {
 	cu.mutation.ClearParentID()
+	return cu
+}
+
+// SetPriority sets the "priority" field.
+func (cu *CategoryUpdate) SetPriority(i int32) *CategoryUpdate {
+	cu.mutation.ResetPriority()
+	cu.mutation.SetPriority(i)
+	return cu
+}
+
+// SetNillablePriority sets the "priority" field if the given value is not nil.
+func (cu *CategoryUpdate) SetNillablePriority(i *int32) *CategoryUpdate {
+	if i != nil {
+		cu.SetPriority(*i)
+	}
+	return cu
+}
+
+// AddPriority adds i to the "priority" field.
+func (cu *CategoryUpdate) AddPriority(i int32) *CategoryUpdate {
+	cu.mutation.AddPriority(i)
+	return cu
+}
+
+// ClearPriority clears the value of the "priority" field.
+func (cu *CategoryUpdate) ClearPriority() *CategoryUpdate {
+	cu.mutation.ClearPriority()
+	return cu
+}
+
+// SetPostCount sets the "post_count" field.
+func (cu *CategoryUpdate) SetPostCount(u uint32) *CategoryUpdate {
+	cu.mutation.ResetPostCount()
+	cu.mutation.SetPostCount(u)
+	return cu
+}
+
+// SetNillablePostCount sets the "post_count" field if the given value is not nil.
+func (cu *CategoryUpdate) SetNillablePostCount(u *uint32) *CategoryUpdate {
+	if u != nil {
+		cu.SetPostCount(*u)
+	}
+	return cu
+}
+
+// AddPostCount adds u to the "post_count" field.
+func (cu *CategoryUpdate) AddPostCount(u int32) *CategoryUpdate {
+	cu.mutation.AddPostCount(u)
+	return cu
+}
+
+// ClearPostCount clears the value of the "post_count" field.
+func (cu *CategoryUpdate) ClearPostCount() *CategoryUpdate {
+	cu.mutation.ClearPostCount()
 	return cu
 }
 
@@ -215,6 +329,16 @@ func (cu *CategoryUpdate) check() error {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Category.name": %w`, err)}
 		}
 	}
+	if v, ok := cu.mutation.Description(); ok {
+		if err := category.DescriptionValidator(v); err != nil {
+			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "Category.description": %w`, err)}
+		}
+	}
+	if v, ok := cu.mutation.Thumbnail(); ok {
+		if err := category.ThumbnailValidator(v); err != nil {
+			return &ValidationError{Name: "thumbnail", err: fmt.Errorf(`ent: validator failed for field "Category.thumbnail": %w`, err)}
+		}
+	}
 	return nil
 }
 
@@ -230,7 +354,7 @@ func (cu *CategoryUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Table:   category.Table,
 			Columns: category.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
+				Type:   field.TypeUint32,
 				Column: category.FieldID,
 			},
 		},
@@ -281,50 +405,129 @@ func (cu *CategoryUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: category.FieldName,
 		})
 	}
-	if value, ok := cu.mutation.DisplayName(); ok {
+	if value, ok := cu.mutation.Slug(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: category.FieldDisplayName,
+			Column: category.FieldSlug,
 		})
 	}
-	if cu.mutation.DisplayNameCleared() {
+	if cu.mutation.SlugCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
-			Column: category.FieldDisplayName,
+			Column: category.FieldSlug,
 		})
 	}
-	if value, ok := cu.mutation.SeoDesc(); ok {
+	if value, ok := cu.mutation.Description(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: category.FieldSeoDesc,
+			Column: category.FieldDescription,
 		})
 	}
-	if cu.mutation.SeoDescCleared() {
+	if cu.mutation.DescriptionCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
-			Column: category.FieldSeoDesc,
+			Column: category.FieldDescription,
+		})
+	}
+	if value, ok := cu.mutation.Thumbnail(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: category.FieldThumbnail,
+		})
+	}
+	if cu.mutation.ThumbnailCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: category.FieldThumbnail,
+		})
+	}
+	if value, ok := cu.mutation.Password(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: category.FieldPassword,
+		})
+	}
+	if cu.mutation.PasswordCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: category.FieldPassword,
+		})
+	}
+	if value, ok := cu.mutation.FullPath(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: category.FieldFullPath,
+		})
+	}
+	if cu.mutation.FullPathCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: category.FieldFullPath,
 		})
 	}
 	if value, ok := cu.mutation.ParentID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: category.FieldParentID,
 		})
 	}
 	if value, ok := cu.mutation.AddedParentID(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: category.FieldParentID,
 		})
 	}
 	if cu.mutation.ParentIDCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint64,
+			Type:   field.TypeUint32,
 			Column: category.FieldParentID,
+		})
+	}
+	if value, ok := cu.mutation.Priority(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: category.FieldPriority,
+		})
+	}
+	if value, ok := cu.mutation.AddedPriority(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: category.FieldPriority,
+		})
+	}
+	if cu.mutation.PriorityCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Column: category.FieldPriority,
+		})
+	}
+	if value, ok := cu.mutation.PostCount(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: category.FieldPostCount,
+		})
+	}
+	if value, ok := cu.mutation.AddedPostCount(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: category.FieldPostCount,
+		})
+	}
+	if cu.mutation.PostCountCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Column: category.FieldPostCount,
 		})
 	}
 	_spec.Modifiers = cu.modifiers
@@ -387,55 +590,115 @@ func (cuo *CategoryUpdateOne) ClearName() *CategoryUpdateOne {
 	return cuo
 }
 
-// SetDisplayName sets the "display_name" field.
-func (cuo *CategoryUpdateOne) SetDisplayName(s string) *CategoryUpdateOne {
-	cuo.mutation.SetDisplayName(s)
+// SetSlug sets the "slug" field.
+func (cuo *CategoryUpdateOne) SetSlug(s string) *CategoryUpdateOne {
+	cuo.mutation.SetSlug(s)
 	return cuo
 }
 
-// SetNillableDisplayName sets the "display_name" field if the given value is not nil.
-func (cuo *CategoryUpdateOne) SetNillableDisplayName(s *string) *CategoryUpdateOne {
+// SetNillableSlug sets the "slug" field if the given value is not nil.
+func (cuo *CategoryUpdateOne) SetNillableSlug(s *string) *CategoryUpdateOne {
 	if s != nil {
-		cuo.SetDisplayName(*s)
+		cuo.SetSlug(*s)
 	}
 	return cuo
 }
 
-// ClearDisplayName clears the value of the "display_name" field.
-func (cuo *CategoryUpdateOne) ClearDisplayName() *CategoryUpdateOne {
-	cuo.mutation.ClearDisplayName()
+// ClearSlug clears the value of the "slug" field.
+func (cuo *CategoryUpdateOne) ClearSlug() *CategoryUpdateOne {
+	cuo.mutation.ClearSlug()
 	return cuo
 }
 
-// SetSeoDesc sets the "seo_desc" field.
-func (cuo *CategoryUpdateOne) SetSeoDesc(s string) *CategoryUpdateOne {
-	cuo.mutation.SetSeoDesc(s)
+// SetDescription sets the "description" field.
+func (cuo *CategoryUpdateOne) SetDescription(s string) *CategoryUpdateOne {
+	cuo.mutation.SetDescription(s)
 	return cuo
 }
 
-// SetNillableSeoDesc sets the "seo_desc" field if the given value is not nil.
-func (cuo *CategoryUpdateOne) SetNillableSeoDesc(s *string) *CategoryUpdateOne {
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (cuo *CategoryUpdateOne) SetNillableDescription(s *string) *CategoryUpdateOne {
 	if s != nil {
-		cuo.SetSeoDesc(*s)
+		cuo.SetDescription(*s)
 	}
 	return cuo
 }
 
-// ClearSeoDesc clears the value of the "seo_desc" field.
-func (cuo *CategoryUpdateOne) ClearSeoDesc() *CategoryUpdateOne {
-	cuo.mutation.ClearSeoDesc()
+// ClearDescription clears the value of the "description" field.
+func (cuo *CategoryUpdateOne) ClearDescription() *CategoryUpdateOne {
+	cuo.mutation.ClearDescription()
+	return cuo
+}
+
+// SetThumbnail sets the "thumbnail" field.
+func (cuo *CategoryUpdateOne) SetThumbnail(s string) *CategoryUpdateOne {
+	cuo.mutation.SetThumbnail(s)
+	return cuo
+}
+
+// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
+func (cuo *CategoryUpdateOne) SetNillableThumbnail(s *string) *CategoryUpdateOne {
+	if s != nil {
+		cuo.SetThumbnail(*s)
+	}
+	return cuo
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (cuo *CategoryUpdateOne) ClearThumbnail() *CategoryUpdateOne {
+	cuo.mutation.ClearThumbnail()
+	return cuo
+}
+
+// SetPassword sets the "password" field.
+func (cuo *CategoryUpdateOne) SetPassword(s string) *CategoryUpdateOne {
+	cuo.mutation.SetPassword(s)
+	return cuo
+}
+
+// SetNillablePassword sets the "password" field if the given value is not nil.
+func (cuo *CategoryUpdateOne) SetNillablePassword(s *string) *CategoryUpdateOne {
+	if s != nil {
+		cuo.SetPassword(*s)
+	}
+	return cuo
+}
+
+// ClearPassword clears the value of the "password" field.
+func (cuo *CategoryUpdateOne) ClearPassword() *CategoryUpdateOne {
+	cuo.mutation.ClearPassword()
+	return cuo
+}
+
+// SetFullPath sets the "full_path" field.
+func (cuo *CategoryUpdateOne) SetFullPath(s string) *CategoryUpdateOne {
+	cuo.mutation.SetFullPath(s)
+	return cuo
+}
+
+// SetNillableFullPath sets the "full_path" field if the given value is not nil.
+func (cuo *CategoryUpdateOne) SetNillableFullPath(s *string) *CategoryUpdateOne {
+	if s != nil {
+		cuo.SetFullPath(*s)
+	}
+	return cuo
+}
+
+// ClearFullPath clears the value of the "full_path" field.
+func (cuo *CategoryUpdateOne) ClearFullPath() *CategoryUpdateOne {
+	cuo.mutation.ClearFullPath()
 	return cuo
 }
 
 // SetParentID sets the "parent_id" field.
-func (cuo *CategoryUpdateOne) SetParentID(u uint64) *CategoryUpdateOne {
+func (cuo *CategoryUpdateOne) SetParentID(u uint32) *CategoryUpdateOne {
 	cuo.mutation.ResetParentID()
 	cuo.mutation.SetParentID(u)
 	return cuo
 }
 
 // SetNillableParentID sets the "parent_id" field if the given value is not nil.
-func (cuo *CategoryUpdateOne) SetNillableParentID(u *uint64) *CategoryUpdateOne {
+func (cuo *CategoryUpdateOne) SetNillableParentID(u *uint32) *CategoryUpdateOne {
 	if u != nil {
 		cuo.SetParentID(*u)
 	}
@@ -443,7 +706,7 @@ func (cuo *CategoryUpdateOne) SetNillableParentID(u *uint64) *CategoryUpdateOne 
 }
 
 // AddParentID adds u to the "parent_id" field.
-func (cuo *CategoryUpdateOne) AddParentID(u int64) *CategoryUpdateOne {
+func (cuo *CategoryUpdateOne) AddParentID(u int32) *CategoryUpdateOne {
 	cuo.mutation.AddParentID(u)
 	return cuo
 }
@@ -451,6 +714,60 @@ func (cuo *CategoryUpdateOne) AddParentID(u int64) *CategoryUpdateOne {
 // ClearParentID clears the value of the "parent_id" field.
 func (cuo *CategoryUpdateOne) ClearParentID() *CategoryUpdateOne {
 	cuo.mutation.ClearParentID()
+	return cuo
+}
+
+// SetPriority sets the "priority" field.
+func (cuo *CategoryUpdateOne) SetPriority(i int32) *CategoryUpdateOne {
+	cuo.mutation.ResetPriority()
+	cuo.mutation.SetPriority(i)
+	return cuo
+}
+
+// SetNillablePriority sets the "priority" field if the given value is not nil.
+func (cuo *CategoryUpdateOne) SetNillablePriority(i *int32) *CategoryUpdateOne {
+	if i != nil {
+		cuo.SetPriority(*i)
+	}
+	return cuo
+}
+
+// AddPriority adds i to the "priority" field.
+func (cuo *CategoryUpdateOne) AddPriority(i int32) *CategoryUpdateOne {
+	cuo.mutation.AddPriority(i)
+	return cuo
+}
+
+// ClearPriority clears the value of the "priority" field.
+func (cuo *CategoryUpdateOne) ClearPriority() *CategoryUpdateOne {
+	cuo.mutation.ClearPriority()
+	return cuo
+}
+
+// SetPostCount sets the "post_count" field.
+func (cuo *CategoryUpdateOne) SetPostCount(u uint32) *CategoryUpdateOne {
+	cuo.mutation.ResetPostCount()
+	cuo.mutation.SetPostCount(u)
+	return cuo
+}
+
+// SetNillablePostCount sets the "post_count" field if the given value is not nil.
+func (cuo *CategoryUpdateOne) SetNillablePostCount(u *uint32) *CategoryUpdateOne {
+	if u != nil {
+		cuo.SetPostCount(*u)
+	}
+	return cuo
+}
+
+// AddPostCount adds u to the "post_count" field.
+func (cuo *CategoryUpdateOne) AddPostCount(u int32) *CategoryUpdateOne {
+	cuo.mutation.AddPostCount(u)
+	return cuo
+}
+
+// ClearPostCount clears the value of the "post_count" field.
+func (cuo *CategoryUpdateOne) ClearPostCount() *CategoryUpdateOne {
+	cuo.mutation.ClearPostCount()
 	return cuo
 }
 
@@ -548,6 +865,16 @@ func (cuo *CategoryUpdateOne) check() error {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "Category.name": %w`, err)}
 		}
 	}
+	if v, ok := cuo.mutation.Description(); ok {
+		if err := category.DescriptionValidator(v); err != nil {
+			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "Category.description": %w`, err)}
+		}
+	}
+	if v, ok := cuo.mutation.Thumbnail(); ok {
+		if err := category.ThumbnailValidator(v); err != nil {
+			return &ValidationError{Name: "thumbnail", err: fmt.Errorf(`ent: validator failed for field "Category.thumbnail": %w`, err)}
+		}
+	}
 	return nil
 }
 
@@ -563,7 +890,7 @@ func (cuo *CategoryUpdateOne) sqlSave(ctx context.Context) (_node *Category, err
 			Table:   category.Table,
 			Columns: category.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
+				Type:   field.TypeUint32,
 				Column: category.FieldID,
 			},
 		},
@@ -631,50 +958,129 @@ func (cuo *CategoryUpdateOne) sqlSave(ctx context.Context) (_node *Category, err
 			Column: category.FieldName,
 		})
 	}
-	if value, ok := cuo.mutation.DisplayName(); ok {
+	if value, ok := cuo.mutation.Slug(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: category.FieldDisplayName,
+			Column: category.FieldSlug,
 		})
 	}
-	if cuo.mutation.DisplayNameCleared() {
+	if cuo.mutation.SlugCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
-			Column: category.FieldDisplayName,
+			Column: category.FieldSlug,
 		})
 	}
-	if value, ok := cuo.mutation.SeoDesc(); ok {
+	if value, ok := cuo.mutation.Description(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: category.FieldSeoDesc,
+			Column: category.FieldDescription,
 		})
 	}
-	if cuo.mutation.SeoDescCleared() {
+	if cuo.mutation.DescriptionCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
-			Column: category.FieldSeoDesc,
+			Column: category.FieldDescription,
+		})
+	}
+	if value, ok := cuo.mutation.Thumbnail(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: category.FieldThumbnail,
+		})
+	}
+	if cuo.mutation.ThumbnailCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: category.FieldThumbnail,
+		})
+	}
+	if value, ok := cuo.mutation.Password(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: category.FieldPassword,
+		})
+	}
+	if cuo.mutation.PasswordCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: category.FieldPassword,
+		})
+	}
+	if value, ok := cuo.mutation.FullPath(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: category.FieldFullPath,
+		})
+	}
+	if cuo.mutation.FullPathCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: category.FieldFullPath,
 		})
 	}
 	if value, ok := cuo.mutation.ParentID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: category.FieldParentID,
 		})
 	}
 	if value, ok := cuo.mutation.AddedParentID(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: category.FieldParentID,
 		})
 	}
 	if cuo.mutation.ParentIDCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint64,
+			Type:   field.TypeUint32,
 			Column: category.FieldParentID,
+		})
+	}
+	if value, ok := cuo.mutation.Priority(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: category.FieldPriority,
+		})
+	}
+	if value, ok := cuo.mutation.AddedPriority(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: category.FieldPriority,
+		})
+	}
+	if cuo.mutation.PriorityCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Column: category.FieldPriority,
+		})
+	}
+	if value, ok := cuo.mutation.PostCount(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: category.FieldPostCount,
+		})
+	}
+	if value, ok := cuo.mutation.AddedPostCount(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: category.FieldPostCount,
+		})
+	}
+	if cuo.mutation.PostCountCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Column: category.FieldPostCount,
 		})
 	}
 	_spec.Modifiers = cuo.modifiers

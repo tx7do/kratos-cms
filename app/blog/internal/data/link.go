@@ -32,10 +32,15 @@ func (r *LinkRepo) convertEntToProto(in *ent.Link) *v1.Link {
 		return nil
 	}
 	return &v1.Link{
-		Id:      in.ID,
-		Name:    in.Name,
-		Link:    in.Link,
-		OrderId: in.OrderID,
+		Id:          in.ID,
+		Name:        in.Name,
+		Url:         in.URL,
+		Logo:        in.Logo,
+		Description: in.Description,
+		Team:        in.Team,
+		Priority:    in.Priority,
+		CreateTime:  entgo.UnixMilliToStringPtr(in.CreateTime),
+		UpdateTime:  entgo.UnixMilliToStringPtr(in.UpdateTime),
 	}
 }
 
@@ -104,8 +109,11 @@ func (r *LinkRepo) Get(ctx context.Context, req *v1.GetLinkRequest) (*v1.Link, e
 func (r *LinkRepo) Create(ctx context.Context, req *v1.CreateLinkRequest) (*v1.Link, error) {
 	po, err := r.data.db.Link.Create().
 		SetNillableName(req.Link.Name).
-		SetNillableLink(req.Link.Link).
-		SetNillableOrderID(req.Link.OrderId).
+		SetNillableURL(req.Link.Url).
+		SetNillableLogo(req.Link.Logo).
+		SetNillableDescription(req.Link.Description).
+		SetNillableTeam(req.Link.Team).
+		SetNillablePriority(req.Link.Priority).
 		Save(ctx)
 	if err != nil {
 		return nil, err
@@ -117,8 +125,11 @@ func (r *LinkRepo) Create(ctx context.Context, req *v1.CreateLinkRequest) (*v1.L
 func (r *LinkRepo) Update(ctx context.Context, req *v1.UpdateLinkRequest) (*v1.Link, error) {
 	builder := r.data.db.Link.UpdateOneID(req.Id).
 		SetNillableName(req.Link.Name).
-		SetNillableLink(req.Link.Link).
-		SetNillableOrderID(req.Link.OrderId)
+		SetNillableURL(req.Link.Url).
+		SetNillableLogo(req.Link.Logo).
+		SetNillableDescription(req.Link.Description).
+		SetNillableTeam(req.Link.Team).
+		SetNillablePriority(req.Link.Priority)
 
 	po, err := builder.Save(ctx)
 	if err != nil {

@@ -118,8 +118,8 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "uint64"
+            "type": "integer",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -148,15 +148,15 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "uint64"
+            "type": "integer",
+            "format": "int64"
           },
           {
             "name": "operatorId",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "uint64"
+            "type": "integer",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -185,8 +185,8 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "uint64"
+            "type": "integer",
+            "format": "int64"
           },
           {
             "name": "link",
@@ -200,8 +200,8 @@
             "name": "operatorId",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "uint64"
+            "type": "integer",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -247,8 +247,8 @@
           "$ref": "#/definitions/v1Link"
         },
         "operatorId": {
-          "type": "string",
-          "format": "uint64"
+          "type": "integer",
+          "format": "int64"
         }
       },
       "title": "请求 - 创建链接"
@@ -257,18 +257,33 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "format": "uint64"
+          "type": "integer",
+          "format": "int64"
         },
         "name": {
           "type": "string"
         },
-        "link": {
+        "url": {
           "type": "string"
         },
-        "orderId": {
+        "logo": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "team": {
+          "type": "string"
+        },
+        "priority": {
           "type": "integer",
           "format": "int32"
+        },
+        "createTime": {
+          "type": "string"
+        },
+        "updateTime": {
+          "type": "string"
         }
       }
     },

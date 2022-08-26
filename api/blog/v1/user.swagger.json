@@ -161,6 +161,13 @@
     "v1LoginResponse": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userName": {
+          "type": "string"
+        },
         "token": {
           "type": "string"
         },
@@ -174,8 +181,8 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "format": "uint64"
+          "type": "integer",
+          "format": "int64"
         }
       },
       "title": "请求 - 登出"
@@ -193,8 +200,14 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "format": "uint64"
+          "type": "integer",
+          "format": "int64"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
         }
       },
       "title": "回应 - 注册"
@@ -203,8 +216,8 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "format": "uint64"
+          "type": "integer",
+          "format": "int64"
         },
         "userName": {
           "type": "string"
@@ -215,7 +228,19 @@
         "email": {
           "type": "string"
         },
+        "avatar": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
         "password": {
+          "type": "string"
+        },
+        "createTime": {
+          "type": "string"
+        },
+        "updateTime": {
           "type": "string"
         }
       }

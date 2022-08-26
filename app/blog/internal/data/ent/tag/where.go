@@ -9,28 +9,28 @@ import (
 )
 
 // ID filters vertices based on their ID field.
-func ID(id uint64) predicate.Tag {
+func ID(id uint32) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldID), id))
 	})
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id uint64) predicate.Tag {
+func IDEQ(id uint32) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldID), id))
 	})
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id uint64) predicate.Tag {
+func IDNEQ(id uint32) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldID), id))
 	})
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...uint64) predicate.Tag {
+func IDIn(ids ...uint32) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
 		v := make([]interface{}, len(ids))
 		for i := range v {
@@ -41,7 +41,7 @@ func IDIn(ids ...uint64) predicate.Tag {
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...uint64) predicate.Tag {
+func IDNotIn(ids ...uint32) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
 		v := make([]interface{}, len(ids))
 		for i := range v {
@@ -52,28 +52,28 @@ func IDNotIn(ids ...uint64) predicate.Tag {
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id uint64) predicate.Tag {
+func IDGT(id uint32) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldID), id))
 	})
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id uint64) predicate.Tag {
+func IDGTE(id uint32) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldID), id))
 	})
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id uint64) predicate.Tag {
+func IDLT(id uint32) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldID), id))
 	})
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id uint64) predicate.Tag {
+func IDLTE(id uint32) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldID), id))
 	})
@@ -100,24 +100,38 @@ func Name(v string) predicate.Tag {
 	})
 }
 
-// DisplayName applies equality check predicate on the "display_name" field. It's identical to DisplayNameEQ.
-func DisplayName(v string) predicate.Tag {
+// Slug applies equality check predicate on the "slug" field. It's identical to SlugEQ.
+func Slug(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldDisplayName), v))
+		s.Where(sql.EQ(s.C(FieldSlug), v))
 	})
 }
 
-// SeoDesc applies equality check predicate on the "seo_desc" field. It's identical to SeoDescEQ.
-func SeoDesc(v string) predicate.Tag {
+// Color applies equality check predicate on the "color" field. It's identical to ColorEQ.
+func Color(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldSeoDesc), v))
+		s.Where(sql.EQ(s.C(FieldColor), v))
 	})
 }
 
-// UseCount applies equality check predicate on the "use_count" field. It's identical to UseCountEQ.
-func UseCount(v int32) predicate.Tag {
+// Thumbnail applies equality check predicate on the "thumbnail" field. It's identical to ThumbnailEQ.
+func Thumbnail(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldUseCount), v))
+		s.Where(sql.EQ(s.C(FieldThumbnail), v))
+	})
+}
+
+// SlugName applies equality check predicate on the "slug_name" field. It's identical to SlugNameEQ.
+func SlugName(v string) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldSlugName), v))
+	})
+}
+
+// PostCount applies equality check predicate on the "post_count" field. It's identical to PostCountEQ.
+func PostCount(v uint32) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPostCount), v))
 	})
 }
 
@@ -390,307 +404,533 @@ func NameContainsFold(v string) predicate.Tag {
 	})
 }
 
-// DisplayNameEQ applies the EQ predicate on the "display_name" field.
-func DisplayNameEQ(v string) predicate.Tag {
+// SlugEQ applies the EQ predicate on the "slug" field.
+func SlugEQ(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldDisplayName), v))
+		s.Where(sql.EQ(s.C(FieldSlug), v))
 	})
 }
 
-// DisplayNameNEQ applies the NEQ predicate on the "display_name" field.
-func DisplayNameNEQ(v string) predicate.Tag {
+// SlugNEQ applies the NEQ predicate on the "slug" field.
+func SlugNEQ(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldDisplayName), v))
+		s.Where(sql.NEQ(s.C(FieldSlug), v))
 	})
 }
 
-// DisplayNameIn applies the In predicate on the "display_name" field.
-func DisplayNameIn(vs ...string) predicate.Tag {
+// SlugIn applies the In predicate on the "slug" field.
+func SlugIn(vs ...string) predicate.Tag {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.In(s.C(FieldDisplayName), v...))
+		s.Where(sql.In(s.C(FieldSlug), v...))
 	})
 }
 
-// DisplayNameNotIn applies the NotIn predicate on the "display_name" field.
-func DisplayNameNotIn(vs ...string) predicate.Tag {
+// SlugNotIn applies the NotIn predicate on the "slug" field.
+func SlugNotIn(vs ...string) predicate.Tag {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.NotIn(s.C(FieldDisplayName), v...))
+		s.Where(sql.NotIn(s.C(FieldSlug), v...))
 	})
 }
 
-// DisplayNameGT applies the GT predicate on the "display_name" field.
-func DisplayNameGT(v string) predicate.Tag {
+// SlugGT applies the GT predicate on the "slug" field.
+func SlugGT(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldDisplayName), v))
+		s.Where(sql.GT(s.C(FieldSlug), v))
 	})
 }
 
-// DisplayNameGTE applies the GTE predicate on the "display_name" field.
-func DisplayNameGTE(v string) predicate.Tag {
+// SlugGTE applies the GTE predicate on the "slug" field.
+func SlugGTE(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldDisplayName), v))
+		s.Where(sql.GTE(s.C(FieldSlug), v))
 	})
 }
 
-// DisplayNameLT applies the LT predicate on the "display_name" field.
-func DisplayNameLT(v string) predicate.Tag {
+// SlugLT applies the LT predicate on the "slug" field.
+func SlugLT(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldDisplayName), v))
+		s.Where(sql.LT(s.C(FieldSlug), v))
 	})
 }
 
-// DisplayNameLTE applies the LTE predicate on the "display_name" field.
-func DisplayNameLTE(v string) predicate.Tag {
+// SlugLTE applies the LTE predicate on the "slug" field.
+func SlugLTE(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldDisplayName), v))
+		s.Where(sql.LTE(s.C(FieldSlug), v))
 	})
 }
 
-// DisplayNameContains applies the Contains predicate on the "display_name" field.
-func DisplayNameContains(v string) predicate.Tag {
+// SlugContains applies the Contains predicate on the "slug" field.
+func SlugContains(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldDisplayName), v))
+		s.Where(sql.Contains(s.C(FieldSlug), v))
 	})
 }
 
-// DisplayNameHasPrefix applies the HasPrefix predicate on the "display_name" field.
-func DisplayNameHasPrefix(v string) predicate.Tag {
+// SlugHasPrefix applies the HasPrefix predicate on the "slug" field.
+func SlugHasPrefix(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldDisplayName), v))
+		s.Where(sql.HasPrefix(s.C(FieldSlug), v))
 	})
 }
 
-// DisplayNameHasSuffix applies the HasSuffix predicate on the "display_name" field.
-func DisplayNameHasSuffix(v string) predicate.Tag {
+// SlugHasSuffix applies the HasSuffix predicate on the "slug" field.
+func SlugHasSuffix(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldDisplayName), v))
+		s.Where(sql.HasSuffix(s.C(FieldSlug), v))
 	})
 }
 
-// DisplayNameIsNil applies the IsNil predicate on the "display_name" field.
-func DisplayNameIsNil() predicate.Tag {
+// SlugIsNil applies the IsNil predicate on the "slug" field.
+func SlugIsNil() predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldDisplayName)))
+		s.Where(sql.IsNull(s.C(FieldSlug)))
 	})
 }
 
-// DisplayNameNotNil applies the NotNil predicate on the "display_name" field.
-func DisplayNameNotNil() predicate.Tag {
+// SlugNotNil applies the NotNil predicate on the "slug" field.
+func SlugNotNil() predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldDisplayName)))
+		s.Where(sql.NotNull(s.C(FieldSlug)))
 	})
 }
 
-// DisplayNameEqualFold applies the EqualFold predicate on the "display_name" field.
-func DisplayNameEqualFold(v string) predicate.Tag {
+// SlugEqualFold applies the EqualFold predicate on the "slug" field.
+func SlugEqualFold(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldDisplayName), v))
+		s.Where(sql.EqualFold(s.C(FieldSlug), v))
 	})
 }
 
-// DisplayNameContainsFold applies the ContainsFold predicate on the "display_name" field.
-func DisplayNameContainsFold(v string) predicate.Tag {
+// SlugContainsFold applies the ContainsFold predicate on the "slug" field.
+func SlugContainsFold(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldDisplayName), v))
+		s.Where(sql.ContainsFold(s.C(FieldSlug), v))
 	})
 }
 
-// SeoDescEQ applies the EQ predicate on the "seo_desc" field.
-func SeoDescEQ(v string) predicate.Tag {
+// ColorEQ applies the EQ predicate on the "color" field.
+func ColorEQ(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldSeoDesc), v))
+		s.Where(sql.EQ(s.C(FieldColor), v))
 	})
 }
 
-// SeoDescNEQ applies the NEQ predicate on the "seo_desc" field.
-func SeoDescNEQ(v string) predicate.Tag {
+// ColorNEQ applies the NEQ predicate on the "color" field.
+func ColorNEQ(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldSeoDesc), v))
+		s.Where(sql.NEQ(s.C(FieldColor), v))
 	})
 }
 
-// SeoDescIn applies the In predicate on the "seo_desc" field.
-func SeoDescIn(vs ...string) predicate.Tag {
+// ColorIn applies the In predicate on the "color" field.
+func ColorIn(vs ...string) predicate.Tag {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.In(s.C(FieldSeoDesc), v...))
+		s.Where(sql.In(s.C(FieldColor), v...))
 	})
 }
 
-// SeoDescNotIn applies the NotIn predicate on the "seo_desc" field.
-func SeoDescNotIn(vs ...string) predicate.Tag {
+// ColorNotIn applies the NotIn predicate on the "color" field.
+func ColorNotIn(vs ...string) predicate.Tag {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.NotIn(s.C(FieldSeoDesc), v...))
+		s.Where(sql.NotIn(s.C(FieldColor), v...))
 	})
 }
 
-// SeoDescGT applies the GT predicate on the "seo_desc" field.
-func SeoDescGT(v string) predicate.Tag {
+// ColorGT applies the GT predicate on the "color" field.
+func ColorGT(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldSeoDesc), v))
+		s.Where(sql.GT(s.C(FieldColor), v))
 	})
 }
 
-// SeoDescGTE applies the GTE predicate on the "seo_desc" field.
-func SeoDescGTE(v string) predicate.Tag {
+// ColorGTE applies the GTE predicate on the "color" field.
+func ColorGTE(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldSeoDesc), v))
+		s.Where(sql.GTE(s.C(FieldColor), v))
 	})
 }
 
-// SeoDescLT applies the LT predicate on the "seo_desc" field.
-func SeoDescLT(v string) predicate.Tag {
+// ColorLT applies the LT predicate on the "color" field.
+func ColorLT(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldSeoDesc), v))
+		s.Where(sql.LT(s.C(FieldColor), v))
 	})
 }
 
-// SeoDescLTE applies the LTE predicate on the "seo_desc" field.
-func SeoDescLTE(v string) predicate.Tag {
+// ColorLTE applies the LTE predicate on the "color" field.
+func ColorLTE(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldSeoDesc), v))
+		s.Where(sql.LTE(s.C(FieldColor), v))
 	})
 }
 
-// SeoDescContains applies the Contains predicate on the "seo_desc" field.
-func SeoDescContains(v string) predicate.Tag {
+// ColorContains applies the Contains predicate on the "color" field.
+func ColorContains(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldSeoDesc), v))
+		s.Where(sql.Contains(s.C(FieldColor), v))
 	})
 }
 
-// SeoDescHasPrefix applies the HasPrefix predicate on the "seo_desc" field.
-func SeoDescHasPrefix(v string) predicate.Tag {
+// ColorHasPrefix applies the HasPrefix predicate on the "color" field.
+func ColorHasPrefix(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldSeoDesc), v))
+		s.Where(sql.HasPrefix(s.C(FieldColor), v))
 	})
 }
 
-// SeoDescHasSuffix applies the HasSuffix predicate on the "seo_desc" field.
-func SeoDescHasSuffix(v string) predicate.Tag {
+// ColorHasSuffix applies the HasSuffix predicate on the "color" field.
+func ColorHasSuffix(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldSeoDesc), v))
+		s.Where(sql.HasSuffix(s.C(FieldColor), v))
 	})
 }
 
-// SeoDescIsNil applies the IsNil predicate on the "seo_desc" field.
-func SeoDescIsNil() predicate.Tag {
+// ColorIsNil applies the IsNil predicate on the "color" field.
+func ColorIsNil() predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldSeoDesc)))
+		s.Where(sql.IsNull(s.C(FieldColor)))
 	})
 }
 
-// SeoDescNotNil applies the NotNil predicate on the "seo_desc" field.
-func SeoDescNotNil() predicate.Tag {
+// ColorNotNil applies the NotNil predicate on the "color" field.
+func ColorNotNil() predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldSeoDesc)))
+		s.Where(sql.NotNull(s.C(FieldColor)))
 	})
 }
 
-// SeoDescEqualFold applies the EqualFold predicate on the "seo_desc" field.
-func SeoDescEqualFold(v string) predicate.Tag {
+// ColorEqualFold applies the EqualFold predicate on the "color" field.
+func ColorEqualFold(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldSeoDesc), v))
+		s.Where(sql.EqualFold(s.C(FieldColor), v))
 	})
 }
 
-// SeoDescContainsFold applies the ContainsFold predicate on the "seo_desc" field.
-func SeoDescContainsFold(v string) predicate.Tag {
+// ColorContainsFold applies the ContainsFold predicate on the "color" field.
+func ColorContainsFold(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldSeoDesc), v))
+		s.Where(sql.ContainsFold(s.C(FieldColor), v))
 	})
 }
 
-// UseCountEQ applies the EQ predicate on the "use_count" field.
-func UseCountEQ(v int32) predicate.Tag {
+// ThumbnailEQ applies the EQ predicate on the "thumbnail" field.
+func ThumbnailEQ(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldUseCount), v))
+		s.Where(sql.EQ(s.C(FieldThumbnail), v))
 	})
 }
 
-// UseCountNEQ applies the NEQ predicate on the "use_count" field.
-func UseCountNEQ(v int32) predicate.Tag {
+// ThumbnailNEQ applies the NEQ predicate on the "thumbnail" field.
+func ThumbnailNEQ(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldUseCount), v))
+		s.Where(sql.NEQ(s.C(FieldThumbnail), v))
 	})
 }
 
-// UseCountIn applies the In predicate on the "use_count" field.
-func UseCountIn(vs ...int32) predicate.Tag {
+// ThumbnailIn applies the In predicate on the "thumbnail" field.
+func ThumbnailIn(vs ...string) predicate.Tag {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.In(s.C(FieldUseCount), v...))
+		s.Where(sql.In(s.C(FieldThumbnail), v...))
 	})
 }
 
-// UseCountNotIn applies the NotIn predicate on the "use_count" field.
-func UseCountNotIn(vs ...int32) predicate.Tag {
+// ThumbnailNotIn applies the NotIn predicate on the "thumbnail" field.
+func ThumbnailNotIn(vs ...string) predicate.Tag {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.NotIn(s.C(FieldUseCount), v...))
+		s.Where(sql.NotIn(s.C(FieldThumbnail), v...))
 	})
 }
 
-// UseCountGT applies the GT predicate on the "use_count" field.
-func UseCountGT(v int32) predicate.Tag {
+// ThumbnailGT applies the GT predicate on the "thumbnail" field.
+func ThumbnailGT(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldUseCount), v))
+		s.Where(sql.GT(s.C(FieldThumbnail), v))
 	})
 }
 
-// UseCountGTE applies the GTE predicate on the "use_count" field.
-func UseCountGTE(v int32) predicate.Tag {
+// ThumbnailGTE applies the GTE predicate on the "thumbnail" field.
+func ThumbnailGTE(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldUseCount), v))
+		s.Where(sql.GTE(s.C(FieldThumbnail), v))
 	})
 }
 
-// UseCountLT applies the LT predicate on the "use_count" field.
-func UseCountLT(v int32) predicate.Tag {
+// ThumbnailLT applies the LT predicate on the "thumbnail" field.
+func ThumbnailLT(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldUseCount), v))
+		s.Where(sql.LT(s.C(FieldThumbnail), v))
 	})
 }
 
-// UseCountLTE applies the LTE predicate on the "use_count" field.
-func UseCountLTE(v int32) predicate.Tag {
+// ThumbnailLTE applies the LTE predicate on the "thumbnail" field.
+func ThumbnailLTE(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldUseCount), v))
+		s.Where(sql.LTE(s.C(FieldThumbnail), v))
 	})
 }
 
-// UseCountIsNil applies the IsNil predicate on the "use_count" field.
-func UseCountIsNil() predicate.Tag {
+// ThumbnailContains applies the Contains predicate on the "thumbnail" field.
+func ThumbnailContains(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldUseCount)))
+		s.Where(sql.Contains(s.C(FieldThumbnail), v))
 	})
 }
 
-// UseCountNotNil applies the NotNil predicate on the "use_count" field.
-func UseCountNotNil() predicate.Tag {
+// ThumbnailHasPrefix applies the HasPrefix predicate on the "thumbnail" field.
+func ThumbnailHasPrefix(v string) predicate.Tag {
 	return predicate.Tag(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldUseCount)))
+		s.Where(sql.HasPrefix(s.C(FieldThumbnail), v))
+	})
+}
+
+// ThumbnailHasSuffix applies the HasSuffix predicate on the "thumbnail" field.
+func ThumbnailHasSuffix(v string) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldThumbnail), v))
+	})
+}
+
+// ThumbnailIsNil applies the IsNil predicate on the "thumbnail" field.
+func ThumbnailIsNil() predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldThumbnail)))
+	})
+}
+
+// ThumbnailNotNil applies the NotNil predicate on the "thumbnail" field.
+func ThumbnailNotNil() predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldThumbnail)))
+	})
+}
+
+// ThumbnailEqualFold applies the EqualFold predicate on the "thumbnail" field.
+func ThumbnailEqualFold(v string) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldThumbnail), v))
+	})
+}
+
+// ThumbnailContainsFold applies the ContainsFold predicate on the "thumbnail" field.
+func ThumbnailContainsFold(v string) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldThumbnail), v))
+	})
+}
+
+// SlugNameEQ applies the EQ predicate on the "slug_name" field.
+func SlugNameEQ(v string) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldSlugName), v))
+	})
+}
+
+// SlugNameNEQ applies the NEQ predicate on the "slug_name" field.
+func SlugNameNEQ(v string) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldSlugName), v))
+	})
+}
+
+// SlugNameIn applies the In predicate on the "slug_name" field.
+func SlugNameIn(vs ...string) predicate.Tag {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldSlugName), v...))
+	})
+}
+
+// SlugNameNotIn applies the NotIn predicate on the "slug_name" field.
+func SlugNameNotIn(vs ...string) predicate.Tag {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldSlugName), v...))
+	})
+}
+
+// SlugNameGT applies the GT predicate on the "slug_name" field.
+func SlugNameGT(v string) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldSlugName), v))
+	})
+}
+
+// SlugNameGTE applies the GTE predicate on the "slug_name" field.
+func SlugNameGTE(v string) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldSlugName), v))
+	})
+}
+
+// SlugNameLT applies the LT predicate on the "slug_name" field.
+func SlugNameLT(v string) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldSlugName), v))
+	})
+}
+
+// SlugNameLTE applies the LTE predicate on the "slug_name" field.
+func SlugNameLTE(v string) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldSlugName), v))
+	})
+}
+
+// SlugNameContains applies the Contains predicate on the "slug_name" field.
+func SlugNameContains(v string) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldSlugName), v))
+	})
+}
+
+// SlugNameHasPrefix applies the HasPrefix predicate on the "slug_name" field.
+func SlugNameHasPrefix(v string) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldSlugName), v))
+	})
+}
+
+// SlugNameHasSuffix applies the HasSuffix predicate on the "slug_name" field.
+func SlugNameHasSuffix(v string) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldSlugName), v))
+	})
+}
+
+// SlugNameIsNil applies the IsNil predicate on the "slug_name" field.
+func SlugNameIsNil() predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldSlugName)))
+	})
+}
+
+// SlugNameNotNil applies the NotNil predicate on the "slug_name" field.
+func SlugNameNotNil() predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldSlugName)))
+	})
+}
+
+// SlugNameEqualFold applies the EqualFold predicate on the "slug_name" field.
+func SlugNameEqualFold(v string) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldSlugName), v))
+	})
+}
+
+// SlugNameContainsFold applies the ContainsFold predicate on the "slug_name" field.
+func SlugNameContainsFold(v string) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldSlugName), v))
+	})
+}
+
+// PostCountEQ applies the EQ predicate on the "post_count" field.
+func PostCountEQ(v uint32) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPostCount), v))
+	})
+}
+
+// PostCountNEQ applies the NEQ predicate on the "post_count" field.
+func PostCountNEQ(v uint32) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldPostCount), v))
+	})
+}
+
+// PostCountIn applies the In predicate on the "post_count" field.
+func PostCountIn(vs ...uint32) predicate.Tag {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldPostCount), v...))
+	})
+}
+
+// PostCountNotIn applies the NotIn predicate on the "post_count" field.
+func PostCountNotIn(vs ...uint32) predicate.Tag {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldPostCount), v...))
+	})
+}
+
+// PostCountGT applies the GT predicate on the "post_count" field.
+func PostCountGT(v uint32) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldPostCount), v))
+	})
+}
+
+// PostCountGTE applies the GTE predicate on the "post_count" field.
+func PostCountGTE(v uint32) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldPostCount), v))
+	})
+}
+
+// PostCountLT applies the LT predicate on the "post_count" field.
+func PostCountLT(v uint32) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldPostCount), v))
+	})
+}
+
+// PostCountLTE applies the LTE predicate on the "post_count" field.
+func PostCountLTE(v uint32) predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldPostCount), v))
+	})
+}
+
+// PostCountIsNil applies the IsNil predicate on the "post_count" field.
+func PostCountIsNil() predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldPostCount)))
+	})
+}
+
+// PostCountNotNil applies the NotNil predicate on the "post_count" field.
+func PostCountNotNil() predicate.Tag {
+	return predicate.Tag(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldPostCount)))
 	})
 }
 

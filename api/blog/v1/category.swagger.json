@@ -118,8 +118,8 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "uint64"
+            "type": "integer",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -148,15 +148,15 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "uint64"
+            "type": "integer",
+            "format": "int64"
           },
           {
             "name": "operatorId",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "uint64"
+            "type": "integer",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -185,8 +185,8 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "uint64"
+            "type": "integer",
+            "format": "int64"
           },
           {
             "name": "category",
@@ -200,8 +200,8 @@
             "name": "operatorId",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "uint64"
+            "type": "integer",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -244,18 +244,44 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "format": "uint64"
+          "type": "integer",
+          "format": "int64"
         },
         "parentId": {
-          "type": "string",
-          "format": "uint64"
+          "type": "integer",
+          "format": "int64"
         },
         "name": {
           "type": "string"
         },
-        "seoDesc": {
+        "slug": {
           "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "thumbnail": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "fullPath": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "createTime": {
+          "type": "string"
+        },
+        "updateTime": {
+          "type": "string"
+        },
+        "postCount": {
+          "type": "integer",
+          "format": "int64"
         }
       }
     },
@@ -266,8 +292,8 @@
           "$ref": "#/definitions/v1Category"
         },
         "operatorId": {
-          "type": "string",
-          "format": "uint64"
+          "type": "integer",
+          "format": "int64"
         }
       },
       "title": "请求 - 创建类别"

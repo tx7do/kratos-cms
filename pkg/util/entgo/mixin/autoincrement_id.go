@@ -15,12 +15,12 @@ type AutoIncrementId struct {
 
 func (AutoIncrementId) Fields() []ent.Field {
 	return []ent.Field{
-		field.Uint64("id").
+		field.Uint32("id").
 			Comment("id").
 			StructTag(`json:"id,omitempty"`).
 			SchemaType(map[string]string{
-				dialect.MySQL:    "bigint",
-				dialect.Postgres: "bigserial",
+				dialect.MySQL:    "int",
+				dialect.Postgres: "serial",
 			}).
 			Annotations(
 				entproto.Field(1),

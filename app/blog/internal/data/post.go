@@ -6,6 +6,7 @@ import (
 	"kratos-blog/app/blog/internal/data/ent/post"
 	"kratos-blog/pkg/util/entgo"
 	paging "kratos-blog/pkg/util/pagination"
+	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
 
@@ -34,12 +35,30 @@ func (r *PostRepo) convertEntToProto(in *ent.Post) *v1.Post {
 		return nil
 	}
 	return &v1.Post{
-		Id:      in.ID,
-		Title:   in.Title,
-		Summary: in.Summary,
-		Content: in.Content,
-		//Category: in.Category,
-		//Tags:     in.Tags,
+		Id:              in.ID,
+		Title:           in.Title,
+		Status:          in.Status,
+		Slug:            in.Slug,
+		EditorType:      in.EditorType,
+		MetaKeywords:    in.MetaKeywords,
+		MetaDescription: in.MetaDescription,
+		FullPath:        in.FullPath,
+		Summary:         in.Summary,
+		Thumbnail:       in.Thumbnail,
+		Password:        in.Password,
+		Template:        in.Template,
+		Content:         in.Content,
+		OriginalContent: in.OriginalContent,
+		Visits:          in.Visits,
+		TopPriority:     in.TopPriority,
+		Likes:           in.Likes,
+		WordCount:       in.WordCount,
+		CommentCount:    in.CommentCount,
+		DisallowComment: in.DisallowComment,
+		InProgress:      in.InProgress,
+		CreateTime:      entgo.UnixMilliToStringPtr(in.CreateTime),
+		UpdateTime:      entgo.UnixMilliToStringPtr(in.UpdateTime),
+		EditTime:        entgo.UnixMilliToStringPtr(in.EditTime),
 	}
 }
 
@@ -108,8 +127,25 @@ func (r *PostRepo) Get(ctx context.Context, req *v1.GetPostRequest) (*v1.Post, e
 func (r *PostRepo) Create(ctx context.Context, req *v1.CreatePostRequest) (*v1.Post, error) {
 	po, err := r.data.db.Post.Create().
 		SetNillableTitle(req.Post.Title).
+		SetNillableStatus(req.Post.Status).
+		SetNillableSlug(req.Post.Slug).
+		SetNillableEditorType(req.Post.EditorType).
+		SetNillableMetaKeywords(req.Post.MetaKeywords).
+		SetNillableMetaDescription(req.Post.MetaDescription).
+		SetNillableFullPath(req.Post.FullPath).
 		SetNillableSummary(req.Post.Summary).
+		SetNillableThumbnail(req.Post.Thumbnail).
+		SetNillablePassword(req.Post.Password).
+		SetNillableTemplate(req.Post.Template).
 		SetNillableContent(req.Post.Content).
+		SetNillableOriginalContent(req.Post.OriginalContent).
+		SetNillableVisits(req.Post.Visits).
+		SetNillableTopPriority(req.Post.TopPriority).
+		SetNillableLikes(req.Post.Likes).
+		SetNillableWordCount(req.Post.WordCount).
+		SetNillableCommentCount(req.Post.CommentCount).
+		SetNillableDisallowComment(req.Post.DisallowComment).
+		SetNillableInProgress(req.Post.InProgress).
 		Save(ctx)
 	if err != nil {
 		return nil, err
@@ -121,8 +157,26 @@ func (r *PostRepo) Create(ctx context.Context, req *v1.CreatePostRequest) (*v1.P
 func (r *PostRepo) Update(ctx context.Context, req *v1.UpdatePostRequest) (*v1.Post, error) {
 	builder := r.data.db.Post.UpdateOneID(req.Id).
 		SetNillableTitle(req.Post.Title).
+		SetNillableStatus(req.Post.Status).
+		SetNillableSlug(req.Post.Slug).
+		SetNillableEditorType(req.Post.EditorType).
+		SetNillableMetaKeywords(req.Post.MetaKeywords).
+		SetNillableMetaDescription(req.Post.MetaDescription).
+		SetNillableFullPath(req.Post.FullPath).
 		SetNillableSummary(req.Post.Summary).
-		SetNillableContent(req.Post.Content)
+		SetNillableThumbnail(req.Post.Thumbnail).
+		SetNillablePassword(req.Post.Password).
+		SetNillableTemplate(req.Post.Template).
+		SetNillableContent(req.Post.Content).
+		SetNillableOriginalContent(req.Post.OriginalContent).
+		SetNillableVisits(req.Post.Visits).
+		SetNillableTopPriority(req.Post.TopPriority).
+		SetNillableLikes(req.Post.Likes).
+		SetNillableWordCount(req.Post.WordCount).
+		SetNillableCommentCount(req.Post.CommentCount).
+		SetNillableDisallowComment(req.Post.DisallowComment).
+		SetNillableInProgress(req.Post.InProgress).
+		SetEditTime(time.Now().UnixMilli())
 
 	po, err := builder.Save(ctx)
 	if err != nil {

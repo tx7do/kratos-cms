@@ -91,6 +91,34 @@ func (uc *UserCreate) SetNillableEmail(s *string) *UserCreate {
 	return uc
 }
 
+// SetAvatar sets the "avatar" field.
+func (uc *UserCreate) SetAvatar(s string) *UserCreate {
+	uc.mutation.SetAvatar(s)
+	return uc
+}
+
+// SetNillableAvatar sets the "avatar" field if the given value is not nil.
+func (uc *UserCreate) SetNillableAvatar(s *string) *UserCreate {
+	if s != nil {
+		uc.SetAvatar(*s)
+	}
+	return uc
+}
+
+// SetDescription sets the "description" field.
+func (uc *UserCreate) SetDescription(s string) *UserCreate {
+	uc.mutation.SetDescription(s)
+	return uc
+}
+
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (uc *UserCreate) SetNillableDescription(s *string) *UserCreate {
+	if s != nil {
+		uc.SetDescription(*s)
+	}
+	return uc
+}
+
 // SetPassword sets the "password" field.
 func (uc *UserCreate) SetPassword(s string) *UserCreate {
 	uc.mutation.SetPassword(s)
@@ -106,7 +134,7 @@ func (uc *UserCreate) SetNillablePassword(s *string) *UserCreate {
 }
 
 // SetID sets the "id" field.
-func (uc *UserCreate) SetID(u uint64) *UserCreate {
+func (uc *UserCreate) SetID(u uint32) *UserCreate {
 	uc.mutation.SetID(u)
 	return uc
 }
@@ -122,6 +150,7 @@ func (uc *UserCreate) Save(ctx context.Context) (*User, error) {
 		err  error
 		node *User
 	)
+	uc.defaults()
 	if len(uc.hooks) == 0 {
 		if err = uc.check(); err != nil {
 			return nil, err
@@ -185,6 +214,14 @@ func (uc *UserCreate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (uc *UserCreate) defaults() {
+	if _, ok := uc.mutation.CreateTime(); !ok {
+		v := user.DefaultCreateTime()
+		uc.mutation.SetCreateTime(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (uc *UserCreate) check() error {
 	if v, ok := uc.mutation.Username(); ok {
@@ -200,6 +237,16 @@ func (uc *UserCreate) check() error {
 	if v, ok := uc.mutation.Email(); ok {
 		if err := user.EmailValidator(v); err != nil {
 			return &ValidationError{Name: "email", err: fmt.Errorf(`ent: validator failed for field "User.email": %w`, err)}
+		}
+	}
+	if v, ok := uc.mutation.Avatar(); ok {
+		if err := user.AvatarValidator(v); err != nil {
+			return &ValidationError{Name: "avatar", err: fmt.Errorf(`ent: validator failed for field "User.avatar": %w`, err)}
+		}
+	}
+	if v, ok := uc.mutation.Description(); ok {
+		if err := user.DescriptionValidator(v); err != nil {
+			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "User.description": %w`, err)}
 		}
 	}
 	if v, ok := uc.mutation.Password(); ok {
@@ -225,7 +272,7 @@ func (uc *UserCreate) sqlSave(ctx context.Context) (*User, error) {
 	}
 	if _spec.ID.Value != _node.ID {
 		id := _spec.ID.Value.(int64)
-		_node.ID = uint64(id)
+		_node.ID = uint32(id)
 	}
 	return _node, nil
 }
@@ -236,7 +283,7 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_spec = &sqlgraph.CreateSpec{
 			Table: user.Table,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeUint64,
+				Type:   field.TypeUint32,
 				Column: user.FieldID,
 			},
 		}
@@ -285,6 +332,22 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 			Column: user.FieldEmail,
 		})
 		_node.Email = &value
+	}
+	if value, ok := uc.mutation.Avatar(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: user.FieldAvatar,
+		})
+		_node.Avatar = &value
+	}
+	if value, ok := uc.mutation.Description(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: user.FieldDescription,
+		})
+		_node.Description = &value
 	}
 	if value, ok := uc.mutation.Password(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -447,6 +510,42 @@ func (u *UserUpsert) UpdateEmail() *UserUpsert {
 // ClearEmail clears the value of the "email" field.
 func (u *UserUpsert) ClearEmail() *UserUpsert {
 	u.SetNull(user.FieldEmail)
+	return u
+}
+
+// SetAvatar sets the "avatar" field.
+func (u *UserUpsert) SetAvatar(v string) *UserUpsert {
+	u.Set(user.FieldAvatar, v)
+	return u
+}
+
+// UpdateAvatar sets the "avatar" field to the value that was provided on create.
+func (u *UserUpsert) UpdateAvatar() *UserUpsert {
+	u.SetExcluded(user.FieldAvatar)
+	return u
+}
+
+// ClearAvatar clears the value of the "avatar" field.
+func (u *UserUpsert) ClearAvatar() *UserUpsert {
+	u.SetNull(user.FieldAvatar)
+	return u
+}
+
+// SetDescription sets the "description" field.
+func (u *UserUpsert) SetDescription(v string) *UserUpsert {
+	u.Set(user.FieldDescription, v)
+	return u
+}
+
+// UpdateDescription sets the "description" field to the value that was provided on create.
+func (u *UserUpsert) UpdateDescription() *UserUpsert {
+	u.SetExcluded(user.FieldDescription)
+	return u
+}
+
+// ClearDescription clears the value of the "description" field.
+func (u *UserUpsert) ClearDescription() *UserUpsert {
+	u.SetNull(user.FieldDescription)
 	return u
 }
 
@@ -643,6 +742,48 @@ func (u *UserUpsertOne) ClearEmail() *UserUpsertOne {
 	})
 }
 
+// SetAvatar sets the "avatar" field.
+func (u *UserUpsertOne) SetAvatar(v string) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.SetAvatar(v)
+	})
+}
+
+// UpdateAvatar sets the "avatar" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateAvatar() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateAvatar()
+	})
+}
+
+// ClearAvatar clears the value of the "avatar" field.
+func (u *UserUpsertOne) ClearAvatar() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.ClearAvatar()
+	})
+}
+
+// SetDescription sets the "description" field.
+func (u *UserUpsertOne) SetDescription(v string) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.SetDescription(v)
+	})
+}
+
+// UpdateDescription sets the "description" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateDescription() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateDescription()
+	})
+}
+
+// ClearDescription clears the value of the "description" field.
+func (u *UserUpsertOne) ClearDescription() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.ClearDescription()
+	})
+}
+
 // SetPassword sets the "password" field.
 func (u *UserUpsertOne) SetPassword(v string) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
@@ -680,7 +821,7 @@ func (u *UserUpsertOne) ExecX(ctx context.Context) {
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *UserUpsertOne) ID(ctx context.Context) (id uint64, err error) {
+func (u *UserUpsertOne) ID(ctx context.Context) (id uint32, err error) {
 	node, err := u.create.Save(ctx)
 	if err != nil {
 		return id, err
@@ -689,7 +830,7 @@ func (u *UserUpsertOne) ID(ctx context.Context) (id uint64, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *UserUpsertOne) IDX(ctx context.Context) uint64 {
+func (u *UserUpsertOne) IDX(ctx context.Context) uint32 {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -712,6 +853,7 @@ func (ucb *UserCreateBulk) Save(ctx context.Context) ([]*User, error) {
 	for i := range ucb.builders {
 		func(i int, root context.Context) {
 			builder := ucb.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*UserMutation)
 				if !ok {
@@ -741,7 +883,7 @@ func (ucb *UserCreateBulk) Save(ctx context.Context) ([]*User, error) {
 				mutation.id = &nodes[i].ID
 				if specs[i].ID.Value != nil && nodes[i].ID == 0 {
 					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = uint64(id)
+					nodes[i].ID = uint32(id)
 				}
 				mutation.done = true
 				return nodes[i], nil
@@ -1000,6 +1142,48 @@ func (u *UserUpsertBulk) UpdateEmail() *UserUpsertBulk {
 func (u *UserUpsertBulk) ClearEmail() *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
 		s.ClearEmail()
+	})
+}
+
+// SetAvatar sets the "avatar" field.
+func (u *UserUpsertBulk) SetAvatar(v string) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.SetAvatar(v)
+	})
+}
+
+// UpdateAvatar sets the "avatar" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateAvatar() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateAvatar()
+	})
+}
+
+// ClearAvatar clears the value of the "avatar" field.
+func (u *UserUpsertBulk) ClearAvatar() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.ClearAvatar()
+	})
+}
+
+// SetDescription sets the "description" field.
+func (u *UserUpsertBulk) SetDescription(v string) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.SetDescription(v)
+	})
+}
+
+// UpdateDescription sets the "description" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateDescription() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateDescription()
+	})
+}
+
+// ClearDescription clears the value of the "description" field.
+func (u *UserUpsertBulk) ClearDescription() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.ClearDescription()
 	})
 }
 
