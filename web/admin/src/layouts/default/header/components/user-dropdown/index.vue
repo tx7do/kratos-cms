@@ -12,12 +12,12 @@
     <template #overlay>
       <Menu @click="handleMenuClick">
         <MenuItem
-          key="doc"
-          :text="t('layout.header.dropdownItemDoc')"
-          icon="ion:document-text-outline"
-          v-if="getShowDoc"
+          key="user"
+          :text="t('layout.header.dropdownItemUser')"
+          icon="ion:person-outline"
+          v-if="handleShowUserSetting"
         />
-        <MenuDivider v-if="getShowDoc" />
+        <MenuDivider v-if="handleShowUserSetting" />
         <MenuItem
           v-if="getUseLockPage"
           key="lock"
@@ -34,14 +34,13 @@
   </Dropdown>
   <LockAction @register="register" />
 </template>
+
 <script lang="ts">
   // components
   import { Dropdown, Menu } from 'ant-design-vue';
   import type { MenuInfo } from 'ant-design-vue/lib/menu/src/interface';
 
   import { defineComponent, computed } from 'vue';
-
-  import { DOC_URL } from '/@/settings/siteSetting';
 
   import { useUserStore } from '/@/store/modules/user';
   import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting';
@@ -51,11 +50,11 @@
 
   import headerImg from '/@/assets/images/header.jpg';
   import { propTypes } from '/@/utils/propTypes';
-  import { openWindow } from '/@/utils';
+  import { useGo } from '/@/hooks/web/usePage';
 
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
 
-  type MenuEvent = 'logout' | 'doc' | 'lock';
+  type MenuEvent = 'logout' | 'user' | 'lock';
 
   export default defineComponent({
     name: 'UserDropdown',
@@ -72,12 +71,13 @@
     setup() {
       const { prefixCls } = useDesign('header-user-dropdown');
       const { t } = useI18n();
-      const { getShowDoc, getUseLockPage } = useHeaderSetting();
+      const { getUseLockPage } = useHeaderSetting();
       const userStore = useUserStore();
+      const go = useGo();
 
       const getUserInfo = computed(() => {
-        const { nickName = '', avatar, desc } = userStore.getUserInfo || {};
-        return { nickName, avatar: avatar || headerImg, desc };
+        const { nickName = '', avatar, description } = userStore.getUserInfo || {};
+        return { nickName, avatar: avatar || headerImg, description };
       });
 
       const [register, { openModal }] = useModal();
@@ -91,9 +91,9 @@
         userStore.confirmLoginOut();
       }
 
-      // open doc
-      function openDoc() {
-        openWindow(DOC_URL);
+      // 个人设置
+      function handleShowUserSetting() {
+        go('/system/account');
       }
 
       function handleMenuClick(e: MenuInfo) {
@@ -101,8 +101,8 @@
           case 'logout':
             handleLoginOut();
             break;
-          case 'doc':
-            openDoc();
+          case 'user':
+            handleShowUserSetting();
             break;
           case 'lock':
             handleLock();
@@ -115,7 +115,7 @@
         t,
         getUserInfo,
         handleMenuClick,
-        getShowDoc,
+        handleShowUserSetting,
         register,
         getUseLockPage,
       };

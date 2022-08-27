@@ -9,23 +9,23 @@ export interface GrowCardItem {
 
 export const growCardList: GrowCardItem[] = [
   {
-    title: '访问数',
+    title: '文章数',
     icon: 'visit-count|svg',
     value: 2000,
     total: 120000,
     color: 'green',
-    action: '月',
+    action: '周',
   },
   {
-    title: '成交额',
+    title: '评论数',
     icon: 'total-sales|svg',
     value: 20000,
     total: 500000,
     color: 'blue',
-    action: '月',
+    action: '周',
   },
   {
-    title: '下载数',
+    title: '阅读量',
     icon: 'download-count|svg',
     value: 8000,
     total: 120000,
@@ -33,11 +33,11 @@ export const growCardList: GrowCardItem[] = [
     action: '周',
   },
   {
-    title: '成交数',
+    title: '访问数',
     icon: 'transaction|svg',
     value: 5000,
     total: 50000,
     color: 'purple',
-    action: '年',
+    action: '月',
   },
 ];

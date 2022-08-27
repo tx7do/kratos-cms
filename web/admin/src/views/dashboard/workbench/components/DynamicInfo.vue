@@ -1,5 +1,5 @@
 <template>
-  <Card title="最新动态" v-bind="$attrs">
+  <Card title="最新评论" v-bind="$attrs">
     <template #extra>
       <a-button type="link" size="small">更多</a-button>
     </template>

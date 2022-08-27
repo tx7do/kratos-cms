@@ -20,8 +20,8 @@ const posts: AppRouteModule = {
       name: 'PostList',
       meta: {
         title: t('routes.blog.posts.postList'),
-        ignoreKeepAlive: false,
         icon: 'ant-design:read-outlined',
+        ignoreKeepAlive: false,
       },
       component: () => import('/@/views/blog/posts/list/index.vue'),
     },
@@ -31,19 +31,22 @@ const posts: AppRouteModule = {
       name: 'PostWrite',
       meta: {
         title: t('routes.blog.posts.postWrite'),
-        ignoreKeepAlive: false,
         icon: 'ant-design:highlight-outlined',
+        ignoreKeepAlive: false,
       },
-      component: () => import('/@/views/blog/posts/write/index.vue'),
+      component: () => import('/@/views/blog/posts/edit/index.vue'),
     },
 
     {
-      path: 'edit',
+      path: 'edit/:id',
       name: 'PostEdit',
       meta: {
         title: t('routes.blog.posts.postEdit'),
-        ignoreKeepAlive: false,
         icon: 'ant-design:edit-outlined',
+        currentActiveMenu: '/posts/list',
+        ignoreKeepAlive: true,
+        hideMenu: true,
+        showMenu: false,
       },
       component: () => import('/@/views/blog/posts/edit/index.vue'),
     },
@@ -53,8 +56,8 @@ const posts: AppRouteModule = {
       name: 'CategoryList',
       meta: {
         title: t('routes.blog.posts.categoryList'),
-        ignoreKeepAlive: false,
         icon: 'ant-design:unordered-list-outlined',
+        ignoreKeepAlive: false,
       },
       component: () => import('/@/views/blog/posts/categories/index.vue'),
     },
@@ -64,8 +67,8 @@ const posts: AppRouteModule = {
       name: 'TagList',
       meta: {
         title: t('routes.blog.posts.tagList'),
-        ignoreKeepAlive: false,
         icon: 'ant-design:tags-outlined',
+        ignoreKeepAlive: false,
       },
       component: () => import('/@/views/blog/posts/tags/index.vue'),
     },

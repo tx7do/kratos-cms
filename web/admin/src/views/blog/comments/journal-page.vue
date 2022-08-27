@@ -1,10 +1,6 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight>
-    <BasicTable @register="registerTable" :searchInfo="searchFormSchema">
-      <template #toolbar>
-        <a-button preIcon="ant-design:plus" type="primary" @click="handleCreate"> 写文章 </a-button>
-        <a-button preIcon="ant-design:delete" @click="handleTrash"> 回收站 </a-button>
-      </template>
+    <BasicTable @register="registerTable" :searchInfo="postSearchFormSchema">
       <template #action="{ record }">
         <TableAction :actions="createActions(record)" />
       </template>
@@ -23,24 +19,24 @@
   import { PageWrapper } from '/@/components/Page';
   import { useGo } from '/@/hooks/web/usePage';
 
-  import { columns, searchFormSchema } from './data';
+  import { journalColumns, postSearchFormSchema } from './data';
 
   const go = useGo();
 
   const [registerTable, { reload }] = useTable({
-    title: '列表',
+    //title: '列表',
     //api: ListPost,
-    columns,
+    columns: journalColumns,
     rowKey: 'id',
     formConfig: {
       labelWidth: 120,
-      schemas: searchFormSchema,
+      schemas: postSearchFormSchema,
       autoSubmitOnEnter: true,
     },
     showIndexColumn: false,
     canResize: false,
     useSearchForm: true,
-    showTableSetting: true,
+    showTableSetting: false,
     bordered: true,
     actionColumn: {
       width: 100,
@@ -55,30 +51,18 @@
   function createActions(record: EditRecordRow): ActionItem[] {
     return [
       {
-        label: '编辑',
-        onClick: handleEdit.bind(null, record),
+        label: '回复',
+        onClick: handleReply.bind(null, record),
       },
       {
-        label: '删除',
+        label: '回收站',
         onClick: handleDelete.bind(null, record),
-      },
-      {
-        label: '设置',
-        onClick: handleSetting.bind(null, record),
       },
     ];
   }
 
-  function handleCreate(record: EditRecordRow) {
-    go('/posts/write');
-  }
-  function handleTrash(record: EditRecordRow) {}
-
-  function handleEdit(record: EditRecordRow) {
-    go('/posts/edit/' + record.id);
-  }
+  function handleReply(record: EditRecordRow) {}
   function handleDelete(record: EditRecordRow) {}
-  function handleSetting(record: EditRecordRow) {}
 </script>
 
 <style lang="less" scoped></style>

@@ -19,7 +19,7 @@ const dashboard: AppRouteModule = {
       name: 'Analysis',
       component: () => import('/@/views/dashboard/analysis/index.vue'),
       meta: {
-        // affix: true,
+        icon: 'ant-design:line-chart-outlined',
         title: t('routes.dashboard.analysis'),
       },
     },
@@ -28,6 +28,7 @@ const dashboard: AppRouteModule = {
       name: 'Workbench',
       component: () => import('/@/views/dashboard/workbench/index.vue'),
       meta: {
+        icon: 'ant-design:home-outlined',
         title: t('routes.dashboard.workbench'),
       },
     },

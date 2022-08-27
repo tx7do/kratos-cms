@@ -5,6 +5,7 @@ export default {
     systemOptions: '博客设置',
     toolList: '小工具',
     actionLogs: '操作日志',
+    account: '个人信息',
   },
 
   posts: {
@@ -36,7 +37,7 @@ export default {
 
   interfaces: {
     moduleName: '外观',
-    themeList: '所有主题',
+    themeList: '主题管理',
     themeSetting: '主题设置',
     themeEdit: '主题编辑',
     menuList: '菜单设置',

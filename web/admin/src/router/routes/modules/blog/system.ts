@@ -15,14 +15,13 @@ const system: AppRouteModule = {
   },
   children: [
     {
-      path: 'developer/options',
-      name: 'DeveloperOptions',
+      path: 'account',
+      name: 'AccountPage',
+      component: () => import('/@/views/blog/system/account/index.vue'),
       meta: {
-        title: t('routes.blog.system.developerOptions'),
-        ignoreKeepAlive: false,
-        icon: 'ant-design:experiment-outlined',
+        title: t('routes.blog.system.account'),
+        hideMenu: true,
       },
-      component: () => import('/@/views/blog/system/developer/index.vue'),
     },
 
     {
@@ -34,6 +33,19 @@ const system: AppRouteModule = {
         icon: 'ant-design:sliders-outlined',
       },
       component: () => import('/@/views/blog/system/options/index.vue'),
+    },
+
+    {
+      path: 'developer/options',
+      name: 'DeveloperOptions',
+      meta: {
+        title: t('routes.blog.system.developerOptions'),
+        icon: 'ant-design:experiment-outlined',
+        ignoreKeepAlive: false,
+        hideMenu: true,
+        showMenu: false,
+      },
+      component: () => import('/@/views/blog/system/developer/index.vue'),
     },
 
     {
@@ -54,6 +66,8 @@ const system: AppRouteModule = {
         title: t('routes.blog.system.actionLogs'),
         ignoreKeepAlive: false,
         icon: 'ant-design:database-outlined',
+        hideMenu: true,
+        showMenu: false,
       },
       component: () => import('/@/views/blog/system/actionlogs/index.vue'),
     },

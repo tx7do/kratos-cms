@@ -27,23 +27,29 @@ const interfaces: AppRouteModule = {
     },
 
     {
-      path: 'themes/setting',
+      path: 'themes/setting/:id',
       name: 'ThemeSetting',
       meta: {
         title: t('routes.blog.interfaces.themeSetting'),
         icon: 'ant-design:control-outlined',
+        currentActiveMenu: '/themes/list',
         ignoreKeepAlive: false,
+        hideMenu: true,
+        showMenu: false,
       },
       component: () => import('/@/views/blog/interfaces/themes/setting/index.vue'),
     },
 
     {
-      path: 'themes/edit',
+      path: 'themes/edit/:id',
       name: 'ThemeEdit',
       meta: {
         title: t('routes.blog.interfaces.themeEdit'),
         icon: 'ant-design:edit-outlined',
+        currentActiveMenu: '/themes/list',
         ignoreKeepAlive: false,
+        hideMenu: true,
+        showMenu: false,
       },
       component: () => import('/@/views/blog/interfaces/themes/edit/index.vue'),
     },
