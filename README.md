@@ -1,6 +1,6 @@
-# kratos-blog
+# 克拉托斯波克 kratos-blog
 
-后端基于微服务框架[go-kratos](https://go-kratos.dev/)，前端基于[VUE3](https://vuejs.org/)，开发出来的博客系统。
+后端基于golang微服务框架[go-kratos](https://go-kratos.dev/)，前端基于[VUE3](https://vuejs.org/)，开发出来的博客系统/CMS。
 
 ## 技术栈
 
@@ -20,7 +20,12 @@
 
 ### 前端技术栈
 
-[Vue3](https://vuejs.org/) -- JavaScript框架
+- [TypeScript](https://www.typescriptlang.org/)
+- [Es6+](http://es6.ruanyifeng.com/) 
+- [Vite](https://vitejs.dev/)
+- [Vue3](https://v3.vuejs.org/)
+- [Pinia](https://pinia.vuejs.org/)
+- [Ant-Design-Vue](https://2x.antdv.com/docs/vue/introduce-cn/)
 
 ## Docker部署开发服务器
 
@@ -42,6 +47,8 @@ docker run -itd \
     bitnami/consul:latest
 ```
 
+- 管理后台: <http://localhost:8500>
+
 ### Jaeger
 
 ```shell
@@ -50,16 +57,23 @@ docker pull jaegertracing/all-in-one:latest
 docker run -d \
     --name jaeger \
     -e COLLECTOR_ZIPKIN_HOST_PORT=:9411 \
-    -p 5775:5775/udp \
+    -e COLLECTOR_OTLP_ENABLED=true \
     -p 6831:6831/udp \
     -p 6832:6832/udp \
     -p 5778:5778 \
     -p 16686:16686 \
-    -p 14268:14268 \
+    -p 4317:4317 \
+    -p 4318:4318 \
     -p 14250:14250 \
+    -p 14268:14268 \
+    -p 14269:14269 \
     -p 9411:9411 \
     jaegertracing/all-in-one:latest
 ```
+
+- API：<http://localhost:14268/api/traces>
+- Zipkin API：<http://localhost:9411/api/v2/spans>
+- 后台: <http://localhost:16686>
 
 ### PostgreSQL
 
@@ -79,7 +93,7 @@ docker run -itd \
 docker exec -it postgres-test "apt update"
 ```
 
-```sql
+```postgresql
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "postgis";
 
@@ -87,8 +101,8 @@ SELECT version();
 SELECT postgis_full_version();
 ```
 
-默认账号：postgres  
-默认密码：123456
+- 默认账号：postgres  
+- 默认密码：123456
 
 ### Redis
 
@@ -103,7 +117,7 @@ docker run -itd \
     bitnami/redis:latest
 ```
 
-## MinIO
+### MinIO
 
 ```shell
 docker pull bitnami/minio:latest
@@ -135,4 +149,4 @@ docker run -itd \
     bitnami/minio-client:latest
 ```
 
-管理后台: <http://localhost:9001/login>
+- 管理后台: <http://localhost:9001/login>

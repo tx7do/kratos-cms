@@ -100,7 +100,7 @@ export interface ProjectConfig {
   // Theme color
   themeColor: string;
 
-  // The main interface is displayed in full screen, the menu is not displayed, and the top
+  // The main interfaces is displayed in full screen, the menu is not displayed, and the top
   fullContent: boolean;
   // content width
   contentMode: ContentEnum;
@@ -130,20 +130,20 @@ export interface ProjectConfig {
   useOpenBackTop: boolean;
   // Is it possible to embed iframe pages
   canEmbedIFramePage: boolean;
-  // Whether to delete unclosed messages and notify when switching the interface
+  // Whether to delete unclosed messages and notify when switching the interfaces
   closeMessageOnSwitch: boolean;
-  // Whether to cancel the http request that has been sent but not responded when switching the interface.
+  // Whether to cancel the http request that has been sent but not responded when switching the interfaces.
   removeAllHttpPending: boolean;
 }
 
 export interface GlobConfig {
   // Site title
   title: string;
-  // Service interface url
+  // Service interfaces url
   apiUrl: string;
   // Upload url
   uploadUrl?: string;
-  //  Service interface url prefix
+  //  Service interfaces url prefix
   urlPrefix?: string;
   // Project abbreviation
   shortName: string;
@@ -151,9 +151,9 @@ export interface GlobConfig {
 export interface GlobEnvConfig {
   // Site title
   VITE_GLOB_APP_TITLE: string;
-  // Service interface url
+  // Service interfaces url
   VITE_GLOB_API_URL: string;
-  // Service interface url prefix
+  // Service interfaces url prefix
   VITE_GLOB_API_URL_PREFIX?: string;
   // Project abbreviation
   VITE_GLOB_APP_SHORT_NAME: string;

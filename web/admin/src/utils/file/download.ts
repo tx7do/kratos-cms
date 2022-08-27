@@ -27,7 +27,7 @@ export function downloadByBase64(buf: string, filename: string, mime?: string, b
 }
 
 /**
- * Download according to the background interface file stream
+ * Download according to the background interfaces file stream
  * @param {*} data
  * @param {*} filename
  * @param {*} mime

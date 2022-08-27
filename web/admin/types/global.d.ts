@@ -17,7 +17,7 @@ declare global {
     };
     lastBuildTime: string;
   };
-  // declare interface Window {
+  // declare interfaces Window {
   //   // Global vue app instance
   //   __APP__: App<Element>;
   // }
@@ -78,9 +78,9 @@ declare global {
   declare function parseFloat(string: string | number): number;
 
   namespace JSX {
-    // tslint:disable no-empty-interface
+    // tslint:disable no-empty-interfaces
     type Element = VNode;
-    // tslint:disable no-empty-interface
+    // tslint:disable no-empty-interfaces
     type ElementClass = ComponentRenderProxy;
     interface ElementAttributesProperty {
       $props: any;

@@ -4,8 +4,8 @@ export default {
     errorTip: 'Error Tip',
     errorMessage: 'The operation failed, the system is abnormal!',
     timeoutMessage: 'Login timed out, please log in again!',
-    apiTimeoutMessage: 'The interface request timed out, please refresh the page and try again!',
-    apiRequestFailed: 'The interface request failed, please try again later!',
+    apiTimeoutMessage: 'The interfaces request timed out, please refresh the page and try again!',
+    apiRequestFailed: 'The interfaces request failed, please try again later!',
     networkException: 'network anomaly',
     networkExceptionMsg:
       'Please check if your network connection is normal! The network is abnormal',

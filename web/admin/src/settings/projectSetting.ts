@@ -171,11 +171,11 @@ const setting: ProjectConfig = {
   //  Is it possible to embed iframe pages
   canEmbedIFramePage: true,
 
-  // Whether to delete unclosed messages and notify when switching the interface
+  // Whether to delete unclosed messages and notify when switching the interfaces
   closeMessageOnSwitch: true,
 
-  // Whether to cancel the http request that has been sent but not responded when switching the interface.
-  // If it is enabled, I want to overwrite a single interface. Can be set in a separate interface
+  // Whether to cancel the http request that has been sent but not responded when switching the interfaces.
+  // If it is enabled, I want to overwrite a single interfaces. Can be set in a separate interfaces
   removeAllHttpPending: false,
 };
 

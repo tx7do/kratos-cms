@@ -1,5 +1,5 @@
 /**
- * @description: Login interface parameters
+ * @description: Login interfaces parameters
  */
 export interface LoginParams {
   userName: string;
@@ -12,7 +12,7 @@ export interface RoleInfo {
 }
 
 /**
- * @description: Login interface return value
+ * @description: Login interfaces return value
  */
 export interface LoginResultModel {
   userId: string | number;

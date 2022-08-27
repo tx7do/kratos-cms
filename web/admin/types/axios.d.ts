@@ -33,7 +33,7 @@ export interface RetryRequest {
   waitTime: number;
 }
 
-/* export interface Result<T = any> {
+/* export interfaces Result<T = any> {
   code: number;
   type: 'success' | 'error' | 'warning';
   message: string;
@@ -51,7 +51,7 @@ export interface Result {
 export interface UploadFileParams {
   // Other parameters
   data?: Recordable;
-  // File parameter interface field name
+  // File parameter interfaces field name
   name?: string;
   // file name
   file: File | Blob;

@@ -32,7 +32,7 @@
      */
     showText: { type: Boolean, default: true },
     /**
-     * Whether to refresh the interface when changing
+     * Whether to refresh the interfaces when changing
      */
     reload: { type: Boolean },
   });

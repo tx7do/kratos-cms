@@ -19,7 +19,7 @@ export const PAGE_SIZE_OPTIONS = pageSizeOptions;
 // Number of items displayed per page
 export const PAGE_SIZE = defaultPageSize;
 
-// Common interface field settings
+// Common interfaces field settings
 export const FETCH_SETTING = fetchSetting;
 
 // Default Size

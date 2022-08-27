@@ -6,7 +6,7 @@ import { useGlobSetting } from '/@/hooks/setting';
 const { uploadUrl = '' } = useGlobSetting();
 
 /**
- * @description: Upload interface
+ * @description: Upload interfaces
  */
 export function uploadApi(
   params: UploadFileParams,
