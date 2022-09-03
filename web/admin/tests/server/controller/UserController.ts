@@ -5,15 +5,15 @@ class UserController {
   private service: UserService = new UserService();
 
   Login = async (ctx) => {
-    ctx.body = await this.service.Login();
+    ctx.body = await this.service.Login(ctx);
   };
 
   Logout = async (ctx) => {
-    ctx.body = await this.service.Logout();
+    ctx.body = await this.service.Logout(ctx);
   };
 
   GetMe = async (ctx) => {
-    ctx.body = await this.service.GetMe();
+    ctx.body = await this.service.GetMe(ctx);
   };
 }
 

@@ -1,7 +1,6 @@
-declare type Recordable<T = any> = Record<string, T>;
 
 export class Result {
-  static success<T = Recordable>(result: T) {
+  static success(result: any) {
     return result;
   }
 

@@ -9,5 +9,5 @@ pnpm install
 ```
 
 ```bash
-pnpm start
+pnpm run start
 ```

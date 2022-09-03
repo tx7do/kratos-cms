@@ -24,12 +24,13 @@
   import { useGo } from '/@/hooks/web/usePage';
 
   import { columns, searchFormSchema } from './data';
+  import {ListPost} from "/@/api/blog/post";
 
   const go = useGo();
 
   const [registerTable, { reload }] = useTable({
     title: '列表',
-    //api: ListPost,
+    api: ListPost,
     columns,
     rowKey: 'id',
     formConfig: {
@@ -43,7 +44,7 @@
     showTableSetting: true,
     bordered: true,
     actionColumn: {
-      width: 100,
+      width: 180,
       title: '操作',
       dataIndex: 'action',
       slots: {

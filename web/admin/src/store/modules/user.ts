@@ -116,7 +116,7 @@ export const useUserStore = defineStore({
           router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
           permissionStore.setDynamicAddedRoute(true);
         }
-        goHome && (await PageEnum.BASE_HOME);
+        goHome && (await router.replace(PageEnum.BASE_HOME));
       }
       return userInfo;
     },

@@ -9,8 +9,6 @@ import { Routes as SystemRoutes } from '../controller/SystemController';
 import { Routes as TagRoutes } from '../controller/TagController';
 import { Routes as UserRoutes } from '../controller/UserController';
 
-// export const AppRoutes = SystemRoutes;
-
 export const AppRoutes = [
   ...AttachmentRoutes,
   ...CategoryRoutes,
