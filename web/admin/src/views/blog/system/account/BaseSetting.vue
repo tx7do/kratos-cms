@@ -31,7 +31,6 @@
   import { useMessage } from '/@/hooks/web/useMessage';
 
   import headerImg from '/@/assets/images/header.jpg';
-  import { accountInfoApi } from '/@/api/demo/account';
   import { baseSetschemas } from './data';
   import { useUserStore } from '/@/store/modules/user';
   import { uploadApi } from '/@/api/sys/upload';
@@ -56,8 +55,6 @@
       });
 
       onMounted(async () => {
-        const data = await accountInfoApi();
-        setFieldsValue(data);
       });
 
       const avatar = computed(() => {

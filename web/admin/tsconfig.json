@@ -9,7 +9,7 @@
     "allowSyntheticDefaultImports": true,
     "strictFunctionTypes": false,
     "jsx": "preserve",
-    "baseUrl": ".",
+    "baseUrl": "./",
     "allowJs": true,
     "sourceMap": true,
     "esModuleInterop": true,
@@ -24,10 +24,12 @@
     "removeComments": true,
     "paths": {
       "/@/*": ["src/*"],
-      "/#/*": ["types/*"]
+      "/#/*": ["types/*"],
+      "/&/*": ["api/*"]
     }
   },
   "include": [
+    "api/**/*.ts",
     "tests/**/*.ts",
     "src/**/*.ts",
     "src/**/*.d.ts",
@@ -37,7 +39,6 @@
     "types/**/*.ts",
     "build/**/*.ts",
     "build/**/*.d.ts",
-    "mock/**/*.ts",
     "vite.config.ts"
   ],
   "exclude": ["node_modules", "tests/server/**/*.ts", "dist", "**/*.js"]
