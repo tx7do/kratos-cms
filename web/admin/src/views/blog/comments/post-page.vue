@@ -25,7 +25,7 @@
 
   const [registerTable, { reload }] = useTable({
     //title: '列表',
-    //api: ListPost,
+    api: ListPost,
     columns: postColumns,
     rowKey: 'id',
     formConfig: {

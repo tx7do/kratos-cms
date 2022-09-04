@@ -1,8 +1,17 @@
 {
-  "watch": ["src"],
-  "ext": "ts",
-  "exec": "ts-node -r tsconfig-paths/register index.ts",
-  "events": {
-    "restart": "clear"
-  }
+  "watch": [
+    "src"
+  ],
+  "ignore": [
+    ".git",
+    ".svn",
+    "node_modules/**/node_modules"
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ext": "ts json",
+  "verbose": true,
+  "restartable": "rs",
+  "exec": "ts-node -r tsconfig-paths/register ./src/index.ts"
 }

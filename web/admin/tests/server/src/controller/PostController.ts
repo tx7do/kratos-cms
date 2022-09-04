@@ -1,28 +1,27 @@
 import PostService from '../service/PostService';
-import * as protocol from "../../../api/post";
-import {userController} from "./UserController";
+import * as protocol from '../../../../api/post';
 
 class PostController {
   private service: PostService = new PostService();
 
   ListPost = async (ctx) => {
-    ctx.body = await this.service.ListPost(ctx);
+    await this.service.ListPost(ctx);
   };
 
   GetPost = async (ctx) => {
-    ctx.body = await this.service.GetPost(ctx);
+    await this.service.GetPost(ctx);
   };
 
   CreatePost = async (ctx) => {
-    ctx.body = await this.service.CreatePost(ctx);
+    await this.service.CreatePost(ctx);
   };
 
   UpdatePost = async (ctx) => {
-    ctx.body = await this.service.UpdatePost(ctx);
+    await this.service.UpdatePost(ctx);
   };
 
   DeletePost = async (ctx) => {
-    ctx.body = await this.service.DeletePost(ctx);
+    await this.service.DeletePost(ctx);
   };
 }
 

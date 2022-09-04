@@ -1,4 +1,7 @@
 import { BasicColumn, FormSchema } from '/@/components/Table';
+import { h } from 'vue';
+import { Badge } from 'ant-design-vue';
+import { Post } from '/&/post';
 
 export const columns: BasicColumn[] = [
   {
@@ -8,8 +11,17 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '状态',
+    align: 'center',
     dataIndex: 'status',
     sorter: false,
+    width: 120,
+    customRender: ({ record }) => {
+      const rd = record as Post;
+      return h(Badge, {
+        status: 'success',
+        text: '已发布',
+      });
+    },
   },
   {
     title: '分类',
@@ -25,11 +37,29 @@ export const columns: BasicColumn[] = [
     title: '评论',
     dataIndex: 'commentCount',
     sorter: false,
+    width: 60,
+    customRender: ({ record }) => {
+      const rd = record as Post;
+      return h(Badge, {
+        count: rd.commentCount,
+        numberStyle: { backgroundColor: 'volcano' },
+        overflowCount: 10000,
+      });
+    },
   },
   {
     title: '访问',
     dataIndex: 'visits',
     sorter: false,
+    width: 60,
+    customRender: ({ record }) => {
+      const rd = record as Post;
+      return h(Badge, {
+        count: rd.visits,
+        numberStyle: { backgroundColor: '#2db7f5' },
+        overflowCount: 100000,
+      });
+    },
   },
   {
     title: '发布时间',
@@ -58,6 +88,5 @@ export const searchFormSchema: FormSchema[] = [
         { label: '回收站', value: '2' },
       ],
     },
-    required: true,
   },
 ];

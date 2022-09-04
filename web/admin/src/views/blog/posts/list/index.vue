@@ -24,7 +24,7 @@
   import { useGo } from '/@/hooks/web/usePage';
 
   import { columns, searchFormSchema } from './data';
-  import {ListPost} from "/@/api/blog/post";
+  import { ListPost } from '/@/api/blog/post';
 
   const go = useGo();
 
