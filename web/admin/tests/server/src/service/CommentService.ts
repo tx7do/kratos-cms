@@ -20,5 +20,7 @@ export default class CommentService {
 
   UpdateComment = async (ctx) => {};
 
-  DeleteComment = async (ctx) => {};
+  DeleteComment = async (ctx) => {
+    ctx.body = Result.success({});
+  };
 }

@@ -1,24 +1,28 @@
-import { Random } from 'mockjs';
 import { Result } from '../utils/utils';
+import { createTags, createTag } from '../utils/mock';
 
 export default class TagService {
   ListTag = async (ctx) => {
-    const tagList: any[] = [];
-    for (let index = 0; index < 20; index++) {
-      tagList.push({
-        id: `${index}`,
-        title: Random.name(),
-        createTime: Random.datetime(),
-      });
-    }
-    ctx.body = Result.success(tagList);
+    const total = 20;
+    ctx.body = Result.success({
+      items: createTags(total),
+      total: total,
+    });
   };
 
-  GetTag = async (ctx) => {};
+  GetTag = async (ctx) => {
+    ctx.body = Result.success(createTag());
+  };
 
-  CreateTag = async (ctx) => {};
+  CreateTag = async (ctx) => {
+    ctx.body = Result.success(createTag());
+  };
 
-  UpdateTag = async (ctx) => {};
+  UpdateTag = async (ctx) => {
+    ctx.body = Result.success(createTag());
+  };
 
-  DeleteTag = async (ctx) => {};
+  DeleteTag = async (ctx) => {
+    ctx.body = Result.success({});
+  };
 }

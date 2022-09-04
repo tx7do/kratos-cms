@@ -3,7 +3,11 @@ import { createPosts, createPost } from '../utils/mock';
 
 export default class PostService {
   ListPost = async (ctx) => {
-    ctx.body = Result.success(createPosts(20));
+    const total = 20;
+    ctx.body = Result.success({
+      items: createPosts(total),
+      total: total,
+    });
   };
 
   GetPost = async (ctx) => {

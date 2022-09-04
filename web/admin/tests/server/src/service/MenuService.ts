@@ -20,5 +20,7 @@ export default class MenuService {
 
   UpdateMenu = async (ctx) => {};
 
-  DeleteMenu = async (ctx) => {};
+  DeleteMenu = async (ctx) => {
+    ctx.body = Result.success({});
+  };
 }

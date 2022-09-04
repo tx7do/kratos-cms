@@ -1,24 +1,28 @@
-import { Random } from 'mockjs';
 import { Result } from '../utils/utils';
+import { createCategories, createCategory } from '../utils/mock';
 
 export default class CategoryService {
   ListCategory = async (ctx) => {
-    const photoList: any[] = [];
-    for (let index = 0; index < 20; index++) {
-      photoList.push({
-        id: `${index}`,
-        title: Random.name(),
-        createTime: Random.datetime(),
-      });
-    }
-    ctx.body = Result.success(photoList);
+    const total = 20;
+    ctx.body = Result.success({
+      items: createCategories(total),
+      total: total,
+    });
   };
 
-  GetCategory = async (ctx) => {};
+  GetCategory = async (ctx) => {
+    ctx.body = Result.success(createCategory());
+  };
 
-  CreateCategory = async (ctx) => {};
+  CreateCategory = async (ctx) => {
+    ctx.body = Result.success(createCategory());
+  };
 
-  UpdateCategory = async (ctx) => {};
+  UpdateCategory = async (ctx) => {
+    ctx.body = Result.success(createCategory());
+  };
 
-  DeleteCategory = async (ctx) => {};
+  DeleteCategory = async (ctx) => {
+    ctx.body = Result.success({});
+  };
 }

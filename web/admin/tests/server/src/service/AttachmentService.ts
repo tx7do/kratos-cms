@@ -1,24 +1,28 @@
-import { Random } from 'mockjs';
 import { Result } from '../utils/utils';
+import { createAttachment, createAttachments } from '../utils/mock';
 
 export default class AttachmentService {
   ListAttachment = async (ctx) => {
-    const photoList: any[] = [];
-    for (let index = 0; index < 20; index++) {
-      photoList.push({
-        id: `${index}`,
-        title: Random.name(),
-        createTime: Random.datetime(),
-      });
-    }
-    ctx.body = Result.success(photoList);
+    const total = 20;
+    ctx.body = Result.success({
+      items: createAttachments(total),
+      total: total,
+    });
   };
 
-  GetAttachment = async (ctx) => {};
+  GetAttachment = async (ctx) => {
+    ctx.body = Result.success(createAttachment());
+  };
 
-  CreateAttachment = async (ctx) => {};
+  CreateAttachment = async (ctx) => {
+    ctx.body = Result.success(createAttachment());
+  };
 
-  UpdateAttachment = async (ctx) => {};
+  UpdateAttachment = async (ctx) => {
+    ctx.body = Result.success(createAttachment());
+  };
 
-  DeleteAttachment = async (ctx) => {};
+  DeleteAttachment = async (ctx) => {
+    ctx.body = Result.success({});
+  };
 }

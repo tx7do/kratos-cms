@@ -20,5 +20,7 @@ export default class LinkService {
 
   UpdateLink = async (ctx) => {};
 
-  DeleteLink = async (ctx) => {};
+  DeleteLink = async (ctx) => {
+    ctx.body = Result.success({});
+  };
 }

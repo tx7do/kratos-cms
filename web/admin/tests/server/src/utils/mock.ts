@@ -25,11 +25,16 @@ export function createPosts(count) {
 }
 
 export function createTag() {
+  const name = Random.first();
   return {
     id: Random.id(),
-    name: Random.first(),
-    slug: Random.first(),
+    name: name,
+    slug: name.toLowerCase(),
+    fullPath: '/tags/' + name.toLowerCase(),
     color: Random.color(),
+    thumbnail: Random.image(),
+    description: Random.cparagraph(),
+    postCount: Random.integer(0, 1000),
     createTime: Random.datetime(),
   };
 }
@@ -47,6 +52,8 @@ export function createCategory() {
     id: Random.id(),
     name: Random.first(),
     slug: Random.first(),
+    thumbnail: Random.image(),
+    postCount: Random.integer(0, 1000),
     createTime: Random.datetime(),
   };
 }
@@ -55,6 +62,30 @@ export function createCategories(count) {
   const items: any[] = [];
   for (let index = 0; index < count; index++) {
     items.push(createCategory());
+  }
+  return items;
+}
+
+export function createAttachment() {
+  return {
+    id: Random.id(),
+    name: Random.first(),
+    path: Random.image(),
+    thumbPath: Random.image(),
+    mediaType: 'image/jpeg',
+    suffix: 'jpeg',
+    width: 6016,
+    height: 4016,
+    size: 476059,
+    type: 'LOCAL',
+    createTime: Random.datetime(),
+  };
+}
+
+export function createAttachments(count) {
+  const items: any[] = [];
+  for (let index = 0; index < count; index++) {
+    items.push(createAttachment());
   }
   return items;
 }

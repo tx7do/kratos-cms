@@ -1,14 +1,14 @@
 <template>
   <PageWrapper title="附件列表">
     <template #extra>
-      <a-space size="middle">
+      <Space size="middle">
         <Button preIcon="ant-design:upload-outlined" type="primary" @click="handleClickUpload"
           >上传</Button
         >
-      </a-space>
+      </Space>
     </template>
 
-    <CardList :params="params" />
+    <CardList :params="params" :api="ListAttachment" />
   </PageWrapper>
 </template>
 
@@ -18,8 +18,7 @@
   import { PageWrapper } from '/@/components/Page';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { Space } from 'ant-design-vue';
-
-  const ASpace = Space;
+  import { ListAttachment } from '/@/api/blog/attachment';
 
   const { notification } = useMessage();
   // 请求api时附带参数

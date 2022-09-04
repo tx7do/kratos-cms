@@ -20,5 +20,7 @@ export default class PhotoService {
 
   UpdatePhoto = async (ctx) => {};
 
-  DeletePhoto = async (ctx) => {};
+  DeletePhoto = async (ctx) => {
+    ctx.body = Result.success({});
+  };
 }

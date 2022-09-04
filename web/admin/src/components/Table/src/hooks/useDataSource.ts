@@ -271,28 +271,57 @@ export function useDataSource(
 
       const { sortInfo = {}, filterInfo } = searchState;
 
+      const sortParams = sortInfo || defSort || opt?.sortInfo;
+
+      const filterParams = filterInfo || opt?.filterInfo;
+
+      const queryParams: Recordable = merge(
+        useSearchForm ? getFieldsValue() : {},
+        opt?.searchInfo ?? {},
+      );
+
+      // YLB EDIT: 增加排序和过滤
+
+      const queryMap: { [key: string]: string } = {};
+      let queryCount = 0;
+      for (const k in queryParams) {
+        const v = (queryParams as any)[k];
+        if (v) {
+          queryMap[k] = v;
+          ++queryCount;
+        }
+      }
+      for (const k in filterParams) {
+        const v = (filterParams as any)[k];
+        if (v) {
+          // 暂时只支持一个过滤条件吧
+          queryMap[k] = v[0];
+          ++queryCount;
+        }
+      }
+
+      const sortMap: { [key: string]: string } = {};
+      let sortCount = 0;
+      if (sortParams.hasOwnProperty('field') && sortParams.hasOwnProperty('order')) {
+        sortMap[sortParams.field] = sortParams.order;
+        ++sortCount;
+      }
+
       let params: Recordable = merge(
         pageParams,
-        useSearchForm ? getFieldsValue() : {},
-        searchInfo,
-        opt?.searchInfo ?? {},
-        defSort,
-        sortInfo,
-        filterInfo,
-        opt?.sortInfo ?? {},
-        opt?.filterInfo ?? {},
+        queryCount == 0 ? {} : { query: queryMap },
+        sortCount == 0 ? {} : { orderBy: sortMap },
       );
       if (beforeFetch && isFunction(beforeFetch)) {
         params = (await beforeFetch(params)) || params;
       }
-
       const res = await api(params);
       rawDataSourceRef.value = res;
 
       const isArrayResult = Array.isArray(res);
 
       let resultItems: Recordable[] = isArrayResult ? res : get(res, listField);
-      const resultTotal: number = isArrayResult ? res.length : get(res, totalField);
+      const resultTotal: number = isArrayResult ? 0 : get(res, totalField);
 
       // 假如数据变少，导致总页数变少并小于当前选中页码，通过getPaginationRef获取到的页码是不正确的，需获取正确的页码再次执行
       if (resultTotal) {
