@@ -5,7 +5,7 @@ function createFakeUserList() {
   return [
     {
       userId: 100,
-      userName: 'jyiot',
+      userName: 'kratos',
       nickName: '美男子',
       avatar: 'https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640',
       email: 'test@gmail.com',
@@ -26,21 +26,21 @@ function createFakeUserList() {
 
 export default class UserService {
   async Login(ctx) {
-    const fakeUserInfo = createFakeUserList()[0]
-    const params : protocol.LoginResponse = {
+    const fakeUserInfo = createFakeUserList()[0];
+    const params: protocol.LoginResponse = {
       id: fakeUserInfo.userId,
       userName: fakeUserInfo.userName,
       token: 'dfsdfsdfsdfsdfdf',
     };
-    return Result.success(params);
+    ctx.body = Result.success(params);
   }
 
   async Logout(ctx) {
-    return Result.success({});
+    ctx.body = Result.success({});
   }
 
   async GetMe(ctx) {
-    const fakeUserInfo = createFakeUserList()[0]
-    return Result.success(fakeUserInfo);
+    const fakeUserInfo = createFakeUserList()[0];
+    ctx.body = Result.success(fakeUserInfo);
   }
 }
