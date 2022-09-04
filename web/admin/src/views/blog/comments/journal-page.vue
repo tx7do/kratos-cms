@@ -20,12 +20,13 @@
   import { useGo } from '/@/hooks/web/usePage';
 
   import { journalColumns, postSearchFormSchema } from './data';
+  import {ListComment} from "/@/api/blog/comment";
 
   const go = useGo();
 
   const [registerTable, { reload }] = useTable({
     //title: '列表',
-    //api: ListPost,
+    api: ListComment,
     columns: journalColumns,
     rowKey: 'id',
     formConfig: {

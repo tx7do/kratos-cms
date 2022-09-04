@@ -1,13 +1,11 @@
 import { Result } from '../utils/utils';
 import { createTags, createTag } from '../utils/mock';
+import * as pagination from '/&/pagination';
 
 export default class TagService {
   ListTag = async (ctx) => {
-    const total = 20;
-    ctx.body = Result.success({
-      items: createTags(total),
-      total: total,
-    });
+    const request: pagination.PagingRequest = ctx.query;
+    ctx.body = Result.pageSuccess(request.page, request.pageSize, createTags(request.pageSize));
   };
 
   GetTag = async (ctx) => {

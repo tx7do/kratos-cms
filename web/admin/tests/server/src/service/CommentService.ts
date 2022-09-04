@@ -1,24 +1,24 @@
-import { Random } from 'mockjs';
 import { Result } from '../utils/utils';
+import * as pagination from '/&/pagination';
+import { createComments, createComment } from '../utils/mock';
 
 export default class CommentService {
   ListComment = async (ctx) => {
-    const photoList: any[] = [];
-    for (let index = 0; index < 20; index++) {
-      photoList.push({
-        id: `${index}`,
-        title: Random.name(),
-        createTime: Random.datetime(),
-      });
-    }
-    ctx.body = Result.success(photoList);
+    const request: pagination.PagingRequest = ctx.query;
+    ctx.body = Result.pageSuccess(request.page, request.pageSize, createComments(request.pageSize));
   };
 
-  GetComment = async (ctx) => {};
+  GetComment = async (ctx) => {
+    ctx.body = Result.success(createComment());
+  };
 
-  CreateComment = async (ctx) => {};
+  CreateComment = async (ctx) => {
+    ctx.body = Result.success(createComment());
+  };
 
-  UpdateComment = async (ctx) => {};
+  UpdateComment = async (ctx) => {
+    ctx.body = Result.success(createComment());
+  };
 
   DeleteComment = async (ctx) => {
     ctx.body = Result.success({});

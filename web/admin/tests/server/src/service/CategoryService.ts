@@ -1,13 +1,15 @@
 import { Result } from '../utils/utils';
 import { createCategories, createCategory } from '../utils/mock';
+import * as pagination from '/&/pagination';
 
 export default class CategoryService {
   ListCategory = async (ctx) => {
-    const total = 20;
-    ctx.body = Result.success({
-      items: createCategories(total),
-      total: total,
-    });
+    const request: pagination.PagingRequest = ctx.query;
+    ctx.body = Result.pageSuccess(
+      request.page,
+      request.pageSize,
+      createCategories(request.pageSize),
+    );
   };
 
   GetCategory = async (ctx) => {

@@ -1,10 +1,18 @@
 import { Random } from 'mockjs';
+import { Post } from '/&/post';
+import { Tag } from '/&/tag';
+import { Category } from '/&/category';
+import { Attachment } from '/&/attachment';
+import { Comment } from '/&/comment';
+import { Link } from '/&/link';
+import { Menu } from '/&/menu';
+import { Photo } from '/&/photo';
 
 export const postStatus = ['PUBLISHED', 'INTIMATE', 'DRAFT', 'RECYCLE'];
 
-export function createPost() {
+export function createPost(): Post {
   return {
-    id: Random.id(),
+    id: Random.increment(),
     title: Random.ctitle(),
     visits: Random.integer(0, 101000),
     commentCount: Random.integer(0, 10100),
@@ -16,7 +24,7 @@ export function createPost() {
   };
 }
 
-export function createPosts(count) {
+export function createPosts(count): Post[] {
   const items: any[] = [];
   for (let index = 0; index < count; index++) {
     items.push(createPost());
@@ -24,22 +32,21 @@ export function createPosts(count) {
   return items;
 }
 
-export function createTag() {
+export function createTag(): Tag {
   const name = Random.first();
   return {
-    id: Random.id(),
+    id: Random.increment(),
     name: name,
     slug: name.toLowerCase(),
     fullPath: '/tags/' + name.toLowerCase(),
     color: Random.color(),
     thumbnail: Random.image(),
-    description: Random.cparagraph(),
     postCount: Random.integer(0, 1000),
     createTime: Random.datetime(),
   };
 }
 
-export function createTags(count) {
+export function createTags(count): Tag[] {
   const items: any[] = [];
   for (let index = 0; index < count; index++) {
     items.push(createTag());
@@ -47,9 +54,9 @@ export function createTags(count) {
   return items;
 }
 
-export function createCategory() {
+export function createCategory(): Category {
   return {
-    id: Random.id(),
+    id: Random.increment(),
     name: Random.first(),
     slug: Random.first(),
     thumbnail: Random.image(),
@@ -58,7 +65,7 @@ export function createCategory() {
   };
 }
 
-export function createCategories(count) {
+export function createCategories(count): Category[] {
   const items: any[] = [];
   for (let index = 0; index < count; index++) {
     items.push(createCategory());
@@ -66,9 +73,9 @@ export function createCategories(count) {
   return items;
 }
 
-export function createAttachment() {
+export function createAttachment(): Attachment {
   return {
-    id: Random.id(),
+    id: Random.increment(),
     name: Random.first(),
     path: Random.image(),
     thumbPath: Random.image(),
@@ -82,10 +89,58 @@ export function createAttachment() {
   };
 }
 
-export function createAttachments(count) {
+export function createAttachments(count): Attachment[] {
   const items: any[] = [];
   for (let index = 0; index < count; index++) {
     items.push(createAttachment());
+  }
+  return items;
+}
+
+export function createComment(): Comment {
+  return {};
+}
+
+export function createComments(count): Comment[] {
+  const items: any[] = [];
+  for (let index = 0; index < count; index++) {
+    items.push(createComment());
+  }
+  return items;
+}
+
+export function createLink(): Link {
+  return {};
+}
+
+export function createLinks(count): Link[] {
+  const items: any[] = [];
+  for (let index = 0; index < count; index++) {
+    items.push(createLink());
+  }
+  return items;
+}
+
+export function createMenu(): Menu {
+  return {};
+}
+
+export function createMenus(count): Menu[] {
+  const items: any[] = [];
+  for (let index = 0; index < count; index++) {
+    items.push(createMenu());
+  }
+  return items;
+}
+
+export function createPhoto(): Photo {
+  return {};
+}
+
+export function createPhotos(count): Photo[] {
+  const items: any[] = [];
+  for (let index = 0; index < count; index++) {
+    items.push(createPhoto());
   }
   return items;
 }

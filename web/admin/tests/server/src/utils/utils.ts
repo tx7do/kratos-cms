@@ -20,8 +20,8 @@ export class Result {
       : array.slice(offset, offset + Number(pageSize));
   }
 
-  static pageSuccess<T = any>(page: number, per_page: number, list: T[], { message = 'ok' } = {}) {
-    const pageData = Result.pagination(page, per_page, list);
+  static pageSuccess<T = any>(page: number, perPage: number, list: T[], { message = 'ok' } = {}) {
+    const pageData = Result.pagination(page, perPage, list);
     return {
       ...Result.success({
         items: pageData,

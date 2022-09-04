@@ -1,24 +1,24 @@
-import { Random } from 'mockjs';
 import { Result } from '../utils/utils';
+import * as pagination from '/&/pagination';
+import { createLinks, createLink } from '../utils/mock';
 
 export default class LinkService {
   ListLink = async (ctx) => {
-    const photoList: any[] = [];
-    for (let index = 0; index < 20; index++) {
-      photoList.push({
-        id: `${index}`,
-        title: Random.name(),
-        createTime: Random.datetime(),
-      });
-    }
-    ctx.body = Result.success(photoList);
+    const request: pagination.PagingRequest = ctx.query;
+    ctx.body = Result.pageSuccess(request.page, request.pageSize, createLinks(request.pageSize));
   };
 
-  GetLink = async (ctx) => {};
+  GetLink = async (ctx) => {
+    ctx.body = Result.success(createLink());
+  };
 
-  CreateLink = async (ctx) => {};
+  CreateLink = async (ctx) => {
+    ctx.body = Result.success(createLink());
+  };
 
-  UpdateLink = async (ctx) => {};
+  UpdateLink = async (ctx) => {
+    ctx.body = Result.success(createLink());
+  };
 
   DeleteLink = async (ctx) => {
     ctx.body = Result.success({});

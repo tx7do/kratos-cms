@@ -32,7 +32,7 @@ export interface Post {
   title?: string;
   status?: string;
   slug?: string;
-  editorType?: number;
+  editorType?: string;
   metaKeywords?: string;
   metaDescription?: string;
   fullPath?: string;

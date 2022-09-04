@@ -35,8 +35,8 @@ export interface Attachment {
   suffix?: string;
   width?: number;
   height?: number;
-  size?: string;
-  type?: number;
+  size?: number;
+  type?: string;
   createTime?: string;
 }
 
