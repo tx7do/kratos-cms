@@ -1,5 +1,5 @@
 import TagService from '../service/TagService';
-import * as protocol from '../../../../api/tag';
+import * as protocol from '/&/tag';
 
 class TagController {
   private service: TagService = new TagService();

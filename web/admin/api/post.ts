@@ -1,4 +1,6 @@
 import * as pagination from './pagination';
+import { Tag } from '/&/tag';
+import { Category } from '/&/category';
 
 export const route = {
   Posts: '/posts',
@@ -28,7 +30,7 @@ export interface DeletePost {
 export interface Post {
   id?: number;
   title?: string;
-  status?: number;
+  status?: string;
   slug?: string;
   editorType?: number;
   metaKeywords?: string;
@@ -50,6 +52,8 @@ export interface Post {
   createTime?: string;
   updateTime?: string;
   editTime?: string;
+  tags?: Tag[];
+  categories?: Category[];
 }
 
 export interface ListPostResponse {

@@ -1,5 +1,5 @@
 import AttachmentService from '../service/AttachmentService';
-import * as protocol from '../../../../api/attachment';
+import * as protocol from '/&/attachment';
 
 class AttachmentController {
   private service: AttachmentService = new AttachmentService();

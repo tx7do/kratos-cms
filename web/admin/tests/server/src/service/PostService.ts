@@ -1,29 +1,24 @@
-import { Random } from 'mockjs';
 import { Result } from '../utils/utils';
-import * as protocol from '../../../../api/post';
+import { createPosts, createPost } from '../utils/mock';
 
 export default class PostService {
   ListPost = async (ctx) => {
-    const postList: any[] = [];
-    for (let index = 0; index < 20; index++) {
-      postList.push({
-        id: `${index}`,
-        title: Random.ctitle(),
-        visits: Random.integer(0, 101000),
-        commentCount: Random.integer(0, 10100),
-        createTime: Random.datetime(),
-        editorType: 'MARKDOWN',
-        status: 'PUBLISHED',
-      });
-    }
-    ctx.body = Result.success(postList);
+    ctx.body = Result.success(createPosts(20));
   };
 
-  GetPost = async (ctx) => {};
+  GetPost = async (ctx) => {
+    ctx.body = Result.success(createPost());
+  };
 
-  CreatePost = async (ctx) => {};
+  CreatePost = async (ctx) => {
+    ctx.body = Result.success(createPost());
+  };
 
-  UpdatePost = async (ctx) => {};
+  UpdatePost = async (ctx) => {
+    ctx.body = Result.success(createPost());
+  };
 
-  DeletePost = async (ctx) => {};
+  DeletePost = async (ctx) => {
+    ctx.body = Result.success({});
+  };
 }

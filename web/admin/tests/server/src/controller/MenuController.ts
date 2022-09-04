@@ -1,5 +1,5 @@
 import MenuService from '../service/MenuService';
-import * as protocol from '../../../../api/menu';
+import * as protocol from '/&/menu';
 
 class MenuController {
   private service: MenuService = new MenuService();

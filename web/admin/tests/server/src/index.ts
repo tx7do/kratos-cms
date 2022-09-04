@@ -25,7 +25,7 @@ AppRoutes.forEach((route) =>
 );
 
 // 监听端口
-app.listen(env.PORT, () => {
+app.listen(env.MOCK_SERVER_PORT, () => {
   console.log(`server listening on: ${env.MOCK_SERVER_PORT}`);
 });
 

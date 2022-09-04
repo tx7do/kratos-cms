@@ -1,5 +1,5 @@
 import { Result } from '../utils/utils';
-import * as protocol from '../../../../api/user';
+import * as protocol from '/&/user';
 
 function createFakeUserList() {
   return [

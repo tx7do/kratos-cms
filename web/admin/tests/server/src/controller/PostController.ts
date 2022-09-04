@@ -1,5 +1,5 @@
 import PostService from '../service/PostService';
-import * as protocol from '../../../../api/post';
+import * as protocol from '/&/post';
 
 class PostController {
   private service: PostService = new PostService();

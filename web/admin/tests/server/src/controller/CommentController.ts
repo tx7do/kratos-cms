@@ -1,5 +1,5 @@
 import CommentService from '../service/CommentService';
-import * as protocol from '../../../../api/comment';
+import * as protocol from '/&/comment';
 
 class CommentController {
   private service: CommentService = new CommentService();

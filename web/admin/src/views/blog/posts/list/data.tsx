@@ -1,6 +1,6 @@
 import { BasicColumn, FormSchema } from '/@/components/Table';
 import { h } from 'vue';
-import { Badge } from 'ant-design-vue';
+import { Badge, Tag, Row, Col } from 'ant-design-vue';
 import { Post } from '/&/post';
 
 export const columns: BasicColumn[] = [
@@ -17,27 +17,57 @@ export const columns: BasicColumn[] = [
     width: 120,
     customRender: ({ record }) => {
       const rd = record as Post;
-      return h(Badge, {
-        status: 'success',
-        text: '已发布',
-      });
+      let statusText = '已发布';
+      let _status: 'default' | 'error' | 'success' | 'warning' | 'processing' | undefined =
+        'success';
+      if (rd.status == 'INTIMATE') {
+        statusText = '私密';
+        _status = 'success';
+      } else if (rd.status == 'DRAFT') {
+        statusText = '私密';
+        _status = 'warning';
+      } else if (rd.status == 'RECYCLE') {
+        statusText = '回收站';
+        _status = 'error';
+      }
+      return <Badge status={_status} text={statusText} />;
     },
   },
   {
     title: '分类',
     dataIndex: 'categoryId',
+    align: 'left',
     sorter: false,
+    customRender: ({ record }) => {
+      const rd = record as Post;
+      const categories = rd?.categories;
+      return h(Row, { gutter: [6, 6] }, () =>
+        categories?.map((cate) => {
+          return h(Col, {}, () => h(Tag, { color: 'processing' }, () => cate.name));
+        }),
+      );
+    },
   },
   {
     title: '标签',
     dataIndex: 'tags',
+    align: 'left',
     sorter: false,
+    customRender: ({ record }) => {
+      const rd = record as Post;
+      const tags = rd?.tags;
+      return h(Row, { gutter: [6, 6] }, () =>
+        tags?.map((tag) => {
+          return h(Col, {}, () => h(Tag, { color: tag.color }, () => tag.name));
+        }),
+      );
+    },
   },
   {
     title: '评论',
     dataIndex: 'commentCount',
     sorter: false,
-    width: 60,
+    width: 80,
     customRender: ({ record }) => {
       const rd = record as Post;
       return h(Badge, {
@@ -51,7 +81,7 @@ export const columns: BasicColumn[] = [
     title: '访问',
     dataIndex: 'visits',
     sorter: false,
-    width: 60,
+    width: 80,
     customRender: ({ record }) => {
       const rd = record as Post;
       return h(Badge, {

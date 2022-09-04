@@ -1,5 +1,5 @@
 import UserService from '../service/UserService';
-import * as protocol from '../../../../api/user';
+import * as protocol from '/&/user';
 
 class UserController {
   private service: UserService = new UserService();

@@ -1,5 +1,5 @@
 import LinkService from '../service/LinkService';
-import * as protocol from '../../../../api/link';
+import * as protocol from '/&/link';
 
 class LinkController {
   private service: LinkService = new LinkService();

@@ -1,5 +1,5 @@
 import PhotoService from '../service/PhotoService';
-import * as protocol from '../../../../api/photo';
+import * as protocol from '/&/photo';
 
 class PhotoController {
   private service: PhotoService = new PhotoService();

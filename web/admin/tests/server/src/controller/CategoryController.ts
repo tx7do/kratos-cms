@@ -1,5 +1,5 @@
 import CategoryService from '../service/CategoryService';
-import * as protocol from '../../../../api/category';
+import * as protocol from '/&/category';
 
 class CategoryController {
   private service: CategoryService = new CategoryService();
