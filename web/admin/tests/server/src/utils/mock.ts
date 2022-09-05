@@ -1,4 +1,5 @@
 import { Random } from 'mockjs';
+
 import { Post } from '/&/post';
 import { Tag } from '/&/tag';
 import { Category } from '/&/category';
@@ -8,7 +9,12 @@ import { Link } from '/&/link';
 import { Menu } from '/&/menu';
 import { Photo } from '/&/photo';
 
-export const postStatus = ['PUBLISHED', 'INTIMATE', 'DRAFT', 'RECYCLE'];
+Random.extend({
+  postStatus: function () {
+    const postStatusList = ['PUBLISHED', 'INTIMATE', 'DRAFT', 'RECYCLE'];
+    return this.pick(postStatusList);
+  },
+});
 
 export function createPost(): Post {
   return {
@@ -18,7 +24,7 @@ export function createPost(): Post {
     commentCount: Random.integer(0, 10100),
     createTime: Random.datetime(),
     editorType: 'MARKDOWN',
-    status: postStatus[Random.integer(0, 3)],
+    status: Random.postStatus(),
     tags: createTags(Random.integer(1, 6)),
     categories: createCategories(Random.integer(1, 3)),
   };

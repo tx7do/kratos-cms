@@ -38,6 +38,7 @@ export interface Category {
   createTime?: string;
   updateTime?: string;
   postCount?: number;
+  children?: Category[];
 }
 
 export interface ListCategoryResponse {

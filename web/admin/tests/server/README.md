@@ -1,12 +1,16 @@
-# Test Server
+# Mock Server
 
-It is used to start the test interface service, which can test the upload, websocket, login and other interfaces.
+基于Koa和Mockjs的测试服务器。
 
-## Usage
+## 安装使用
+
+- 安装依赖库
 
 ```bash
 pnpm install
 ```
+
+- 运行
 
 ```bash
 pnpm run start

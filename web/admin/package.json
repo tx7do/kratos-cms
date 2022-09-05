@@ -4,14 +4,14 @@
   "scripts": {
     "commit": "czg",
     "bootstrap": "pnpm install",
-    "serve": "npm run dev",
+    "serve": "pnpm run dev",
     "dev": "vite",
     "build": "cross-env NODE_ENV=production vite build && esno ./build/script/postBuild.ts",
     "build:test": "cross-env vite build --mode test && esno ./build/script/postBuild.ts",
-    "build:no-cache": "pnpm clean:cache && npm run build",
-    "report": "cross-env REPORT=true npm run build",
+    "build:no-cache": "pnpm clean:cache && pnpm run build",
+    "report": "cross-env REPORT=true pnpm run build",
     "type:check": "vue-tsc --noEmit --skipLibCheck",
-    "preview": "npm run build && vite preview",
+    "preview": "pnpm run build && vite preview",
     "preview:dist": "vite preview",
     "log": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "clean:cache": "rimraf node_modules/.cache/ && rimraf node_modules/.vite",
@@ -145,15 +145,7 @@
     "rollup": "^2.56.3",
     "gifsicle": "5.2.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/anncwb/vue-vben-admin.git"
-  },
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/anncwb/vue-vben-admin/issues"
-  },
-  "homepage": "https://github.com/anncwb/vue-vben-admin",
   "engines": {
     "node": "^12 || >=14"
   },
