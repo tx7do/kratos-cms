@@ -21,14 +21,9 @@
 * [Swagger](https://github.com/swaggo/swag) -- RESTful API 文档生成
 * [MinIO](https://min.io/) -- 对象存储服务器
 
-### 前端技术栈
+### 前端
 
-- [TypeScript](https://www.typescriptlang.org/)
-- [Es6+](http://es6.ruanyifeng.com/) 
-- [Vite](https://vitejs.dev/)
-- [Vue3](https://v3.vuejs.org/)
-- [Pinia](https://pinia.vuejs.org/)
-- [Ant-Design-Vue](https://2x.antdv.com/docs/vue/introduce-cn/)
+后台代码仓库： <https://github.com/tx7do/kratos-blog-admin>
 
 ## 博客基本功能设计要点
 
