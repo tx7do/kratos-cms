@@ -28,5 +28,11 @@ func (Time) Fields() []ent.Field {
 			Optional().
 			Nillable().
 			UpdateDefault(time.Now().UnixMilli),
+
+		// 删除时间,使用毫秒单位
+		field.Int64("delete_time").
+			Comment("删除时间").
+			Optional().
+			Nillable(),
 	}
 }
