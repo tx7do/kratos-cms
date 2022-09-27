@@ -44,6 +44,11 @@ func (r *AttachmentRepo) List(ctx context.Context, req *pagination.PagingRequest
 			Offset(paging.GetPageOffset(req.GetPage(), req.GetPageSize())).
 			Limit(int(req.GetPageSize()))
 	}
+
+	if len(whereCond) > 0 {
+
+	}
+
 	builder.Find(&res.Items)
 
 	var countBuilder *gorm.DB
