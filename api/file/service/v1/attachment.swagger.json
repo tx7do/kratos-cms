@@ -281,7 +281,13 @@
           "type": "integer",
           "format": "int32"
         },
-        "createTime": {
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "deletedAt": {
           "type": "string"
         }
       }

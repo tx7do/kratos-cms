@@ -27,6 +27,7 @@ var schemaGraph = func() *sqlgraph.Schema {
 		Fields: map[string]*sqlgraph.FieldSpec{
 			user.FieldCreateTime:  {Type: field.TypeInt64, Column: user.FieldCreateTime},
 			user.FieldUpdateTime:  {Type: field.TypeInt64, Column: user.FieldUpdateTime},
+			user.FieldDeleteTime:  {Type: field.TypeInt64, Column: user.FieldDeleteTime},
 			user.FieldUsername:    {Type: field.TypeString, Column: user.FieldUsername},
 			user.FieldNickname:    {Type: field.TypeString, Column: user.FieldNickname},
 			user.FieldEmail:       {Type: field.TypeString, Column: user.FieldEmail},
@@ -92,6 +93,11 @@ func (f *UserFilter) WhereCreateTime(p entql.Int64P) {
 // WhereUpdateTime applies the entql int64 predicate on the update_time field.
 func (f *UserFilter) WhereUpdateTime(p entql.Int64P) {
 	f.Where(p.Field(user.FieldUpdateTime))
+}
+
+// WhereDeleteTime applies the entql int64 predicate on the delete_time field.
+func (f *UserFilter) WhereDeleteTime(p entql.Int64P) {
+	f.Where(p.Field(user.FieldDeleteTime))
 }
 
 // WhereUsername applies the entql string predicate on the username field.

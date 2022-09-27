@@ -20,6 +20,8 @@ type User struct {
 	CreateTime *int64 `json:"create_time,omitempty"`
 	// 更新时间
 	UpdateTime *int64 `json:"update_time,omitempty"`
+	// 删除时间
+	DeleteTime *int64 `json:"delete_time,omitempty"`
 	// 用户名
 	Username *string `json:"username,omitempty"`
 	// 昵称
@@ -35,11 +37,11 @@ type User struct {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*User) scanValues(columns []string) ([]any, error) {
-	values := make([]any, len(columns))
+func (*User) scanValues(columns []string) ([]interface{}, error) {
+	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case user.FieldID, user.FieldCreateTime, user.FieldUpdateTime:
+		case user.FieldID, user.FieldCreateTime, user.FieldUpdateTime, user.FieldDeleteTime:
 			values[i] = new(sql.NullInt64)
 		case user.FieldUsername, user.FieldNickname, user.FieldEmail, user.FieldAvatar, user.FieldDescription, user.FieldPassword:
 			values[i] = new(sql.NullString)
@@ -52,7 +54,7 @@ func (*User) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the User fields.
-func (u *User) assignValues(columns []string, values []any) error {
+func (u *User) assignValues(columns []string, values []interface{}) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -77,6 +79,13 @@ func (u *User) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				u.UpdateTime = new(int64)
 				*u.UpdateTime = value.Int64
+			}
+		case user.FieldDeleteTime:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field delete_time", values[i])
+			} else if value.Valid {
+				u.DeleteTime = new(int64)
+				*u.DeleteTime = value.Int64
 			}
 		case user.FieldUsername:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -155,6 +164,11 @@ func (u *User) String() string {
 	builder.WriteString(", ")
 	if v := u.UpdateTime; v != nil {
 		builder.WriteString("update_time=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := u.DeleteTime; v != nil {
+		builder.WriteString("delete_time=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")

@@ -79,7 +79,7 @@ func (r *PostRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 	} else {
 		builder1.Order(ent.Desc(post.FieldCreateTime))
 	}
-	if req.Page != nil && req.PageSize != nil {
+	if req.GetPage() > 0 && req.GetPageSize() > 0 && !req.GetNopaging() {
 		builder1.
 			Offset(paging.GetPageOffset(req.GetPage(), req.GetPageSize())).
 			Limit(int(req.GetPageSize()))

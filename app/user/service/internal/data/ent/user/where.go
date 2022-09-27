@@ -32,7 +32,7 @@ func IDNEQ(id uint32) predicate.User {
 // IDIn applies the In predicate on the ID field.
 func IDIn(ids ...uint32) predicate.User {
 	return predicate.User(func(s *sql.Selector) {
-		v := make([]any, len(ids))
+		v := make([]interface{}, len(ids))
 		for i := range v {
 			v[i] = ids[i]
 		}
@@ -43,7 +43,7 @@ func IDIn(ids ...uint32) predicate.User {
 // IDNotIn applies the NotIn predicate on the ID field.
 func IDNotIn(ids ...uint32) predicate.User {
 	return predicate.User(func(s *sql.Selector) {
-		v := make([]any, len(ids))
+		v := make([]interface{}, len(ids))
 		for i := range v {
 			v[i] = ids[i]
 		}
@@ -90,6 +90,13 @@ func CreateTime(v int64) predicate.User {
 func UpdateTime(v int64) predicate.User {
 	return predicate.User(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldUpdateTime), v))
+	})
+}
+
+// DeleteTime applies equality check predicate on the "delete_time" field. It's identical to DeleteTimeEQ.
+func DeleteTime(v int64) predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldDeleteTime), v))
 	})
 }
 
@@ -151,7 +158,7 @@ func CreateTimeNEQ(v int64) predicate.User {
 
 // CreateTimeIn applies the In predicate on the "create_time" field.
 func CreateTimeIn(vs ...int64) predicate.User {
-	v := make([]any, len(vs))
+	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
@@ -162,7 +169,7 @@ func CreateTimeIn(vs ...int64) predicate.User {
 
 // CreateTimeNotIn applies the NotIn predicate on the "create_time" field.
 func CreateTimeNotIn(vs ...int64) predicate.User {
-	v := make([]any, len(vs))
+	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
@@ -229,7 +236,7 @@ func UpdateTimeNEQ(v int64) predicate.User {
 
 // UpdateTimeIn applies the In predicate on the "update_time" field.
 func UpdateTimeIn(vs ...int64) predicate.User {
-	v := make([]any, len(vs))
+	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
@@ -240,7 +247,7 @@ func UpdateTimeIn(vs ...int64) predicate.User {
 
 // UpdateTimeNotIn applies the NotIn predicate on the "update_time" field.
 func UpdateTimeNotIn(vs ...int64) predicate.User {
-	v := make([]any, len(vs))
+	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
@@ -291,6 +298,84 @@ func UpdateTimeNotNil() predicate.User {
 	})
 }
 
+// DeleteTimeEQ applies the EQ predicate on the "delete_time" field.
+func DeleteTimeEQ(v int64) predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldDeleteTime), v))
+	})
+}
+
+// DeleteTimeNEQ applies the NEQ predicate on the "delete_time" field.
+func DeleteTimeNEQ(v int64) predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldDeleteTime), v))
+	})
+}
+
+// DeleteTimeIn applies the In predicate on the "delete_time" field.
+func DeleteTimeIn(vs ...int64) predicate.User {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.User(func(s *sql.Selector) {
+		s.Where(sql.In(s.C(FieldDeleteTime), v...))
+	})
+}
+
+// DeleteTimeNotIn applies the NotIn predicate on the "delete_time" field.
+func DeleteTimeNotIn(vs ...int64) predicate.User {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.User(func(s *sql.Selector) {
+		s.Where(sql.NotIn(s.C(FieldDeleteTime), v...))
+	})
+}
+
+// DeleteTimeGT applies the GT predicate on the "delete_time" field.
+func DeleteTimeGT(v int64) predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldDeleteTime), v))
+	})
+}
+
+// DeleteTimeGTE applies the GTE predicate on the "delete_time" field.
+func DeleteTimeGTE(v int64) predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldDeleteTime), v))
+	})
+}
+
+// DeleteTimeLT applies the LT predicate on the "delete_time" field.
+func DeleteTimeLT(v int64) predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldDeleteTime), v))
+	})
+}
+
+// DeleteTimeLTE applies the LTE predicate on the "delete_time" field.
+func DeleteTimeLTE(v int64) predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldDeleteTime), v))
+	})
+}
+
+// DeleteTimeIsNil applies the IsNil predicate on the "delete_time" field.
+func DeleteTimeIsNil() predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldDeleteTime)))
+	})
+}
+
+// DeleteTimeNotNil applies the NotNil predicate on the "delete_time" field.
+func DeleteTimeNotNil() predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldDeleteTime)))
+	})
+}
+
 // UsernameEQ applies the EQ predicate on the "username" field.
 func UsernameEQ(v string) predicate.User {
 	return predicate.User(func(s *sql.Selector) {
@@ -307,7 +392,7 @@ func UsernameNEQ(v string) predicate.User {
 
 // UsernameIn applies the In predicate on the "username" field.
 func UsernameIn(vs ...string) predicate.User {
-	v := make([]any, len(vs))
+	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
@@ -318,7 +403,7 @@ func UsernameIn(vs ...string) predicate.User {
 
 // UsernameNotIn applies the NotIn predicate on the "username" field.
 func UsernameNotIn(vs ...string) predicate.User {
-	v := make([]any, len(vs))
+	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
@@ -420,7 +505,7 @@ func NicknameNEQ(v string) predicate.User {
 
 // NicknameIn applies the In predicate on the "nickname" field.
 func NicknameIn(vs ...string) predicate.User {
-	v := make([]any, len(vs))
+	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
@@ -431,7 +516,7 @@ func NicknameIn(vs ...string) predicate.User {
 
 // NicknameNotIn applies the NotIn predicate on the "nickname" field.
 func NicknameNotIn(vs ...string) predicate.User {
-	v := make([]any, len(vs))
+	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
@@ -533,7 +618,7 @@ func EmailNEQ(v string) predicate.User {
 
 // EmailIn applies the In predicate on the "email" field.
 func EmailIn(vs ...string) predicate.User {
-	v := make([]any, len(vs))
+	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
@@ -544,7 +629,7 @@ func EmailIn(vs ...string) predicate.User {
 
 // EmailNotIn applies the NotIn predicate on the "email" field.
 func EmailNotIn(vs ...string) predicate.User {
-	v := make([]any, len(vs))
+	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
@@ -646,7 +731,7 @@ func AvatarNEQ(v string) predicate.User {
 
 // AvatarIn applies the In predicate on the "avatar" field.
 func AvatarIn(vs ...string) predicate.User {
-	v := make([]any, len(vs))
+	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
@@ -657,7 +742,7 @@ func AvatarIn(vs ...string) predicate.User {
 
 // AvatarNotIn applies the NotIn predicate on the "avatar" field.
 func AvatarNotIn(vs ...string) predicate.User {
-	v := make([]any, len(vs))
+	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
@@ -759,7 +844,7 @@ func DescriptionNEQ(v string) predicate.User {
 
 // DescriptionIn applies the In predicate on the "description" field.
 func DescriptionIn(vs ...string) predicate.User {
-	v := make([]any, len(vs))
+	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
@@ -770,7 +855,7 @@ func DescriptionIn(vs ...string) predicate.User {
 
 // DescriptionNotIn applies the NotIn predicate on the "description" field.
 func DescriptionNotIn(vs ...string) predicate.User {
-	v := make([]any, len(vs))
+	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
@@ -872,7 +957,7 @@ func PasswordNEQ(v string) predicate.User {
 
 // PasswordIn applies the In predicate on the "password" field.
 func PasswordIn(vs ...string) predicate.User {
-	v := make([]any, len(vs))
+	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}
@@ -883,7 +968,7 @@ func PasswordIn(vs ...string) predicate.User {
 
 // PasswordNotIn applies the NotIn predicate on the "password" field.
 func PasswordNotIn(vs ...string) predicate.User {
-	v := make([]any, len(vs))
+	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
 	}

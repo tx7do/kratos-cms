@@ -18,7 +18,7 @@ type (
 	// testing.T and testing.B and used by enttest.
 	TestingT interface {
 		FailNow()
-		Error(...any)
+		Error(...interface{})
 	}
 
 	// Option configures client creation.

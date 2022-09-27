@@ -47,6 +47,33 @@ func (uu *UserUpdate) ClearUpdateTime() *UserUpdate {
 	return uu
 }
 
+// SetDeleteTime sets the "delete_time" field.
+func (uu *UserUpdate) SetDeleteTime(i int64) *UserUpdate {
+	uu.mutation.ResetDeleteTime()
+	uu.mutation.SetDeleteTime(i)
+	return uu
+}
+
+// SetNillableDeleteTime sets the "delete_time" field if the given value is not nil.
+func (uu *UserUpdate) SetNillableDeleteTime(i *int64) *UserUpdate {
+	if i != nil {
+		uu.SetDeleteTime(*i)
+	}
+	return uu
+}
+
+// AddDeleteTime adds i to the "delete_time" field.
+func (uu *UserUpdate) AddDeleteTime(i int64) *UserUpdate {
+	uu.mutation.AddDeleteTime(i)
+	return uu
+}
+
+// ClearDeleteTime clears the value of the "delete_time" field.
+func (uu *UserUpdate) ClearDeleteTime() *UserUpdate {
+	uu.mutation.ClearDeleteTime()
+	return uu
+}
+
 // SetNickname sets the "nickname" field.
 func (uu *UserUpdate) SetNickname(s string) *UserUpdate {
 	uu.mutation.SetNickname(s)
@@ -301,6 +328,26 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: user.FieldUpdateTime,
 		})
 	}
+	if value, ok := uu.mutation.DeleteTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: user.FieldDeleteTime,
+		})
+	}
+	if value, ok := uu.mutation.AddedDeleteTime(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: user.FieldDeleteTime,
+		})
+	}
+	if uu.mutation.DeleteTimeCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Column: user.FieldDeleteTime,
+		})
+	}
 	if uu.mutation.UsernameCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -409,6 +456,33 @@ func (uuo *UserUpdateOne) AddUpdateTime(i int64) *UserUpdateOne {
 // ClearUpdateTime clears the value of the "update_time" field.
 func (uuo *UserUpdateOne) ClearUpdateTime() *UserUpdateOne {
 	uuo.mutation.ClearUpdateTime()
+	return uuo
+}
+
+// SetDeleteTime sets the "delete_time" field.
+func (uuo *UserUpdateOne) SetDeleteTime(i int64) *UserUpdateOne {
+	uuo.mutation.ResetDeleteTime()
+	uuo.mutation.SetDeleteTime(i)
+	return uuo
+}
+
+// SetNillableDeleteTime sets the "delete_time" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableDeleteTime(i *int64) *UserUpdateOne {
+	if i != nil {
+		uuo.SetDeleteTime(*i)
+	}
+	return uuo
+}
+
+// AddDeleteTime adds i to the "delete_time" field.
+func (uuo *UserUpdateOne) AddDeleteTime(i int64) *UserUpdateOne {
+	uuo.mutation.AddDeleteTime(i)
+	return uuo
+}
+
+// ClearDeleteTime clears the value of the "delete_time" field.
+func (uuo *UserUpdateOne) ClearDeleteTime() *UserUpdateOne {
+	uuo.mutation.ClearDeleteTime()
 	return uuo
 }
 
@@ -694,6 +768,26 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Column: user.FieldUpdateTime,
+		})
+	}
+	if value, ok := uuo.mutation.DeleteTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: user.FieldDeleteTime,
+		})
+	}
+	if value, ok := uuo.mutation.AddedDeleteTime(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: user.FieldDeleteTime,
+		})
+	}
+	if uuo.mutation.DeleteTimeCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Column: user.FieldDeleteTime,
 		})
 	}
 	if uuo.mutation.UsernameCleared() {

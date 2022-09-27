@@ -263,11 +263,11 @@ func IsConstraintError(err error) bool {
 type selector struct {
 	label string
 	flds  *[]string
-	scan  func(context.Context, any) error
+	scan  func(context.Context, interface{}) error
 }
 
 // ScanX is like Scan, but panics if an error occurs.
-func (s *selector) ScanX(ctx context.Context, v any) {
+func (s *selector) ScanX(ctx context.Context, v interface{}) {
 	if err := s.scan(ctx, v); err != nil {
 		panic(err)
 	}

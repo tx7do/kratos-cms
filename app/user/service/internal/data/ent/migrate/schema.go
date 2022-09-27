@@ -14,6 +14,7 @@ var (
 		{Name: "id", Type: field.TypeUint32, Increment: true, SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
 		{Name: "create_time", Type: field.TypeInt64, Nullable: true},
 		{Name: "update_time", Type: field.TypeInt64, Nullable: true},
+		{Name: "delete_time", Type: field.TypeInt64, Nullable: true},
 		{Name: "username", Type: field.TypeString, Unique: true, Nullable: true, Size: 50},
 		{Name: "nickname", Type: field.TypeString, Nullable: true, Size: 128},
 		{Name: "email", Type: field.TypeString, Nullable: true, Size: 127},
@@ -35,7 +36,7 @@ var (
 			{
 				Name:    "user_id_username",
 				Unique:  true,
-				Columns: []*schema.Column{UserColumns[0], UserColumns[3]},
+				Columns: []*schema.Column{UserColumns[0], UserColumns[4]},
 			},
 		},
 	}
