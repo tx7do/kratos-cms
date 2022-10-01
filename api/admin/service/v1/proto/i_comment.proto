@@ -5,8 +5,9 @@ option go_package = "kratos-blog/api/admin/service/v1;v1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
+
 import "pagination/pagination.proto";
-import "comment/service/v1/comment.proto";
+import "comment/service/v1/proto/comment.proto";
 
 // 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
 

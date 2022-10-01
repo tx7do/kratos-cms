@@ -79,8 +79,7 @@ func NewHTTPServer(
 	}
 	srv := http.NewServer(opts...)
 
-	h := openapiv2.NewHandler()
-	srv.HandlePrefix("/q/", h)
+	srv.HandlePrefix("/q/", openapiv2.NewHandler())
 
 	v1.RegisterPostServiceHTTPServer(srv, postSvc)
 	v1.RegisterCategoryServiceHTTPServer(srv, cateSvc)
