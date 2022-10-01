@@ -3,7 +3,7 @@ syntax = "proto3";
 package comment.service.v1;
 
 import "google/protobuf/empty.proto";
-import "pagination/pagination.proto";
+import "pagination.proto";
 
 option go_package = "kratos-blog/api/comment/service/v1;v1";
 

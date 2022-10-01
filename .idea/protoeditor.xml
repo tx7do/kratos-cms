@@ -19,6 +19,21 @@
         <ImportPathEntry>
           <option name="location" value="file://$PROJECT_DIR$" />
         </ImportPathEntry>
+        <ImportPathEntry>
+          <option name="location" value="file://$PROJECT_DIR$/third_party/pagination" />
+        </ImportPathEntry>
+        <ImportPathEntry>
+          <option name="location" value="file://$PROJECT_DIR$/api/file/service/v1/proto" />
+        </ImportPathEntry>
+        <ImportPathEntry>
+          <option name="location" value="file://$PROJECT_DIR$/api/content/service/v1/proto" />
+        </ImportPathEntry>
+        <ImportPathEntry>
+          <option name="location" value="file://$PROJECT_DIR$/api/comment/service/v1/proto" />
+        </ImportPathEntry>
+        <ImportPathEntry>
+          <option name="location" value="file://$PROJECT_DIR$/api/user/service/v1/proto" />
+        </ImportPathEntry>
       </list>
     </option>
     <option name="descriptorPath" value="google/protobuf/descriptor.proto" />
