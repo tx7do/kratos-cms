@@ -23,7 +23,7 @@ type CommentUseCase struct {
 }
 
 func NewCommentUseCase(repo CommentRepo, logger log.Logger) *CommentUseCase {
-	l := log.NewHelper(log.With(logger, "module", "comment/usecase"))
+	l := log.NewHelper(log.With(logger, "module", "comment/usecase/comment-service"))
 	return &CommentUseCase{
 		repo: repo,
 		log:  l,

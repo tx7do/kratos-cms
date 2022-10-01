@@ -22,7 +22,7 @@ type UserRepo struct {
 }
 
 func NewUserRepo(data *Data, logger log.Logger) biz.UserRepo {
-	l := log.NewHelper(log.With(logger, "module", "user/repo"))
+	l := log.NewHelper(log.With(logger, "module", "user/repo/user-service"))
 	return &UserRepo{
 		data: data,
 		log:  l,

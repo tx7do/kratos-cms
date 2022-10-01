@@ -1,45 +1,25 @@
 syntax = "proto3";
 
 package user.service.v1;
-
-import "google/api/annotations.proto";
-import "google/protobuf/empty.proto";
-
 option go_package = "kratos-blog/api/user/service/v1;v1";
+
+import "google/protobuf/empty.proto";
 
 // 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
 
+// 用户服务
 service UserService {
   // 登陆
-  rpc Login (LoginRequest) returns (LoginResponse) {
-    option (google.api.http) = {
-      post: "/blog/v1/login"
-      body: "*"
-    };
-  }
+  rpc Login (LoginRequest) returns (LoginResponse) {}
 
   // 登出
-  rpc Logout (LogoutRequest) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      post: "/blog/v1/logout"
-      body: "*"
-    };
-  }
+  rpc Logout (LogoutRequest) returns (google.protobuf.Empty) {}
 
   // 注册
-  rpc Register (RegisterRequest) returns (RegisterResponse) {
-    option (google.api.http) = {
-      post: "/blog/v1/register"
-      body: "*"
-    };
-  }
+  rpc Register (RegisterRequest) returns (RegisterResponse) {}
 
   // 获取已经登陆的用户的数据
-  rpc GetMe (GetMeRequest) returns (User) {
-    option (google.api.http) = {
-      get: "/blog/v1/me"
-    };
-  }
+  rpc GetMe (GetMeRequest) returns (User) {}
 }
 
 // 用户

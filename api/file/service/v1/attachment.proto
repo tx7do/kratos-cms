@@ -1,52 +1,29 @@
 syntax = "proto3";
 
 package file.service.v1;
+option go_package = "kratos-blog/api/file/service/v1";
 
-import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "pagination/pagination.proto";
 
-option go_package = "kratos-blog/api/file/service/v1;v1";
-
 // 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
 
+// 附件服务
 service AttachmentService {
   // 获取附件列表
-  rpc ListAttachment (pagination.PagingRequest) returns (ListAttachmentResponse) {
-    option (google.api.http) = {
-      get: "/blog/v1/attachments"
-    };
-  }
+  rpc ListAttachment (pagination.PagingRequest) returns (ListAttachmentResponse) {}
 
   // 获取附件数据
-  rpc GetAttachment (GetAttachmentRequest) returns (Attachment) {
-    option (google.api.http) = {
-      get: "/blog/v1/attachments/{id}"
-    };
-  }
+  rpc GetAttachment (GetAttachmentRequest) returns (Attachment) {}
 
   // 创建附件
-  rpc CreateAttachment (CreateAttachmentRequest) returns (Attachment) {
-    option (google.api.http) = {
-      post: "/blog/v1/attachments"
-      body: "*"
-    };
-  }
+  rpc CreateAttachment (CreateAttachmentRequest) returns (Attachment) {}
 
   // 更新附件
-  rpc UpdateAttachment (UpdateAttachmentRequest) returns (Attachment) {
-    option (google.api.http) = {
-      put: "/blog/v1/attachments/{id}"
-      body: "attachment"
-    };
-  }
+  rpc UpdateAttachment (UpdateAttachmentRequest) returns (Attachment) {}
 
   // 删除附件
-  rpc DeleteAttachment (DeleteAttachmentRequest) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      delete: "/blog/v1/attachments/{id}"
-    };
-  }
+  rpc DeleteAttachment (DeleteAttachmentRequest) returns (google.protobuf.Empty) {}
 }
 
 message Attachment {

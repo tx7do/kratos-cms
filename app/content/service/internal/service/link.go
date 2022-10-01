@@ -6,7 +6,7 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	v1 "kratos-blog/api/blog/v1"
+	"kratos-blog/api/content/service/v1"
 	"kratos-blog/app/content/service/internal/biz"
 	"kratos-blog/third_party/pagination"
 )
@@ -19,7 +19,7 @@ type LinkService struct {
 }
 
 func NewLinkService(logger log.Logger, uc *biz.LinkUseCase) *LinkService {
-	l := log.NewHelper(log.With(logger, "module", "service/link"))
+	l := log.NewHelper(log.With(logger, "module", "link/service/content-service"))
 	return &LinkService{
 		log: l,
 		uc:  uc,

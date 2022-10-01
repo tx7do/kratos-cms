@@ -22,7 +22,7 @@ type AttachmentRepo struct {
 }
 
 func NewAttachmentRepo(data *Data, logger log.Logger) biz.AttachmentRepo {
-	l := log.NewHelper(log.With(logger, "module", "attachment/repo"))
+	l := log.NewHelper(log.With(logger, "module", "attachment/repo/file-service"))
 	return &AttachmentRepo{
 		data: data,
 		log:  l,

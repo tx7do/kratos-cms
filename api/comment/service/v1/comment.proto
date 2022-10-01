@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package comment.service.v1;
 
-import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "pagination/pagination.proto";
 
@@ -10,45 +9,25 @@ option go_package = "kratos-blog/api/comment/service/v1;v1";
 
 // 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
 
+// 评论服务
 service CommentService {
   // 获取评论列表
-  rpc ListComment (pagination.PagingRequest) returns (ListCommentResponse) {
-    option (google.api.http) = {
-      get: "/blog/v1/comments"
-    };
-  }
+  rpc ListComment (pagination.PagingRequest) returns (ListCommentResponse) {}
 
   // 获取评论数据
-  rpc GetComment (GetCommentRequest) returns (Comment) {
-    option (google.api.http) = {
-      get: "/blog/v1/comments/{id}"
-    };
-  }
+  rpc GetComment (GetCommentRequest) returns (Comment) {}
 
   // 创建评论
-  rpc CreateComment (CreateCommentRequest) returns (Comment) {
-    option (google.api.http) = {
-      post: "/blog/v1/comments"
-      body: "*"
-    };
-  }
+  rpc CreateComment (CreateCommentRequest) returns (Comment) {}
 
   // 更新评论
-  rpc UpdateComment (UpdateCommentRequest) returns (Comment) {
-    option (google.api.http) = {
-      put: "/blog/v1/comments/{id}"
-      body: "comment"
-    };
-  }
+  rpc UpdateComment (UpdateCommentRequest) returns (Comment) {}
 
   // 删除评论
-  rpc DeleteComment (DeleteCommentRequest) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      delete: "/blog/v1/comments/{id}"
-    };
-  }
+  rpc DeleteComment (DeleteCommentRequest) returns (google.protobuf.Empty) {}
 }
 
+// 评论
 message Comment {
   uint32 id = 1;
   optional string author = 2;

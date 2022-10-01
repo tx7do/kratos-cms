@@ -2,6 +2,7 @@ package data
 
 import (
 	"context"
+	"kratos-blog/api/content/service/v1"
 	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
@@ -10,7 +11,6 @@ import (
 	"kratos-blog/app/content/service/internal/data/ent"
 	"kratos-blog/app/content/service/internal/data/ent/post"
 
-	v1 "kratos-blog/api/blog/v1"
 	"kratos-blog/pkg/util/entgo"
 	paging "kratos-blog/pkg/util/pagination"
 	"kratos-blog/third_party/pagination"
@@ -24,7 +24,7 @@ type PostRepo struct {
 }
 
 func NewPostRepo(data *Data, logger log.Logger) biz.PostRepo {
-	l := log.NewHelper(log.With(logger, "module", "post/repo"))
+	l := log.NewHelper(log.With(logger, "module", "post/repo/content-service"))
 	return &PostRepo{
 		data: data,
 		log:  l,

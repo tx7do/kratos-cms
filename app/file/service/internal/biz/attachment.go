@@ -23,7 +23,7 @@ type AttachmentUseCase struct {
 }
 
 func NewAttachmentUseCase(repo AttachmentRepo, logger log.Logger) *AttachmentUseCase {
-	l := log.NewHelper(log.With(logger, "module", "attachment/usecase"))
+	l := log.NewHelper(log.With(logger, "module", "attachment/usecase/file-service"))
 	return &AttachmentUseCase{
 		repo: repo,
 		log:  l,

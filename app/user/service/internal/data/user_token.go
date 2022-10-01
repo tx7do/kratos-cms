@@ -42,7 +42,7 @@ type userTokenRepo struct {
 }
 
 func NewUserTokenRepo(data *Data, conf *conf.Auth, logger log.Logger) biz.UserTokenRepo {
-	l := log.NewHelper(log.With(logger, "module", "user-token/repo"))
+	l := log.NewHelper(log.With(logger, "module", "user-token/repo/user-service"))
 	return &userTokenRepo{
 		data: data,
 		log:  l,

@@ -431,30 +431,6 @@ type (
 	}
 )
 
-// SetCreateTime sets the "create_time" field.
-func (u *UserUpsert) SetCreateTime(v int64) *UserUpsert {
-	u.Set(user.FieldCreateTime, v)
-	return u
-}
-
-// UpdateCreateTime sets the "create_time" field to the value that was provided on create.
-func (u *UserUpsert) UpdateCreateTime() *UserUpsert {
-	u.SetExcluded(user.FieldCreateTime)
-	return u
-}
-
-// AddCreateTime adds v to the "create_time" field.
-func (u *UserUpsert) AddCreateTime(v int64) *UserUpsert {
-	u.Add(user.FieldCreateTime, v)
-	return u
-}
-
-// ClearCreateTime clears the value of the "create_time" field.
-func (u *UserUpsert) ClearCreateTime() *UserUpsert {
-	u.SetNull(user.FieldCreateTime)
-	return u
-}
-
 // SetUpdateTime sets the "update_time" field.
 func (u *UserUpsert) SetUpdateTime(v int64) *UserUpsert {
 	u.Set(user.FieldUpdateTime, v)
@@ -500,24 +476,6 @@ func (u *UserUpsert) AddDeleteTime(v int64) *UserUpsert {
 // ClearDeleteTime clears the value of the "delete_time" field.
 func (u *UserUpsert) ClearDeleteTime() *UserUpsert {
 	u.SetNull(user.FieldDeleteTime)
-	return u
-}
-
-// SetUsername sets the "username" field.
-func (u *UserUpsert) SetUsername(v string) *UserUpsert {
-	u.Set(user.FieldUsername, v)
-	return u
-}
-
-// UpdateUsername sets the "username" field to the value that was provided on create.
-func (u *UserUpsert) UpdateUsername() *UserUpsert {
-	u.SetExcluded(user.FieldUsername)
-	return u
-}
-
-// ClearUsername clears the value of the "username" field.
-func (u *UserUpsert) ClearUsername() *UserUpsert {
-	u.SetNull(user.FieldUsername)
 	return u
 }
 
@@ -665,34 +623,6 @@ func (u *UserUpsertOne) Update(set func(*UserUpsert)) *UserUpsertOne {
 	return u
 }
 
-// SetCreateTime sets the "create_time" field.
-func (u *UserUpsertOne) SetCreateTime(v int64) *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.SetCreateTime(v)
-	})
-}
-
-// AddCreateTime adds v to the "create_time" field.
-func (u *UserUpsertOne) AddCreateTime(v int64) *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.AddCreateTime(v)
-	})
-}
-
-// UpdateCreateTime sets the "create_time" field to the value that was provided on create.
-func (u *UserUpsertOne) UpdateCreateTime() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdateCreateTime()
-	})
-}
-
-// ClearCreateTime clears the value of the "create_time" field.
-func (u *UserUpsertOne) ClearCreateTime() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearCreateTime()
-	})
-}
-
 // SetUpdateTime sets the "update_time" field.
 func (u *UserUpsertOne) SetUpdateTime(v int64) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
@@ -746,27 +676,6 @@ func (u *UserUpsertOne) UpdateDeleteTime() *UserUpsertOne {
 func (u *UserUpsertOne) ClearDeleteTime() *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
 		s.ClearDeleteTime()
-	})
-}
-
-// SetUsername sets the "username" field.
-func (u *UserUpsertOne) SetUsername(v string) *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.SetUsername(v)
-	})
-}
-
-// UpdateUsername sets the "username" field to the value that was provided on create.
-func (u *UserUpsertOne) UpdateUsername() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdateUsername()
-	})
-}
-
-// ClearUsername clears the value of the "username" field.
-func (u *UserUpsertOne) ClearUsername() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearUsername()
 	})
 }
 
@@ -1052,7 +961,6 @@ func (u *UserUpsertBulk) UpdateNewValues() *UserUpsertBulk {
 		for _, b := range u.create.builders {
 			if _, exists := b.mutation.ID(); exists {
 				s.SetIgnore(user.FieldID)
-				return
 			}
 			if _, exists := b.mutation.CreateTime(); exists {
 				s.SetIgnore(user.FieldCreateTime)
@@ -1090,34 +998,6 @@ func (u *UserUpsertBulk) Update(set func(*UserUpsert)) *UserUpsertBulk {
 		set(&UserUpsert{UpdateSet: update})
 	}))
 	return u
-}
-
-// SetCreateTime sets the "create_time" field.
-func (u *UserUpsertBulk) SetCreateTime(v int64) *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.SetCreateTime(v)
-	})
-}
-
-// AddCreateTime adds v to the "create_time" field.
-func (u *UserUpsertBulk) AddCreateTime(v int64) *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.AddCreateTime(v)
-	})
-}
-
-// UpdateCreateTime sets the "create_time" field to the value that was provided on create.
-func (u *UserUpsertBulk) UpdateCreateTime() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdateCreateTime()
-	})
-}
-
-// ClearCreateTime clears the value of the "create_time" field.
-func (u *UserUpsertBulk) ClearCreateTime() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearCreateTime()
-	})
 }
 
 // SetUpdateTime sets the "update_time" field.
@@ -1173,27 +1053,6 @@ func (u *UserUpsertBulk) UpdateDeleteTime() *UserUpsertBulk {
 func (u *UserUpsertBulk) ClearDeleteTime() *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
 		s.ClearDeleteTime()
-	})
-}
-
-// SetUsername sets the "username" field.
-func (u *UserUpsertBulk) SetUsername(v string) *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.SetUsername(v)
-	})
-}
-
-// UpdateUsername sets the "username" field to the value that was provided on create.
-func (u *UserUpsertBulk) UpdateUsername() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdateUsername()
-	})
-}
-
-// ClearUsername clears the value of the "username" field.
-func (u *UserUpsertBulk) ClearUsername() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearUsername()
 	})
 }
 

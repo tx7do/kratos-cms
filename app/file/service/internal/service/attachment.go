@@ -19,7 +19,7 @@ type AttachmentService struct {
 }
 
 func NewAttachmentService(logger log.Logger, uc *biz.AttachmentUseCase) *AttachmentService {
-	l := log.NewHelper(log.With(logger, "module", "service/attachment"))
+	l := log.NewHelper(log.With(logger, "module", "attachment/service/file-service"))
 	return &AttachmentService{
 		log: l,
 		uc:  uc,

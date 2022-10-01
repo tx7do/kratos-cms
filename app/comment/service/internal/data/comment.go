@@ -23,7 +23,7 @@ type CommentRepo struct {
 }
 
 func NewCommentRepo(data *Data, logger log.Logger) biz.CommentRepo {
-	l := log.NewHelper(log.With(logger, "module", "comment/repo"))
+	l := log.NewHelper(log.With(logger, "module", "comment/repo/comment-service"))
 	return &CommentRepo{
 		data: data,
 		log:  l,

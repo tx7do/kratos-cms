@@ -17,7 +17,7 @@ type CommentService struct {
 }
 
 func NewCommentService(logger log.Logger, uc *biz.CommentUseCase) *CommentService {
-	l := log.NewHelper(log.With(logger, "module", "service/comment"))
+	l := log.NewHelper(log.With(logger, "module", "service/comment/comment-service"))
 	return &CommentService{
 		log: l,
 		uc:  uc,

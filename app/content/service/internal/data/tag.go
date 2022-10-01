@@ -2,6 +2,7 @@ package data
 
 import (
 	"context"
+	"kratos-blog/api/content/service/v1"
 
 	"github.com/go-kratos/kratos/v2/log"
 
@@ -9,7 +10,6 @@ import (
 	"kratos-blog/app/content/service/internal/data/ent"
 	"kratos-blog/app/content/service/internal/data/ent/tag"
 
-	v1 "kratos-blog/api/blog/v1"
 	"kratos-blog/pkg/util/entgo"
 	paging "kratos-blog/pkg/util/pagination"
 	"kratos-blog/third_party/pagination"
@@ -23,7 +23,7 @@ type TagRepo struct {
 }
 
 func NewTagRepo(data *Data, logger log.Logger) biz.TagRepo {
-	l := log.NewHelper(log.With(logger, "module", "tag/repo"))
+	l := log.NewHelper(log.With(logger, "module", "tag/repo/content-service"))
 	return &TagRepo{
 		data: data,
 		log:  l,

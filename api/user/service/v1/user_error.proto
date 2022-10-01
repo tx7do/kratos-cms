@@ -1,10 +1,9 @@
 syntax = "proto3";
 
 package user.service.v1;
+option go_package = "kratos-blog/api/user/service/v1;v1";
 
 import "errors/errors.proto";
-
-option go_package = "kratos-blog/api/user/service/v1;v1";
 
 enum UserErrorReason {
     option (errors.default_code) = 500;

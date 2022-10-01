@@ -77,7 +77,7 @@ func NewRedisClient(conf *conf.Data, logger log.Logger) *redis.Client {
 
 // NewEntClient 创建数据库客户端
 func NewEntClient(conf *conf.Data, logger log.Logger) *ent.Client {
-	l := log.NewHelper(log.With(logger, "module", "db/data/user-service"))
+	l := log.NewHelper(log.With(logger, "module", "ent/data/user-service"))
 
 	client, err := ent.Open(
 		conf.Database.Driver,

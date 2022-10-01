@@ -6,7 +6,7 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	v1 "kratos-blog/api/blog/v1"
+	v1 "kratos-blog/api/content/service/v1"
 	"kratos-blog/app/content/service/internal/biz"
 	"kratos-blog/third_party/pagination"
 )
@@ -19,7 +19,7 @@ type CategoryService struct {
 }
 
 func NewCategoryService(logger log.Logger, uc *biz.CategoryUseCase) *CategoryService {
-	l := log.NewHelper(log.With(logger, "module", "service/category"))
+	l := log.NewHelper(log.With(logger, "module", "category/service/content-service"))
 	return &CategoryService{
 		log: l,
 		uc:  uc,

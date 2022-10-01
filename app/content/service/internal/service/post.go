@@ -6,7 +6,7 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	v1 "kratos-blog/api/blog/v1"
+	"kratos-blog/api/content/service/v1"
 	"kratos-blog/app/content/service/internal/biz"
 	"kratos-blog/third_party/pagination"
 )
@@ -19,7 +19,7 @@ type PostService struct {
 }
 
 func NewPostService(logger log.Logger, uc *biz.PostUseCase) *PostService {
-	l := log.NewHelper(log.With(logger, "module", "service/post"))
+	l := log.NewHelper(log.With(logger, "module", "post/service/content-service"))
 	return &PostService{
 		log: l,
 		uc:  uc,

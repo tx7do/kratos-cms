@@ -2,10 +2,10 @@ package biz
 
 import (
 	"context"
+	"kratos-blog/api/content/service/v1"
 
 	"github.com/go-kratos/kratos/v2/log"
 
-	v1 "kratos-blog/api/blog/v1"
 	"kratos-blog/third_party/pagination"
 )
 
@@ -23,7 +23,7 @@ type CategoryUseCase struct {
 }
 
 func NewCategoryUseCase(repo CategoryRepo, logger log.Logger) *CategoryUseCase {
-	l := log.NewHelper(log.With(logger, "module", "category/usecase"))
+	l := log.NewHelper(log.With(logger, "module", "category/usecase/content-service"))
 	return &CategoryUseCase{
 		repo: repo,
 		log:  l,
