@@ -2,9 +2,6 @@ package server
 
 import (
 	"context"
-	"fmt"
-	"google.golang.org/protobuf/reflect/protoreflect"
-	"google.golang.org/protobuf/reflect/protoregistry"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/auth/jwt"
@@ -82,14 +79,6 @@ func NewHTTPServer(
 		opts = append(opts, http.Timeout(c.Http.Timeout.AsDuration()))
 	}
 	srv := http.NewServer(opts...)
-
-	protoregistry.GlobalFiles.RangeFiles(func(fd protoreflect.FileDescriptor) bool {
-		for i := 0; i < fd.Services().Len(); i++ {
-			//svc := fd.Services().Get(i)
-			fmt.Println(fd.Path())
-		}
-		return true
-	})
 
 	srv.HandlePrefix("/q/", openapiv2.NewHandler())
 
