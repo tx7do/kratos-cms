@@ -8,9 +8,9 @@ import (
 	"github.com/google/uuid"
 )
 
-type UuidId struct {
-	mixin.Schema
-}
+var _ ent.Mixin = (*UuidId)(nil)
+
+type UuidId struct{ mixin.Schema }
 
 func (UuidId) Fields() []ent.Field {
 	return []ent.Field{

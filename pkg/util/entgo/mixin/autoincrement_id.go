@@ -9,9 +9,9 @@ import (
 	"entgo.io/ent/schema/mixin"
 )
 
-type AutoIncrementId struct {
-	mixin.Schema
-}
+var _ ent.Mixin = (*AutoIncrementId)(nil)
+
+type AutoIncrementId struct{ mixin.Schema }
 
 func (AutoIncrementId) Fields() []ent.Field {
 	return []ent.Field{
