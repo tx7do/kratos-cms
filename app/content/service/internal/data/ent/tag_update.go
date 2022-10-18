@@ -440,7 +440,7 @@ func (tu *TagUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: tag.FieldPostCount,
 		})
 	}
-	_spec.Modifiers = tu.modifiers
+	_spec.AddModifiers(tu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, tu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{tag.Label}
@@ -903,7 +903,7 @@ func (tuo *TagUpdateOne) sqlSave(ctx context.Context) (_node *Tag, err error) {
 			Column: tag.FieldPostCount,
 		})
 	}
-	_spec.Modifiers = tuo.modifiers
+	_spec.AddModifiers(tuo.modifiers...)
 	_node = &Tag{config: tuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

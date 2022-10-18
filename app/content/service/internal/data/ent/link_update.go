@@ -450,7 +450,7 @@ func (lu *LinkUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: link.FieldPriority,
 		})
 	}
-	_spec.Modifiers = lu.modifiers
+	_spec.AddModifiers(lu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, lu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{link.Label}
@@ -923,7 +923,7 @@ func (luo *LinkUpdateOne) sqlSave(ctx context.Context) (_node *Link, err error) 
 			Column: link.FieldPriority,
 		})
 	}
-	_spec.Modifiers = luo.modifiers
+	_spec.AddModifiers(luo.modifiers...)
 	_node = &Link{config: luo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

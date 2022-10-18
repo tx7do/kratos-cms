@@ -504,7 +504,7 @@ func (pu *PhotoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: photo.FieldLikes,
 		})
 	}
-	_spec.Modifiers = pu.modifiers
+	_spec.AddModifiers(pu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, pu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{photo.Label}
@@ -1031,7 +1031,7 @@ func (puo *PhotoUpdateOne) sqlSave(ctx context.Context) (_node *Photo, err error
 			Column: photo.FieldLikes,
 		})
 	}
-	_spec.Modifiers = puo.modifiers
+	_spec.AddModifiers(puo.modifiers...)
 	_node = &Photo{config: puo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

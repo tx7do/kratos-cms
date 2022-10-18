@@ -577,7 +577,7 @@ func (cu *CategoryUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: category.FieldPostCount,
 		})
 	}
-	_spec.Modifiers = cu.modifiers
+	_spec.AddModifiers(cu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, cu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{category.Label}
@@ -1177,7 +1177,7 @@ func (cuo *CategoryUpdateOne) sqlSave(ctx context.Context) (_node *Category, err
 			Column: category.FieldPostCount,
 		})
 	}
-	_spec.Modifiers = cuo.modifiers
+	_spec.AddModifiers(cuo.modifiers...)
 	_node = &Category{config: cuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

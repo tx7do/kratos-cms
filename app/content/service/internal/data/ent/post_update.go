@@ -1033,7 +1033,7 @@ func (pu *PostUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: post.FieldInProgress,
 		})
 	}
-	_spec.Modifiers = pu.modifiers
+	_spec.AddModifiers(pu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, pu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{post.Label}
@@ -2089,7 +2089,7 @@ func (puo *PostUpdateOne) sqlSave(ctx context.Context) (_node *Post, err error) 
 			Column: post.FieldInProgress,
 		})
 	}
-	_spec.Modifiers = puo.modifiers
+	_spec.AddModifiers(puo.modifiers...)
 	_node = &Post{config: puo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

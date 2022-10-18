@@ -487,7 +487,7 @@ func (mu *MenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: menu.FieldTeam,
 		})
 	}
-	_spec.Modifiers = mu.modifiers
+	_spec.AddModifiers(mu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, mu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{menu.Label}
@@ -997,7 +997,7 @@ func (muo *MenuUpdateOne) sqlSave(ctx context.Context) (_node *Menu, err error) 
 			Column: menu.FieldTeam,
 		})
 	}
-	_spec.Modifiers = muo.modifiers
+	_spec.AddModifiers(muo.modifiers...)
 	_node = &Menu{config: muo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
