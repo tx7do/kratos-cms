@@ -8,6 +8,7 @@ require (
 	github.com/go-kratos/kratos/contrib/config/nacos/v2 v2.0.0-20220921072156-7866ff75fd6c
 	github.com/go-kratos/kratos/contrib/registry/consul/v2 v2.0.0-20220921072156-7866ff75fd6c
 	github.com/go-kratos/kratos/v2 v2.5.0
+	github.com/google/subcommands v1.0.1
 	github.com/google/wire v0.5.0
 	github.com/hashicorp/consul/api v1.15.2
 	github.com/nacos-group/nacos-sdk-go v1.1.2

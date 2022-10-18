@@ -24,8 +24,8 @@ import (
 // NewWhiteListMatcher 创建jwt白名单
 func NewWhiteListMatcher() selector.MatchFunc {
 	whiteList := make(map[string]bool)
-	whiteList["/blog.v1.UserService/Register"] = true
-	whiteList["/blog.v1.UserService/Login"] = true
+	whiteList[v1.OperationUserServiceRegister] = true
+	whiteList[v1.OperationUserServiceLogin] = true
 	return func(ctx context.Context, operation string) bool {
 		if _, ok := whiteList[operation]; ok {
 			return false
