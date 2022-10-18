@@ -6,15 +6,16 @@
 package main
 
 import (
+	"github.com/go-kratos/kratos/v2"
+	"github.com/go-kratos/kratos/v2/log"
+
+	"github.com/google/wire"
+
 	"kratos-blog/app/comment/service/internal/biz"
 	"kratos-blog/app/comment/service/internal/conf"
 	"kratos-blog/app/comment/service/internal/data"
 	"kratos-blog/app/comment/service/internal/server"
 	"kratos-blog/app/comment/service/internal/service"
-
-	"github.com/go-kratos/kratos/v2"
-	"github.com/go-kratos/kratos/v2/log"
-	"github.com/google/wire"
 )
 
 // initApp init kratos application.

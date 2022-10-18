@@ -3,13 +3,13 @@ package main
 import (
 	"flag"
 	"fmt"
-	"kratos-blog/app/admin/service/internal/conf"
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/registry"
 	"github.com/go-kratos/kratos/v2/transport/http"
 
+	"kratos-blog/app/admin/service/internal/conf"
 	"kratos-blog/pkg/service"
 	"kratos-blog/pkg/util/bootstrap"
 )
