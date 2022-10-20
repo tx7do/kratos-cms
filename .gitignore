@@ -134,10 +134,11 @@ fabric.properties
 !.vscode/extensions.json
 *.code-workspace
 
-# End of https://www.toptal.com/developers/gitignore/api/go,jetbrains,vscode
-/bazel-bin/
-/bazel-kratos-blog/
-/bazel-out/
-/bazel-testlogs/
+# Bazel output
+/bazel-*/
 
+# Ninja output
+.ninja_deps
 .ninja_log
+
+*~
