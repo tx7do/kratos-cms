@@ -2,7 +2,12 @@
 <module type="WEB_MODULE" version="4">
   <component name="Go" enabled="true" />
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/bazel-bin" />
+      <excludeFolder url="file://$MODULE_DIR$/bazel-kratos-blog" />
+      <excludeFolder url="file://$MODULE_DIR$/bazel-out" />
+      <excludeFolder url="file://$MODULE_DIR$/bazel-testlogs" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

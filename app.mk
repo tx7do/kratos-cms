@@ -26,7 +26,7 @@ init:
 dep:
 	@go mod download
 
-# 下载依赖库
+# 创建依赖库
 .PHONY: vendor
 vendor:
 	@go mod vendor
@@ -45,7 +45,7 @@ clean:
 # 直接运行程序
 .PHONY: run
 run:
-	cd cmd/server/ && go run .
+	go run ./cmd/server -conf ./configs
 
 # 构建docker镜像
 .PHONY: docker
@@ -70,22 +70,22 @@ vet:
 # 生成Protobuf配置代码
 .PHONY: conf
 conf:
-	cd internal/conf/ && @go generate ./...
+	@go generate ./internal/conf/...
 
 # 生成Entgo代码
 .PHONY: ent
 ent:
-	cd internal/data/ent/ && @go generate ./...
+	@go generate ./internal/data/ent/...
 
 # 生成Wire代码
 .PHONY: wire
 wire:
-	cd cmd/server && wire
+	@wire ./cmd/server
 
 # 生成所有的Protobuf API代码
 .PHONY: api
 api:
-	cd ../../../api && @go generate ./...
+	@go generate ../../../api/...
 
 # 执行代码检查
 .PHONY: lint
