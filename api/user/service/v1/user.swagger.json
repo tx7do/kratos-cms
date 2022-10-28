@@ -109,6 +109,15 @@
         },
         "updateTime": {
           "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "ON",
+            "OFF"
+          ],
+          "default": "ON",
+          "description": "用户状态"
         }
       },
       "title": "用户"

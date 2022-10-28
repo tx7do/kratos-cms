@@ -3,6 +3,7 @@ syntax = "proto3";
 package user.service.v1;
 option go_package = "kratos-blog/api/user/service/v1;v1";
 
+import "protoc-gen-openapiv2/options/annotations.proto";
 import "google/protobuf/empty.proto";
 
 // 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
@@ -25,14 +26,19 @@ service UserService {
 // 用户
 message User {
   uint32 id = 1;
-  optional string userName = 2;
-  optional string nickName = 3;
-  optional string email = 4;
-  optional string avatar = 5;
-  optional string description = 6;
-  optional string password = 7;
-  optional string createTime = 8;
-  optional string updateTime = 9;
+  string userName = 2;
+  string nickName = 3;
+  string email = 4;
+  string avatar = 5;
+  string description = 6;
+  string password = 7;
+  string createTime = 8;
+  string updateTime = 9;
+  string status = 10 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "用户状态"
+    default: "ON"
+    enum: ["ON", "OFF"]
+  }];
 }
 
 // 请求 - 登录
@@ -68,23 +74,23 @@ message RegisterResponse {
 // 请求 - 创建
 message CreateUserRequest {
   User user = 1;
-  optional uint32 operatorId = 2;
+  uint32 operatorId = 2;
 }
 
 // 请求 - 更新
 message UpdateUserRequest {
   uint32 id = 1;
   User user = 2;
-  optional uint32 operatorId = 3;
+  uint32 operatorId = 3;
 }
 
 // 请求 - 删除
 message DeleteUserRequest {
   uint32 id = 1;
-  optional uint32 operatorId = 2;
+  uint32 operatorId = 2;
 }
 
 // 请求 - 获取当前用户信息
 message GetMeRequest {
-  optional uint32 id = 1;
+  uint32 id = 1;
 }

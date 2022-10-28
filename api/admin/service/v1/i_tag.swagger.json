@@ -1,12 +1,18 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "i_tag.proto",
-    "version": "version not set"
+    "title": "标签管理接口",
+    "description": "标签管理",
+    "version": "1.0"
   },
   "tags": [
     {
-      "name": "TagService"
+      "name": "TagService",
+      "description": "TagService -- 标签服务",
+      "externalDocs": {
+        "description": "Find out more about EchoService",
+        "url": "https://github.com/grpc-ecosystem/grpc-gateway"
+      }
     }
   ],
   "consumes": [
@@ -70,7 +76,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1Tag"
+              "$ref": "#/definitions/servicev1Tag"
             }
           },
           "default": {
@@ -103,7 +109,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1Tag"
+              "$ref": "#/definitions/servicev1Tag"
             }
           },
           "default": {
@@ -171,7 +177,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1Tag"
+              "$ref": "#/definitions/servicev1Tag"
             }
           },
           "default": {
@@ -194,7 +200,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1Tag"
+              "$ref": "#/definitions/servicev1Tag"
             }
           },
           {
@@ -241,36 +247,7 @@
         }
       }
     },
-    "v1CreateTagRequest": {
-      "type": "object",
-      "properties": {
-        "tag": {
-          "$ref": "#/definitions/v1Tag"
-        },
-        "operatorId": {
-          "type": "integer",
-          "format": "int64"
-        }
-      },
-      "title": "请求 - 创建标签"
-    },
-    "v1ListTagResponse": {
-      "type": "object",
-      "properties": {
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1Tag"
-          }
-        },
-        "total": {
-          "type": "integer",
-          "format": "int32"
-        }
-      },
-      "title": "回应 - 标签列表"
-    },
-    "v1Tag": {
+    "servicev1Tag": {
       "type": "object",
       "properties": {
         "id": {
@@ -307,6 +284,35 @@
         }
       },
       "title": "标签"
+    },
+    "v1CreateTagRequest": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "$ref": "#/definitions/servicev1Tag"
+        },
+        "operatorId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "请求 - 创建标签"
+    },
+    "v1ListTagResponse": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/servicev1Tag"
+          }
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "回应 - 标签列表"
     }
   }
 }

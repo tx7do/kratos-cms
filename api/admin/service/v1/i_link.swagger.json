@@ -1,12 +1,18 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "i_link.proto",
-    "version": "version not set"
+    "title": "链接管理接口",
+    "description": "链接管理",
+    "version": "1.0"
   },
   "tags": [
     {
-      "name": "LinkService"
+      "name": "LinkService",
+      "description": "LinkService -- 链接服务",
+      "externalDocs": {
+        "description": "Find out more about EchoService",
+        "url": "https://github.com/grpc-ecosystem/grpc-gateway"
+      }
     }
   ],
   "consumes": [

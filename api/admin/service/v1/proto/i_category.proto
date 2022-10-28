@@ -3,16 +3,33 @@ syntax = "proto3";
 package admin.service.v1;
 option go_package = "kratos-blog/api/admin/service/v1;v1";
 
+import "protoc-gen-openapiv2/options/annotations.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 
 import "pagination.proto";
 import "category.proto";
 
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "类别管理接口";
+    description: "类别管理";
+    version: "1.0";
+  }
+};
+
 // 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
 
 // 类别服务
 service CategoryService {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_tag) = {
+    description: "CategoryService -- 类别服务"
+    external_docs: {
+      url: "https://github.com/grpc-ecosystem/grpc-gateway";
+      description: "Find out more about EchoService";
+    }
+  };
+
   // 获取类别列表
   rpc ListCategory (pagination.PagingRequest) returns (content.service.v1.ListCategoryResponse) {
     option (google.api.http) = {

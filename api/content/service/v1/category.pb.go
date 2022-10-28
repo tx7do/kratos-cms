@@ -10,7 +10,7 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	pagination "kratos-blog/third_party/pagination"
+	pagination "kratos-blog/api/pagination"
 	reflect "reflect"
 	sync "sync"
 )

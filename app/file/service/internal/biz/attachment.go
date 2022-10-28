@@ -2,11 +2,11 @@ package biz
 
 import (
 	"context"
+	"kratos-blog/api/pagination"
 
 	"github.com/go-kratos/kratos/v2/log"
 
 	v1 "kratos-blog/api/file/service/v1"
-	"kratos-blog/third_party/pagination"
 )
 
 type AttachmentRepo interface {

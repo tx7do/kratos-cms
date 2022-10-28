@@ -12,7 +12,7 @@ import (
 	binding "github.com/go-kratos/kratos/v2/transport/http/binding"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	v1 "kratos-blog/api/file/service/v1"
-	pagination "kratos-blog/third_party/pagination"
+	pagination "kratos-blog/api/pagination"
 )
 
 // This is a compile-time assertion to ensure that this generated file

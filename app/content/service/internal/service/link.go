@@ -2,13 +2,13 @@ package service
 
 import (
 	"context"
+	"kratos-blog/api/pagination"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
 
 	"kratos-blog/api/content/service/v1"
 	"kratos-blog/app/content/service/internal/biz"
-	"kratos-blog/third_party/pagination"
 )
 
 type LinkService struct {

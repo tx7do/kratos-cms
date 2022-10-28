@@ -1,12 +1,18 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "i_comment.proto",
-    "version": "version not set"
+    "title": "评论管理接口",
+    "description": "评论管理",
+    "version": "1.0"
   },
   "tags": [
     {
-      "name": "CommentService"
+      "name": "CommentService",
+      "description": "CommentService -- 评论服务",
+      "externalDocs": {
+        "description": "Find out more about EchoService",
+        "url": "https://github.com/grpc-ecosystem/grpc-gateway"
+      }
     }
   ],
   "consumes": [

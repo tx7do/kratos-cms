@@ -1,12 +1,18 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "i_attachment.proto",
-    "version": "version not set"
+    "title": "附件管理接口",
+    "description": "附件管理",
+    "version": "1.0"
   },
   "tags": [
     {
-      "name": "AttachmentService"
+      "name": "AttachmentService",
+      "description": "AttachmentService -- 附件服务",
+      "externalDocs": {
+        "description": "Find out more about EchoService",
+        "url": "https://github.com/grpc-ecosystem/grpc-gateway"
+      }
     }
   ],
   "consumes": [
@@ -291,7 +297,8 @@
         "deletedAt": {
           "type": "string"
         }
-      }
+      },
+      "title": "附件"
     },
     "v1CreateAttachmentRequest": {
       "type": "object",
@@ -304,7 +311,7 @@
           "format": "int64"
         }
       },
-      "title": "请求 - 创建附件"
+      "title": "创建附件 - 请求"
     },
     "v1ListAttachmentResponse": {
       "type": "object",
@@ -320,7 +327,7 @@
           "format": "int32"
         }
       },
-      "title": "回应 - 附件列表"
+      "title": "附件列表 - 回应"
     }
   }
 }

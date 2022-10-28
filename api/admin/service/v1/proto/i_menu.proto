@@ -3,16 +3,33 @@ syntax = "proto3";
 package admin.service.v1;
 option go_package = "kratos-blog/api/admin/service/v1;v1";
 
+import "protoc-gen-openapiv2/options/annotations.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 
 import "pagination.proto";
 import "menu.proto";
 
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "菜单管理接口";
+    description: "菜单管理";
+    version: "1.0";
+  }
+};
+
 // 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
 
 // 菜单服务
 service MenuService {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_tag) = {
+    description: "MenuService -- 菜单服务"
+    external_docs: {
+      url: "https://github.com/grpc-ecosystem/grpc-gateway";
+      description: "Find out more about EchoService";
+    }
+  };
+
   // 获取目录列表
   rpc ListMenu (pagination.PagingRequest) returns (content.service.v1.ListMenuResponse) {
     option (google.api.http) = {

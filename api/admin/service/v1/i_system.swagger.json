@@ -1,12 +1,18 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "i_system.proto",
-    "version": "version not set"
+    "title": "系统配置管理接口",
+    "description": "系统配置管理",
+    "version": "1.0"
   },
   "tags": [
     {
-      "name": "SystemService"
+      "name": "SystemService",
+      "description": "SystemService -- 系统配置服务",
+      "externalDocs": {
+        "description": "Find out more about EchoService",
+        "url": "https://github.com/grpc-ecosystem/grpc-gateway"
+      }
     }
   ],
   "consumes": [

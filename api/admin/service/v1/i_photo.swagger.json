@@ -1,12 +1,18 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "i_photo.proto",
-    "version": "version not set"
+    "title": "照片管理接口",
+    "description": "照片管理",
+    "version": "1.0"
   },
   "tags": [
     {
-      "name": "PhotoService"
+      "name": "PhotoService",
+      "description": "PhotoService -- 照片服务",
+      "externalDocs": {
+        "description": "Find out more about EchoService",
+        "url": "https://github.com/grpc-ecosystem/grpc-gateway"
+      }
     }
   ],
   "consumes": [

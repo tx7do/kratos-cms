@@ -1,12 +1,18 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "i_post.proto",
-    "version": "version not set"
+    "title": "帖子管理接口",
+    "description": "帖子管理",
+    "version": "1.0"
   },
   "tags": [
     {
-      "name": "PostService"
+      "name": "PostService",
+      "description": "PostService -- 帖子服务",
+      "externalDocs": {
+        "description": "Find out more about EchoService",
+        "url": "https://github.com/grpc-ecosystem/grpc-gateway"
+      }
     }
   ],
   "consumes": [

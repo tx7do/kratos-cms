@@ -1,12 +1,18 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "i_user.proto",
-    "version": "version not set"
+    "title": "用户管理接口",
+    "description": "用户管理",
+    "version": "1.0"
   },
   "tags": [
     {
-      "name": "UserService"
+      "name": "UserService",
+      "description": "UserService -- 用户服务",
+      "externalDocs": {
+        "description": "Find out more about EchoService",
+        "url": "https://github.com/grpc-ecosystem/grpc-gateway"
+      }
     }
   ],
   "consumes": [
@@ -275,6 +281,15 @@
         },
         "updateTime": {
           "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "ON",
+            "OFF"
+          ],
+          "default": "ON",
+          "description": "用户状态"
         }
       },
       "title": "用户"

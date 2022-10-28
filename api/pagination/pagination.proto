@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package pagination;
-option go_package = "kratos-blog/third_party/pagination;pagination";
+option go_package = "kratos-blog/api/pagination;pagination";
 
 import "google/protobuf/any.proto";
 

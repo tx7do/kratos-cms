@@ -3,7 +3,9 @@ syntax = "proto3";
 package file.service.v1;
 option go_package = "kratos-blog/api/file/service/v1";
 
+import "protoc-gen-openapiv2/options/annotations.proto";
 import "google/protobuf/empty.proto";
+
 import "pagination.proto";
 
 // 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
@@ -26,6 +28,7 @@ service AttachmentService {
   rpc DeleteAttachment (DeleteAttachmentRequest) returns (google.protobuf.Empty) {}
 }
 
+// 附件
 message Attachment {
   uint32 id = 1;
   optional string name = 2;
@@ -43,31 +46,31 @@ message Attachment {
   optional string deletedAt = 14;
 }
 
-// 回应 - 附件列表
+// 附件列表 - 回应
 message ListAttachmentResponse {
   repeated Attachment items = 1;
   int32 total = 2;
 }
 
-// 请求 - 附件数据
+// 附件数据 - 请求
 message GetAttachmentRequest {
   uint32 id = 1;
 }
 
-// 请求 - 创建附件
+// 创建附件 - 请求
 message CreateAttachmentRequest {
   Attachment attachment = 1;
   optional uint32 operatorId = 2;
 }
 
-// 请求 - 更新附件
+// 更新附件 - 请求
 message UpdateAttachmentRequest {
   uint32 id = 1;
   Attachment attachment = 2;
   optional uint32 operatorId = 3;
 }
 
-// 请求 - 删除附件
+// 删除附件 - 请求
 message DeleteAttachmentRequest {
   uint32 id = 1;
   optional uint32 operatorId = 2;

@@ -3,6 +3,7 @@ package data
 import (
 	"context"
 	"kratos-blog/api/content/service/v1"
+	"kratos-blog/api/pagination"
 	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
@@ -13,7 +14,6 @@ import (
 
 	"kratos-blog/pkg/util/entgo"
 	paging "kratos-blog/pkg/util/pagination"
-	"kratos-blog/third_party/pagination"
 )
 
 var _ biz.PostRepo = (*PostRepo)(nil)

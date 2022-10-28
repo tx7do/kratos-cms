@@ -1,12 +1,18 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "i_category.proto",
-    "version": "version not set"
+    "title": "类别管理接口",
+    "description": "类别管理",
+    "version": "1.0"
   },
   "tags": [
     {
-      "name": "CategoryService"
+      "name": "CategoryService",
+      "description": "CategoryService -- 类别服务",
+      "externalDocs": {
+        "description": "Find out more about EchoService",
+        "url": "https://github.com/grpc-ecosystem/grpc-gateway"
+      }
     }
   ],
   "consumes": [

@@ -1,12 +1,18 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "i_menu.proto",
-    "version": "version not set"
+    "title": "菜单管理接口",
+    "description": "菜单管理",
+    "version": "1.0"
   },
   "tags": [
     {
-      "name": "MenuService"
+      "name": "MenuService",
+      "description": "MenuService -- 菜单服务",
+      "externalDocs": {
+        "description": "Find out more about EchoService",
+        "url": "https://github.com/grpc-ecosystem/grpc-gateway"
+      }
     }
   ],
   "consumes": [

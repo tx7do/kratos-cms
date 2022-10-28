@@ -3,15 +3,32 @@ syntax = "proto3";
 package admin.service.v1;
 option go_package = "kratos-blog/api/admin/service/v1;v1";
 
+import "protoc-gen-openapiv2/options/annotations.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 
 import "pagination.proto";
 
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "系统配置管理接口";
+    description: "系统配置管理";
+    version: "1.0";
+  }
+};
+
 // 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
 
 // 系统配置服务
 service SystemService {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_tag) = {
+    description: "SystemService -- 系统配置服务"
+    external_docs: {
+      url: "https://github.com/grpc-ecosystem/grpc-gateway";
+      description: "Find out more about EchoService";
+    }
+  };
+
   // 获取系统设置列表
   rpc ListSystem (pagination.PagingRequest) returns (ListSystemResponse) {
     option (google.api.http) = {

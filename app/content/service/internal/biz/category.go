@@ -3,10 +3,9 @@ package biz
 import (
 	"context"
 	"kratos-blog/api/content/service/v1"
+	"kratos-blog/api/pagination"
 
 	"github.com/go-kratos/kratos/v2/log"
-
-	"kratos-blog/third_party/pagination"
 )
 
 type CategoryRepo interface {

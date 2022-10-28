@@ -3,15 +3,33 @@ syntax = "proto3";
 package admin.service.v1;
 option go_package = "kratos-blog/api/admin/service/v1;v1";
 
+import "protoc-gen-openapiv2/options/annotations.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 
 import "pagination.proto";
 import "attachment.proto";
 
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "附件管理接口";
+    description: "附件管理";
+    version: "1.0";
+  }
+};
+
 // 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
 
+// 附件服务
 service AttachmentService {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_tag) = {
+    description: "AttachmentService -- 附件服务"
+    external_docs: {
+      url: "https://github.com/grpc-ecosystem/grpc-gateway";
+      description: "Find out more about EchoService";
+    }
+  };
+
   // 获取附件列表
   rpc ListAttachment (pagination.PagingRequest) returns (file.service.v1.ListAttachmentResponse) {
     option (google.api.http) = {
