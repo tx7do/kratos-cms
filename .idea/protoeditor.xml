@@ -8,19 +8,13 @@
           <option name="location" value="file://$USER_HOME$/AppData/Local/JetBrains/GoLand2022.2/protoeditor" />
         </ImportPathEntry>
         <ImportPathEntry>
+          <option name="location" value="file://$PROJECT_DIR$" />
+        </ImportPathEntry>
+        <ImportPathEntry>
           <option name="location" value="file://$PROJECT_DIR$/third_party" />
         </ImportPathEntry>
         <ImportPathEntry>
           <option name="location" value="file://$PROJECT_DIR$/api" />
-        </ImportPathEntry>
-        <ImportPathEntry>
-          <option name="location" value="file://$PROJECT_DIR$/.." />
-        </ImportPathEntry>
-        <ImportPathEntry>
-          <option name="location" value="file://$PROJECT_DIR$" />
-        </ImportPathEntry>
-        <ImportPathEntry>
-          <option name="location" value="file://$PROJECT_DIR$/third_party/pagination" />
         </ImportPathEntry>
         <ImportPathEntry>
           <option name="location" value="file://$PROJECT_DIR$/api/file/service/v1/proto" />
