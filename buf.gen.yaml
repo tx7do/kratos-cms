@@ -1,0 +1,29 @@
+# 配置protoc生成规则
+version: v1
+managed:
+  enabled: false
+plugins:
+  # 使用go插件生成go代码
+  - name: go
+    out: gen/proto/go
+    opt: paths=source_relative
+  # 使用go-grpc插件生成grpc代码
+  - name: go-grpc
+    out: gen/proto/go
+    opt:
+      - paths=source_relative
+  # 使用go-http插件生成grpc http代码
+  - name: go-http
+    out: gen/proto/go
+    opt:
+      - paths=source_relative
+  # 使用go-errors插件生成errors代码
+  - name: go-errors
+    out: gen/proto/go
+    opt: paths=source_relative
+  # 使用openapiv2插件生成swagger文件
+  - name: openapiv2
+    out: gen/proto/go
+    opt:
+      - json_names_for_fields=true
+      - logtostderr=true
