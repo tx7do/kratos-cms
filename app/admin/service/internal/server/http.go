@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/go-kratos/kratos/v2/middleware/auth/jwt"
 	"github.com/go-kratos/kratos/v2/middleware/logging"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/middleware/selector"
@@ -12,10 +11,16 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/go-kratos/swagger-api/openapiv2"
 
-	jwtV4 "github.com/golang-jwt/jwt/v4"
 	"github.com/gorilla/handlers"
 
+	"github.com/tx7do/kratos-authn/authn"
+	"github.com/tx7do/kratos-authn/engine/jwt"
+
+	"github.com/tx7do/kratos-authz/authz"
+	"github.com/tx7do/kratos-authz/engine/noop"
+
 	v1 "kratos-blog/api/admin/service/v1"
+	"kratos-blog/pkg/middleware/auth"
 
 	"kratos-blog/app/admin/service/internal/conf"
 	"kratos-blog/app/admin/service/internal/service"
@@ -36,17 +41,18 @@ func NewWhiteListMatcher() selector.MatchFunc {
 
 // NewMiddleware 创建中间件
 func NewMiddleware(ac *conf.Auth, logger log.Logger) http.ServerOption {
+	authenticator, _ := jwt.NewAuthenticator(ac.ApiKey, "HS256")
+	authorizer := noop.State{}
+
 	return http.Middleware(
 		recovery.Recovery(),
 		tracing.Server(),
 		logging.Server(logger),
 		selector.Server(
-			jwt.Server(func(token *jwtV4.Token) (interface{}, error) {
-				return []byte(ac.ApiKey), nil
-			}, jwt.WithSigningMethod(jwtV4.SigningMethodHS256)),
-		).
-			Match(NewWhiteListMatcher()).
-			Build(),
+			authn.Server(authenticator),
+			auth.Server(),
+			authz.Server(authorizer),
+		).Match(NewWhiteListMatcher()).Build(),
 	)
 }
 
