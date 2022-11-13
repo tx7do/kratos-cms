@@ -12,8 +12,9 @@ require (
 	github.com/google/wire v0.5.0
 	github.com/hashicorp/consul/api v1.15.3
 	github.com/nacos-group/nacos-sdk-go v1.1.2
-	github.com/tx7do/kratos-authn v0.0.0-20221112180151-96f31a3dcfee
-	github.com/tx7do/kratos-authz v0.0.0-20221112181407-762c99fec9b9
+	github.com/tx7do/kratos-authn/authn v0.0.4
+	github.com/tx7do/kratos-authn/engine/jwt v0.0.4
+	github.com/tx7do/kratos-authz v0.0.1
 	go.etcd.io/etcd/client/v3 v3.5.5
 	go.opentelemetry.io/otel v1.11.1
 	go.opentelemetry.io/otel/exporters/jaeger v1.11.1
@@ -78,6 +79,7 @@ require (
 	github.com/rogpeppe/go-internal v1.9.0 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
 	github.com/shopspring/decimal v1.3.1 // indirect
+	github.com/tx7do/kratos-authn v0.0.4 // indirect
 	go.etcd.io/etcd/api/v3 v3.5.5 // indirect
 	go.etcd.io/etcd/client/pkg/v3 v3.5.5 // indirect
 	go.opentelemetry.io/otel/trace v1.11.1 // indirect
