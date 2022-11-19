@@ -8,8 +8,8 @@ APP_RELATIVE_PATH=$(shell a=`basename $$PWD` && cd .. && b=`basename $$PWD` && e
 APP_NAME=$(shell echo $(APP_RELATIVE_PATH) | sed -En "s/\//-/p")
 APP_DOCKER_IMAGE=$(shell echo $(APP_NAME) |awk -F '@' '{print "go-kratos/" $$0 ":0.1.0"}')
 
-# 初始化环境
 .PHONY: init
+# 初始化环境
 init:
 	@go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 	@go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
@@ -23,18 +23,18 @@ init:
 	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 	@go install github.com/bufbuild/buf/cmd/buf@latest
 
-# 下载依赖库
 .PHONY: dep
+# 下载依赖库
 dep:
 	@go mod download
 
-# 创建依赖库
 .PHONY: vendor
+# 创建依赖库
 vendor:
 	@go mod vendor
 
-# 构建生成二进制可执行文件
 .PHONY: build
+# 构建生成二进制可执行文件
 build:
 	mkdir -p bin/ && go build -ldflags "-X main.Service.Version=$(APP_VERSION)" -o ./bin/ ./...
 
@@ -44,77 +44,75 @@ clean:
 	@go clean
 	rm --force "coverage.out"
 
-# 直接运行程序
 .PHONY: run
+# 直接运行程序
 run:
 	go run ./cmd/server -conf ./configs
 
-# 构建docker镜像
 .PHONY: docker
+# 构建docker镜像
 docker:
 	cd ../../.. && @docker build -f deploy/build/Dockerfile --build-arg APP_RELATIVE_PATH=$(APP_RELATIVE_PATH) -t $(APP_DOCKER_IMAGE) .
 
-# 执行单元测试
 .PHONY: test
+# 执行单元测试
 test:
 	@go test ./...
 
-# 执行覆盖率测试
 .PHONY: cover
+# 执行覆盖率测试
 cover:
 	@go test -v ./... -coverprofile=coverage.out
 
-# 执行代码静态检查
 .PHONY: vet
+# 执行代码静态检查
 vet:
 	@go vet
 
-# 生成Protobuf配置代码
 .PHONY: conf
+# 生成Protobuf配置代码
 conf:
 	@go generate ./internal/conf/...
 
-# 生成Entgo代码
 .PHONY: ent
+# 生成Entgo代码
 ent:
 	@go generate ./internal/data/ent/...
 
-# 生成Wire代码
 .PHONY: wire
+# 生成Wire代码
 wire:
 	@wire ./cmd/server
 
-# 生成所有的Protobuf API代码
 .PHONY: api
+# 生成所有的Protobuf API代码
 api:
 	@go generate ../../../api/...
 
-# 执行代码检查
 .PHONY: lint
+# 执行代码检查
 lint:
 	@golangci-lint run
 
-# 执行所有
 .PHONY: all
+# 执行所有
 all: api wire conf build test
 
-# 显示帮助信息
+# show help
 help:
-	@echo ''
-	@echo 'Usage:'
-	@echo '  make init: init environment'
-	@echo "  make dep: download dependency libs"
-	@echo "  make run: run the program"
-	@echo "  make build: build binary program"
-	@echo "  make docker: build docker images"
-	@echo "  make clean: clean object"
-	@echo "  make test: run the unit test"
-	@echo "  make cover: run the coverage check"
-	@echo "  make lint: run the lint check"
-	@echo "  make vet: run the static analysis check"
-	@echo "  make api: generate Protobuf API code"
-	@echo "  make wire: generate Wire code"
-	@echo "  make ent: generate Entgo code"
-	@echo "  make conf: generate Protobuf config code"
+	@echo ""
+	@echo "Usage:"
+	@echo " make [target]"
+	@echo ""
+	@echo 'Targets:'
+	@awk '/^[a-zA-Z\-_0-9]+:/ { \
+	helpMessage = match(lastLine, /^# (.*)/); \
+		if (helpMessage) { \
+			helpCommand = substr($$1, 0, index($$1, ":")-1); \
+			helpMessage = substr(lastLine, RSTART + 2, RLENGTH); \
+			printf "\033[36m%-22s\033[0m %s\n", helpCommand,helpMessage; \
+		} \
+	} \
+	{ lastLine = $$0 }' $(MAKEFILE_LIST)
 
 .DEFAULT_GOAL := help
