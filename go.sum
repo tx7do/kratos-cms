@@ -672,8 +672,8 @@ github.com/toolkits/concurrent v0.0.0-20150624120057-a4371d70e3e3/go.mod h1:QDlp
 github.com/tv42/httpunix v0.0.0-20150427012821-b75d8614f926/go.mod h1:9ESjWnEqriFuLhtthL60Sar/7RFoluCcXsuvEwTV5KM=
 github.com/tx7do/kratos-authn v0.0.4 h1:fhP6TDfdoKPr2Y/WaF+1039yNG7Qx71NnuH3OSed0KI=
 github.com/tx7do/kratos-authn v0.0.4/go.mod h1:CRE7BXNggCfg8rgbNMkh4CRTe72pJZ/DYflFECyRkOQ=
-github.com/tx7do/kratos-authn/authn v0.0.4 h1:quI+93NiKrsD0qn1IzLK9FRS8btyDGzWtrur+tOTjSA=
-github.com/tx7do/kratos-authn/authn v0.0.4/go.mod h1:F5yLtdSK2IEf7pZUi8JdKj3jnTIa3cWhNTUiufV+LpU=
+github.com/tx7do/kratos-authn/authn v0.0.0-20221113094443-0674ebc7a3b3 h1:s60v/YlnNGhRuFFPzpydAepMfn2DA76g2CQvnbhBhhw=
+github.com/tx7do/kratos-authn/authn v0.0.0-20221113094443-0674ebc7a3b3/go.mod h1:aBe5Vx1vY3BZMCiwKV3/W4SgMUtmw+PO5ioZ40749Pk=
 github.com/tx7do/kratos-authn/engine/jwt v0.0.4 h1:VhSUeM2YtvcEQwqEUNaCQK5F99OpYkQqeo89PxFIB5U=
 github.com/tx7do/kratos-authn/engine/jwt v0.0.4/go.mod h1:+7UN9JAsz16/kqbiflqRZ25NI0niBP60lwmmaN0YfIM=
 github.com/tx7do/kratos-authz v0.0.1 h1:76PnVPfNeMkl7Z+o+OKRzOTZ2ueMUHegv8bDgvJBeDc=
