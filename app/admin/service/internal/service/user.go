@@ -80,7 +80,7 @@ func (s *UserService) GetMe(ctx context.Context, req *userV1.GetMeRequest) (*use
 		return nil, v1.ErrorRequestNotSupport("%d 权限信息不存在", userId)
 	}
 
-	req.Id = &userId
+	req.Id = userId
 
 	return s.userClient.GetMe(ctx, req)
 }
