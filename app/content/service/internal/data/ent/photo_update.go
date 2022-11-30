@@ -341,168 +341,79 @@ func (pu *PhotoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 	}
 	if pu.mutation.CreateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: photo.FieldCreateTime,
-		})
+		_spec.ClearField(photo.FieldCreateTime, field.TypeInt64)
 	}
 	if value, ok := pu.mutation.UpdateTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: photo.FieldUpdateTime,
-		})
+		_spec.SetField(photo.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if value, ok := pu.mutation.AddedUpdateTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: photo.FieldUpdateTime,
-		})
+		_spec.AddField(photo.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if pu.mutation.UpdateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: photo.FieldUpdateTime,
-		})
+		_spec.ClearField(photo.FieldUpdateTime, field.TypeInt64)
 	}
 	if value, ok := pu.mutation.DeleteTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: photo.FieldDeleteTime,
-		})
+		_spec.SetField(photo.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if value, ok := pu.mutation.AddedDeleteTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: photo.FieldDeleteTime,
-		})
+		_spec.AddField(photo.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if pu.mutation.DeleteTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: photo.FieldDeleteTime,
-		})
+		_spec.ClearField(photo.FieldDeleteTime, field.TypeInt64)
 	}
 	if value, ok := pu.mutation.Name(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: photo.FieldName,
-		})
+		_spec.SetField(photo.FieldName, field.TypeString, value)
 	}
 	if pu.mutation.NameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: photo.FieldName,
-		})
+		_spec.ClearField(photo.FieldName, field.TypeString)
 	}
 	if value, ok := pu.mutation.Thumbnail(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: photo.FieldThumbnail,
-		})
+		_spec.SetField(photo.FieldThumbnail, field.TypeString, value)
 	}
 	if pu.mutation.ThumbnailCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: photo.FieldThumbnail,
-		})
+		_spec.ClearField(photo.FieldThumbnail, field.TypeString)
 	}
 	if value, ok := pu.mutation.TakeTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: photo.FieldTakeTime,
-		})
+		_spec.SetField(photo.FieldTakeTime, field.TypeInt64, value)
 	}
 	if value, ok := pu.mutation.AddedTakeTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: photo.FieldTakeTime,
-		})
+		_spec.AddField(photo.FieldTakeTime, field.TypeInt64, value)
 	}
 	if pu.mutation.TakeTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: photo.FieldTakeTime,
-		})
+		_spec.ClearField(photo.FieldTakeTime, field.TypeInt64)
 	}
 	if value, ok := pu.mutation.URL(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: photo.FieldURL,
-		})
+		_spec.SetField(photo.FieldURL, field.TypeString, value)
 	}
 	if pu.mutation.URLCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: photo.FieldURL,
-		})
+		_spec.ClearField(photo.FieldURL, field.TypeString)
 	}
 	if value, ok := pu.mutation.Team(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: photo.FieldTeam,
-		})
+		_spec.SetField(photo.FieldTeam, field.TypeString, value)
 	}
 	if pu.mutation.TeamCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: photo.FieldTeam,
-		})
+		_spec.ClearField(photo.FieldTeam, field.TypeString)
 	}
 	if value, ok := pu.mutation.Location(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: photo.FieldLocation,
-		})
+		_spec.SetField(photo.FieldLocation, field.TypeString, value)
 	}
 	if pu.mutation.LocationCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: photo.FieldLocation,
-		})
+		_spec.ClearField(photo.FieldLocation, field.TypeString)
 	}
 	if value, ok := pu.mutation.Description(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: photo.FieldDescription,
-		})
+		_spec.SetField(photo.FieldDescription, field.TypeString, value)
 	}
 	if pu.mutation.DescriptionCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: photo.FieldDescription,
-		})
+		_spec.ClearField(photo.FieldDescription, field.TypeString)
 	}
 	if value, ok := pu.mutation.Likes(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: photo.FieldLikes,
-		})
+		_spec.SetField(photo.FieldLikes, field.TypeInt32, value)
 	}
 	if value, ok := pu.mutation.AddedLikes(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: photo.FieldLikes,
-		})
+		_spec.AddField(photo.FieldLikes, field.TypeInt32, value)
 	}
 	if pu.mutation.LikesCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: photo.FieldLikes,
-		})
+		_spec.ClearField(photo.FieldLikes, field.TypeInt32)
 	}
 	_spec.AddModifiers(pu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, pu.driver, _spec); err != nil {
@@ -868,168 +779,79 @@ func (puo *PhotoUpdateOne) sqlSave(ctx context.Context) (_node *Photo, err error
 		}
 	}
 	if puo.mutation.CreateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: photo.FieldCreateTime,
-		})
+		_spec.ClearField(photo.FieldCreateTime, field.TypeInt64)
 	}
 	if value, ok := puo.mutation.UpdateTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: photo.FieldUpdateTime,
-		})
+		_spec.SetField(photo.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if value, ok := puo.mutation.AddedUpdateTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: photo.FieldUpdateTime,
-		})
+		_spec.AddField(photo.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if puo.mutation.UpdateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: photo.FieldUpdateTime,
-		})
+		_spec.ClearField(photo.FieldUpdateTime, field.TypeInt64)
 	}
 	if value, ok := puo.mutation.DeleteTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: photo.FieldDeleteTime,
-		})
+		_spec.SetField(photo.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if value, ok := puo.mutation.AddedDeleteTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: photo.FieldDeleteTime,
-		})
+		_spec.AddField(photo.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if puo.mutation.DeleteTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: photo.FieldDeleteTime,
-		})
+		_spec.ClearField(photo.FieldDeleteTime, field.TypeInt64)
 	}
 	if value, ok := puo.mutation.Name(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: photo.FieldName,
-		})
+		_spec.SetField(photo.FieldName, field.TypeString, value)
 	}
 	if puo.mutation.NameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: photo.FieldName,
-		})
+		_spec.ClearField(photo.FieldName, field.TypeString)
 	}
 	if value, ok := puo.mutation.Thumbnail(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: photo.FieldThumbnail,
-		})
+		_spec.SetField(photo.FieldThumbnail, field.TypeString, value)
 	}
 	if puo.mutation.ThumbnailCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: photo.FieldThumbnail,
-		})
+		_spec.ClearField(photo.FieldThumbnail, field.TypeString)
 	}
 	if value, ok := puo.mutation.TakeTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: photo.FieldTakeTime,
-		})
+		_spec.SetField(photo.FieldTakeTime, field.TypeInt64, value)
 	}
 	if value, ok := puo.mutation.AddedTakeTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: photo.FieldTakeTime,
-		})
+		_spec.AddField(photo.FieldTakeTime, field.TypeInt64, value)
 	}
 	if puo.mutation.TakeTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: photo.FieldTakeTime,
-		})
+		_spec.ClearField(photo.FieldTakeTime, field.TypeInt64)
 	}
 	if value, ok := puo.mutation.URL(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: photo.FieldURL,
-		})
+		_spec.SetField(photo.FieldURL, field.TypeString, value)
 	}
 	if puo.mutation.URLCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: photo.FieldURL,
-		})
+		_spec.ClearField(photo.FieldURL, field.TypeString)
 	}
 	if value, ok := puo.mutation.Team(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: photo.FieldTeam,
-		})
+		_spec.SetField(photo.FieldTeam, field.TypeString, value)
 	}
 	if puo.mutation.TeamCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: photo.FieldTeam,
-		})
+		_spec.ClearField(photo.FieldTeam, field.TypeString)
 	}
 	if value, ok := puo.mutation.Location(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: photo.FieldLocation,
-		})
+		_spec.SetField(photo.FieldLocation, field.TypeString, value)
 	}
 	if puo.mutation.LocationCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: photo.FieldLocation,
-		})
+		_spec.ClearField(photo.FieldLocation, field.TypeString)
 	}
 	if value, ok := puo.mutation.Description(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: photo.FieldDescription,
-		})
+		_spec.SetField(photo.FieldDescription, field.TypeString, value)
 	}
 	if puo.mutation.DescriptionCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: photo.FieldDescription,
-		})
+		_spec.ClearField(photo.FieldDescription, field.TypeString)
 	}
 	if value, ok := puo.mutation.Likes(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: photo.FieldLikes,
-		})
+		_spec.SetField(photo.FieldLikes, field.TypeInt32, value)
 	}
 	if value, ok := puo.mutation.AddedLikes(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: photo.FieldLikes,
-		})
+		_spec.AddField(photo.FieldLikes, field.TypeInt32, value)
 	}
 	if puo.mutation.LikesCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: photo.FieldLikes,
-		})
+		_spec.ClearField(photo.FieldLikes, field.TypeInt32)
 	}
 	_spec.AddModifiers(puo.modifiers...)
 	_node = &Photo{config: puo.config}

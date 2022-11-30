@@ -659,379 +659,175 @@ func (pu *PostUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 	}
 	if pu.mutation.CreateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: post.FieldCreateTime,
-		})
+		_spec.ClearField(post.FieldCreateTime, field.TypeInt64)
 	}
 	if value, ok := pu.mutation.UpdateTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: post.FieldUpdateTime,
-		})
+		_spec.SetField(post.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if value, ok := pu.mutation.AddedUpdateTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: post.FieldUpdateTime,
-		})
+		_spec.AddField(post.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if pu.mutation.UpdateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: post.FieldUpdateTime,
-		})
+		_spec.ClearField(post.FieldUpdateTime, field.TypeInt64)
 	}
 	if value, ok := pu.mutation.DeleteTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: post.FieldDeleteTime,
-		})
+		_spec.SetField(post.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if value, ok := pu.mutation.AddedDeleteTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: post.FieldDeleteTime,
-		})
+		_spec.AddField(post.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if pu.mutation.DeleteTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: post.FieldDeleteTime,
-		})
+		_spec.ClearField(post.FieldDeleteTime, field.TypeInt64)
 	}
 	if value, ok := pu.mutation.Title(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldTitle,
-		})
+		_spec.SetField(post.FieldTitle, field.TypeString, value)
 	}
 	if pu.mutation.TitleCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldTitle,
-		})
+		_spec.ClearField(post.FieldTitle, field.TypeString)
 	}
 	if value, ok := pu.mutation.Slug(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldSlug,
-		})
+		_spec.SetField(post.FieldSlug, field.TypeString, value)
 	}
 	if pu.mutation.SlugCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldSlug,
-		})
+		_spec.ClearField(post.FieldSlug, field.TypeString)
 	}
 	if value, ok := pu.mutation.MetaKeywords(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldMetaKeywords,
-		})
+		_spec.SetField(post.FieldMetaKeywords, field.TypeString, value)
 	}
 	if pu.mutation.MetaKeywordsCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldMetaKeywords,
-		})
+		_spec.ClearField(post.FieldMetaKeywords, field.TypeString)
 	}
 	if value, ok := pu.mutation.MetaDescription(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldMetaDescription,
-		})
+		_spec.SetField(post.FieldMetaDescription, field.TypeString, value)
 	}
 	if pu.mutation.MetaDescriptionCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldMetaDescription,
-		})
+		_spec.ClearField(post.FieldMetaDescription, field.TypeString)
 	}
 	if value, ok := pu.mutation.FullPath(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldFullPath,
-		})
+		_spec.SetField(post.FieldFullPath, field.TypeString, value)
 	}
 	if pu.mutation.FullPathCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldFullPath,
-		})
+		_spec.ClearField(post.FieldFullPath, field.TypeString)
 	}
 	if value, ok := pu.mutation.OriginalContent(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldOriginalContent,
-		})
+		_spec.SetField(post.FieldOriginalContent, field.TypeString, value)
 	}
 	if pu.mutation.OriginalContentCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldOriginalContent,
-		})
+		_spec.ClearField(post.FieldOriginalContent, field.TypeString)
 	}
 	if value, ok := pu.mutation.Content(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldContent,
-		})
+		_spec.SetField(post.FieldContent, field.TypeString, value)
 	}
 	if pu.mutation.ContentCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldContent,
-		})
+		_spec.ClearField(post.FieldContent, field.TypeString)
 	}
 	if value, ok := pu.mutation.Summary(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldSummary,
-		})
+		_spec.SetField(post.FieldSummary, field.TypeString, value)
 	}
 	if pu.mutation.SummaryCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldSummary,
-		})
+		_spec.ClearField(post.FieldSummary, field.TypeString)
 	}
 	if value, ok := pu.mutation.Thumbnail(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldThumbnail,
-		})
+		_spec.SetField(post.FieldThumbnail, field.TypeString, value)
 	}
 	if pu.mutation.ThumbnailCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldThumbnail,
-		})
+		_spec.ClearField(post.FieldThumbnail, field.TypeString)
 	}
 	if value, ok := pu.mutation.Password(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldPassword,
-		})
+		_spec.SetField(post.FieldPassword, field.TypeString, value)
 	}
 	if pu.mutation.PasswordCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldPassword,
-		})
+		_spec.ClearField(post.FieldPassword, field.TypeString)
 	}
 	if value, ok := pu.mutation.Template(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldTemplate,
-		})
+		_spec.SetField(post.FieldTemplate, field.TypeString, value)
 	}
 	if pu.mutation.TemplateCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldTemplate,
-		})
+		_spec.ClearField(post.FieldTemplate, field.TypeString)
 	}
 	if value, ok := pu.mutation.CommentCount(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldCommentCount,
-		})
+		_spec.SetField(post.FieldCommentCount, field.TypeInt32, value)
 	}
 	if value, ok := pu.mutation.AddedCommentCount(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldCommentCount,
-		})
+		_spec.AddField(post.FieldCommentCount, field.TypeInt32, value)
 	}
 	if pu.mutation.CommentCountCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: post.FieldCommentCount,
-		})
+		_spec.ClearField(post.FieldCommentCount, field.TypeInt32)
 	}
 	if value, ok := pu.mutation.Visits(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldVisits,
-		})
+		_spec.SetField(post.FieldVisits, field.TypeInt32, value)
 	}
 	if value, ok := pu.mutation.AddedVisits(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldVisits,
-		})
+		_spec.AddField(post.FieldVisits, field.TypeInt32, value)
 	}
 	if pu.mutation.VisitsCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: post.FieldVisits,
-		})
+		_spec.ClearField(post.FieldVisits, field.TypeInt32)
 	}
 	if value, ok := pu.mutation.Likes(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldLikes,
-		})
+		_spec.SetField(post.FieldLikes, field.TypeInt32, value)
 	}
 	if value, ok := pu.mutation.AddedLikes(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldLikes,
-		})
+		_spec.AddField(post.FieldLikes, field.TypeInt32, value)
 	}
 	if pu.mutation.LikesCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: post.FieldLikes,
-		})
+		_spec.ClearField(post.FieldLikes, field.TypeInt32)
 	}
 	if value, ok := pu.mutation.WordCount(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldWordCount,
-		})
+		_spec.SetField(post.FieldWordCount, field.TypeInt32, value)
 	}
 	if value, ok := pu.mutation.AddedWordCount(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldWordCount,
-		})
+		_spec.AddField(post.FieldWordCount, field.TypeInt32, value)
 	}
 	if pu.mutation.WordCountCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: post.FieldWordCount,
-		})
+		_spec.ClearField(post.FieldWordCount, field.TypeInt32)
 	}
 	if value, ok := pu.mutation.TopPriority(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldTopPriority,
-		})
+		_spec.SetField(post.FieldTopPriority, field.TypeInt32, value)
 	}
 	if value, ok := pu.mutation.AddedTopPriority(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldTopPriority,
-		})
+		_spec.AddField(post.FieldTopPriority, field.TypeInt32, value)
 	}
 	if pu.mutation.TopPriorityCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: post.FieldTopPriority,
-		})
+		_spec.ClearField(post.FieldTopPriority, field.TypeInt32)
 	}
 	if value, ok := pu.mutation.Status(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldStatus,
-		})
+		_spec.SetField(post.FieldStatus, field.TypeInt32, value)
 	}
 	if value, ok := pu.mutation.AddedStatus(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldStatus,
-		})
+		_spec.AddField(post.FieldStatus, field.TypeInt32, value)
 	}
 	if pu.mutation.StatusCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: post.FieldStatus,
-		})
+		_spec.ClearField(post.FieldStatus, field.TypeInt32)
 	}
 	if value, ok := pu.mutation.EditorType(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldEditorType,
-		})
+		_spec.SetField(post.FieldEditorType, field.TypeInt32, value)
 	}
 	if value, ok := pu.mutation.AddedEditorType(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldEditorType,
-		})
+		_spec.AddField(post.FieldEditorType, field.TypeInt32, value)
 	}
 	if pu.mutation.EditorTypeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: post.FieldEditorType,
-		})
+		_spec.ClearField(post.FieldEditorType, field.TypeInt32)
 	}
 	if value, ok := pu.mutation.EditTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: post.FieldEditTime,
-		})
+		_spec.SetField(post.FieldEditTime, field.TypeInt64, value)
 	}
 	if value, ok := pu.mutation.AddedEditTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: post.FieldEditTime,
-		})
+		_spec.AddField(post.FieldEditTime, field.TypeInt64, value)
 	}
 	if pu.mutation.EditTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: post.FieldEditTime,
-		})
+		_spec.ClearField(post.FieldEditTime, field.TypeInt64)
 	}
 	if value, ok := pu.mutation.DisallowComment(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: post.FieldDisallowComment,
-		})
+		_spec.SetField(post.FieldDisallowComment, field.TypeBool, value)
 	}
 	if pu.mutation.DisallowCommentCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: post.FieldDisallowComment,
-		})
+		_spec.ClearField(post.FieldDisallowComment, field.TypeBool)
 	}
 	if value, ok := pu.mutation.InProgress(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: post.FieldInProgress,
-		})
+		_spec.SetField(post.FieldInProgress, field.TypeBool, value)
 	}
 	if pu.mutation.InProgressCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: post.FieldInProgress,
-		})
+		_spec.ClearField(post.FieldInProgress, field.TypeBool)
 	}
 	_spec.AddModifiers(pu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, pu.driver, _spec); err != nil {
@@ -1715,379 +1511,175 @@ func (puo *PostUpdateOne) sqlSave(ctx context.Context) (_node *Post, err error) 
 		}
 	}
 	if puo.mutation.CreateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: post.FieldCreateTime,
-		})
+		_spec.ClearField(post.FieldCreateTime, field.TypeInt64)
 	}
 	if value, ok := puo.mutation.UpdateTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: post.FieldUpdateTime,
-		})
+		_spec.SetField(post.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if value, ok := puo.mutation.AddedUpdateTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: post.FieldUpdateTime,
-		})
+		_spec.AddField(post.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if puo.mutation.UpdateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: post.FieldUpdateTime,
-		})
+		_spec.ClearField(post.FieldUpdateTime, field.TypeInt64)
 	}
 	if value, ok := puo.mutation.DeleteTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: post.FieldDeleteTime,
-		})
+		_spec.SetField(post.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if value, ok := puo.mutation.AddedDeleteTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: post.FieldDeleteTime,
-		})
+		_spec.AddField(post.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if puo.mutation.DeleteTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: post.FieldDeleteTime,
-		})
+		_spec.ClearField(post.FieldDeleteTime, field.TypeInt64)
 	}
 	if value, ok := puo.mutation.Title(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldTitle,
-		})
+		_spec.SetField(post.FieldTitle, field.TypeString, value)
 	}
 	if puo.mutation.TitleCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldTitle,
-		})
+		_spec.ClearField(post.FieldTitle, field.TypeString)
 	}
 	if value, ok := puo.mutation.Slug(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldSlug,
-		})
+		_spec.SetField(post.FieldSlug, field.TypeString, value)
 	}
 	if puo.mutation.SlugCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldSlug,
-		})
+		_spec.ClearField(post.FieldSlug, field.TypeString)
 	}
 	if value, ok := puo.mutation.MetaKeywords(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldMetaKeywords,
-		})
+		_spec.SetField(post.FieldMetaKeywords, field.TypeString, value)
 	}
 	if puo.mutation.MetaKeywordsCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldMetaKeywords,
-		})
+		_spec.ClearField(post.FieldMetaKeywords, field.TypeString)
 	}
 	if value, ok := puo.mutation.MetaDescription(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldMetaDescription,
-		})
+		_spec.SetField(post.FieldMetaDescription, field.TypeString, value)
 	}
 	if puo.mutation.MetaDescriptionCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldMetaDescription,
-		})
+		_spec.ClearField(post.FieldMetaDescription, field.TypeString)
 	}
 	if value, ok := puo.mutation.FullPath(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldFullPath,
-		})
+		_spec.SetField(post.FieldFullPath, field.TypeString, value)
 	}
 	if puo.mutation.FullPathCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldFullPath,
-		})
+		_spec.ClearField(post.FieldFullPath, field.TypeString)
 	}
 	if value, ok := puo.mutation.OriginalContent(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldOriginalContent,
-		})
+		_spec.SetField(post.FieldOriginalContent, field.TypeString, value)
 	}
 	if puo.mutation.OriginalContentCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldOriginalContent,
-		})
+		_spec.ClearField(post.FieldOriginalContent, field.TypeString)
 	}
 	if value, ok := puo.mutation.Content(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldContent,
-		})
+		_spec.SetField(post.FieldContent, field.TypeString, value)
 	}
 	if puo.mutation.ContentCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldContent,
-		})
+		_spec.ClearField(post.FieldContent, field.TypeString)
 	}
 	if value, ok := puo.mutation.Summary(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldSummary,
-		})
+		_spec.SetField(post.FieldSummary, field.TypeString, value)
 	}
 	if puo.mutation.SummaryCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldSummary,
-		})
+		_spec.ClearField(post.FieldSummary, field.TypeString)
 	}
 	if value, ok := puo.mutation.Thumbnail(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldThumbnail,
-		})
+		_spec.SetField(post.FieldThumbnail, field.TypeString, value)
 	}
 	if puo.mutation.ThumbnailCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldThumbnail,
-		})
+		_spec.ClearField(post.FieldThumbnail, field.TypeString)
 	}
 	if value, ok := puo.mutation.Password(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldPassword,
-		})
+		_spec.SetField(post.FieldPassword, field.TypeString, value)
 	}
 	if puo.mutation.PasswordCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldPassword,
-		})
+		_spec.ClearField(post.FieldPassword, field.TypeString)
 	}
 	if value, ok := puo.mutation.Template(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldTemplate,
-		})
+		_spec.SetField(post.FieldTemplate, field.TypeString, value)
 	}
 	if puo.mutation.TemplateCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: post.FieldTemplate,
-		})
+		_spec.ClearField(post.FieldTemplate, field.TypeString)
 	}
 	if value, ok := puo.mutation.CommentCount(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldCommentCount,
-		})
+		_spec.SetField(post.FieldCommentCount, field.TypeInt32, value)
 	}
 	if value, ok := puo.mutation.AddedCommentCount(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldCommentCount,
-		})
+		_spec.AddField(post.FieldCommentCount, field.TypeInt32, value)
 	}
 	if puo.mutation.CommentCountCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: post.FieldCommentCount,
-		})
+		_spec.ClearField(post.FieldCommentCount, field.TypeInt32)
 	}
 	if value, ok := puo.mutation.Visits(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldVisits,
-		})
+		_spec.SetField(post.FieldVisits, field.TypeInt32, value)
 	}
 	if value, ok := puo.mutation.AddedVisits(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldVisits,
-		})
+		_spec.AddField(post.FieldVisits, field.TypeInt32, value)
 	}
 	if puo.mutation.VisitsCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: post.FieldVisits,
-		})
+		_spec.ClearField(post.FieldVisits, field.TypeInt32)
 	}
 	if value, ok := puo.mutation.Likes(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldLikes,
-		})
+		_spec.SetField(post.FieldLikes, field.TypeInt32, value)
 	}
 	if value, ok := puo.mutation.AddedLikes(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldLikes,
-		})
+		_spec.AddField(post.FieldLikes, field.TypeInt32, value)
 	}
 	if puo.mutation.LikesCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: post.FieldLikes,
-		})
+		_spec.ClearField(post.FieldLikes, field.TypeInt32)
 	}
 	if value, ok := puo.mutation.WordCount(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldWordCount,
-		})
+		_spec.SetField(post.FieldWordCount, field.TypeInt32, value)
 	}
 	if value, ok := puo.mutation.AddedWordCount(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldWordCount,
-		})
+		_spec.AddField(post.FieldWordCount, field.TypeInt32, value)
 	}
 	if puo.mutation.WordCountCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: post.FieldWordCount,
-		})
+		_spec.ClearField(post.FieldWordCount, field.TypeInt32)
 	}
 	if value, ok := puo.mutation.TopPriority(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldTopPriority,
-		})
+		_spec.SetField(post.FieldTopPriority, field.TypeInt32, value)
 	}
 	if value, ok := puo.mutation.AddedTopPriority(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldTopPriority,
-		})
+		_spec.AddField(post.FieldTopPriority, field.TypeInt32, value)
 	}
 	if puo.mutation.TopPriorityCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: post.FieldTopPriority,
-		})
+		_spec.ClearField(post.FieldTopPriority, field.TypeInt32)
 	}
 	if value, ok := puo.mutation.Status(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldStatus,
-		})
+		_spec.SetField(post.FieldStatus, field.TypeInt32, value)
 	}
 	if value, ok := puo.mutation.AddedStatus(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldStatus,
-		})
+		_spec.AddField(post.FieldStatus, field.TypeInt32, value)
 	}
 	if puo.mutation.StatusCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: post.FieldStatus,
-		})
+		_spec.ClearField(post.FieldStatus, field.TypeInt32)
 	}
 	if value, ok := puo.mutation.EditorType(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldEditorType,
-		})
+		_spec.SetField(post.FieldEditorType, field.TypeInt32, value)
 	}
 	if value, ok := puo.mutation.AddedEditorType(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldEditorType,
-		})
+		_spec.AddField(post.FieldEditorType, field.TypeInt32, value)
 	}
 	if puo.mutation.EditorTypeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: post.FieldEditorType,
-		})
+		_spec.ClearField(post.FieldEditorType, field.TypeInt32)
 	}
 	if value, ok := puo.mutation.EditTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: post.FieldEditTime,
-		})
+		_spec.SetField(post.FieldEditTime, field.TypeInt64, value)
 	}
 	if value, ok := puo.mutation.AddedEditTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: post.FieldEditTime,
-		})
+		_spec.AddField(post.FieldEditTime, field.TypeInt64, value)
 	}
 	if puo.mutation.EditTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: post.FieldEditTime,
-		})
+		_spec.ClearField(post.FieldEditTime, field.TypeInt64)
 	}
 	if value, ok := puo.mutation.DisallowComment(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: post.FieldDisallowComment,
-		})
+		_spec.SetField(post.FieldDisallowComment, field.TypeBool, value)
 	}
 	if puo.mutation.DisallowCommentCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: post.FieldDisallowComment,
-		})
+		_spec.ClearField(post.FieldDisallowComment, field.TypeBool)
 	}
 	if value, ok := puo.mutation.InProgress(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: post.FieldInProgress,
-		})
+		_spec.SetField(post.FieldInProgress, field.TypeBool, value)
 	}
 	if puo.mutation.InProgressCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: post.FieldInProgress,
-		})
+		_spec.ClearField(post.FieldInProgress, field.TypeBool)
 	}
 	_spec.AddModifiers(puo.modifiers...)
 	_node = &Post{config: puo.config}

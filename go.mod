@@ -4,22 +4,24 @@ go 1.18
 
 require (
 	github.com/go-kratos/kratos/contrib/config/consul/v2 v2.0.0-20221110150034-a7bae93ee08d
-	github.com/go-kratos/kratos/contrib/config/etcd/v2 v2.0.0-20221110150034-a7bae93ee08d
+	github.com/go-kratos/kratos/contrib/config/etcd/v2 v2.0.0-20221130041748-2cf82fa4a75c
 	github.com/go-kratos/kratos/contrib/config/nacos/v2 v2.0.0-20221110150034-a7bae93ee08d
-	github.com/go-kratos/kratos/contrib/registry/consul/v2 v2.0.0-20221110150034-a7bae93ee08d
+	github.com/go-kratos/kratos/contrib/registry/consul/v2 v2.0.0-20221130041748-2cf82fa4a75c
 	github.com/go-kratos/kratos/v2 v2.5.3
 	github.com/google/subcommands v1.2.0
 	github.com/google/wire v0.5.0
-	github.com/hashicorp/consul/api v1.15.3
+	github.com/hashicorp/consul/api v1.17.0
 	github.com/nacos-group/nacos-sdk-go v1.1.2
 	github.com/tx7do/kratos-authn/authn v0.0.0-20221113094443-0674ebc7a3b3
 	github.com/tx7do/kratos-authn/engine/jwt v0.0.4
-	github.com/tx7do/kratos-authz v0.0.1
-	go.etcd.io/etcd/client/v3 v3.5.5
+	github.com/tx7do/kratos-authz v0.0.2
+	github.com/tx7do/kratos-authz/authz v0.0.0-20221114164744-f3a99f191bdd
+	github.com/tx7do/kratos-authz/engine/noop v0.0.0-20221114164744-f3a99f191bdd
+	go.etcd.io/etcd/client/v3 v3.5.6
 	go.opentelemetry.io/otel v1.11.1
 	go.opentelemetry.io/otel/exporters/jaeger v1.11.1
 	go.opentelemetry.io/otel/sdk v1.11.1
-	google.golang.org/grpc v1.50.1
+	google.golang.org/grpc v1.51.0
 	google.golang.org/protobuf v1.28.1
 )
 
@@ -76,12 +78,11 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rakyll/statik v0.1.7 // indirect
-	github.com/rogpeppe/go-internal v1.9.0 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
 	github.com/shopspring/decimal v1.3.1 // indirect
 	github.com/tx7do/kratos-authn v0.0.4 // indirect
-	go.etcd.io/etcd/api/v3 v3.5.5 // indirect
-	go.etcd.io/etcd/client/pkg/v3 v3.5.5 // indirect
+	go.etcd.io/etcd/api/v3 v3.5.6 // indirect
+	go.etcd.io/etcd/client/pkg/v3 v3.5.6 // indirect
 	go.opentelemetry.io/otel/trace v1.11.1 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
 	go.uber.org/multierr v1.8.0 // indirect
@@ -110,7 +111,7 @@ require (
 	github.com/go-redis/redis/extra/redisotel/v8 v8.11.5
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-sql-driver/mysql v1.6.0
-	github.com/golang-jwt/jwt/v4 v4.4.2
+	github.com/golang-jwt/jwt/v4 v4.4.3
 	github.com/golang-sql/civil v0.0.0-20220223132316-b832511892a9 // indirect
 	github.com/google/btree v1.0.1 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
@@ -138,7 +139,7 @@ require (
 	golang.org/x/net v0.2.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
 	golang.org/x/sys v0.2.0 // indirect
-	google.golang.org/genproto v0.0.0-20221111202108-142d8a6fa32e
+	google.golang.org/genproto v0.0.0-20221118155620-16455021b5e6
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gorm.io/driver/clickhouse v0.5.0

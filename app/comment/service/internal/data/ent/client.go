@@ -178,7 +178,7 @@ func (c *CommentClient) DeleteOne(co *Comment) *CommentDeleteOne {
 	return c.DeleteOneID(co.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *CommentClient) DeleteOneID(id uint32) *CommentDeleteOne {
 	builder := c.Delete().Where(comment.ID(id))
 	builder.mutation.id = &id

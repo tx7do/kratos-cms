@@ -337,155 +337,73 @@ func (mu *MenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 	}
 	if mu.mutation.CreateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: menu.FieldCreateTime,
-		})
+		_spec.ClearField(menu.FieldCreateTime, field.TypeInt64)
 	}
 	if value, ok := mu.mutation.UpdateTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: menu.FieldUpdateTime,
-		})
+		_spec.SetField(menu.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if value, ok := mu.mutation.AddedUpdateTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: menu.FieldUpdateTime,
-		})
+		_spec.AddField(menu.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if mu.mutation.UpdateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: menu.FieldUpdateTime,
-		})
+		_spec.ClearField(menu.FieldUpdateTime, field.TypeInt64)
 	}
 	if value, ok := mu.mutation.DeleteTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: menu.FieldDeleteTime,
-		})
+		_spec.SetField(menu.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if value, ok := mu.mutation.AddedDeleteTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: menu.FieldDeleteTime,
-		})
+		_spec.AddField(menu.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if mu.mutation.DeleteTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: menu.FieldDeleteTime,
-		})
+		_spec.ClearField(menu.FieldDeleteTime, field.TypeInt64)
 	}
 	if value, ok := mu.mutation.Name(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: menu.FieldName,
-		})
+		_spec.SetField(menu.FieldName, field.TypeString, value)
 	}
 	if mu.mutation.NameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: menu.FieldName,
-		})
+		_spec.ClearField(menu.FieldName, field.TypeString)
 	}
 	if value, ok := mu.mutation.URL(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: menu.FieldURL,
-		})
+		_spec.SetField(menu.FieldURL, field.TypeString, value)
 	}
 	if mu.mutation.URLCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: menu.FieldURL,
-		})
+		_spec.ClearField(menu.FieldURL, field.TypeString)
 	}
 	if value, ok := mu.mutation.Priority(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: menu.FieldPriority,
-		})
+		_spec.SetField(menu.FieldPriority, field.TypeInt32, value)
 	}
 	if value, ok := mu.mutation.AddedPriority(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: menu.FieldPriority,
-		})
+		_spec.AddField(menu.FieldPriority, field.TypeInt32, value)
 	}
 	if mu.mutation.PriorityCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: menu.FieldPriority,
-		})
+		_spec.ClearField(menu.FieldPriority, field.TypeInt32)
 	}
 	if value, ok := mu.mutation.Target(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: menu.FieldTarget,
-		})
+		_spec.SetField(menu.FieldTarget, field.TypeString, value)
 	}
 	if mu.mutation.TargetCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: menu.FieldTarget,
-		})
+		_spec.ClearField(menu.FieldTarget, field.TypeString)
 	}
 	if value, ok := mu.mutation.Icon(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: menu.FieldIcon,
-		})
+		_spec.SetField(menu.FieldIcon, field.TypeString, value)
 	}
 	if mu.mutation.IconCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: menu.FieldIcon,
-		})
+		_spec.ClearField(menu.FieldIcon, field.TypeString)
 	}
 	if value, ok := mu.mutation.ParentID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: menu.FieldParentID,
-		})
+		_spec.SetField(menu.FieldParentID, field.TypeUint32, value)
 	}
 	if value, ok := mu.mutation.AddedParentID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: menu.FieldParentID,
-		})
+		_spec.AddField(menu.FieldParentID, field.TypeUint32, value)
 	}
 	if mu.mutation.ParentIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Column: menu.FieldParentID,
-		})
+		_spec.ClearField(menu.FieldParentID, field.TypeUint32)
 	}
 	if value, ok := mu.mutation.Team(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: menu.FieldTeam,
-		})
+		_spec.SetField(menu.FieldTeam, field.TypeString, value)
 	}
 	if mu.mutation.TeamCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: menu.FieldTeam,
-		})
+		_spec.ClearField(menu.FieldTeam, field.TypeString)
 	}
 	_spec.AddModifiers(mu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, mu.driver, _spec); err != nil {
@@ -847,155 +765,73 @@ func (muo *MenuUpdateOne) sqlSave(ctx context.Context) (_node *Menu, err error) 
 		}
 	}
 	if muo.mutation.CreateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: menu.FieldCreateTime,
-		})
+		_spec.ClearField(menu.FieldCreateTime, field.TypeInt64)
 	}
 	if value, ok := muo.mutation.UpdateTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: menu.FieldUpdateTime,
-		})
+		_spec.SetField(menu.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if value, ok := muo.mutation.AddedUpdateTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: menu.FieldUpdateTime,
-		})
+		_spec.AddField(menu.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if muo.mutation.UpdateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: menu.FieldUpdateTime,
-		})
+		_spec.ClearField(menu.FieldUpdateTime, field.TypeInt64)
 	}
 	if value, ok := muo.mutation.DeleteTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: menu.FieldDeleteTime,
-		})
+		_spec.SetField(menu.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if value, ok := muo.mutation.AddedDeleteTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: menu.FieldDeleteTime,
-		})
+		_spec.AddField(menu.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if muo.mutation.DeleteTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: menu.FieldDeleteTime,
-		})
+		_spec.ClearField(menu.FieldDeleteTime, field.TypeInt64)
 	}
 	if value, ok := muo.mutation.Name(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: menu.FieldName,
-		})
+		_spec.SetField(menu.FieldName, field.TypeString, value)
 	}
 	if muo.mutation.NameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: menu.FieldName,
-		})
+		_spec.ClearField(menu.FieldName, field.TypeString)
 	}
 	if value, ok := muo.mutation.URL(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: menu.FieldURL,
-		})
+		_spec.SetField(menu.FieldURL, field.TypeString, value)
 	}
 	if muo.mutation.URLCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: menu.FieldURL,
-		})
+		_spec.ClearField(menu.FieldURL, field.TypeString)
 	}
 	if value, ok := muo.mutation.Priority(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: menu.FieldPriority,
-		})
+		_spec.SetField(menu.FieldPriority, field.TypeInt32, value)
 	}
 	if value, ok := muo.mutation.AddedPriority(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: menu.FieldPriority,
-		})
+		_spec.AddField(menu.FieldPriority, field.TypeInt32, value)
 	}
 	if muo.mutation.PriorityCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: menu.FieldPriority,
-		})
+		_spec.ClearField(menu.FieldPriority, field.TypeInt32)
 	}
 	if value, ok := muo.mutation.Target(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: menu.FieldTarget,
-		})
+		_spec.SetField(menu.FieldTarget, field.TypeString, value)
 	}
 	if muo.mutation.TargetCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: menu.FieldTarget,
-		})
+		_spec.ClearField(menu.FieldTarget, field.TypeString)
 	}
 	if value, ok := muo.mutation.Icon(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: menu.FieldIcon,
-		})
+		_spec.SetField(menu.FieldIcon, field.TypeString, value)
 	}
 	if muo.mutation.IconCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: menu.FieldIcon,
-		})
+		_spec.ClearField(menu.FieldIcon, field.TypeString)
 	}
 	if value, ok := muo.mutation.ParentID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: menu.FieldParentID,
-		})
+		_spec.SetField(menu.FieldParentID, field.TypeUint32, value)
 	}
 	if value, ok := muo.mutation.AddedParentID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: menu.FieldParentID,
-		})
+		_spec.AddField(menu.FieldParentID, field.TypeUint32, value)
 	}
 	if muo.mutation.ParentIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Column: menu.FieldParentID,
-		})
+		_spec.ClearField(menu.FieldParentID, field.TypeUint32)
 	}
 	if value, ok := muo.mutation.Team(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: menu.FieldTeam,
-		})
+		_spec.SetField(menu.FieldTeam, field.TypeString, value)
 	}
 	if muo.mutation.TeamCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: menu.FieldTeam,
-		})
+		_spec.ClearField(menu.FieldTeam, field.TypeString)
 	}
 	_spec.AddModifiers(muo.modifiers...)
 	_node = &Menu{config: muo.config}

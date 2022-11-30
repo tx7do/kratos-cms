@@ -296,6 +296,11 @@ func (pq *PhotoQuery) Select(fields ...string) *PhotoSelect {
 	return selbuild
 }
 
+// Aggregate returns a PhotoSelect configured with the given aggregations.
+func (pq *PhotoQuery) Aggregate(fns ...AggregateFunc) *PhotoSelect {
+	return pq.Select().Aggregate(fns...)
+}
+
 func (pq *PhotoQuery) prepareQuery(ctx context.Context) error {
 	for _, f := range pq.fields {
 		if !photo.ValidColumn(f) {
@@ -504,8 +509,6 @@ func (pgb *PhotoGroupBy) sqlQuery() *sql.Selector {
 	for _, fn := range pgb.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
-	// If no columns were selected in a custom aggregation function, the default
-	// selection is the fields used for "group-by", and the aggregation functions.
 	if len(selector.SelectedColumns()) == 0 {
 		columns := make([]string, 0, len(pgb.fields)+len(pgb.fns))
 		for _, f := range pgb.fields {
@@ -525,6 +528,12 @@ type PhotoSelect struct {
 	sql *sql.Selector
 }
 
+// Aggregate adds the given aggregation functions to the selector query.
+func (ps *PhotoSelect) Aggregate(fns ...AggregateFunc) *PhotoSelect {
+	ps.fns = append(ps.fns, fns...)
+	return ps
+}
+
 // Scan applies the selector query and scans the result into the given value.
 func (ps *PhotoSelect) Scan(ctx context.Context, v any) error {
 	if err := ps.prepareQuery(ctx); err != nil {
@@ -535,6 +544,16 @@ func (ps *PhotoSelect) Scan(ctx context.Context, v any) error {
 }
 
 func (ps *PhotoSelect) sqlScan(ctx context.Context, v any) error {
+	aggregation := make([]string, 0, len(ps.fns))
+	for _, fn := range ps.fns {
+		aggregation = append(aggregation, fn(ps.sql))
+	}
+	switch n := len(*ps.selector.flds); {
+	case n == 0 && len(aggregation) > 0:
+		ps.sql.Select(aggregation...)
+	case n != 0 && len(aggregation) > 0:
+		ps.sql.AppendSelect(aggregation...)
+	}
 	rows := &sql.Rows{}
 	query, args := ps.sql.Query()
 	if err := ps.driver.Query(ctx, query, args, rows); err != nil {

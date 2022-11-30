@@ -6,6 +6,14 @@ option go_package = "kratos-blog/api/user/service/v1;v1";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "google/protobuf/empty.proto";
 
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "用户管理接口";
+    description: "用户管理";
+    version: "1.0";
+  }
+};
+
 // 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
 
 // 用户服务
@@ -26,15 +34,15 @@ service UserService {
 // 用户
 message User {
   uint32 id = 1;
-  string userName = 2;
-  string nickName = 3;
-  string email = 4;
-  string avatar = 5;
-  string description = 6;
-  string password = 7;
-  string createTime = 8;
-  string updateTime = 9;
-  string status = 10 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+  optional string userName = 2;
+  optional string nickName = 3;
+  optional string email = 4;
+  optional string avatar = 5;
+  optional string description = 6;
+  optional string password = 7;
+  optional string createTime = 8;
+  optional string updateTime = 9;
+  optional string status = 10 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "用户状态"
     default: "ON"
     enum: ["ON", "OFF"]
@@ -43,8 +51,8 @@ message User {
 
 // 请求 - 登录
 message LoginRequest {
-  string userName = 1;
-  string password = 2;
+  optional string userName = 1;
+  optional string password = 2;
 }
 // 回应 - 登录
 message LoginResponse {

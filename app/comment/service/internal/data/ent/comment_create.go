@@ -367,123 +367,63 @@ func (cc *CommentCreate) createSpec() (*Comment, *sqlgraph.CreateSpec) {
 		_spec.ID.Value = id
 	}
 	if value, ok := cc.mutation.CreateTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: comment.FieldCreateTime,
-		})
+		_spec.SetField(comment.FieldCreateTime, field.TypeInt64, value)
 		_node.CreateTime = &value
 	}
 	if value, ok := cc.mutation.UpdateTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: comment.FieldUpdateTime,
-		})
+		_spec.SetField(comment.FieldUpdateTime, field.TypeInt64, value)
 		_node.UpdateTime = &value
 	}
 	if value, ok := cc.mutation.DeleteTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: comment.FieldDeleteTime,
-		})
+		_spec.SetField(comment.FieldDeleteTime, field.TypeInt64, value)
 		_node.DeleteTime = &value
 	}
 	if value, ok := cc.mutation.Author(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldAuthor,
-		})
+		_spec.SetField(comment.FieldAuthor, field.TypeString, value)
 		_node.Author = &value
 	}
 	if value, ok := cc.mutation.Email(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldEmail,
-		})
+		_spec.SetField(comment.FieldEmail, field.TypeString, value)
 		_node.Email = &value
 	}
 	if value, ok := cc.mutation.IPAddress(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldIPAddress,
-		})
+		_spec.SetField(comment.FieldIPAddress, field.TypeString, value)
 		_node.IPAddress = &value
 	}
 	if value, ok := cc.mutation.AuthorURL(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldAuthorURL,
-		})
+		_spec.SetField(comment.FieldAuthorURL, field.TypeString, value)
 		_node.AuthorURL = &value
 	}
 	if value, ok := cc.mutation.GravatarMd5(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldGravatarMd5,
-		})
+		_spec.SetField(comment.FieldGravatarMd5, field.TypeString, value)
 		_node.GravatarMd5 = &value
 	}
 	if value, ok := cc.mutation.Content(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldContent,
-		})
+		_spec.SetField(comment.FieldContent, field.TypeString, value)
 		_node.Content = &value
 	}
 	if value, ok := cc.mutation.UserAgent(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldUserAgent,
-		})
+		_spec.SetField(comment.FieldUserAgent, field.TypeString, value)
 		_node.UserAgent = &value
 	}
 	if value, ok := cc.mutation.Avatar(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldAvatar,
-		})
+		_spec.SetField(comment.FieldAvatar, field.TypeString, value)
 		_node.Avatar = &value
 	}
 	if value, ok := cc.mutation.ParentID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: comment.FieldParentID,
-		})
+		_spec.SetField(comment.FieldParentID, field.TypeUint32, value)
 		_node.ParentID = &value
 	}
 	if value, ok := cc.mutation.Status(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: comment.FieldStatus,
-		})
+		_spec.SetField(comment.FieldStatus, field.TypeUint32, value)
 		_node.Status = &value
 	}
 	if value, ok := cc.mutation.IsAdmin(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: comment.FieldIsAdmin,
-		})
+		_spec.SetField(comment.FieldIsAdmin, field.TypeBool, value)
 		_node.IsAdmin = &value
 	}
 	if value, ok := cc.mutation.AllowNotification(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: comment.FieldAllowNotification,
-		})
+		_spec.SetField(comment.FieldAllowNotification, field.TypeBool, value)
 		_node.AllowNotification = &value
 	}
 	return _node, _spec

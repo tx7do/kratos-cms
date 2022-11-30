@@ -437,220 +437,103 @@ func (cu *CommentUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 	}
 	if cu.mutation.CreateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: comment.FieldCreateTime,
-		})
+		_spec.ClearField(comment.FieldCreateTime, field.TypeInt64)
 	}
 	if value, ok := cu.mutation.UpdateTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: comment.FieldUpdateTime,
-		})
+		_spec.SetField(comment.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if value, ok := cu.mutation.AddedUpdateTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: comment.FieldUpdateTime,
-		})
+		_spec.AddField(comment.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if cu.mutation.UpdateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: comment.FieldUpdateTime,
-		})
+		_spec.ClearField(comment.FieldUpdateTime, field.TypeInt64)
 	}
 	if value, ok := cu.mutation.DeleteTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: comment.FieldDeleteTime,
-		})
+		_spec.SetField(comment.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if value, ok := cu.mutation.AddedDeleteTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: comment.FieldDeleteTime,
-		})
+		_spec.AddField(comment.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if cu.mutation.DeleteTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: comment.FieldDeleteTime,
-		})
+		_spec.ClearField(comment.FieldDeleteTime, field.TypeInt64)
 	}
 	if value, ok := cu.mutation.Author(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldAuthor,
-		})
+		_spec.SetField(comment.FieldAuthor, field.TypeString, value)
 	}
 	if cu.mutation.AuthorCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: comment.FieldAuthor,
-		})
+		_spec.ClearField(comment.FieldAuthor, field.TypeString)
 	}
 	if value, ok := cu.mutation.Email(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldEmail,
-		})
+		_spec.SetField(comment.FieldEmail, field.TypeString, value)
 	}
 	if cu.mutation.EmailCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: comment.FieldEmail,
-		})
+		_spec.ClearField(comment.FieldEmail, field.TypeString)
 	}
 	if value, ok := cu.mutation.IPAddress(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldIPAddress,
-		})
+		_spec.SetField(comment.FieldIPAddress, field.TypeString, value)
 	}
 	if cu.mutation.IPAddressCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: comment.FieldIPAddress,
-		})
+		_spec.ClearField(comment.FieldIPAddress, field.TypeString)
 	}
 	if value, ok := cu.mutation.AuthorURL(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldAuthorURL,
-		})
+		_spec.SetField(comment.FieldAuthorURL, field.TypeString, value)
 	}
 	if cu.mutation.AuthorURLCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: comment.FieldAuthorURL,
-		})
+		_spec.ClearField(comment.FieldAuthorURL, field.TypeString)
 	}
 	if value, ok := cu.mutation.GravatarMd5(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldGravatarMd5,
-		})
+		_spec.SetField(comment.FieldGravatarMd5, field.TypeString, value)
 	}
 	if cu.mutation.GravatarMd5Cleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: comment.FieldGravatarMd5,
-		})
+		_spec.ClearField(comment.FieldGravatarMd5, field.TypeString)
 	}
 	if value, ok := cu.mutation.Content(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldContent,
-		})
+		_spec.SetField(comment.FieldContent, field.TypeString, value)
 	}
 	if cu.mutation.ContentCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: comment.FieldContent,
-		})
+		_spec.ClearField(comment.FieldContent, field.TypeString)
 	}
 	if value, ok := cu.mutation.UserAgent(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldUserAgent,
-		})
+		_spec.SetField(comment.FieldUserAgent, field.TypeString, value)
 	}
 	if cu.mutation.UserAgentCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: comment.FieldUserAgent,
-		})
+		_spec.ClearField(comment.FieldUserAgent, field.TypeString)
 	}
 	if value, ok := cu.mutation.Avatar(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldAvatar,
-		})
+		_spec.SetField(comment.FieldAvatar, field.TypeString, value)
 	}
 	if cu.mutation.AvatarCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: comment.FieldAvatar,
-		})
+		_spec.ClearField(comment.FieldAvatar, field.TypeString)
 	}
 	if value, ok := cu.mutation.ParentID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: comment.FieldParentID,
-		})
+		_spec.SetField(comment.FieldParentID, field.TypeUint32, value)
 	}
 	if value, ok := cu.mutation.AddedParentID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: comment.FieldParentID,
-		})
+		_spec.AddField(comment.FieldParentID, field.TypeUint32, value)
 	}
 	if cu.mutation.ParentIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Column: comment.FieldParentID,
-		})
+		_spec.ClearField(comment.FieldParentID, field.TypeUint32)
 	}
 	if value, ok := cu.mutation.Status(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: comment.FieldStatus,
-		})
+		_spec.SetField(comment.FieldStatus, field.TypeUint32, value)
 	}
 	if value, ok := cu.mutation.AddedStatus(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: comment.FieldStatus,
-		})
+		_spec.AddField(comment.FieldStatus, field.TypeUint32, value)
 	}
 	if cu.mutation.StatusCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Column: comment.FieldStatus,
-		})
+		_spec.ClearField(comment.FieldStatus, field.TypeUint32)
 	}
 	if value, ok := cu.mutation.IsAdmin(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: comment.FieldIsAdmin,
-		})
+		_spec.SetField(comment.FieldIsAdmin, field.TypeBool, value)
 	}
 	if cu.mutation.IsAdminCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: comment.FieldIsAdmin,
-		})
+		_spec.ClearField(comment.FieldIsAdmin, field.TypeBool)
 	}
 	if value, ok := cu.mutation.AllowNotification(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: comment.FieldAllowNotification,
-		})
+		_spec.SetField(comment.FieldAllowNotification, field.TypeBool, value)
 	}
 	if cu.mutation.AllowNotificationCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: comment.FieldAllowNotification,
-		})
+		_spec.ClearField(comment.FieldAllowNotification, field.TypeBool)
 	}
 	_spec.AddModifiers(cu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, cu.driver, _spec); err != nil {
@@ -1112,220 +995,103 @@ func (cuo *CommentUpdateOne) sqlSave(ctx context.Context) (_node *Comment, err e
 		}
 	}
 	if cuo.mutation.CreateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: comment.FieldCreateTime,
-		})
+		_spec.ClearField(comment.FieldCreateTime, field.TypeInt64)
 	}
 	if value, ok := cuo.mutation.UpdateTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: comment.FieldUpdateTime,
-		})
+		_spec.SetField(comment.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if value, ok := cuo.mutation.AddedUpdateTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: comment.FieldUpdateTime,
-		})
+		_spec.AddField(comment.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if cuo.mutation.UpdateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: comment.FieldUpdateTime,
-		})
+		_spec.ClearField(comment.FieldUpdateTime, field.TypeInt64)
 	}
 	if value, ok := cuo.mutation.DeleteTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: comment.FieldDeleteTime,
-		})
+		_spec.SetField(comment.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if value, ok := cuo.mutation.AddedDeleteTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: comment.FieldDeleteTime,
-		})
+		_spec.AddField(comment.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if cuo.mutation.DeleteTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: comment.FieldDeleteTime,
-		})
+		_spec.ClearField(comment.FieldDeleteTime, field.TypeInt64)
 	}
 	if value, ok := cuo.mutation.Author(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldAuthor,
-		})
+		_spec.SetField(comment.FieldAuthor, field.TypeString, value)
 	}
 	if cuo.mutation.AuthorCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: comment.FieldAuthor,
-		})
+		_spec.ClearField(comment.FieldAuthor, field.TypeString)
 	}
 	if value, ok := cuo.mutation.Email(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldEmail,
-		})
+		_spec.SetField(comment.FieldEmail, field.TypeString, value)
 	}
 	if cuo.mutation.EmailCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: comment.FieldEmail,
-		})
+		_spec.ClearField(comment.FieldEmail, field.TypeString)
 	}
 	if value, ok := cuo.mutation.IPAddress(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldIPAddress,
-		})
+		_spec.SetField(comment.FieldIPAddress, field.TypeString, value)
 	}
 	if cuo.mutation.IPAddressCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: comment.FieldIPAddress,
-		})
+		_spec.ClearField(comment.FieldIPAddress, field.TypeString)
 	}
 	if value, ok := cuo.mutation.AuthorURL(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldAuthorURL,
-		})
+		_spec.SetField(comment.FieldAuthorURL, field.TypeString, value)
 	}
 	if cuo.mutation.AuthorURLCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: comment.FieldAuthorURL,
-		})
+		_spec.ClearField(comment.FieldAuthorURL, field.TypeString)
 	}
 	if value, ok := cuo.mutation.GravatarMd5(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldGravatarMd5,
-		})
+		_spec.SetField(comment.FieldGravatarMd5, field.TypeString, value)
 	}
 	if cuo.mutation.GravatarMd5Cleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: comment.FieldGravatarMd5,
-		})
+		_spec.ClearField(comment.FieldGravatarMd5, field.TypeString)
 	}
 	if value, ok := cuo.mutation.Content(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldContent,
-		})
+		_spec.SetField(comment.FieldContent, field.TypeString, value)
 	}
 	if cuo.mutation.ContentCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: comment.FieldContent,
-		})
+		_spec.ClearField(comment.FieldContent, field.TypeString)
 	}
 	if value, ok := cuo.mutation.UserAgent(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldUserAgent,
-		})
+		_spec.SetField(comment.FieldUserAgent, field.TypeString, value)
 	}
 	if cuo.mutation.UserAgentCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: comment.FieldUserAgent,
-		})
+		_spec.ClearField(comment.FieldUserAgent, field.TypeString)
 	}
 	if value, ok := cuo.mutation.Avatar(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: comment.FieldAvatar,
-		})
+		_spec.SetField(comment.FieldAvatar, field.TypeString, value)
 	}
 	if cuo.mutation.AvatarCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: comment.FieldAvatar,
-		})
+		_spec.ClearField(comment.FieldAvatar, field.TypeString)
 	}
 	if value, ok := cuo.mutation.ParentID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: comment.FieldParentID,
-		})
+		_spec.SetField(comment.FieldParentID, field.TypeUint32, value)
 	}
 	if value, ok := cuo.mutation.AddedParentID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: comment.FieldParentID,
-		})
+		_spec.AddField(comment.FieldParentID, field.TypeUint32, value)
 	}
 	if cuo.mutation.ParentIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Column: comment.FieldParentID,
-		})
+		_spec.ClearField(comment.FieldParentID, field.TypeUint32)
 	}
 	if value, ok := cuo.mutation.Status(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: comment.FieldStatus,
-		})
+		_spec.SetField(comment.FieldStatus, field.TypeUint32, value)
 	}
 	if value, ok := cuo.mutation.AddedStatus(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: comment.FieldStatus,
-		})
+		_spec.AddField(comment.FieldStatus, field.TypeUint32, value)
 	}
 	if cuo.mutation.StatusCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Column: comment.FieldStatus,
-		})
+		_spec.ClearField(comment.FieldStatus, field.TypeUint32)
 	}
 	if value, ok := cuo.mutation.IsAdmin(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: comment.FieldIsAdmin,
-		})
+		_spec.SetField(comment.FieldIsAdmin, field.TypeBool, value)
 	}
 	if cuo.mutation.IsAdminCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: comment.FieldIsAdmin,
-		})
+		_spec.ClearField(comment.FieldIsAdmin, field.TypeBool)
 	}
 	if value, ok := cuo.mutation.AllowNotification(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: comment.FieldAllowNotification,
-		})
+		_spec.SetField(comment.FieldAllowNotification, field.TypeBool, value)
 	}
 	if cuo.mutation.AllowNotificationCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: comment.FieldAllowNotification,
-		})
+		_spec.ClearField(comment.FieldAllowNotification, field.TypeBool)
 	}
 	_spec.AddModifiers(cuo.modifiers...)
 	_node = &Comment{config: cuo.config}

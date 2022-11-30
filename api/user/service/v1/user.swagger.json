@@ -1,8 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "user.proto",
-    "version": "version not set"
+    "title": "用户管理接口",
+    "description": "用户管理",
+    "version": "1.0"
   },
   "tags": [
     {

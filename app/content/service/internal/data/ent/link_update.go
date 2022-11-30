@@ -320,135 +320,64 @@ func (lu *LinkUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 	}
 	if lu.mutation.CreateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: link.FieldCreateTime,
-		})
+		_spec.ClearField(link.FieldCreateTime, field.TypeInt64)
 	}
 	if value, ok := lu.mutation.UpdateTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: link.FieldUpdateTime,
-		})
+		_spec.SetField(link.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if value, ok := lu.mutation.AddedUpdateTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: link.FieldUpdateTime,
-		})
+		_spec.AddField(link.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if lu.mutation.UpdateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: link.FieldUpdateTime,
-		})
+		_spec.ClearField(link.FieldUpdateTime, field.TypeInt64)
 	}
 	if value, ok := lu.mutation.DeleteTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: link.FieldDeleteTime,
-		})
+		_spec.SetField(link.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if value, ok := lu.mutation.AddedDeleteTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: link.FieldDeleteTime,
-		})
+		_spec.AddField(link.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if lu.mutation.DeleteTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: link.FieldDeleteTime,
-		})
+		_spec.ClearField(link.FieldDeleteTime, field.TypeInt64)
 	}
 	if value, ok := lu.mutation.Name(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: link.FieldName,
-		})
+		_spec.SetField(link.FieldName, field.TypeString, value)
 	}
 	if lu.mutation.NameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: link.FieldName,
-		})
+		_spec.ClearField(link.FieldName, field.TypeString)
 	}
 	if value, ok := lu.mutation.URL(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: link.FieldURL,
-		})
+		_spec.SetField(link.FieldURL, field.TypeString, value)
 	}
 	if lu.mutation.URLCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: link.FieldURL,
-		})
+		_spec.ClearField(link.FieldURL, field.TypeString)
 	}
 	if value, ok := lu.mutation.Logo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: link.FieldLogo,
-		})
+		_spec.SetField(link.FieldLogo, field.TypeString, value)
 	}
 	if lu.mutation.LogoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: link.FieldLogo,
-		})
+		_spec.ClearField(link.FieldLogo, field.TypeString)
 	}
 	if value, ok := lu.mutation.Description(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: link.FieldDescription,
-		})
+		_spec.SetField(link.FieldDescription, field.TypeString, value)
 	}
 	if lu.mutation.DescriptionCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: link.FieldDescription,
-		})
+		_spec.ClearField(link.FieldDescription, field.TypeString)
 	}
 	if value, ok := lu.mutation.Team(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: link.FieldTeam,
-		})
+		_spec.SetField(link.FieldTeam, field.TypeString, value)
 	}
 	if lu.mutation.TeamCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: link.FieldTeam,
-		})
+		_spec.ClearField(link.FieldTeam, field.TypeString)
 	}
 	if value, ok := lu.mutation.Priority(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: link.FieldPriority,
-		})
+		_spec.SetField(link.FieldPriority, field.TypeInt32, value)
 	}
 	if value, ok := lu.mutation.AddedPriority(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: link.FieldPriority,
-		})
+		_spec.AddField(link.FieldPriority, field.TypeInt32, value)
 	}
 	if lu.mutation.PriorityCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: link.FieldPriority,
-		})
+		_spec.ClearField(link.FieldPriority, field.TypeInt32)
 	}
 	_spec.AddModifiers(lu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, lu.driver, _spec); err != nil {
@@ -793,135 +722,64 @@ func (luo *LinkUpdateOne) sqlSave(ctx context.Context) (_node *Link, err error) 
 		}
 	}
 	if luo.mutation.CreateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: link.FieldCreateTime,
-		})
+		_spec.ClearField(link.FieldCreateTime, field.TypeInt64)
 	}
 	if value, ok := luo.mutation.UpdateTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: link.FieldUpdateTime,
-		})
+		_spec.SetField(link.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if value, ok := luo.mutation.AddedUpdateTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: link.FieldUpdateTime,
-		})
+		_spec.AddField(link.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if luo.mutation.UpdateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: link.FieldUpdateTime,
-		})
+		_spec.ClearField(link.FieldUpdateTime, field.TypeInt64)
 	}
 	if value, ok := luo.mutation.DeleteTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: link.FieldDeleteTime,
-		})
+		_spec.SetField(link.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if value, ok := luo.mutation.AddedDeleteTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: link.FieldDeleteTime,
-		})
+		_spec.AddField(link.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if luo.mutation.DeleteTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: link.FieldDeleteTime,
-		})
+		_spec.ClearField(link.FieldDeleteTime, field.TypeInt64)
 	}
 	if value, ok := luo.mutation.Name(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: link.FieldName,
-		})
+		_spec.SetField(link.FieldName, field.TypeString, value)
 	}
 	if luo.mutation.NameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: link.FieldName,
-		})
+		_spec.ClearField(link.FieldName, field.TypeString)
 	}
 	if value, ok := luo.mutation.URL(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: link.FieldURL,
-		})
+		_spec.SetField(link.FieldURL, field.TypeString, value)
 	}
 	if luo.mutation.URLCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: link.FieldURL,
-		})
+		_spec.ClearField(link.FieldURL, field.TypeString)
 	}
 	if value, ok := luo.mutation.Logo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: link.FieldLogo,
-		})
+		_spec.SetField(link.FieldLogo, field.TypeString, value)
 	}
 	if luo.mutation.LogoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: link.FieldLogo,
-		})
+		_spec.ClearField(link.FieldLogo, field.TypeString)
 	}
 	if value, ok := luo.mutation.Description(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: link.FieldDescription,
-		})
+		_spec.SetField(link.FieldDescription, field.TypeString, value)
 	}
 	if luo.mutation.DescriptionCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: link.FieldDescription,
-		})
+		_spec.ClearField(link.FieldDescription, field.TypeString)
 	}
 	if value, ok := luo.mutation.Team(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: link.FieldTeam,
-		})
+		_spec.SetField(link.FieldTeam, field.TypeString, value)
 	}
 	if luo.mutation.TeamCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: link.FieldTeam,
-		})
+		_spec.ClearField(link.FieldTeam, field.TypeString)
 	}
 	if value, ok := luo.mutation.Priority(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: link.FieldPriority,
-		})
+		_spec.SetField(link.FieldPriority, field.TypeInt32, value)
 	}
 	if value, ok := luo.mutation.AddedPriority(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: link.FieldPriority,
-		})
+		_spec.AddField(link.FieldPriority, field.TypeInt32, value)
 	}
 	if luo.mutation.PriorityCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: link.FieldPriority,
-		})
+		_spec.ClearField(link.FieldPriority, field.TypeInt32)
 	}
 	_spec.AddModifiers(luo.modifiers...)
 	_node = &Link{config: luo.config}

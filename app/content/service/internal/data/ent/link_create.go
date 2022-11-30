@@ -293,75 +293,39 @@ func (lc *LinkCreate) createSpec() (*Link, *sqlgraph.CreateSpec) {
 		_spec.ID.Value = id
 	}
 	if value, ok := lc.mutation.CreateTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: link.FieldCreateTime,
-		})
+		_spec.SetField(link.FieldCreateTime, field.TypeInt64, value)
 		_node.CreateTime = &value
 	}
 	if value, ok := lc.mutation.UpdateTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: link.FieldUpdateTime,
-		})
+		_spec.SetField(link.FieldUpdateTime, field.TypeInt64, value)
 		_node.UpdateTime = &value
 	}
 	if value, ok := lc.mutation.DeleteTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: link.FieldDeleteTime,
-		})
+		_spec.SetField(link.FieldDeleteTime, field.TypeInt64, value)
 		_node.DeleteTime = &value
 	}
 	if value, ok := lc.mutation.Name(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: link.FieldName,
-		})
+		_spec.SetField(link.FieldName, field.TypeString, value)
 		_node.Name = &value
 	}
 	if value, ok := lc.mutation.URL(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: link.FieldURL,
-		})
+		_spec.SetField(link.FieldURL, field.TypeString, value)
 		_node.URL = &value
 	}
 	if value, ok := lc.mutation.Logo(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: link.FieldLogo,
-		})
+		_spec.SetField(link.FieldLogo, field.TypeString, value)
 		_node.Logo = &value
 	}
 	if value, ok := lc.mutation.Description(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: link.FieldDescription,
-		})
+		_spec.SetField(link.FieldDescription, field.TypeString, value)
 		_node.Description = &value
 	}
 	if value, ok := lc.mutation.Team(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: link.FieldTeam,
-		})
+		_spec.SetField(link.FieldTeam, field.TypeString, value)
 		_node.Team = &value
 	}
 	if value, ok := lc.mutation.Priority(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: link.FieldPriority,
-		})
+		_spec.SetField(link.FieldPriority, field.TypeInt32, value)
 		_node.Priority = &value
 	}
 	return _node, _spec

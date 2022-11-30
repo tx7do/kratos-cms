@@ -8,6 +8,14 @@ import "google/protobuf/empty.proto";
 
 import "pagination.proto";
 
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "附件管理接口";
+    description: "附件管理";
+    version: "1.0";
+  }
+};
+
 // 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
 
 // 附件服务

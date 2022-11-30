@@ -297,83 +297,43 @@ func (mc *MenuCreate) createSpec() (*Menu, *sqlgraph.CreateSpec) {
 		_spec.ID.Value = id
 	}
 	if value, ok := mc.mutation.CreateTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: menu.FieldCreateTime,
-		})
+		_spec.SetField(menu.FieldCreateTime, field.TypeInt64, value)
 		_node.CreateTime = &value
 	}
 	if value, ok := mc.mutation.UpdateTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: menu.FieldUpdateTime,
-		})
+		_spec.SetField(menu.FieldUpdateTime, field.TypeInt64, value)
 		_node.UpdateTime = &value
 	}
 	if value, ok := mc.mutation.DeleteTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: menu.FieldDeleteTime,
-		})
+		_spec.SetField(menu.FieldDeleteTime, field.TypeInt64, value)
 		_node.DeleteTime = &value
 	}
 	if value, ok := mc.mutation.Name(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: menu.FieldName,
-		})
+		_spec.SetField(menu.FieldName, field.TypeString, value)
 		_node.Name = &value
 	}
 	if value, ok := mc.mutation.URL(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: menu.FieldURL,
-		})
+		_spec.SetField(menu.FieldURL, field.TypeString, value)
 		_node.URL = &value
 	}
 	if value, ok := mc.mutation.Priority(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: menu.FieldPriority,
-		})
+		_spec.SetField(menu.FieldPriority, field.TypeInt32, value)
 		_node.Priority = &value
 	}
 	if value, ok := mc.mutation.Target(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: menu.FieldTarget,
-		})
+		_spec.SetField(menu.FieldTarget, field.TypeString, value)
 		_node.Target = &value
 	}
 	if value, ok := mc.mutation.Icon(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: menu.FieldIcon,
-		})
+		_spec.SetField(menu.FieldIcon, field.TypeString, value)
 		_node.Icon = &value
 	}
 	if value, ok := mc.mutation.ParentID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: menu.FieldParentID,
-		})
+		_spec.SetField(menu.FieldParentID, field.TypeUint32, value)
 		_node.ParentID = &value
 	}
 	if value, ok := mc.mutation.Team(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: menu.FieldTeam,
-		})
+		_spec.SetField(menu.FieldTeam, field.TypeString, value)
 		_node.Team = &value
 	}
 	return _node, _spec

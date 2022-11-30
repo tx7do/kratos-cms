@@ -335,99 +335,51 @@ func (cc *CategoryCreate) createSpec() (*Category, *sqlgraph.CreateSpec) {
 		_spec.ID.Value = id
 	}
 	if value, ok := cc.mutation.CreateTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: category.FieldCreateTime,
-		})
+		_spec.SetField(category.FieldCreateTime, field.TypeInt64, value)
 		_node.CreateTime = &value
 	}
 	if value, ok := cc.mutation.UpdateTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: category.FieldUpdateTime,
-		})
+		_spec.SetField(category.FieldUpdateTime, field.TypeInt64, value)
 		_node.UpdateTime = &value
 	}
 	if value, ok := cc.mutation.DeleteTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: category.FieldDeleteTime,
-		})
+		_spec.SetField(category.FieldDeleteTime, field.TypeInt64, value)
 		_node.DeleteTime = &value
 	}
 	if value, ok := cc.mutation.Name(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: category.FieldName,
-		})
+		_spec.SetField(category.FieldName, field.TypeString, value)
 		_node.Name = &value
 	}
 	if value, ok := cc.mutation.Slug(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: category.FieldSlug,
-		})
+		_spec.SetField(category.FieldSlug, field.TypeString, value)
 		_node.Slug = &value
 	}
 	if value, ok := cc.mutation.Description(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: category.FieldDescription,
-		})
+		_spec.SetField(category.FieldDescription, field.TypeString, value)
 		_node.Description = &value
 	}
 	if value, ok := cc.mutation.Thumbnail(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: category.FieldThumbnail,
-		})
+		_spec.SetField(category.FieldThumbnail, field.TypeString, value)
 		_node.Thumbnail = &value
 	}
 	if value, ok := cc.mutation.Password(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: category.FieldPassword,
-		})
+		_spec.SetField(category.FieldPassword, field.TypeString, value)
 		_node.Password = &value
 	}
 	if value, ok := cc.mutation.FullPath(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: category.FieldFullPath,
-		})
+		_spec.SetField(category.FieldFullPath, field.TypeString, value)
 		_node.FullPath = &value
 	}
 	if value, ok := cc.mutation.ParentID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: category.FieldParentID,
-		})
+		_spec.SetField(category.FieldParentID, field.TypeUint32, value)
 		_node.ParentID = &value
 	}
 	if value, ok := cc.mutation.Priority(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: category.FieldPriority,
-		})
+		_spec.SetField(category.FieldPriority, field.TypeInt32, value)
 		_node.Priority = &value
 	}
 	if value, ok := cc.mutation.PostCount(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: category.FieldPostCount,
-		})
+		_spec.SetField(category.FieldPostCount, field.TypeUint32, value)
 		_node.PostCount = &value
 	}
 	return _node, _spec

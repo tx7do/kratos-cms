@@ -283,75 +283,39 @@ func (tc *TagCreate) createSpec() (*Tag, *sqlgraph.CreateSpec) {
 		_spec.ID.Value = id
 	}
 	if value, ok := tc.mutation.CreateTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: tag.FieldCreateTime,
-		})
+		_spec.SetField(tag.FieldCreateTime, field.TypeInt64, value)
 		_node.CreateTime = &value
 	}
 	if value, ok := tc.mutation.UpdateTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: tag.FieldUpdateTime,
-		})
+		_spec.SetField(tag.FieldUpdateTime, field.TypeInt64, value)
 		_node.UpdateTime = &value
 	}
 	if value, ok := tc.mutation.DeleteTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: tag.FieldDeleteTime,
-		})
+		_spec.SetField(tag.FieldDeleteTime, field.TypeInt64, value)
 		_node.DeleteTime = &value
 	}
 	if value, ok := tc.mutation.Name(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: tag.FieldName,
-		})
+		_spec.SetField(tag.FieldName, field.TypeString, value)
 		_node.Name = &value
 	}
 	if value, ok := tc.mutation.Slug(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: tag.FieldSlug,
-		})
+		_spec.SetField(tag.FieldSlug, field.TypeString, value)
 		_node.Slug = &value
 	}
 	if value, ok := tc.mutation.Color(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: tag.FieldColor,
-		})
+		_spec.SetField(tag.FieldColor, field.TypeString, value)
 		_node.Color = &value
 	}
 	if value, ok := tc.mutation.Thumbnail(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: tag.FieldThumbnail,
-		})
+		_spec.SetField(tag.FieldThumbnail, field.TypeString, value)
 		_node.Thumbnail = &value
 	}
 	if value, ok := tc.mutation.SlugName(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: tag.FieldSlugName,
-		})
+		_spec.SetField(tag.FieldSlugName, field.TypeString, value)
 		_node.SlugName = &value
 	}
 	if value, ok := tc.mutation.PostCount(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: tag.FieldPostCount,
-		})
+		_spec.SetField(tag.FieldPostCount, field.TypeUint32, value)
 		_node.PostCount = &value
 	}
 	return _node, _spec

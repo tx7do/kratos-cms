@@ -310,135 +310,64 @@ func (tu *TagUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 	}
 	if tu.mutation.CreateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: tag.FieldCreateTime,
-		})
+		_spec.ClearField(tag.FieldCreateTime, field.TypeInt64)
 	}
 	if value, ok := tu.mutation.UpdateTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: tag.FieldUpdateTime,
-		})
+		_spec.SetField(tag.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if value, ok := tu.mutation.AddedUpdateTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: tag.FieldUpdateTime,
-		})
+		_spec.AddField(tag.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if tu.mutation.UpdateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: tag.FieldUpdateTime,
-		})
+		_spec.ClearField(tag.FieldUpdateTime, field.TypeInt64)
 	}
 	if value, ok := tu.mutation.DeleteTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: tag.FieldDeleteTime,
-		})
+		_spec.SetField(tag.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if value, ok := tu.mutation.AddedDeleteTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: tag.FieldDeleteTime,
-		})
+		_spec.AddField(tag.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if tu.mutation.DeleteTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: tag.FieldDeleteTime,
-		})
+		_spec.ClearField(tag.FieldDeleteTime, field.TypeInt64)
 	}
 	if value, ok := tu.mutation.Name(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: tag.FieldName,
-		})
+		_spec.SetField(tag.FieldName, field.TypeString, value)
 	}
 	if tu.mutation.NameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: tag.FieldName,
-		})
+		_spec.ClearField(tag.FieldName, field.TypeString)
 	}
 	if value, ok := tu.mutation.Slug(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: tag.FieldSlug,
-		})
+		_spec.SetField(tag.FieldSlug, field.TypeString, value)
 	}
 	if tu.mutation.SlugCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: tag.FieldSlug,
-		})
+		_spec.ClearField(tag.FieldSlug, field.TypeString)
 	}
 	if value, ok := tu.mutation.Color(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: tag.FieldColor,
-		})
+		_spec.SetField(tag.FieldColor, field.TypeString, value)
 	}
 	if tu.mutation.ColorCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: tag.FieldColor,
-		})
+		_spec.ClearField(tag.FieldColor, field.TypeString)
 	}
 	if value, ok := tu.mutation.Thumbnail(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: tag.FieldThumbnail,
-		})
+		_spec.SetField(tag.FieldThumbnail, field.TypeString, value)
 	}
 	if tu.mutation.ThumbnailCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: tag.FieldThumbnail,
-		})
+		_spec.ClearField(tag.FieldThumbnail, field.TypeString)
 	}
 	if value, ok := tu.mutation.SlugName(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: tag.FieldSlugName,
-		})
+		_spec.SetField(tag.FieldSlugName, field.TypeString, value)
 	}
 	if tu.mutation.SlugNameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: tag.FieldSlugName,
-		})
+		_spec.ClearField(tag.FieldSlugName, field.TypeString)
 	}
 	if value, ok := tu.mutation.PostCount(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: tag.FieldPostCount,
-		})
+		_spec.SetField(tag.FieldPostCount, field.TypeUint32, value)
 	}
 	if value, ok := tu.mutation.AddedPostCount(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: tag.FieldPostCount,
-		})
+		_spec.AddField(tag.FieldPostCount, field.TypeUint32, value)
 	}
 	if tu.mutation.PostCountCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Column: tag.FieldPostCount,
-		})
+		_spec.ClearField(tag.FieldPostCount, field.TypeUint32)
 	}
 	_spec.AddModifiers(tu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, tu.driver, _spec); err != nil {
@@ -773,135 +702,64 @@ func (tuo *TagUpdateOne) sqlSave(ctx context.Context) (_node *Tag, err error) {
 		}
 	}
 	if tuo.mutation.CreateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: tag.FieldCreateTime,
-		})
+		_spec.ClearField(tag.FieldCreateTime, field.TypeInt64)
 	}
 	if value, ok := tuo.mutation.UpdateTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: tag.FieldUpdateTime,
-		})
+		_spec.SetField(tag.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if value, ok := tuo.mutation.AddedUpdateTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: tag.FieldUpdateTime,
-		})
+		_spec.AddField(tag.FieldUpdateTime, field.TypeInt64, value)
 	}
 	if tuo.mutation.UpdateTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: tag.FieldUpdateTime,
-		})
+		_spec.ClearField(tag.FieldUpdateTime, field.TypeInt64)
 	}
 	if value, ok := tuo.mutation.DeleteTime(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: tag.FieldDeleteTime,
-		})
+		_spec.SetField(tag.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if value, ok := tuo.mutation.AddedDeleteTime(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: tag.FieldDeleteTime,
-		})
+		_spec.AddField(tag.FieldDeleteTime, field.TypeInt64, value)
 	}
 	if tuo.mutation.DeleteTimeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: tag.FieldDeleteTime,
-		})
+		_spec.ClearField(tag.FieldDeleteTime, field.TypeInt64)
 	}
 	if value, ok := tuo.mutation.Name(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: tag.FieldName,
-		})
+		_spec.SetField(tag.FieldName, field.TypeString, value)
 	}
 	if tuo.mutation.NameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: tag.FieldName,
-		})
+		_spec.ClearField(tag.FieldName, field.TypeString)
 	}
 	if value, ok := tuo.mutation.Slug(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: tag.FieldSlug,
-		})
+		_spec.SetField(tag.FieldSlug, field.TypeString, value)
 	}
 	if tuo.mutation.SlugCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: tag.FieldSlug,
-		})
+		_spec.ClearField(tag.FieldSlug, field.TypeString)
 	}
 	if value, ok := tuo.mutation.Color(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: tag.FieldColor,
-		})
+		_spec.SetField(tag.FieldColor, field.TypeString, value)
 	}
 	if tuo.mutation.ColorCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: tag.FieldColor,
-		})
+		_spec.ClearField(tag.FieldColor, field.TypeString)
 	}
 	if value, ok := tuo.mutation.Thumbnail(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: tag.FieldThumbnail,
-		})
+		_spec.SetField(tag.FieldThumbnail, field.TypeString, value)
 	}
 	if tuo.mutation.ThumbnailCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: tag.FieldThumbnail,
-		})
+		_spec.ClearField(tag.FieldThumbnail, field.TypeString)
 	}
 	if value, ok := tuo.mutation.SlugName(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: tag.FieldSlugName,
-		})
+		_spec.SetField(tag.FieldSlugName, field.TypeString, value)
 	}
 	if tuo.mutation.SlugNameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: tag.FieldSlugName,
-		})
+		_spec.ClearField(tag.FieldSlugName, field.TypeString)
 	}
 	if value, ok := tuo.mutation.PostCount(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: tag.FieldPostCount,
-		})
+		_spec.SetField(tag.FieldPostCount, field.TypeUint32, value)
 	}
 	if value, ok := tuo.mutation.AddedPostCount(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: tag.FieldPostCount,
-		})
+		_spec.AddField(tag.FieldPostCount, field.TypeUint32, value)
 	}
 	if tuo.mutation.PostCountCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Column: tag.FieldPostCount,
-		})
+		_spec.ClearField(tag.FieldPostCount, field.TypeUint32)
 	}
 	_spec.AddModifiers(tuo.modifiers...)
 	_node = &Tag{config: tuo.config}

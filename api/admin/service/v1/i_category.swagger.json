@@ -126,6 +126,12 @@
             "required": true,
             "type": "integer",
             "format": "int64"
+          },
+          {
+            "name": "fieldMask",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [

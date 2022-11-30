@@ -306,91 +306,47 @@ func (pc *PhotoCreate) createSpec() (*Photo, *sqlgraph.CreateSpec) {
 		_spec.ID.Value = id
 	}
 	if value, ok := pc.mutation.CreateTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: photo.FieldCreateTime,
-		})
+		_spec.SetField(photo.FieldCreateTime, field.TypeInt64, value)
 		_node.CreateTime = &value
 	}
 	if value, ok := pc.mutation.UpdateTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: photo.FieldUpdateTime,
-		})
+		_spec.SetField(photo.FieldUpdateTime, field.TypeInt64, value)
 		_node.UpdateTime = &value
 	}
 	if value, ok := pc.mutation.DeleteTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: photo.FieldDeleteTime,
-		})
+		_spec.SetField(photo.FieldDeleteTime, field.TypeInt64, value)
 		_node.DeleteTime = &value
 	}
 	if value, ok := pc.mutation.Name(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: photo.FieldName,
-		})
+		_spec.SetField(photo.FieldName, field.TypeString, value)
 		_node.Name = &value
 	}
 	if value, ok := pc.mutation.Thumbnail(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: photo.FieldThumbnail,
-		})
+		_spec.SetField(photo.FieldThumbnail, field.TypeString, value)
 		_node.Thumbnail = &value
 	}
 	if value, ok := pc.mutation.TakeTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: photo.FieldTakeTime,
-		})
+		_spec.SetField(photo.FieldTakeTime, field.TypeInt64, value)
 		_node.TakeTime = &value
 	}
 	if value, ok := pc.mutation.URL(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: photo.FieldURL,
-		})
+		_spec.SetField(photo.FieldURL, field.TypeString, value)
 		_node.URL = &value
 	}
 	if value, ok := pc.mutation.Team(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: photo.FieldTeam,
-		})
+		_spec.SetField(photo.FieldTeam, field.TypeString, value)
 		_node.Team = &value
 	}
 	if value, ok := pc.mutation.Location(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: photo.FieldLocation,
-		})
+		_spec.SetField(photo.FieldLocation, field.TypeString, value)
 		_node.Location = &value
 	}
 	if value, ok := pc.mutation.Description(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: photo.FieldDescription,
-		})
+		_spec.SetField(photo.FieldDescription, field.TypeString, value)
 		_node.Description = &value
 	}
 	if value, ok := pc.mutation.Likes(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: photo.FieldLikes,
-		})
+		_spec.SetField(photo.FieldLikes, field.TypeInt32, value)
 		_node.Likes = &value
 	}
 	return _node, _spec

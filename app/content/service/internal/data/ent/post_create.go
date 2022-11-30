@@ -493,195 +493,99 @@ func (pc *PostCreate) createSpec() (*Post, *sqlgraph.CreateSpec) {
 		_spec.ID.Value = id
 	}
 	if value, ok := pc.mutation.CreateTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: post.FieldCreateTime,
-		})
+		_spec.SetField(post.FieldCreateTime, field.TypeInt64, value)
 		_node.CreateTime = &value
 	}
 	if value, ok := pc.mutation.UpdateTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: post.FieldUpdateTime,
-		})
+		_spec.SetField(post.FieldUpdateTime, field.TypeInt64, value)
 		_node.UpdateTime = &value
 	}
 	if value, ok := pc.mutation.DeleteTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: post.FieldDeleteTime,
-		})
+		_spec.SetField(post.FieldDeleteTime, field.TypeInt64, value)
 		_node.DeleteTime = &value
 	}
 	if value, ok := pc.mutation.Title(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldTitle,
-		})
+		_spec.SetField(post.FieldTitle, field.TypeString, value)
 		_node.Title = &value
 	}
 	if value, ok := pc.mutation.Slug(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldSlug,
-		})
+		_spec.SetField(post.FieldSlug, field.TypeString, value)
 		_node.Slug = &value
 	}
 	if value, ok := pc.mutation.MetaKeywords(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldMetaKeywords,
-		})
+		_spec.SetField(post.FieldMetaKeywords, field.TypeString, value)
 		_node.MetaKeywords = &value
 	}
 	if value, ok := pc.mutation.MetaDescription(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldMetaDescription,
-		})
+		_spec.SetField(post.FieldMetaDescription, field.TypeString, value)
 		_node.MetaDescription = &value
 	}
 	if value, ok := pc.mutation.FullPath(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldFullPath,
-		})
+		_spec.SetField(post.FieldFullPath, field.TypeString, value)
 		_node.FullPath = &value
 	}
 	if value, ok := pc.mutation.OriginalContent(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldOriginalContent,
-		})
+		_spec.SetField(post.FieldOriginalContent, field.TypeString, value)
 		_node.OriginalContent = &value
 	}
 	if value, ok := pc.mutation.Content(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldContent,
-		})
+		_spec.SetField(post.FieldContent, field.TypeString, value)
 		_node.Content = &value
 	}
 	if value, ok := pc.mutation.Summary(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldSummary,
-		})
+		_spec.SetField(post.FieldSummary, field.TypeString, value)
 		_node.Summary = &value
 	}
 	if value, ok := pc.mutation.Thumbnail(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldThumbnail,
-		})
+		_spec.SetField(post.FieldThumbnail, field.TypeString, value)
 		_node.Thumbnail = &value
 	}
 	if value, ok := pc.mutation.Password(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldPassword,
-		})
+		_spec.SetField(post.FieldPassword, field.TypeString, value)
 		_node.Password = &value
 	}
 	if value, ok := pc.mutation.Template(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: post.FieldTemplate,
-		})
+		_spec.SetField(post.FieldTemplate, field.TypeString, value)
 		_node.Template = &value
 	}
 	if value, ok := pc.mutation.CommentCount(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldCommentCount,
-		})
+		_spec.SetField(post.FieldCommentCount, field.TypeInt32, value)
 		_node.CommentCount = &value
 	}
 	if value, ok := pc.mutation.Visits(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldVisits,
-		})
+		_spec.SetField(post.FieldVisits, field.TypeInt32, value)
 		_node.Visits = &value
 	}
 	if value, ok := pc.mutation.Likes(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldLikes,
-		})
+		_spec.SetField(post.FieldLikes, field.TypeInt32, value)
 		_node.Likes = &value
 	}
 	if value, ok := pc.mutation.WordCount(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldWordCount,
-		})
+		_spec.SetField(post.FieldWordCount, field.TypeInt32, value)
 		_node.WordCount = &value
 	}
 	if value, ok := pc.mutation.TopPriority(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldTopPriority,
-		})
+		_spec.SetField(post.FieldTopPriority, field.TypeInt32, value)
 		_node.TopPriority = &value
 	}
 	if value, ok := pc.mutation.Status(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldStatus,
-		})
+		_spec.SetField(post.FieldStatus, field.TypeInt32, value)
 		_node.Status = &value
 	}
 	if value, ok := pc.mutation.EditorType(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: post.FieldEditorType,
-		})
+		_spec.SetField(post.FieldEditorType, field.TypeInt32, value)
 		_node.EditorType = &value
 	}
 	if value, ok := pc.mutation.EditTime(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: post.FieldEditTime,
-		})
+		_spec.SetField(post.FieldEditTime, field.TypeInt64, value)
 		_node.EditTime = &value
 	}
 	if value, ok := pc.mutation.DisallowComment(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: post.FieldDisallowComment,
-		})
+		_spec.SetField(post.FieldDisallowComment, field.TypeBool, value)
 		_node.DisallowComment = &value
 	}
 	if value, ok := pc.mutation.InProgress(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: post.FieldInProgress,
-		})
+		_spec.SetField(post.FieldInProgress, field.TypeBool, value)
 		_node.InProgress = &value
 	}
 	return _node, _spec

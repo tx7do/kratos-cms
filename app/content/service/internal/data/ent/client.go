@@ -213,7 +213,7 @@ func (c *CategoryClient) DeleteOne(ca *Category) *CategoryDeleteOne {
 	return c.DeleteOneID(ca.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *CategoryClient) DeleteOneID(id uint32) *CategoryDeleteOne {
 	builder := c.Delete().Where(category.ID(id))
 	builder.mutation.id = &id
@@ -303,7 +303,7 @@ func (c *LinkClient) DeleteOne(l *Link) *LinkDeleteOne {
 	return c.DeleteOneID(l.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *LinkClient) DeleteOneID(id uint32) *LinkDeleteOne {
 	builder := c.Delete().Where(link.ID(id))
 	builder.mutation.id = &id
@@ -393,7 +393,7 @@ func (c *MenuClient) DeleteOne(m *Menu) *MenuDeleteOne {
 	return c.DeleteOneID(m.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *MenuClient) DeleteOneID(id uint32) *MenuDeleteOne {
 	builder := c.Delete().Where(menu.ID(id))
 	builder.mutation.id = &id
@@ -483,7 +483,7 @@ func (c *PhotoClient) DeleteOne(ph *Photo) *PhotoDeleteOne {
 	return c.DeleteOneID(ph.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *PhotoClient) DeleteOneID(id uint32) *PhotoDeleteOne {
 	builder := c.Delete().Where(photo.ID(id))
 	builder.mutation.id = &id
@@ -573,7 +573,7 @@ func (c *PostClient) DeleteOne(po *Post) *PostDeleteOne {
 	return c.DeleteOneID(po.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *PostClient) DeleteOneID(id uint32) *PostDeleteOne {
 	builder := c.Delete().Where(post.ID(id))
 	builder.mutation.id = &id
@@ -663,7 +663,7 @@ func (c *TagClient) DeleteOne(t *Tag) *TagDeleteOne {
 	return c.DeleteOneID(t.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *TagClient) DeleteOneID(id uint32) *TagDeleteOne {
 	builder := c.Delete().Where(tag.ID(id))
 	builder.mutation.id = &id
