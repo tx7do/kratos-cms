@@ -12,17 +12,20 @@ require (
 	github.com/google/wire v0.5.0
 	github.com/hashicorp/consul/api v1.17.0
 	github.com/nacos-group/nacos-sdk-go v1.1.2
-	github.com/tx7do/kratos-authn/authn v0.0.0-20221113094443-0674ebc7a3b3
-	github.com/tx7do/kratos-authn/engine/jwt v0.0.4
-	github.com/tx7do/kratos-authz v0.0.2
-	github.com/tx7do/kratos-authz/authz v0.0.0-20221114164744-f3a99f191bdd
-	github.com/tx7do/kratos-authz/engine/noop v0.0.0-20221114164744-f3a99f191bdd
 	go.etcd.io/etcd/client/v3 v3.5.6
 	go.opentelemetry.io/otel v1.11.1
 	go.opentelemetry.io/otel/exporters/jaeger v1.11.1
 	go.opentelemetry.io/otel/sdk v1.11.1
 	google.golang.org/grpc v1.51.0
 	google.golang.org/protobuf v1.28.1
+)
+
+require (
+	github.com/tx7do/kratos-authn/authn v0.0.0-20221130122723-a3cd19e86f68
+	github.com/tx7do/kratos-authn/engine/jwt v0.0.0-20221130122723-a3cd19e86f68
+	github.com/tx7do/kratos-authz v0.0.2
+	github.com/tx7do/kratos-authz/authz v0.0.0-20221114164744-f3a99f191bdd
+	github.com/tx7do/kratos-authz/engine/noop v0.0.0-20221114164744-f3a99f191bdd
 )
 
 require (
@@ -80,7 +83,7 @@ require (
 	github.com/rakyll/statik v0.1.7 // indirect
 	github.com/segmentio/asm v1.2.0 // indirect
 	github.com/shopspring/decimal v1.3.1 // indirect
-	github.com/tx7do/kratos-authn v0.0.4 // indirect
+	github.com/tx7do/kratos-authn v0.0.5 // indirect
 	go.etcd.io/etcd/api/v3 v3.5.6 // indirect
 	go.etcd.io/etcd/client/pkg/v3 v3.5.6 // indirect
 	go.opentelemetry.io/otel/trace v1.11.1 // indirect
