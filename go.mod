@@ -28,7 +28,7 @@ require (
 	github.com/stretchr/testify v1.8.1
 	github.com/tx7do/kratos-authn/authn v0.0.0-20221130123508-fed84d7952e9
 	github.com/tx7do/kratos-authn/engine/jwt v0.0.0-20221130123508-fed84d7952e9
-	github.com/tx7do/kratos-authz v0.0.2
+	github.com/tx7do/kratos-authz v0.0.3
 	github.com/tx7do/kratos-authz/authz v0.0.0-20221114164744-f3a99f191bdd
 	github.com/tx7do/kratos-authz/engine/noop v0.0.0-20221114164744-f3a99f191bdd
 	go.etcd.io/etcd/client/v3 v3.5.6

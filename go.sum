@@ -655,6 +655,8 @@ github.com/tx7do/kratos-authn/engine/jwt v0.0.0-20221130123508-fed84d7952e9 h1:Q
 github.com/tx7do/kratos-authn/engine/jwt v0.0.0-20221130123508-fed84d7952e9/go.mod h1:FvvG+lBhYvqlFkCxtEyRbuZrt0HWM+wAf7Y3+x/JP/w=
 github.com/tx7do/kratos-authz v0.0.2 h1:knW8I5EZjNbaeJCIMDesIeGWkXnQgqOpn0mcTl6pteA=
 github.com/tx7do/kratos-authz v0.0.2/go.mod h1:AzSqXPeiFzLoxPo+s9za1eL6uy+NPq7OA0PIUTkeK7Q=
+github.com/tx7do/kratos-authz v0.0.3 h1:ss9FLig5mD7dyy0zRfBXozoUNz9tARYAJk7flBPkik4=
+github.com/tx7do/kratos-authz v0.0.3/go.mod h1:AzSqXPeiFzLoxPo+s9za1eL6uy+NPq7OA0PIUTkeK7Q=
 github.com/tx7do/kratos-authz/authz v0.0.0-20221114164744-f3a99f191bdd h1:IrNLdmWQkygdGi4RAiW/PT8uAWMbPf7/ImEvEQx9uq4=
 github.com/tx7do/kratos-authz/authz v0.0.0-20221114164744-f3a99f191bdd/go.mod h1:11vs/7RCpJfmHdxqAKbS3kRT0bMGxHgMGuhwQf+zVs8=
 github.com/tx7do/kratos-authz/engine/casbin v0.0.1 h1:v0MwhTeuOJBxfeCx0jhuugUe2SbL6VhNizAB8UW73HM=
