@@ -36,6 +36,7 @@ require (
 	go.opentelemetry.io/otel/exporters/jaeger v1.11.1
 	go.opentelemetry.io/otel/sdk v1.11.1
 	golang.org/x/crypto v0.3.0
+	golang.org/x/tools v0.3.0
 	google.golang.org/genproto v0.0.0-20221130183247-a2ec334bae6f
 	google.golang.org/grpc v1.51.0
 	google.golang.org/protobuf v1.28.1
@@ -135,7 +136,6 @@ require (
 	golang.org/x/sync v0.1.0 // indirect
 	golang.org/x/sys v0.2.0 // indirect
 	golang.org/x/text v0.4.0 // indirect
-	golang.org/x/tools v0.3.0 // indirect
 	gopkg.in/ini.v1 v1.42.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
