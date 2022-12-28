@@ -21,13 +21,13 @@ message PagingRequest {
   optional int32 page = 1;
 
   // 每一页的行数
-  optional int32 pageSize = 2;
+  optional int32 pageSize = 2 [json_name = "pageSize"];
 
   // 查询参数
   map<string, string> query = 3;
 
   // 排序
-  map<string, string> orderBy = 4;
+  map<string, string> orderBy = 4 [json_name = "orderBy"];
 
   // 是否不分页
   optional bool nopaging = 5;
