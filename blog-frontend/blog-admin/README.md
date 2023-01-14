@@ -1,13 +1,9 @@
-# 克拉托斯博客后台管理系统 Kratos-Blog-Admin 
+# 克拉托斯博客 - 后台管理系统 - Kratos Blog Admin
 
-一个基于Go的博客系统/CMS。
+一个Golang的博客系统/CMS。
 
-- 后端基于golang微服务框架[go-kratos](https://go-kratos.dev/)
-- 前端基于[VUE3](https://vuejs.org/)
-
-## 后端代码
-
-后端代码仓库：<https://github.com/tx7do/kratos-blog>
+- 后端基于 golang微服务框架 [go-kratos](https://go-kratos.dev/)
+- 前端基于 [VUE3](https://vuejs.org/) + [TypeScript](https://www.typescriptlang.org/)
 
 ## 技术栈
 
