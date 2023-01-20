@@ -19,6 +19,24 @@
 * [Swagger](https://github.com/swaggo/swag) -- RESTful API 文档
 * [MinIO](https://min.io/) -- 对象存储服务器
 
+## 生成API
+
+使用[buf.build](https://buf.build/)进行构建，buf的安装文档请参考官方文档：<https://docs.buf.build/installation>
+
+在`blog-backend`根目录下执行`buf generate`命令：
+
+1. 生成全部
+
+    ```bash
+    buf generate
+    ```
+
+2. 生成OpenAPI v3文档
+
+    ```bash
+    buf generate --path api/admin/service/v1 --template api/admin/service/buf.openapi.gen.yaml
+    ```
+
 ## Docker部署开发服务器
 
 ### Consul

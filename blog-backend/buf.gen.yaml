@@ -28,15 +28,3 @@ plugins:
     opt:
       - paths=source_relative
       - lang=go
-  # generate openapi v2 json doc
-#  - name: openapiv2
-#    out: gen/api/go
-#    opt:
-#      - json_names_for_fields=true
-#      - logtostderr=true
-  # generate openapi v2 yaml doc
-#  - name: openapi
-#    out: gen/api/go
-#    opt:
-#      - naming=json
-#      - paths=source_relative
