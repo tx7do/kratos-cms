@@ -34,7 +34,7 @@
 2. 生成OpenAPI v3文档
 
     ```bash
-    buf generate --path api/admin/service/v1 --template api/admin/service/buf.openapi.gen.yaml
+    buf generate --path api/admin/service/v1 --template api/admin/service/v1/buf.openapi.gen.yaml
     ```
 
 ## Docker部署开发服务器
