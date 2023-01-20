@@ -2,7 +2,6 @@ package data
 
 import (
 	"context"
-	"kratos-blog/api/pagination"
 
 	"github.com/go-kratos/kratos/v2/log"
 
@@ -10,7 +9,9 @@ import (
 	"kratos-blog/app/comment/service/internal/data/ent"
 	"kratos-blog/app/comment/service/internal/data/ent/comment"
 
-	v1 "kratos-blog/api/comment/service/v1"
+	v1 "kratos-blog/gen/api/go/comment/service/v1"
+	"kratos-blog/gen/api/go/pagination"
+
 	"kratos-blog/pkg/util/entgo"
 	paging "kratos-blog/pkg/util/pagination"
 )

@@ -19,7 +19,7 @@ import (
 	"github.com/tx7do/kratos-authz/authz"
 	"github.com/tx7do/kratos-authz/engine/noop"
 
-	v1 "kratos-blog/api/admin/service/v1"
+	v1 "kratos-blog/gen/api/go/admin/service/v1"
 	"kratos-blog/pkg/middleware/auth"
 
 	"kratos-blog/app/admin/service/internal/conf"

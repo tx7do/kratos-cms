@@ -2,11 +2,13 @@ package service
 
 import (
 	"context"
+
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	v1 "kratos-blog/api/user/service/v1"
 	"kratos-blog/app/user/service/internal/biz"
+
+	v1 "kratos-blog/gen/api/go/user/service/v1"
 )
 
 type UserService struct {

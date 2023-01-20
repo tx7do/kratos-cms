@@ -142,3 +142,6 @@ fabric.properties
 .ninja_log
 
 *~
+
+# protobuf generate output
+gen/

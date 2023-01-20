@@ -5,7 +5,8 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 
-	v1 "kratos-blog/api/user/service/v1"
+	v1 "kratos-blog/gen/api/go/user/service/v1"
+
 	"kratos-blog/pkg/util/crypto"
 	"kratos-blog/pkg/util/entgo"
 

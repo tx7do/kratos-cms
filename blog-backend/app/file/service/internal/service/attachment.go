@@ -2,13 +2,14 @@ package service
 
 import (
 	"context"
-	"kratos-blog/api/pagination"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	v1 "kratos-blog/api/file/service/v1"
 	"kratos-blog/app/file/service/internal/biz"
+
+	v1 "kratos-blog/gen/api/go/file/service/v1"
+	"kratos-blog/gen/api/go/pagination"
 )
 
 type AttachmentService struct {

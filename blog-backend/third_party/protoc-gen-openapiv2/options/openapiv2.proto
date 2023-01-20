@@ -22,7 +22,7 @@ enum Scheme {
 //
 // Example:
 //
-//  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+//  option (openapi.v3.document) = {
 //    info: {
 //      title: "Echo API";
 //      version: "1.0";
@@ -252,7 +252,7 @@ message Response {
 //
 // Example:
 //
-//  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+//  option (openapi.v3.document) = {
 //    info: {
 //      title: "Echo API";
 //      version: "1.0";
@@ -297,7 +297,7 @@ message Info {
 //
 // Example:
 //
-//  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+//  option (openapi.v3.document) = {
 //    info: {
 //      ...
 //      contact: {
@@ -327,7 +327,7 @@ message Contact {
 //
 // Example:
 //
-//  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+//  option (openapi.v3.document) = {
 //    info: {
 //      ...
 //      license: {
@@ -353,7 +353,7 @@ message License {
 //
 // Example:
 //
-//  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+//  option (openapi.v3.document) = {
 //    ...
 //    external_docs: {
 //      description: "More about gRPC-Gateway";

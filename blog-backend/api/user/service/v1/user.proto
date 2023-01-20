@@ -1,0 +1,103 @@
+syntax = "proto3";
+
+package user.service.v1;
+option go_package = "kratos-blog/gen/api/go/user/service/v1;v1";
+
+import "openapiv3/annotations.proto";
+import "google/protobuf/empty.proto";
+
+option (openapi.v3.document) = {
+  info: {
+    title: "用户管理接口";
+    description: "用户管理";
+    version: "1.0";
+  }
+};
+
+// 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
+
+// 用户服务
+service UserService {
+  // 登陆
+  rpc Login (LoginRequest) returns (LoginResponse) {}
+
+  // 登出
+  rpc Logout (LogoutRequest) returns (google.protobuf.Empty) {}
+
+  // 注册
+  rpc Register (RegisterRequest) returns (RegisterResponse) {}
+
+  // 获取已经登陆的用户的数据
+  rpc GetMe (GetMeRequest) returns (User) {}
+}
+
+// 用户
+message User {
+  uint32 id = 1;
+  optional string userName = 2;
+  optional string nickName = 3;
+  optional string email = 4;
+  optional string avatar = 5;
+  optional string description = 6;
+  optional string password = 7;
+  optional string createTime = 8;
+  optional string updateTime = 9;
+  optional string status = 10 [(openapi.v3.property) = {
+    description: "用户状态"
+//    enum: [ON, OFF]
+  }];
+}
+
+// 请求 - 登录
+message LoginRequest {
+  optional string userName = 1;
+  optional string password = 2;
+}
+// 回应 - 登录
+message LoginResponse {
+  uint32 id = 1;
+  string userName = 2;
+  string token = 3;
+  string refreshToken = 4;
+}
+
+// 请求 - 登出
+message LogoutRequest {
+  uint32 id = 1;
+}
+
+// 请求 - 注册
+message RegisterRequest {
+  User user = 1;
+}
+// 回应 - 注册
+message RegisterResponse {
+  uint32 id = 1;
+  string userName = 2;
+  string token = 3;
+}
+
+
+// 请求 - 创建
+message CreateUserRequest {
+  User user = 1;
+  uint32 operatorId = 2;
+}
+
+// 请求 - 更新
+message UpdateUserRequest {
+  uint32 id = 1;
+  User user = 2;
+  uint32 operatorId = 3;
+}
+
+// 请求 - 删除
+message DeleteUserRequest {
+  uint32 id = 1;
+  uint32 operatorId = 2;
+}
+
+// 请求 - 获取当前用户信息
+message GetMeRequest {
+  uint32 id = 1;
+}

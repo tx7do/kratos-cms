@@ -3,27 +3,40 @@ version: v1
 managed:
   enabled: false
 plugins:
-  # 使用go插件生成go代码
+  # generate go struct code
   - name: go
-    out: gen/proto/go
+    out: gen/api/go
     opt: paths=source_relative
-  # 使用go-grpc插件生成grpc代码
+  # generate grpc service code
   - name: go-grpc
-    out: gen/proto/go
+    out: gen/api/go
     opt:
       - paths=source_relative
-  # 使用go-http插件生成grpc http代码
+  # generate rest service code
   - name: go-http
-    out: gen/proto/go
+    out: gen/api/go
     opt:
       - paths=source_relative
-  # 使用go-errors插件生成errors代码
+  # generate kratos errors code
   - name: go-errors
-    out: gen/proto/go
-    opt: paths=source_relative
-  # 使用openapiv2插件生成swagger文件
-  - name: openapiv2
-    out: gen/proto/go
+    out: gen/api/go
     opt:
-      - json_names_for_fields=true
-      - logtostderr=true
+      - paths=source_relative
+  # generate message validator code
+  - name: validate
+    out: gen/api/go
+    opt:
+      - paths=source_relative
+      - lang=go
+  # generate openapi v2 json doc
+#  - name: openapiv2
+#    out: gen/api/go
+#    opt:
+#      - json_names_for_fields=true
+#      - logtostderr=true
+  # generate openapi v2 yaml doc
+#  - name: openapi
+#    out: gen/api/go
+#    opt:
+#      - naming=json
+#      - paths=source_relative

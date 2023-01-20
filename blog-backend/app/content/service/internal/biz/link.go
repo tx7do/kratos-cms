@@ -2,10 +2,11 @@ package biz
 
 import (
 	"context"
-	"kratos-blog/api/content/service/v1"
-	"kratos-blog/api/pagination"
 
 	"github.com/go-kratos/kratos/v2/log"
+
+	"kratos-blog/gen/api/go/content/service/v1"
+	"kratos-blog/gen/api/go/pagination"
 )
 
 type LinkRepo interface {

@@ -17,10 +17,10 @@ import (
 	"github.com/go-redis/redis/extra/redisotel/v8"
 	"github.com/go-redis/redis/v8"
 
-	commentV1 "kratos-blog/api/comment/service/v1"
-	contentV1 "kratos-blog/api/content/service/v1"
-	fileV1 "kratos-blog/api/file/service/v1"
-	userV1 "kratos-blog/api/user/service/v1"
+	commentV1 "kratos-blog/gen/api/go/comment/service/v1"
+	contentV1 "kratos-blog/gen/api/go/content/service/v1"
+	fileV1 "kratos-blog/gen/api/go/file/service/v1"
+	userV1 "kratos-blog/gen/api/go/user/service/v1"
 
 	"kratos-blog/app/admin/service/internal/conf"
 	"kratos-blog/pkg/service"

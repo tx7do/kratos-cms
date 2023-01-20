@@ -11,9 +11,10 @@ import (
 	"github.com/go-redis/redis/v8"
 	jwtV4 "github.com/golang-jwt/jwt/v4"
 
-	v1 "kratos-blog/api/user/service/v1"
 	"kratos-blog/app/user/service/internal/biz"
 	"kratos-blog/app/user/service/internal/conf"
+
+	v1 "kratos-blog/gen/api/go/user/service/v1"
 )
 
 // 官方的7个字段

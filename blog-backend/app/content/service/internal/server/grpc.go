@@ -7,7 +7,7 @@ import (
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 
-	v1 "kratos-blog/api/content/service/v1"
+	v1 "kratos-blog/gen/api/go/content/service/v1"
 
 	"kratos-blog/app/content/service/internal/conf"
 	"kratos-blog/app/content/service/internal/service"

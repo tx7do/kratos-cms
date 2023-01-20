@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package admin.service.v1;
+option go_package = "kratos-blog/gen/api/go/admin/service/v1;v1";
+
+import "openapiv3/annotations.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+import "pagination/pagination.proto";
+import "content/service/v1/post.proto";
+
+option (openapi.v3.document) = {
+  info: {
+    title: "帖子管理接口";
+    description: "帖子管理";
+    version: "1.0";
+  }
+};
+
+// 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
+
+// 帖子服务
+service PostService {
+  // 获取帖子列表
+  rpc ListPost (pagination.PagingRequest) returns (content.service.v1.ListPostResponse) {
+    option (google.api.http) = {
+      get: "/blog/v1/posts"
+    };
+  }
+
+  // 获取帖子数据
+  rpc GetPost (content.service.v1.GetPostRequest) returns (content.service.v1.Post) {
+    option (google.api.http) = {
+      get: "/blog/v1/posts/{id}"
+    };
+  }
+
+  // 创建帖子
+  rpc CreatePost (content.service.v1.CreatePostRequest) returns (content.service.v1.Post) {
+    option (google.api.http) = {
+      post: "/blog/v1/posts"
+      body: "*"
+    };
+  }
+
+  // 更新帖子
+  rpc UpdatePost (content.service.v1.UpdatePostRequest) returns (content.service.v1.Post) {
+    option (google.api.http) = {
+      put: "/blog/v1/posts/{id}"
+      body: "post"
+    };
+  }
+
+  // 删除帖子
+  rpc DeletePost (content.service.v1.DeletePostRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/blog/v1/posts/{id}"
+    };
+  }
+}

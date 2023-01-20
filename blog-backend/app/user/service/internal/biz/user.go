@@ -2,8 +2,10 @@ package biz
 
 import (
 	"context"
+
 	"github.com/go-kratos/kratos/v2/log"
-	v1 "kratos-blog/api/user/service/v1"
+
+	v1 "kratos-blog/gen/api/go/user/service/v1"
 )
 
 type UserRepo interface {

@@ -2,16 +2,17 @@ package data
 
 import (
 	"context"
-	"gorm.io/gorm"
-	"kratos-blog/api/pagination"
-	"kratos-blog/app/file/service/internal/data/model"
-	paging "kratos-blog/pkg/util/pagination"
 
 	"github.com/go-kratos/kratos/v2/log"
+	"gorm.io/gorm"
 
 	"kratos-blog/app/file/service/internal/biz"
+	"kratos-blog/app/file/service/internal/data/model"
 
-	v1 "kratos-blog/api/file/service/v1"
+	v1 "kratos-blog/gen/api/go/file/service/v1"
+	"kratos-blog/gen/api/go/pagination"
+
+	paging "kratos-blog/pkg/util/pagination"
 )
 
 var _ biz.AttachmentRepo = (*AttachmentRepo)(nil)

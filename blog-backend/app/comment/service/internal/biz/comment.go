@@ -2,11 +2,11 @@ package biz
 
 import (
 	"context"
-	"kratos-blog/api/pagination"
+	"kratos-blog/gen/api/go/pagination"
 
 	"github.com/go-kratos/kratos/v2/log"
 
-	v1 "kratos-blog/api/comment/service/v1"
+	v1 "kratos-blog/gen/api/go/comment/service/v1"
 )
 
 type CommentRepo interface {
