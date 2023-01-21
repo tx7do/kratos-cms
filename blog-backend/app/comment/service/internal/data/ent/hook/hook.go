@@ -14,11 +14,10 @@ type CommentFunc func(context.Context, *ent.CommentMutation) (ent.Value, error)
 
 // Mutate calls f(ctx, m).
 func (f CommentFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.CommentMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.CommentMutation", m)
+	if mv, ok := m.(*ent.CommentMutation); ok {
+		return f(ctx, mv)
 	}
-	return f(ctx, mv)
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.CommentMutation", m)
 }
 
 // Condition is a hook condition function.

@@ -2,13 +2,13 @@ package auth
 
 import (
 	"context"
-	"github.com/go-kratos/kratos/v2/transport"
-
-	"github.com/tx7do/kratos-authn/authn"
-	"github.com/tx7do/kratos-authz/authz"
-	"github.com/tx7do/kratos-authz/engine"
 
 	"github.com/go-kratos/kratos/v2/middleware"
+	"github.com/go-kratos/kratos/v2/transport"
+
+	authn "github.com/tx7do/kratos-authn/middleware"
+	"github.com/tx7do/kratos-authz/engine"
+	authz "github.com/tx7do/kratos-authz/middleware"
 )
 
 var action = engine.Action("ANY")

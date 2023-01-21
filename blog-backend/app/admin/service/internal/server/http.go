@@ -16,11 +16,12 @@ import (
 	"github.com/tx7do/kratos-authn/authn"
 	"github.com/tx7do/kratos-authn/engine/jwt"
 
-	"github.com/tx7do/kratos-authz/authz"
 	"github.com/tx7do/kratos-authz/engine/noop"
+	authz "github.com/tx7do/kratos-authz/middleware"
+
+	"kratos-blog/pkg/middleware/auth"
 
 	v1 "kratos-blog/gen/api/go/admin/service/v1"
-	"kratos-blog/pkg/middleware/auth"
 
 	"kratos-blog/app/admin/service/internal/conf"
 	"kratos-blog/app/admin/service/internal/service"
