@@ -29,7 +29,8 @@ jobs:
         run: ./.github/scripts/install_protoc_plugins.sh
 
       - name: Generate API
-        run: buf generate
+        shell: bash
+        run: ./.github/scripts/generate_api.sh
 
       - name: Get dependencies
         run: |
