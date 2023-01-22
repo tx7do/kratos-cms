@@ -6,14 +6,6 @@ option go_package = "kratos-blog/gen/api/go/user/service/v1;v1";
 import "openapiv3/annotations.proto";
 import "google/protobuf/empty.proto";
 
-option (openapi.v3.document) = {
-  info: {
-    title: "用户管理接口";
-    description: "用户管理";
-    version: "1.0";
-  }
-};
-
 // 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
 
 // 用户服务
@@ -44,7 +36,8 @@ message User {
   optional string updateTime = 9;
   optional string status = 10 [(openapi.v3.property) = {
     description: "用户状态"
-//    enum: [ON, OFF]
+    default: { string: "ON" }
+    enum: [{yaml: "ON"}, {yaml: "OFF"}]
   }];
 }
 

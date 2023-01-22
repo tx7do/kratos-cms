@@ -3,18 +3,9 @@ syntax = "proto3";
 package file.service.v1;
 option go_package = "kratos-blog/gen/api/go/file/service/v1";
 
-import "openapiv3/annotations.proto";
 import "google/protobuf/empty.proto";
 
 import "pagination/pagination.proto";
-
-option (openapi.v3.document) = {
-  info: {
-    title: "附件管理接口";
-    description: "附件管理";
-    version: "1.0";
-  }
-};
 
 // 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
 
