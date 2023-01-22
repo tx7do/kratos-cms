@@ -21,12 +21,10 @@ init:
 	@go install github.com/go-kratos/kratos/cmd/protoc-gen-go-errors/v2@latest
 	@go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
 	@go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
-	@go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
-	@go install github.com/envoyproxy/protoc-gen-validate@latest
-	@go install github.com/google/gnostic@latest
-	#@go install github.com/google/wire/cmd/wire@latest
-	@go install entgo.io/ent/cmd/ent@latest
+	@go install github.com/bufbuild/protoc-gen-validate@latest
 	@go install github.com/bufbuild/buf/cmd/buf@latest
+	@go install github.com/google/gnostic@latest
+	@go install entgo.io/ent/cmd/ent@latest
 	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 
 .PHONY: dep
@@ -42,7 +40,10 @@ vendor:
 .PHONY: build
 # build application
 build:
-	mkdir -p bin/ && go build -ldflags "-X main.Service.Version=$(APP_VERSION)" -o ./bin/ ./...
+ifeq ("$(wildcard ./bin/)","")
+	mkdir bin
+endif
+	@go build -ldflags "-X main.Service.Version=$(APP_VERSION)" -o ./bin/ ./...
 
 # clean build files
 .PHONY: clean
@@ -53,32 +54,46 @@ clean:
 .PHONY: docker
 # build docker image
 docker:
-	cd ../../.. && @docker build -f deploy/build/Dockerfile --build-arg APP_RELATIVE_PATH=$(APP_RELATIVE_PATH) -t $(APP_DOCKER_IMAGE) .
+	@docker build -f ../../../.docker/Dockerfile --build-arg APP_RELATIVE_PATH=$(APP_RELATIVE_PATH) -t $(APP_DOCKER_IMAGE) .
 
 .PHONY: conf
-# generate config struct code
+# generate config define code
 conf:
-	@go generate ./internal/conf/...
+	protoc --proto_path=. \
+	       --proto_path=../../../third_party \
+	       --go_out=paths=source_relative:. \
+	       ./internal/conf/conf.proto
 
 .PHONY: ent
 # generate ent code
 ent:
-	@go generate ./internal/data/ent/...
+ifneq ("$(wildcard ./internal/data/ent/schema)","")
+	@go run -mod=mod entgo.io/ent/cmd/ent generate \
+				--feature privacy \
+				--feature sql/modifier \
+				--feature entql \
+				--feature sql/upsert \
+				./internal/data/ent/schema
+else
+	@echo ent schema doesnt exist!
+endif
 
 .PHONY: wire
 # generate wire code
 wire:
-	@go run github.com/google/wire/cmd/wire ./cmd/server
+	@go run -mod=mod github.com/google/wire/cmd/wire ./cmd/server
 
 .PHONY: api
 # generate api code
 api:
-	$(if $(IS_WINDOWS), cd ..\..\..\api\ & .\generate.bat, cd ../../../api/ & ./generate.sh)
+	@cd ..\..\..\ && \
+	buf generate && \
+	buf generate --path api/admin/service/v1 --template api/admin/service/v1/buf.openapi.gen.yaml
 
 .PHONY: run
 # run application
 run:
-	go run ./cmd/server -conf ./configs
+	@go run ./cmd/server -conf ./configs
 
 .PHONY: test
 # run tests
@@ -102,7 +117,7 @@ lint:
 
 .PHONY: all
 # build all
-all: api wire conf build test
+all: api wire conf ent build test
 
 # show help
 help:

@@ -1,0 +1,31 @@
+
+## Build
+FROM golang:1.18 AS builder
+
+COPY . /src
+
+WORKDIR /src/app/${APP_RELATIVE_PATH}
+
+RUN GOPROXY=https://goproxy.cn make build
+
+## Deploy
+FROM debian:stable-slim
+
+ARG APP_RELATIVE_PATH
+
+RUN apt update && \
+    apt install -y --no-install-recommends ca-certificates netbase && \
+    rm -rf /var/lib/apt/lists/ && \
+    apt autoremove -y && \
+    apt autoclean -y
+
+COPY --from=builder /src/app/${APP_RELATIVE_PATH}/bin /app
+
+WORKDIR /app
+
+EXPOSE 8000 9000
+VOLUME /data/conf
+
+USER nonroot:nonroot
+
+CMD ["./server", "-conf", "/data/conf"]
