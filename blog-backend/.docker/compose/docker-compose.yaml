@@ -16,7 +16,11 @@ services:
       - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
       - KAFKA_LISTENERS=PLAINTEXT://:9092
       - KAFKA_BROKER_ID=1
+    volumes:
+      - /home/data/kafka:/bitnami/kafka
     depends_on:
+      - zookeeper
+    links:
       - zookeeper
   postgres:
     image: docker.io/bitnami/postgresql:latest
@@ -69,3 +73,13 @@ services:
     image: docker.io/bitnami/redis:latest
     ports:
       - "6379:6379"
+  user-service:
+    image: kratos-blog/user-service:0.1.0
+  file-service:
+    image: kratos-blog/file-service:0.1.0
+  content-service:
+    image: kratos-blog/content-service:0.1.0
+  comment-service:
+    image: kratos-blog/comment-service:0.1.0
+  admin-service:
+    image: kratos-blog/admin-service:0.1.0

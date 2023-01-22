@@ -23,7 +23,7 @@ COPY --from=builder /src/app/${APP_RELATIVE_PATH}/bin /app
 
 WORKDIR /app
 
-EXPOSE 8000 9000
+EXPOSE ${GRPC_PORT} ${REST_PORT}
 VOLUME /data/conf
 
 USER nonroot:nonroot

@@ -6,7 +6,7 @@ KRATOS=$(GOPATH)/pkg/mod/github.com/go-kratos/kratos/v2@$(KRATOS_VERSION)
 APP_VERSION=$(shell git describe --tags --always)
 APP_RELATIVE_PATH=$(shell a=`basename $$PWD` && cd .. && b=`basename $$PWD` && echo $$b/$$a)
 APP_NAME=$(shell echo $(APP_RELATIVE_PATH) | sed -En "s/\//-/p")
-APP_DOCKER_IMAGE=$(shell echo $(APP_NAME) |awk -F '@' '{print "go-kratos/" $$0 ":0.1.0"}')
+APP_DOCKER_IMAGE=$(shell echo $(APP_NAME) |awk -F '@' '{print "kratos-blog/" $$0 ":0.1.0"}')
 
 ifeq ($(OS),Windows_NT)
     IS_WINDOWS:=1
@@ -54,7 +54,9 @@ clean:
 .PHONY: docker
 # build docker image
 docker:
-	@docker build -f ../../../.docker/Dockerfile --build-arg APP_RELATIVE_PATH=$(APP_RELATIVE_PATH) -t $(APP_DOCKER_IMAGE) .
+	@docker build -t $(APP_DOCKER_IMAGE) . \
+				  -f ../../../.docker/Dockerfile \
+				  --build-arg APP_RELATIVE_PATH=$(APP_RELATIVE_PATH) GRPC_PORT=9000 REST_PORT=8000
 
 .PHONY: conf
 # generate config define code
