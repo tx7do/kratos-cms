@@ -1,4 +1,6 @@
 #!/bin/bash
+cd ./blog-backend
+
 cd ./app/admin/service
 make build
 
