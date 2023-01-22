@@ -34,14 +34,16 @@ jobs:
 
       - name: Get dependencies
         run: |
-          env GO111MODULE=on go vet ./blog-backend/...
+          env GO111MODULE=on go vet ./...
+        working-directory: ./blog-backend
 
       - name: Build
         shell: bash
         run: ./.github/scripts/build_server.sh
 
       - name: Test
-        run: env GO111MODULE=on go test -v -timeout 30m -race ./blog-backend/... -coverprofile=coverage.txt -covermode=atomic
+        run: env GO111MODULE=on go test -v -timeout 30m -race ./... -coverprofile=coverage.txt -covermode=atomic
+        working-directory: ./blog-backend
 
       - name: Codecov
         uses: codecov/codecov-action@v3
