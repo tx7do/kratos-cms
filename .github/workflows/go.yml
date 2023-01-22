@@ -34,7 +34,7 @@ jobs:
 
       - name: Get dependencies
         run: |
-          env GO111MODULE=on go vet ./...
+          env GO111MODULE=on go mod tidy
         working-directory: ./blog-backend
 
       - name: Build
