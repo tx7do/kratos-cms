@@ -181,7 +181,7 @@ func (r *userTokenRepo) getToken(ctx context.Context, userId uint32) string {
 	result, err := r.data.rdb.Get(ctx, key).Result()
 	if err != nil {
 		if err != redis.Nil {
-			r.log.Error("get redis user token failed: %s", err.Error())
+			r.log.Errorf("get redis user token failed: %s", err.Error())
 		}
 		return ""
 	}
