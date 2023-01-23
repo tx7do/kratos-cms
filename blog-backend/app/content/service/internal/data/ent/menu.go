@@ -147,7 +147,7 @@ func (m *Menu) assignValues(columns []string, values []any) error {
 // Note that you need to call Menu.Unwrap() before calling this method if this Menu
 // was returned from a transaction, and the transaction was committed or rolled back.
 func (m *Menu) Update() *MenuUpdateOne {
-	return (&MenuClient{config: m.config}).UpdateOne(m)
+	return NewMenuClient(m.config).UpdateOne(m)
 }
 
 // Unwrap unwraps the Menu entity that was returned from a transaction after it was closed,

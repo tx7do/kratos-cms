@@ -275,7 +275,7 @@ func (po *Post) assignValues(columns []string, values []any) error {
 // Note that you need to call Post.Unwrap() before calling this method if this Post
 // was returned from a transaction, and the transaction was committed or rolled back.
 func (po *Post) Update() *PostUpdateOne {
-	return (&PostClient{config: po.config}).UpdateOne(po)
+	return NewPostClient(po.config).UpdateOne(po)
 }
 
 // Unwrap unwraps the Post entity that was returned from a transaction after it was closed,

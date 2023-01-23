@@ -1,0 +1,48 @@
+workspace(name = "com_github_tx7do_kratos_blog")
+
+load("//:DOWNLOAD.bzl", "download_package")
+download_package()
+
+load("@io_bazel_rules_go//go:deps.bzl", "go_download_sdk", "go_register_toolchains", "go_rules_dependencies")
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+
+go_rules_dependencies()
+
+go_download_sdk(
+    name = "go_sdk",
+    urls = [
+        "https://mirrors.aliyun.com/golang/{}",
+        "https://dl.google.com/go/{}",
+    ],
+    version = "1.19.5",
+)
+
+go_register_toolchains()
+
+gazelle_dependencies()
+
+load("@rules_buf//buf:repositories.bzl", "rules_buf_dependencies", "rules_buf_toolchains")
+
+rules_buf_dependencies()
+
+rules_buf_toolchains()
+
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+
+rules_proto_dependencies()
+
+rules_proto_toolchains()
+
+load("@rules_buf//buf:defs.bzl", "buf_dependencies")
+
+#buf_dependencies(
+#    name = "buf_deps",
+#    modules = [
+#        "buf.build/envoyproxy/protoc-gen-validate:dc09a417d27241f7b069feae2cd74a0e",
+#    ],
+#)
+
+load("//:DEPS.bzl", "go_deps")
+
+# gazelle:repository_macro DEPS.bzl%go_deps
+go_deps()

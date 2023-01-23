@@ -35,8 +35,8 @@ cloud.google.com/go/storage v1.10.0/go.mod h1:FLPqc6j+Ki4BU591ie1oL6qBQGu2Bl/tZ9
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
 entgo.io/contrib v0.3.4 h1:s6dSxMALALQRktvTVeKCSTEVIk9kg/HPOAWtomBU2uE=
 entgo.io/contrib v0.3.4/go.mod h1:fUwIOdC0+G7OTDpsXZjrjJK8iTPyvYP22pG08hFhhZ0=
-entgo.io/ent v0.11.6 h1:fMQwhuzbPv12AXdrAGyHoOcgh9r0D9F8WEsCRoUWxVc=
-entgo.io/ent v0.11.6/go.mod h1:d4yUWiwY3NQtjGvINzAhUyypopfeEKOxcxLN7D5yM7o=
+entgo.io/ent v0.11.6 h1:qV1wlqehwEYkmkB2AArRghrQnruQmw8DqweeJYNre6I=
+entgo.io/ent v0.11.6/go.mod h1:ericBi6Q8l3wBH1wEIDfKxw7rcQEuRPyBfbIzjtxJ18=
 github.com/Azure/azure-sdk-for-go/sdk/azcore v1.0.0/go.mod h1:uGG2W01BaETf0Ozp+QxxKJdMBNRWPdstHG0Fmdwn1/U=
 github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.0.0/go.mod h1:+6sju8gk8FRmSajX3Oz4G5Gm7P+mbqE9FVaXXFYTkCM=
 github.com/Azure/azure-sdk-for-go/sdk/internal v1.0.0/go.mod h1:eWRD7oawr1Mu1sLCawqVc0CUiF43ia3qQMxLscsKQ9w=

@@ -1,0 +1,8 @@
+.git/
+bazel-bin/
+bazel-out/
+bazel-testlogs/
+bin/
+*.test.bin
+cmd/
+Dockerfile

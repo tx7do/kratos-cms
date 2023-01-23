@@ -1,0 +1,8 @@
+# set GOPROXY
+test --action_env=GOPROXY=https://goproxy.io
+build --action_env=GOPROXY=https://goproxy.io
+run --action_env=GOPROXY=https://goproxy.io
+
+startup --host_jvm_args=-Xmx8g
+startup --unlimit_coredumps
+

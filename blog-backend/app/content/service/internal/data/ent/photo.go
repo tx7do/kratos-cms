@@ -156,7 +156,7 @@ func (ph *Photo) assignValues(columns []string, values []any) error {
 // Note that you need to call Photo.Unwrap() before calling this method if this Photo
 // was returned from a transaction, and the transaction was committed or rolled back.
 func (ph *Photo) Update() *PhotoUpdateOne {
-	return (&PhotoClient{config: ph.config}).UpdateOne(ph)
+	return NewPhotoClient(ph.config).UpdateOne(ph)
 }
 
 // Unwrap unwraps the Photo entity that was returned from a transaction after it was closed,
