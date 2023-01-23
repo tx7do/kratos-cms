@@ -1,4 +1,47 @@
 load("@bazel_gazelle//:def.bzl", "gazelle")
 
 # gazelle:prefix blog-backend
+# gazelle:go_naming_convention import_alias
 gazelle(name = "gazelle")
+
+gazelle(
+    name = "gazelle-update-repos",
+    args = [
+        "-from_file=go.mod",
+        "-to_macro=deps.bzl%go_dependencies",
+        "-prune",
+    ],
+    command = "update-repos",
+)
+
+load("@io_bazel_rules_go//go:def.bzl", "go_binary")
+
+go_binary(
+    name = "admin-server",
+    srcs = ["app/admin/service/cmd/server/main.go"],
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "comment-server",
+    srcs = ["app/comment/service/cmd/server/main.go"],
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "content-server",
+    srcs = ["app/content/service/cmd/server/main.go"],
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "file-server",
+    srcs = ["app/file/service/cmd/server/main.go"],
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "user-server",
+    srcs = ["app/user/service/cmd/server/main.go"],
+    visibility = ["//visibility:private"],
+)

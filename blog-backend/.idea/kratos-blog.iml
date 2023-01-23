@@ -7,6 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/bazel-kratos-blog" />
       <excludeFolder url="file://$MODULE_DIR$/bazel-out" />
       <excludeFolder url="file://$MODULE_DIR$/bazel-testlogs" />
+      <excludeFolder url="file://$MODULE_DIR$/bazel-blog-backend" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
