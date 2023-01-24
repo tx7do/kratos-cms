@@ -4,10 +4,10 @@ package ent
 
 import (
 	"fmt"
-	"kratos-blog/app/comment/service/internal/data/ent/comment"
 	"strings"
 
 	"entgo.io/ent/dialect/sql"
+	"github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/data/ent/comment"
 )
 
 // Comment is the model entity for the Comment schema.

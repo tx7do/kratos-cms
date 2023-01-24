@@ -6,11 +6,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"kratos-blog/app/user/service/internal/data/ent/user"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/tx7do/kratos-blog/blog-backend/app/user/service/internal/data/ent/user"
 )
 
 // UserCreate is the builder for creating a User entity.

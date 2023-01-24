@@ -3,9 +3,8 @@
 package comment
 
 import (
-	"kratos-blog/app/comment/service/internal/data/ent/predicate"
-
 	"entgo.io/ent/dialect/sql"
+	"github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/data/ent/predicate"
 )
 
 // ID filters vertices based on their ID field.

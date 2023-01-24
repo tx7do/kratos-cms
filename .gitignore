@@ -138,6 +138,7 @@ fabric.properties
 
 # Bazel output
 bazel-*/
+bazel-*
 
 # Ninja output
 .ninja_deps

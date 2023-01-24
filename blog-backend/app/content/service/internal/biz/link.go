@@ -5,8 +5,8 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 
-	"kratos-blog/gen/api/go/content/service/v1"
-	"kratos-blog/gen/api/go/pagination"
+	"github.com/tx7do/kratos-blog/blog-backend/gen/api/go/content/service/v1"
+	"github.com/tx7do/kratos-blog/blog-backend/gen/api/go/pagination"
 )
 
 type LinkRepo interface {

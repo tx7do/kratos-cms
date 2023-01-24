@@ -3,8 +3,8 @@
 package ent
 
 import (
-	"kratos-blog/app/user/service/internal/data/ent/schema"
-	"kratos-blog/app/user/service/internal/data/ent/user"
+	"github.com/tx7do/kratos-blog/blog-backend/app/user/service/internal/data/ent/schema"
+	"github.com/tx7do/kratos-blog/blog-backend/app/user/service/internal/data/ent/user"
 )
 
 // The init function reads all schema descriptors with runtime code

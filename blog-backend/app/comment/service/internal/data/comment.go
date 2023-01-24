@@ -5,15 +5,15 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 
-	"kratos-blog/app/comment/service/internal/biz"
-	"kratos-blog/app/comment/service/internal/data/ent"
-	"kratos-blog/app/comment/service/internal/data/ent/comment"
+	"github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/biz"
+	"github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/data/ent"
+	"github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/data/ent/comment"
 
-	v1 "kratos-blog/gen/api/go/comment/service/v1"
-	"kratos-blog/gen/api/go/pagination"
+	v1 "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/comment/service/v1"
+	"github.com/tx7do/kratos-blog/blog-backend/gen/api/go/pagination"
 
-	"kratos-blog/pkg/util/entgo"
-	paging "kratos-blog/pkg/util/pagination"
+	"github.com/tx7do/kratos-blog/blog-backend/pkg/util/entgo"
+	paging "github.com/tx7do/kratos-blog/blog-backend/pkg/util/pagination"
 )
 
 var _ biz.CommentRepo = (*CommentRepo)(nil)

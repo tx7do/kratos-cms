@@ -5,8 +5,8 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 
-	v1 "kratos-blog/gen/api/go/file/service/v1"
-	"kratos-blog/gen/api/go/pagination"
+	v1 "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/file/service/v1"
+	"github.com/tx7do/kratos-blog/blog-backend/gen/api/go/pagination"
 )
 
 type AttachmentRepo interface {

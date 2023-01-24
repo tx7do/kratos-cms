@@ -3,6 +3,11 @@ test --action_env=GOPROXY=https://goproxy.io
 build --action_env=GOPROXY=https://goproxy.io
 run --action_env=GOPROXY=https://goproxy.io
 
+# set GOSUMDB
+test --action_env=GOSUMDB=gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
+build --action_env=GOSUMDB=gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
+run --action_env=GOSUMDB=gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
+
 startup --host_jvm_args=-Xmx8g
 startup --unlimit_coredumps
 

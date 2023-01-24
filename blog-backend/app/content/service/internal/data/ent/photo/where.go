@@ -3,9 +3,8 @@
 package photo
 
 import (
-	"kratos-blog/app/content/service/internal/data/ent/predicate"
-
 	"entgo.io/ent/dialect/sql"
+	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/predicate"
 )
 
 // ID filters vertices based on their ID field.

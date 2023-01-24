@@ -7,10 +7,10 @@ import (
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 
-	"kratos-blog/app/user/service/internal/conf"
-	"kratos-blog/app/user/service/internal/service"
+	"github.com/tx7do/kratos-blog/blog-backend/app/user/service/internal/conf"
+	"github.com/tx7do/kratos-blog/blog-backend/app/user/service/internal/service"
 
-	v1 "kratos-blog/gen/api/go/user/service/v1"
+	v1 "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/user/service/v1"
 )
 
 // NewGRPCServer new a gRPC server.

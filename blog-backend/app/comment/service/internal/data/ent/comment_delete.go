@@ -4,12 +4,12 @@ package ent
 
 import (
 	"context"
-	"kratos-blog/app/comment/service/internal/data/ent/comment"
-	"kratos-blog/app/comment/service/internal/data/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/data/ent/comment"
+	"github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/data/ent/predicate"
 )
 
 // CommentDelete is the builder for deleting a Comment entity.

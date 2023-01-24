@@ -10,22 +10,26 @@
 * [Kratos](https://go-kratos.dev/) -- B站微服务框架
 * [Consul](https://www.consul.io/) -- 服务发现和配置管理
 * [OpenTelemetry](https://opentelemetry.io/) -- 分布式可观察系统
-* [Jaeger](https://www.jaegertracing.io/) -- 分布式跟踪的存储和展示
+* [Wire](https://github.com/google/wire) -- 依赖注入框架
+* [OpenAPI](https://www.openapis.org/) -- RESTful API 文档
 * [Ent](https://entgo.io/) -- Facebook ORM 数据库实体框架
 * [Redis](https://redis.io/) -- 非关系型数据库
 * [PostgreSQL](https://www.postgresql.org/) -- 关系型数据库
-* [Casbin](https://casbin.org/) -- 访问控制框架
-* [Wire](https://github.com/google/wire) -- 依赖注入框架
-* [Swagger](https://github.com/swaggo/swag) -- RESTful API 文档
 * [MinIO](https://min.io/) -- 对象存储服务器
 
-## 生成API
+## 生成Protobuf API
 
-使用[buf.build](https://buf.build/)进行构建，buf的安装文档请参考官方文档：<https://docs.buf.build/installation>
+使用[buf.build](https://buf.build/)进行Protobuf API的构建。
 
-在`blog-backend`根目录下执行`buf generate`命令：
+### 安装工具
 
-1. 生成全部
+具体安装方法请参见：[Kratos微服务框架API工程化指南](https://juejin.cn/post/7191095845096259641)
+
+### 执行生成命令
+
+在`blog-backend`根目录下执行命令：
+
+1. 生成GO代码
 
     ```bash
     buf generate
@@ -37,126 +41,80 @@
     buf generate --path api/admin/service/v1 --template api/admin/service/v1/buf.openapi.gen.yaml
     ```
 
-## Docker部署开发服务器
+## Make构建
 
-### Consul
+请在`app/{服务名}/service`下执行：
 
-```shell
-docker pull bitnami/consul:latest
+- 初始化开发环境
 
-docker run -itd \
-    --name consul-server-standalone \
-    -p 8300:8300 \
-    -p 8500:8500 \
-    -p 8600:8600/udp \
-    -e CONSUL_BIND_INTERFACE='eth0' \
-    -e CONSUL_AGENT_MODE=server \
-    -e CONSUL_ENABLE_UI=true \
-    -e CONSUL_BOOTSTRAP_EXPECT=1 \
-    -e CONSUL_CLIENT_LAN_ADDRESS=0.0.0.0 \
-    bitnami/consul:latest
-```
+   ```bash
+   make init
+   ```
 
-- 管理后台: <http://localhost:8500>
+- 生成API
 
-### Jaeger
+   ```bash
+   make api
+   ```
 
-```shell
-docker pull jaegertracing/all-in-one:latest
+- 生成服务器配置结构代码
 
-docker run -d \
-    --name jaeger \
-    -e COLLECTOR_ZIPKIN_HOST_PORT=:9411 \
-    -e COLLECTOR_OTLP_ENABLED=true \
-    -p 6831:6831/udp \
-    -p 6832:6832/udp \
-    -p 5778:5778 \
-    -p 16686:16686 \
-    -p 4317:4317 \
-    -p 4318:4318 \
-    -p 14250:14250 \
-    -p 14268:14268 \
-    -p 14269:14269 \
-    -p 9411:9411 \
-    jaegertracing/all-in-one:latest
-```
+   ```bash
+   make conf
+   ```
 
-- API：<http://localhost:14268/api/traces>
-- Zipkin API：<http://localhost:9411/api/v2/spans>
-- 后台: <http://localhost:16686>
+- 生成ent代码
 
-### PostgreSQL
+   ```bash
+   make ent
+   ```
 
-```shell
-docker pull bitnami/postgresql:latest
-docker pull bitnami/postgresql-repmgr:latest
-docker pull bitnami/pgbouncer:latest
-docker pull bitnami/pgpool:latest
-docker pull bitnami/postgres-exporter:latest
+- 生成wire代码
 
-docker run -itd \
-    --name postgres-test \
-    -p 5432:5432 \
-    -e POSTGRES_PASSWORD=123456 \
-    bitnami/postgresql:latest
+   ```bash
+   make wire
+   ```
 
-docker exec -it postgres-test "apt update"
-```
+- 构建程序
 
-```postgresql
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-CREATE EXTENSION IF NOT EXISTS "postgis";
+   ```bash
+   make build
+   ```
 
-SELECT version();
-SELECT postgis_full_version();
-```
+- 构建Docker镜像
 
-- 默认账号：postgres
-- 默认密码：123456
+   ```bash
+   make docker
+   ```
 
-### Redis
+## Bazel构建
 
-```shell
-docker pull bitnami/redis:latest
-docker pull bitnami/redis-exporter:latest
+使用[bazel.build](https://bazel.build/)进行服务器程序的构建。
 
-docker run -itd \
-    --name redis-test \
-    -p 6379:6379 \
-    -e ALLOW_EMPTY_PASSWORD=yes \
-    bitnami/redis:latest
-```
+### 安装Bazel
 
-### MinIO
+如何安装bazel.build的文档，请参考官方文档：<https://bazel.build/install>。
 
-```shell
-docker pull bitnami/minio:latest
-docker pull bitnami/minio-client:latest
+- 安装Gazelle
 
-docker network create app-tier --driver bridge
+   ```shell
+   go install github.com/bazelbuild/bazel-gazelle/cmd/gazelle@latest
+   ```
 
-# MINIO_ROOT_USER最少3个字符
-# MINIO_ROOT_PASSWORD最少8个字符
-# 第一次运行的时候,服务会自动关闭,手动再启动就可以正常运行了.
-docker run -itd \
-    --name minio-server \
-    -p 9000:9000 \
-    -p 9001:9001 \
-    --env MINIO_ROOT_USER="root" \
-    --env MINIO_ROOT_PASSWORD="123456789" \
-    --env MINIO_DEFAULT_BUCKETS='my-bucket' \
-    --env MINIO_FORCE_NEW_KEYS="yes" \
-    --env BITNAMI_DEBUG=true \
-    --network app-tier \
-    bitnami/minio:latest
+## Bazel命令使用
 
-docker run -itd \
-    --name minio-client \
-    --env MINIO_SERVER_HOST="minio-server" \
-    --env MINIO_SERVER_ACCESS_KEY="root" \
-    --env MINIO_SERVER_SECRET_KEY="123456789" \
-    --network app-tier \
-    bitnami/minio-client:latest
-```
+在`blog-backend`根目录下执行命令：
 
-- 管理后台: <http://localhost:9001/login>
+- 更新GO依赖库引入
+
+   ```bash
+   bazel run //:gazelle -- update-repos -from_file=go.mod
+   ```
+   
+   或者
+   
+   ```bash
+   bazel run //:gazelle-update-repos
+   ```
+
+## Docker部署

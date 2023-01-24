@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package content.service.v1;
-option go_package = "kratos-blog/gen/api/go/content/service/v1;v1";
+option go_package = "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/content/service/v1;v1";
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/field_mask.proto";

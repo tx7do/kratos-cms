@@ -4,10 +4,10 @@ package ent
 
 import (
 	"fmt"
-	"kratos-blog/app/content/service/internal/data/ent/menu"
 	"strings"
 
 	"entgo.io/ent/dialect/sql"
+	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/menu"
 )
 
 // Menu is the model entity for the Menu schema.

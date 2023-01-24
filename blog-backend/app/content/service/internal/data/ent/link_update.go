@@ -6,12 +6,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"kratos-blog/app/content/service/internal/data/ent/link"
-	"kratos-blog/app/content/service/internal/data/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/link"
+	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/predicate"
 )
 
 // LinkUpdate is the builder for updating Link entities.

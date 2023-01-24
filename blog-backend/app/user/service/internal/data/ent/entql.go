@@ -3,7 +3,7 @@
 package ent
 
 import (
-	"kratos-blog/app/user/service/internal/data/ent/user"
+	"github.com/tx7do/kratos-blog/blog-backend/app/user/service/internal/data/ent/user"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"

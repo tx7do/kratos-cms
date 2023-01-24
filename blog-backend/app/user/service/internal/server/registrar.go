@@ -6,7 +6,7 @@ import (
 
 	consulAPI "github.com/hashicorp/consul/api"
 
-	"kratos-blog/app/user/service/internal/conf"
+	"github.com/tx7do/kratos-blog/blog-backend/app/user/service/internal/conf"
 )
 
 func NewRegistrar(conf *conf.Registry) registry.Registrar {

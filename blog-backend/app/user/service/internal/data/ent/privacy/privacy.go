@@ -5,7 +5,8 @@ package privacy
 import (
 	"context"
 	"fmt"
-	"kratos-blog/app/user/service/internal/data/ent"
+
+	"github.com/tx7do/kratos-blog/blog-backend/app/user/service/internal/data/ent"
 
 	"entgo.io/ent/entql"
 	"entgo.io/ent/privacy"
