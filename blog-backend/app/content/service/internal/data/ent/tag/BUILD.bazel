@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "tag",
+    srcs = [
+        "tag.go",
+        "where.go",
+    ],
+    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/tag",
+    visibility = ["//app/content/service:__subpackages__"],
+    deps = [
+        "//app/content/service/internal/data/ent/predicate",
+        "@io_entgo_ent//dialect/sql",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":tag",
+    visibility = ["//app/content/service:__subpackages__"],
+)

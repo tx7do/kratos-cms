@@ -1,0 +1,47 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "bootstrap",
+    srcs = [
+        "cli.go",
+        "config.go",
+        "flag.go",
+        "logger.go",
+        "service_info.go",
+        "tracer.go",
+    ],
+    importpath = "github.com/tx7do/kratos-blog/blog-backend/pkg/util/bootstrap",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_go_kratos_kratos_contrib_config_consul_v2//:consul",
+        "@com_github_go_kratos_kratos_contrib_config_etcd_v2//:etcd",
+        "@com_github_go_kratos_kratos_contrib_config_nacos_v2//:nacos",
+        "@com_github_go_kratos_kratos_v2//config",
+        "@com_github_go_kratos_kratos_v2//config/file",
+        "@com_github_go_kratos_kratos_v2//log",
+        "@com_github_go_kratos_kratos_v2//middleware/tracing",
+        "@com_github_google_subcommands//:subcommands",
+        "@com_github_hashicorp_consul_api//:api",
+        "@com_github_nacos_group_nacos_sdk_go//clients",
+        "@com_github_nacos_group_nacos_sdk_go//common/constant",
+        "@com_github_nacos_group_nacos_sdk_go//vo",
+        "@com_github_olekukonko_tablewriter//:tablewriter",
+        "@com_github_spf13_cobra//:cobra",
+        "@io_etcd_go_etcd_client_v3//:client",
+        "@io_opentelemetry_go_otel//:otel",
+        "@io_opentelemetry_go_otel//attribute",
+        "@io_opentelemetry_go_otel//semconv/v1.4.0:v1_4_0",
+        "@io_opentelemetry_go_otel_exporters_jaeger//:jaeger",
+        "@io_opentelemetry_go_otel_sdk//resource",
+        "@io_opentelemetry_go_otel_sdk//trace",
+        "@org_golang_google_grpc//:go_default_library",
+        "@org_golang_x_tools//go/ast/astutil",
+        "@org_golang_x_tools//go/packages",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":bootstrap",
+    visibility = ["//visibility:public"],
+)

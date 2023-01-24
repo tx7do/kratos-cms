@@ -1,0 +1,47 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@rules_buf//buf:defs.bzl", "buf_lint_test")
+
+proto_library(
+    name = "httpbody_proto",
+    srcs = [
+        "annotations.proto",
+        "field_behavior.proto",
+        "http.proto",
+        "httpbody.proto",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_google_protobuf//:any_proto",
+        "@com_google_protobuf//:descriptor_proto",
+        "@go_googleapis//google/api:annotations_proto",
+    ],
+)
+
+buf_lint_test(
+    name = "httpbody_proto_lint",
+    config = "//third_party:buf.yaml",
+    targets = [":httpbody_proto"],
+)
+
+go_proto_library(
+    name = "httpbody_go_proto",
+    importpath = "google.golang.org/genproto/googleapis/api/httpbody",
+    proto = ":httpbody_proto",
+    visibility = ["//visibility:public"],
+    deps = ["@go_googleapis//google/api:annotations_go_proto"],
+)
+
+go_library(
+    name = "httpbody",
+    embed = [":httpbody_go_proto"],
+    importpath = "google.golang.org/genproto/googleapis/api/httpbody",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":httpbody",
+    visibility = ["//visibility:public"],
+)

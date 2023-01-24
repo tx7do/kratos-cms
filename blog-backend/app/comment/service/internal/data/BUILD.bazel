@@ -1,0 +1,35 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "data",
+    srcs = [
+        "comment.go",
+        "data.go",
+    ],
+    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/data",
+    visibility = ["//app/comment/service:__subpackages__"],
+    deps = [
+        "//api/comment/service/v1:service",
+        "//api/pagination",
+        "//app/comment/service/internal/biz",
+        "//app/comment/service/internal/conf",
+        "//app/comment/service/internal/data/ent",
+        "//app/comment/service/internal/data/ent/comment",
+        "//app/comment/service/internal/data/ent/migrate",
+        "//pkg/util/entgo",
+        "//pkg/util/pagination",
+        "@com_github_go_kratos_kratos_v2//log",
+        "@com_github_go_redis_redis_extra_redisotel_v8//:redisotel",
+        "@com_github_go_redis_redis_v8//:redis",
+        "@com_github_go_sql_driver_mysql//:mysql",
+        "@com_github_google_wire//:wire",
+        "@com_github_jackc_pgx_v4//stdlib",
+        "@com_github_lib_pq//:pq",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":data",
+    visibility = ["//app/comment/service:__subpackages__"],
+)

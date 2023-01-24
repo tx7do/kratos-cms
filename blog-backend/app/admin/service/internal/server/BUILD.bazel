@@ -1,0 +1,40 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "server",
+    srcs = [
+        "http.go",
+        "registrar.go",
+        "server.go",
+    ],
+    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/admin/service/internal/server",
+    visibility = ["//app/admin/service:__subpackages__"],
+    deps = [
+        "//api/admin/service/v1:service",
+        "//app/admin/service/internal/conf",
+        "//app/admin/service/internal/service",
+        "//pkg/middleware/auth",
+        "@com_github_go_kratos_kratos_contrib_registry_consul_v2//:consul",
+        "@com_github_go_kratos_kratos_v2//log",
+        "@com_github_go_kratos_kratos_v2//middleware/logging",
+        "@com_github_go_kratos_kratos_v2//middleware/recovery",
+        "@com_github_go_kratos_kratos_v2//middleware/selector",
+        "@com_github_go_kratos_kratos_v2//middleware/tracing",
+        "@com_github_go_kratos_kratos_v2//registry",
+        "@com_github_go_kratos_kratos_v2//transport/http",
+        "@com_github_go_kratos_swagger_api//openapiv2",
+        "@com_github_google_wire//:wire",
+        "@com_github_gorilla_handlers//:handlers",
+        "@com_github_hashicorp_consul_api//:api",
+        "@com_github_tx7do_kratos_authn_authn//:authn",
+        "@com_github_tx7do_kratos_authn_engine_jwt//:jwt",
+        "@com_github_tx7do_kratos_authz//engine/noop",
+        "@com_github_tx7do_kratos_authz_middleware//:middleware",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":server",
+    visibility = ["//app/admin/service:__subpackages__"],
+)

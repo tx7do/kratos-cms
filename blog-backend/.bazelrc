@@ -1,13 +1,12 @@
 # set GOPROXY
-test --action_env=GOPROXY=https://goproxy.io
-build --action_env=GOPROXY=https://goproxy.io
-run --action_env=GOPROXY=https://goproxy.io
+test --action_env=GOPROXY=https://goproxy.cn
+build --action_env=GOPROXY=https://goproxy.cn
+run --action_env=GOPROXY=https://goproxy.cn
 
 # set GOSUMDB
-test --action_env=GOSUMDB=gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
-build --action_env=GOSUMDB=gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
-run --action_env=GOSUMDB=gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
+test --action_env=GOSUMDB=goproxy.cn/sumdb/sum.golang.org
+build --action_env=GOSUMDB=goproxy.cn/sumdb/sum.golang.org
+run --action_env=GOSUMDB=goproxy.cn/sumdb/sum.golang.org
 
 startup --host_jvm_args=-Xmx8g
 startup --unlimit_coredumps
-

@@ -29,13 +29,19 @@
 
 在`blog-backend`根目录下执行命令：
 
-1. 生成GO代码
+- 更新buf.lock
+
+    ```bash
+    buf mod update
+    ```
+
+- 生成GO代码
 
     ```bash
     buf generate
     ```
 
-2. 生成OpenAPI v3文档
+- 生成OpenAPI v3文档
 
     ```bash
     buf generate --path api/admin/service/v1 --template api/admin/service/v1/buf.openapi.gen.yaml
@@ -105,10 +111,13 @@
 
 在`blog-backend`根目录下执行命令：
 
-- 更新GO依赖库引入
+- 更新GO依赖库引入的构建配置文件repos.bzl
 
    ```bash
-   bazel run //:gazelle -- update-repos -from_file=go.mod
+   gazelle update-repos \
+           --from_file=go.mod --to_macro=repos.bzl%go_repositories \
+           --build_file_generation=on --build_file_proto_mode=disable \
+           --prune
    ```
    
    或者
@@ -116,5 +125,37 @@
    ```bash
    bazel run //:gazelle-update-repos
    ```
+
+- 生成构建配置文件BUILD.bazel
+
+   ```bash
+   bazel run //:gazelle
+   ```
+
+- 构建单个服务
+
+  ```bash
+  bazel build //app/admin/service/cmd/server:server
+  bazel build //app/comment/service/cmd/server:server
+  bazel build //app/content/service/cmd/server:server
+  bazel build //app/file/service/cmd/server:server
+  bazel build //app/user/service/cmd/server:server
+  ```
+
+  或者
+
+  ```bash
+  bazel build //:admin-server
+  bazel build //:comment-server
+  bazel build //:content-server
+  bazel build //:file-server
+  bazel build //:user-server
+  ```
+
+- 构建全部服务
+
+  ```bash
+  bazel build //:all
+  ```
 
 ## Docker部署

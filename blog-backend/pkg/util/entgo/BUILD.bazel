@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "entgo",
+    srcs = ["util.go"],
+    importpath = "github.com/tx7do/kratos-blog/blog-backend/pkg/util/entgo",
+    visibility = ["//visibility:public"],
+    deps = ["@io_entgo_ent//dialect/sql"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":entgo",
+    visibility = ["//visibility:public"],
+)

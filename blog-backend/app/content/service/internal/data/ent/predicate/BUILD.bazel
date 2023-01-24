@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "predicate",
+    srcs = ["predicate.go"],
+    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/predicate",
+    visibility = ["//app/content/service:__subpackages__"],
+    deps = ["@io_entgo_ent//dialect/sql"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":predicate",
+    visibility = ["//app/content/service:__subpackages__"],
+)

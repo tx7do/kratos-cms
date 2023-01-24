@@ -1,0 +1,41 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "ent",
+    srcs = [
+        "client.go",
+        "comment.go",
+        "comment_create.go",
+        "comment_delete.go",
+        "comment_query.go",
+        "comment_update.go",
+        "config.go",
+        "context.go",
+        "ent.go",
+        "entql.go",
+        "generate.go",
+        "mutation.go",
+        "runtime.go",
+        "tx.go",
+    ],
+    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/data/ent",
+    visibility = ["//app/comment/service:__subpackages__"],
+    deps = [
+        "//app/comment/service/internal/data/ent/comment",
+        "//app/comment/service/internal/data/ent/migrate",
+        "//app/comment/service/internal/data/ent/predicate",
+        "//app/comment/service/internal/data/ent/schema",
+        "@io_entgo_ent//:ent",
+        "@io_entgo_ent//dialect",
+        "@io_entgo_ent//dialect/sql",
+        "@io_entgo_ent//dialect/sql/sqlgraph",
+        "@io_entgo_ent//entql",
+        "@io_entgo_ent//schema/field",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":ent",
+    visibility = ["//app/comment/service:__subpackages__"],
+)

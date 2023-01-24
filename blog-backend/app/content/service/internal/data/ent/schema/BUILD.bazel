@@ -1,0 +1,28 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "schema",
+    srcs = [
+        "category.go",
+        "link.go",
+        "menu.go",
+        "photo.go",
+        "post.go",
+        "tag.go",
+    ],
+    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/schema",
+    visibility = ["//app/content/service:__subpackages__"],
+    deps = [
+        "//pkg/util/entgo/mixin",
+        "@io_entgo_ent//:ent",
+        "@io_entgo_ent//dialect/entsql",
+        "@io_entgo_ent//schema",
+        "@io_entgo_ent//schema/field",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":schema",
+    visibility = ["//app/content/service:__subpackages__"],
+)

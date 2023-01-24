@@ -1,0 +1,26 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "biz",
+    srcs = [
+        "biz.go",
+        "category.go",
+        "link.go",
+        "post.go",
+        "tag.go",
+    ],
+    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/biz",
+    visibility = ["//app/content/service:__subpackages__"],
+    deps = [
+        "//api/content/service/v1:service",
+        "//api/pagination",
+        "@com_github_go_kratos_kratos_v2//log",
+        "@com_github_google_wire//:wire",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":biz",
+    visibility = ["//app/content/service:__subpackages__"],
+)

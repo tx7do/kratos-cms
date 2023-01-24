@@ -1,0 +1,48 @@
+# gazelle:repo bazel_gazelle
+workspace(name = "com_github_tx7do_kratos_blog")
+
+#########################################
+
+load("//:DOWNLOAD.bzl", "download_package")
+
+download_package()
+
+#########################################
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+
+go_rules_dependencies()
+
+go_register_toolchains(version = "1.19.5")
+
+#########################################
+
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("//:repos.bzl", "go_dependencies")
+
+# gazelle:repository_macro repos.bzl%go_dependencies
+go_dependencies()
+
+gazelle_dependencies()
+
+#########################################
+
+load("@rules_buf//buf:repositories.bzl", "rules_buf_dependencies", "rules_buf_toolchains")
+load("@rules_buf//gazelle/buf:repositories.bzl", "gazelle_buf_dependencies")
+load("//:buf_deps.bzl", "buf_deps")
+
+# gazelle:repository_macro buf_deps.bzl%buf_deps
+buf_deps()
+
+rules_buf_dependencies()
+
+rules_buf_toolchains(version = "v1.12.0")
+
+gazelle_buf_dependencies()
+
+#########################################
+
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+
+rules_proto_dependencies()
+
+rules_proto_toolchains()

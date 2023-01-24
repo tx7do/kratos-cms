@@ -1,0 +1,32 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "server",
+    srcs = [
+        "grpc.go",
+        "registrar.go",
+        "server.go",
+    ],
+    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/server",
+    visibility = ["//app/content/service:__subpackages__"],
+    deps = [
+        "//api/content/service/v1:service",
+        "//app/content/service/internal/conf",
+        "//app/content/service/internal/service",
+        "@com_github_go_kratos_kratos_contrib_registry_consul_v2//:consul",
+        "@com_github_go_kratos_kratos_v2//log",
+        "@com_github_go_kratos_kratos_v2//middleware/logging",
+        "@com_github_go_kratos_kratos_v2//middleware/recovery",
+        "@com_github_go_kratos_kratos_v2//middleware/tracing",
+        "@com_github_go_kratos_kratos_v2//registry",
+        "@com_github_go_kratos_kratos_v2//transport/grpc",
+        "@com_github_google_wire//:wire",
+        "@com_github_hashicorp_consul_api//:api",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":server",
+    visibility = ["//app/content/service:__subpackages__"],
+)

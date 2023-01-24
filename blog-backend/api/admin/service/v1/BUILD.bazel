@@ -1,0 +1,75 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@rules_buf//buf:defs.bzl", "buf_lint_test")
+
+proto_library(
+    name = "v1_proto",
+    srcs = [
+        "admin_error.proto",
+        "i_attachment.proto",
+        "i_category.proto",
+        "i_comment.proto",
+        "i_link.proto",
+        "i_menu.proto",
+        "i_photo.proto",
+        "i_post.proto",
+        "i_system.proto",
+        "i_tag.proto",
+        "i_user.proto",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@buf_deps_api//comment/service/v1:v1_proto",
+        "@buf_deps_api//content/service/v1:v1_proto",
+        "@buf_deps_api//errors:errors_proto",
+        "@buf_deps_api//file/service/v1:v1_proto",
+        "@buf_deps_api//openapiv3:openapiv3_proto",
+        "@buf_deps_api//pagination:pagination_proto",
+        "@buf_deps_api//user/service/v1:v1_proto",
+        "@com_google_protobuf//:empty_proto",
+        "@go_googleapis//google/api:annotations_proto",
+    ],
+)
+
+buf_lint_test(
+    name = "v1_proto_lint",
+    config = "//api:buf.yaml",
+    targets = [":v1_proto"],
+)
+
+go_proto_library(
+    name = "v1_go_proto",
+    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
+    importpath = "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/admin/service/v1",
+    proto = ":v1_proto",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//comment/service/v1:comment_proto",
+        "//content/service/v1:category_proto",
+        "//content/service/v1:link_proto",
+        "//content/service/v1:menu_proto",
+        "//content/service/v1:photo_proto",
+        "//content/service/v1:post_proto",
+        "//content/service/v1:tag_proto",
+        "//errors:errors_proto",
+        "//file/service/v1:attachment_proto",
+        "//openapiv3:annotations_proto",
+        "//pagination:pagination_proto",
+        "//user/service/v1:user_proto",
+        "@go_googleapis//google/api:annotations_go_proto",
+    ],
+)
+
+go_library(
+    name = "service",
+    embed = [":v1_go_proto"],
+    importpath = "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/admin/service/v1",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":service",
+    visibility = ["//visibility:public"],
+)

@@ -1,47 +1,89 @@
-load("@bazel_gazelle//:def.bzl", "gazelle")
+load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 
-# gazelle:prefix blog-backend
+# gazelle:prefix github.com/tx7do/kratos-blog/blog-backend
 # gazelle:go_naming_convention import_alias
-gazelle(name = "gazelle")
+gazelle(
+    name = "gazelle",
+)
 
 gazelle(
     name = "gazelle-update-repos",
     args = [
         "-from_file=go.mod",
-        "-to_macro=deps.bzl%go_dependencies",
+        "-to_macro=repos.bzl%go_dependencies",
         "-prune",
     ],
     command = "update-repos",
 )
 
+gazelle(
+    name = "gazelle-update-buf-repos",
+    args = [
+        # This can also be `buf.yaml` and `buf.lock`.
+        "--from_file=buf.work.yaml",
+        # This is optional but recommended, if absent gazelle
+        # will add the rules directly to WORKSPACE
+        "-to_macro=buf_deps.bzl%buf_deps",
+        # Deletes outdated repo rules
+        "-prune",
+    ],
+    command = "update-repos",
+    gazelle = ":gazelle-buf",
+)
+
+gazelle_binary(
+    name = "gazelle-buf",
+    languages = [
+        # Loads the native proto extension
+        "@bazel_gazelle//language/proto:go_default_library",
+        # Loads the Buf extension
+        "@rules_buf//gazelle/buf:buf",
+        # NOTE: This needs to be loaded after the proto language
+    ],
+)
+
+#########################################
+
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 
 go_binary(
     name = "admin-server",
-    srcs = ["app/admin/service/cmd/server/main.go"],
+    srcs = ["//app/admin/service/cmd/server"],
     visibility = ["//visibility:private"],
 )
 
 go_binary(
     name = "comment-server",
-    srcs = ["app/comment/service/cmd/server/main.go"],
+    srcs = ["//app/comment/service/cmd/server"],
     visibility = ["//visibility:private"],
 )
 
 go_binary(
     name = "content-server",
-    srcs = ["app/content/service/cmd/server/main.go"],
+    srcs = ["//app/content/service/cmd/server"],
     visibility = ["//visibility:private"],
 )
 
 go_binary(
     name = "file-server",
-    srcs = ["app/file/service/cmd/server/main.go"],
+    srcs = ["//app/file/service/cmd/server"],
     visibility = ["//visibility:private"],
 )
 
 go_binary(
     name = "user-server",
-    srcs = ["app/user/service/cmd/server/main.go"],
+    srcs = ["//app/user/service/cmd/server"],
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "all",
+    srcs = [
+        "//app/admin/service/cmd/server",
+        "//app/comment/service/cmd/server",
+        "//app/content/service/cmd/server",
+        "//app/file/service/cmd/server",
+        "//app/user/service/cmd/server",
+    ],
     visibility = ["//visibility:private"],
 )

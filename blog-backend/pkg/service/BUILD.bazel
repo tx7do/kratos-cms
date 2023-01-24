@@ -1,0 +1,14 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "service",
+    srcs = ["name.go"],
+    importpath = "github.com/tx7do/kratos-blog/blog-backend/pkg/service",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":service",
+    visibility = ["//visibility:public"],
+)

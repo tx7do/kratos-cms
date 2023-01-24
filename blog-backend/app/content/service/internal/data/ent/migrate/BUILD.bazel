@@ -1,0 +1,23 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "migrate",
+    srcs = [
+        "migrate.go",
+        "schema.go",
+    ],
+    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/migrate",
+    visibility = ["//app/content/service:__subpackages__"],
+    deps = [
+        "@io_entgo_ent//dialect",
+        "@io_entgo_ent//dialect/entsql",
+        "@io_entgo_ent//dialect/sql/schema",
+        "@io_entgo_ent//schema/field",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":migrate",
+    visibility = ["//app/content/service:__subpackages__"],
+)

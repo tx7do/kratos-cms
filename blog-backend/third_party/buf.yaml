@@ -5,5 +5,3 @@ breaking:
 lint:
   use:
     - DEFAULT
-build:
-  excludes: [protoc-gen-openapiv2]

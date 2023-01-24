@@ -1,0 +1,20 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "enttest",
+    srcs = ["enttest.go"],
+    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/data/ent/enttest",
+    visibility = ["//app/comment/service:__subpackages__"],
+    deps = [
+        "//app/comment/service/internal/data/ent",
+        "//app/comment/service/internal/data/ent/migrate",
+        "//app/comment/service/internal/data/ent/runtime",
+        "@io_entgo_ent//dialect/sql/schema",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":enttest",
+    visibility = ["//app/comment/service:__subpackages__"],
+)
