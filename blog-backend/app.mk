@@ -22,7 +22,7 @@ APP_NAME=$(shell echo $(APP_RELATIVE_PATH) | sed -En "s/\//-/p")
 APP_DOCKER_IMAGE=$(shell echo $(APP_NAME) |awk -F '@' '{print "kratos-blog/" $$0 ":0.1.0"}')
 
 
-.PHONY: init dep vendor build clean docker conf ent wire api run test cover vet lint all
+.PHONY: init dep vendor build clean docker conf ent wire api openapi run test cover vet lint all
 
 # initialize develop environment
 init:
@@ -90,7 +90,11 @@ wire:
 # generate api code
 api:
 	@cd ..\..\..\ && \
-	buf generate && \
+	buf generate
+
+# generate OpenAPI doc
+openapi:
+	@cd ..\..\..\ && \
 	buf generate --path api/admin/service/v1 --template api/admin/service/v1/buf.openapi.gen.yaml
 
 # run application
