@@ -11,8 +11,8 @@ proto_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "@buf_deps_api//errors:errors_proto",
-        "@buf_deps_api//openapiv3:openapiv3_proto",
+        "//errors:errors_proto",
+        "//openapiv3:openapiv3_proto",
         "@com_google_protobuf//:empty_proto",
     ],
 )

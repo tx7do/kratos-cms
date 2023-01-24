@@ -124,6 +124,7 @@
    
    ```bash
    bazel run //:gazelle-update-repos
+   bazel run //:gazelle-update-buf-repos
    ```
 
 - 生成构建配置文件BUILD.bazel

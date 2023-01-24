@@ -8,7 +8,7 @@ proto_library(
     srcs = ["comment.proto"],
     visibility = ["//visibility:public"],
     deps = [
-        "@buf_deps_api//pagination:pagination_proto",
+        "//pagination:pagination_proto",
         "@com_google_protobuf//:empty_proto",
     ],
 )

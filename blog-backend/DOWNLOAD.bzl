@@ -42,6 +42,14 @@ def download_package():
             ],
         )
 
+    if not native.existing_rule("rules_proto_grpc"):
+        http_archive(
+            name = "rules_proto_grpc",
+            sha256 = "fb7fc7a3c19a92b2f15ed7c4ffb2983e956625c1436f57a3430b897ba9864059",
+            strip_prefix = "rules_proto_grpc-4.3.0",
+            urls = ["https://github.com/rules-proto-grpc/rules_proto_grpc/archive/4.3.0.tar.gz"],
+        )
+
     if not native.existing_rule("com_google_protobuf"):
         http_archive(
             name = "com_google_protobuf",
