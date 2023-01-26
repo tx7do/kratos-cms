@@ -57,7 +57,7 @@ endif
 # clean build files
 clean:
 	@go clean
-	rm --force "coverage.out"
+	$(if $(IS_WINDOWS), del "coverage.out", rm -f "coverage.out")
 
 # build docker image
 docker:
