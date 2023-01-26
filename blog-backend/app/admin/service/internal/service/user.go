@@ -64,7 +64,7 @@ func (s *UserService) ParseFromContext(ctx context.Context) (uint32, string, err
 	var userId uint32
 	strUserId, ok := mc["userId"]
 	if ok {
-		userId_, err := strconv.ParseUint(strUserId.(string), 10, 64)
+		userId_, err := strconv.Atoi(strUserId.(string))
 		if err != nil {
 			return 0, "", err
 		}
