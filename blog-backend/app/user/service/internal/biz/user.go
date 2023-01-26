@@ -5,7 +5,7 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 
-	v1 "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/user/service/v1"
+	v1 "kratos-blog/gen/api/go/user/service/v1"
 )
 
 type UserRepo interface {

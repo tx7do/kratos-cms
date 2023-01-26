@@ -6,9 +6,9 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	v1 "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/admin/service/v1"
-	commentV1 "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/comment/service/v1"
-	"github.com/tx7do/kratos-blog/blog-backend/gen/api/go/pagination"
+	v1 "kratos-blog/gen/api/go/admin/service/v1"
+	commentV1 "kratos-blog/gen/api/go/comment/service/v1"
+	"kratos-blog/gen/api/go/pagination"
 )
 
 type CommentService struct {

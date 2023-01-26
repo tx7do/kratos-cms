@@ -9,7 +9,7 @@ go_library(
         "post.go",
         "tag.go",
     ],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data",
+    importpath = "kratos-blog/app/content/service/internal/data",
     visibility = ["//app/content/service:__subpackages__"],
     deps = [
         "//api/content/service/v1:service",
@@ -29,10 +29,4 @@ go_library(
         "@com_github_go_redis_redis_v8//:redis",
         "@com_github_google_wire//:wire",
     ],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":data",
-    visibility = ["//app/content/service:__subpackages__"],
 )

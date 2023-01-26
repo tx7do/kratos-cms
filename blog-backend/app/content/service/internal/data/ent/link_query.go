@@ -5,13 +5,13 @@ package ent
 import (
 	"context"
 	"fmt"
+	"kratos-blog/app/content/service/internal/data/ent/link"
+	"kratos-blog/app/content/service/internal/data/ent/predicate"
 	"math"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/link"
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/predicate"
 )
 
 // LinkQuery is the builder for querying Link entities.

@@ -8,14 +8,14 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/migrate"
+	"kratos-blog/app/content/service/internal/data/ent/migrate"
 
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/category"
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/link"
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/menu"
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/photo"
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/post"
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/tag"
+	"kratos-blog/app/content/service/internal/data/ent/category"
+	"kratos-blog/app/content/service/internal/data/ent/link"
+	"kratos-blog/app/content/service/internal/data/ent/menu"
+	"kratos-blog/app/content/service/internal/data/ent/photo"
+	"kratos-blog/app/content/service/internal/data/ent/post"
+	"kratos-blog/app/content/service/internal/data/ent/tag"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"

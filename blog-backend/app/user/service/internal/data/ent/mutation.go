@@ -6,10 +6,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"kratos-blog/app/user/service/internal/data/ent/predicate"
+	"kratos-blog/app/user/service/internal/data/ent/user"
 	"sync"
-
-	"github.com/tx7do/kratos-blog/blog-backend/app/user/service/internal/data/ent/predicate"
-	"github.com/tx7do/kratos-blog/blog-backend/app/user/service/internal/data/ent/user"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"

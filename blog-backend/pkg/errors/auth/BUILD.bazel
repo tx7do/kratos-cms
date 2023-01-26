@@ -3,13 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "auth",
     srcs = ["error.go"],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/pkg/errors/auth",
+    importpath = "kratos-blog/pkg/errors/auth",
     visibility = ["//visibility:public"],
-    deps = ["//third_party/errors"],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":auth",
-    visibility = ["//visibility:public"],
+    deps = ["//api/third_party/errors"],
 )

@@ -3,12 +3,6 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "runtime",
     srcs = ["runtime.go"],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/runtime",
-    visibility = ["//app/content/service:__subpackages__"],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":runtime",
+    importpath = "kratos-blog/app/content/service/internal/data/ent/runtime",
     visibility = ["//app/content/service:__subpackages__"],
 )

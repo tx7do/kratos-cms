@@ -8,9 +8,9 @@ import (
 	"github.com/go-kratos/kratos/v2/registry"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/conf"
-	"github.com/tx7do/kratos-blog/blog-backend/pkg/service"
-	"github.com/tx7do/kratos-blog/blog-backend/pkg/util/bootstrap"
+	"kratos-blog/app/content/service/internal/conf"
+	"kratos-blog/pkg/service"
+	"kratos-blog/pkg/util/bootstrap"
 )
 
 // go build -ldflags "-X main.Service.Version=x.y.z"

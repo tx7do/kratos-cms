@@ -5,13 +5,13 @@ package ent
 import (
 	"context"
 	"fmt"
+	"kratos-blog/app/user/service/internal/data/ent/predicate"
+	"kratos-blog/app/user/service/internal/data/ent/user"
 	"math"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/tx7do/kratos-blog/blog-backend/app/user/service/internal/data/ent/predicate"
-	"github.com/tx7do/kratos-blog/blog-backend/app/user/service/internal/data/ent/user"
 )
 
 // UserQuery is the builder for querying User entities.

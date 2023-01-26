@@ -6,16 +6,10 @@ go_library(
         "user.go",
         "where.go",
     ],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/user/service/internal/data/ent/user",
+    importpath = "kratos-blog/app/user/service/internal/data/ent/user",
     visibility = ["//app/user/service:__subpackages__"],
     deps = [
         "//app/user/service/internal/data/ent/predicate",
         "@io_entgo_ent//dialect/sql",
     ],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":user",
-    visibility = ["//app/user/service:__subpackages__"],
 )

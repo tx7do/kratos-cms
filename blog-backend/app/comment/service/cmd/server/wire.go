@@ -11,11 +11,11 @@ import (
 
 	"github.com/google/wire"
 
-	"github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/biz"
-	"github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/conf"
-	"github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/data"
-	"github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/server"
-	"github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/service"
+	"kratos-blog/app/comment/service/internal/biz"
+	"kratos-blog/app/comment/service/internal/conf"
+	"kratos-blog/app/comment/service/internal/data"
+	"kratos-blog/app/comment/service/internal/server"
+	"kratos-blog/app/comment/service/internal/service"
 )
 
 // initApp init kratos application.

@@ -10,7 +10,7 @@ go_library(
         "service_info.go",
         "tracer.go",
     ],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/pkg/util/bootstrap",
+    importpath = "kratos-blog/pkg/util/bootstrap",
     visibility = ["//visibility:public"],
     deps = [
         "@com_github_go_kratos_kratos_contrib_config_consul_v2//:consul",
@@ -38,10 +38,4 @@ go_library(
         "@org_golang_x_tools//go/ast/astutil",
         "@org_golang_x_tools//go/packages",
     ],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":bootstrap",
-    visibility = ["//visibility:public"],
 )

@@ -14,8 +14,8 @@ import (
 	"github.com/go-redis/redis/extra/redisotel/v8"
 	"github.com/go-redis/redis/v8"
 
-	"github.com/tx7do/kratos-blog/blog-backend/app/file/service/internal/conf"
-	"github.com/tx7do/kratos-blog/blog-backend/app/file/service/internal/data/model"
+	"kratos-blog/app/file/service/internal/conf"
+	"kratos-blog/app/file/service/internal/data/model"
 )
 
 // ProviderSet is data providers.

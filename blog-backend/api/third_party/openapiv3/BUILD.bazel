@@ -1,7 +1,6 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@rules_buf//buf:defs.bzl", "buf_lint_test")
 
 proto_library(
     name = "openapi_v3_proto",
@@ -9,18 +8,12 @@ proto_library(
         "OpenAPIv3.proto",
         "annotations.proto",
     ],
+    strip_import_prefix = "/api",
     visibility = ["//visibility:public"],
     deps = [
-        "//openapiv3:openapiv3_proto",
         "@com_google_protobuf//:any_proto",
         "@com_google_protobuf//:descriptor_proto",
     ],
-)
-
-buf_lint_test(
-    name = "openapi_v3_proto_lint",
-    config = "//third_party:buf.yaml",
-    targets = [":openapi_v3_proto"],
 )
 
 go_proto_library(
@@ -28,18 +21,11 @@ go_proto_library(
     importpath = "github.com/google/gnostic/openapiv3",
     proto = ":openapi_v3_proto",
     visibility = ["//visibility:public"],
-    deps = ["//openapiv3:OpenAPIv3_proto"],
 )
 
 go_library(
     name = "openapiv3",
     embed = [":openapi_v3_go_proto"],
     importpath = "github.com/google/gnostic/openapiv3",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":openapiv3",
     visibility = ["//visibility:public"],
 )

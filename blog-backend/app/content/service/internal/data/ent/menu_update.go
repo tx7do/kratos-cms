@@ -6,12 +6,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"kratos-blog/app/content/service/internal/data/ent/menu"
+	"kratos-blog/app/content/service/internal/data/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/menu"
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/predicate"
 )
 
 // MenuUpdate is the builder for updating Menu entities.

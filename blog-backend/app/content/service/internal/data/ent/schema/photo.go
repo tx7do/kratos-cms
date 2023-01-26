@@ -5,7 +5,7 @@ import (
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/field"
-	"github.com/tx7do/kratos-blog/blog-backend/pkg/util/entgo/mixin"
+	"kratos-blog/pkg/util/entgo/mixin"
 )
 
 // Photo holds the schema definition for the Photo entity.

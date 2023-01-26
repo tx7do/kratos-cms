@@ -10,8 +10,8 @@ import (
 	jwtV4 "github.com/golang-jwt/jwt/v4"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	v1 "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/admin/service/v1"
-	userV1 "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/user/service/v1"
+	v1 "kratos-blog/gen/api/go/admin/service/v1"
+	userV1 "kratos-blog/gen/api/go/user/service/v1"
 )
 
 type UserService struct {

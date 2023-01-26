@@ -6,7 +6,7 @@ go_library(
         "comment.go",
         "data.go",
     ],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/data",
+    importpath = "kratos-blog/app/comment/service/internal/data",
     visibility = ["//app/comment/service:__subpackages__"],
     deps = [
         "//api/comment/service/v1:service",
@@ -26,10 +26,4 @@ go_library(
         "@com_github_jackc_pgx_v4//stdlib",
         "@com_github_lib_pq//:pq",
     ],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":data",
-    visibility = ["//app/comment/service:__subpackages__"],
 )

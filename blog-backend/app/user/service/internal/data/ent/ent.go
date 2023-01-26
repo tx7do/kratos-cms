@@ -6,12 +6,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"kratos-blog/app/user/service/internal/data/ent/user"
 	"reflect"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
-	"github.com/tx7do/kratos-blog/blog-backend/app/user/service/internal/data/ent/user"
 )
 
 // ent aliases to avoid import conflicts in user's code.

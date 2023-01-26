@@ -18,7 +18,7 @@ go_library(
         "user_query.go",
         "user_update.go",
     ],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/user/service/internal/data/ent",
+    importpath = "kratos-blog/app/user/service/internal/data/ent",
     visibility = ["//app/user/service:__subpackages__"],
     deps = [
         "//app/user/service/internal/data/ent/migrate",
@@ -32,10 +32,4 @@ go_library(
         "@io_entgo_ent//entql",
         "@io_entgo_ent//schema/field",
     ],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":ent",
-    visibility = ["//app/user/service:__subpackages__"],
 )

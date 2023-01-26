@@ -43,7 +43,7 @@ go_library(
         "tag_update.go",
         "tx.go",
     ],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent",
+    importpath = "kratos-blog/app/content/service/internal/data/ent",
     visibility = ["//app/content/service:__subpackages__"],
     deps = [
         "//app/content/service/internal/data/ent/category",
@@ -62,10 +62,4 @@ go_library(
         "@io_entgo_ent//entql",
         "@io_entgo_ent//schema/field",
     ],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":ent",
-    visibility = ["//app/content/service:__subpackages__"],
 )

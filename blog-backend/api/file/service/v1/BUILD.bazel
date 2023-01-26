@@ -1,42 +1,30 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@rules_buf//buf:defs.bzl", "buf_lint_test")
 
 proto_library(
     name = "v1_proto",
     srcs = ["attachment.proto"],
+    strip_import_prefix = "/api",
     visibility = ["//visibility:public"],
     deps = [
-        "//pagination:pagination_proto",
+        "//api/pagination:pagination_proto",
         "@com_google_protobuf//:empty_proto",
     ],
-)
-
-buf_lint_test(
-    name = "v1_proto_lint",
-    config = "//api:buf.yaml",
-    targets = [":v1_proto"],
 )
 
 go_proto_library(
     name = "v1_go_proto",
     compilers = ["@io_bazel_rules_go//proto:go_grpc"],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/file/service/v1",
+    importpath = "kratos-blog/gen/api/go/file/service/v1",
     proto = ":v1_proto",
     visibility = ["//visibility:public"],
-    deps = ["//pagination:pagination_proto"],
+    deps = ["//api/pagination"],
 )
 
 go_library(
     name = "service",
     embed = [":v1_go_proto"],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/file/service/v1",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":service",
+    importpath = "kratos-blog/gen/api/go/file/service/v1",
     visibility = ["//visibility:public"],
 )

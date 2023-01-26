@@ -1,24 +1,18 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@rules_buf//buf:defs.bzl", "buf_lint_test")
 
 proto_library(
     name = "pagination_proto",
     srcs = ["pagination.proto"],
+    strip_import_prefix = "/api",
     visibility = ["//visibility:public"],
     deps = ["@com_google_protobuf//:any_proto"],
 )
 
-buf_lint_test(
-    name = "pagination_proto_lint",
-    config = "//api:buf.yaml",
-    targets = [":pagination_proto"],
-)
-
 go_proto_library(
     name = "pagination_go_proto",
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/pagination",
+    importpath = "kratos-blog/gen/api/go/pagination",
     proto = ":pagination_proto",
     visibility = ["//visibility:public"],
 )
@@ -26,12 +20,6 @@ go_proto_library(
 go_library(
     name = "pagination",
     embed = [":pagination_go_proto"],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/pagination",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":pagination",
+    importpath = "kratos-blog/gen/api/go/pagination",
     visibility = ["//visibility:public"],
 )

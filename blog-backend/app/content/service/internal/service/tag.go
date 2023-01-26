@@ -6,10 +6,10 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/biz"
+	"kratos-blog/app/content/service/internal/biz"
 
-	v1 "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/content/service/v1"
-	"github.com/tx7do/kratos-blog/blog-backend/gen/api/go/pagination"
+	v1 "kratos-blog/gen/api/go/content/service/v1"
+	"kratos-blog/gen/api/go/pagination"
 )
 
 type TagService struct {

@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "schema",
     srcs = ["comment.go"],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/data/ent/schema",
+    importpath = "kratos-blog/app/comment/service/internal/data/ent/schema",
     visibility = ["//app/comment/service:__subpackages__"],
     deps = [
         "//pkg/util/entgo/mixin",
@@ -12,10 +12,4 @@ go_library(
         "@io_entgo_ent//schema",
         "@io_entgo_ent//schema/field",
     ],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":schema",
-    visibility = ["//app/comment/service:__subpackages__"],
 )

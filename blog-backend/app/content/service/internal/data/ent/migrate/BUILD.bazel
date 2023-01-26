@@ -6,7 +6,7 @@ go_library(
         "migrate.go",
         "schema.go",
     ],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/migrate",
+    importpath = "kratos-blog/app/content/service/internal/data/ent/migrate",
     visibility = ["//app/content/service:__subpackages__"],
     deps = [
         "@io_entgo_ent//dialect",
@@ -14,10 +14,4 @@ go_library(
         "@io_entgo_ent//dialect/sql/schema",
         "@io_entgo_ent//schema/field",
     ],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":migrate",
-    visibility = ["//app/content/service:__subpackages__"],
 )

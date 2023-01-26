@@ -3,12 +3,6 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "pagination",
     srcs = ["pagination.go"],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/pkg/util/pagination",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":pagination",
+    importpath = "kratos-blog/pkg/util/pagination",
     visibility = ["//visibility:public"],
 )

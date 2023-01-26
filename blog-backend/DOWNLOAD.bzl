@@ -1,6 +1,7 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 def download_package():
+    # Load go bazel rules
     if not native.existing_rule("io_bazel_rules_go"):
         http_archive(
             name = "io_bazel_rules_go",
@@ -11,16 +12,29 @@ def download_package():
             ],
         )
 
+    # Load gazelle
     if not native.existing_rule("bazel_gazelle"):
         http_archive(
             name = "bazel_gazelle",
-            sha256 = "448e37e0dbf61d6fa8f00aaa12d191745e14f07c31cabfa731f0c8e8a4f41b97",
+            sha256 = "ecba0f04f96b4960a5b250c8e8eeec42281035970aa8852dda73098274d14a1d",
             urls = [
-                "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.28.0/bazel-gazelle-v0.28.0.tar.gz",
-                "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.28.0/bazel-gazelle-v0.28.0.tar.gz",
+                "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.29.0/bazel-gazelle-v0.29.0.tar.gz",
+                "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.29.0/bazel-gazelle-v0.29.0.tar.gz",
             ],
         )
 
+    # Load Bazel/starlark utilities.
+    if not native.existing_rule("bazel_skylib"):
+        http_archive(
+            name = "bazel_skylib",
+            sha256 = "74d544d96f4a5bb630d465ca8bbcfe231e3594e5aae57e1edbf17a6eb3ca2506",
+            urls = [
+                "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.3.0/bazel-skylib-1.3.0.tar.gz",
+                "https://github.com/bazelbuild/bazel-skylib/releases/download/1.3.0/bazel-skylib-1.3.0.tar.gz",
+            ],
+        )
+
+    # Load buf.build rule.
     if not native.existing_rule("rules_buf"):
         http_archive(
             name = "rules_buf",
@@ -31,6 +45,7 @@ def download_package():
             ],
         )
 
+    # Load protobuf dependencies.
     if not native.existing_rule("rules_proto"):
         http_archive(
             name = "rules_proto",
@@ -42,6 +57,7 @@ def download_package():
             ],
         )
 
+    # Load grpc dependencies.
     if not native.existing_rule("rules_proto_grpc"):
         http_archive(
             name = "rules_proto_grpc",
@@ -50,6 +66,20 @@ def download_package():
             urls = ["https://github.com/rules-proto-grpc/rules_proto_grpc/archive/4.3.0.tar.gz"],
         )
 
+    if not native.existing_rule("build_stack_rules_proto"):
+        # Release: v2.0.1
+        # TargetCommitish: master
+        # Date: 2022-10-20 02:38:27 +0000 UTC
+        # URL: https://github.com/stackb/rules_proto/releases/tag/v2.0.1
+        # Size: 2071295 (2.1 MB)
+        http_archive(
+            name = "build_stack_rules_proto",
+            sha256 = "ac7e2966a78660e83e1ba84a06db6eda9a7659a841b6a7fd93028cd8757afbfb",
+            strip_prefix = "rules_proto-2.0.1",
+            urls = ["https://github.com/stackb/rules_proto/archive/v2.0.1.tar.gz"],
+        )
+
+    # protoc
     if not native.existing_rule("com_google_protobuf"):
         http_archive(
             name = "com_google_protobuf",

@@ -1,23 +1,17 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@rules_buf//buf:defs.bzl", "buf_lint_test")
 
 proto_library(
     name = "validate_proto",
     srcs = ["validate.proto"],
+    strip_import_prefix = "/api",
     visibility = ["//visibility:public"],
     deps = [
         "@com_google_protobuf//:descriptor_proto",
         "@com_google_protobuf//:duration_proto",
         "@com_google_protobuf//:timestamp_proto",
     ],
-)
-
-buf_lint_test(
-    name = "validate_proto_lint",
-    config = "//third_party:buf.yaml",
-    targets = [":validate_proto"],
 )
 
 go_proto_library(
@@ -31,11 +25,5 @@ go_library(
     name = "validate",
     embed = [":validate_go_proto"],
     importpath = "github.com/envoyproxy/protoc-gen-validate/validate",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":validate",
     visibility = ["//visibility:public"],
 )

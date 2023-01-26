@@ -6,11 +6,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"kratos-blog/app/content/service/internal/data/ent/photo"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/photo"
 )
 
 // PhotoCreate is the builder for creating a Photo entity.

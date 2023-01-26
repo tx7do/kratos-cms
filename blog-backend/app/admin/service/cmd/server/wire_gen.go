@@ -9,10 +9,10 @@ package main
 import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/tx7do/kratos-blog/blog-backend/app/admin/service/internal/conf"
-	"github.com/tx7do/kratos-blog/blog-backend/app/admin/service/internal/data"
-	"github.com/tx7do/kratos-blog/blog-backend/app/admin/service/internal/server"
-	"github.com/tx7do/kratos-blog/blog-backend/app/admin/service/internal/service"
+	"kratos-blog/app/admin/service/internal/conf"
+	"kratos-blog/app/admin/service/internal/data"
+	"kratos-blog/app/admin/service/internal/server"
+	"kratos-blog/app/admin/service/internal/service"
 )
 
 // Injectors from wire.go:

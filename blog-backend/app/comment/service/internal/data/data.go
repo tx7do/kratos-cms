@@ -13,9 +13,9 @@ import (
 	_ "github.com/jackc/pgx/v4/stdlib"
 	_ "github.com/lib/pq"
 
-	"github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/conf"
-	"github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/data/ent"
-	"github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/data/ent/migrate"
+	"kratos-blog/app/comment/service/internal/conf"
+	"kratos-blog/app/comment/service/internal/data/ent"
+	"kratos-blog/app/comment/service/internal/data/ent/migrate"
 )
 
 // ProviderSet is data providers.

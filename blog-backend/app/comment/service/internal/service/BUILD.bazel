@@ -6,7 +6,7 @@ go_library(
         "comment.go",
         "service.go",
     ],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/service",
+    importpath = "kratos-blog/app/comment/service/internal/service",
     visibility = ["//app/comment/service:__subpackages__"],
     deps = [
         "//api/comment/service/v1:service",
@@ -16,10 +16,4 @@ go_library(
         "@com_github_google_wire//:wire",
         "@org_golang_google_protobuf//types/known/emptypb",
     ],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":service",
-    visibility = ["//app/comment/service:__subpackages__"],
 )

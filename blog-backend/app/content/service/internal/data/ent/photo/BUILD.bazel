@@ -6,16 +6,10 @@ go_library(
         "photo.go",
         "where.go",
     ],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/photo",
+    importpath = "kratos-blog/app/content/service/internal/data/ent/photo",
     visibility = ["//app/content/service:__subpackages__"],
     deps = [
         "//app/content/service/internal/data/ent/predicate",
         "@io_entgo_ent//dialect/sql",
     ],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":photo",
-    visibility = ["//app/content/service:__subpackages__"],
 )

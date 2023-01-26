@@ -6,11 +6,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"kratos-blog/app/content/service/internal/data/ent/category"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/category"
 )
 
 // CategoryCreate is the builder for creating a Category entity.

@@ -6,7 +6,7 @@ go_library(
         "attachment.go",
         "data.go",
     ],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/file/service/internal/data",
+    importpath = "kratos-blog/app/file/service/internal/data",
     visibility = ["//app/file/service:__subpackages__"],
     deps = [
         "//api/file/service/v1:service",
@@ -26,10 +26,4 @@ go_library(
         "@io_gorm_driver_sqlserver//:sqlserver",
         "@io_gorm_gorm//:gorm",
     ],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":data",
-    visibility = ["//app/file/service:__subpackages__"],
 )

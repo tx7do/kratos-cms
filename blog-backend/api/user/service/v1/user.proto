@@ -1,9 +1,9 @@
 syntax = "proto3";
 
 package user.service.v1;
-option go_package = "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/user/service/v1;v1";
+option go_package = "kratos-blog/gen/api/go/user/service/v1;v1";
 
-import "openapiv3/annotations.proto";
+import "third_party/openapiv3/annotations.proto";
 import "google/protobuf/empty.proto";
 
 // 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。

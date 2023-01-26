@@ -5,13 +5,13 @@ package ent
 import (
 	"context"
 	"fmt"
+	"kratos-blog/app/content/service/internal/data/ent/predicate"
+	"kratos-blog/app/content/service/internal/data/ent/tag"
 	"math"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/predicate"
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/tag"
 )
 
 // TagQuery is the builder for querying Tag entities.

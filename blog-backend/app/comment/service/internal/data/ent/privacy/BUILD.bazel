@@ -3,17 +3,11 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "privacy",
     srcs = ["privacy.go"],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/comment/service/internal/data/ent/privacy",
+    importpath = "kratos-blog/app/comment/service/internal/data/ent/privacy",
     visibility = ["//app/comment/service:__subpackages__"],
     deps = [
         "//app/comment/service/internal/data/ent",
         "@io_entgo_ent//entql",
         "@io_entgo_ent//privacy",
     ],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":privacy",
-    visibility = ["//app/comment/service:__subpackages__"],
 )

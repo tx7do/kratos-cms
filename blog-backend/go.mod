@@ -1,4 +1,4 @@
-module github.com/tx7do/kratos-blog/blog-backend
+module kratos-blog
 
 go 1.18
 

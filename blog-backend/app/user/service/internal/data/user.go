@@ -5,14 +5,14 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 
-	v1 "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/user/service/v1"
+	v1 "kratos-blog/gen/api/go/user/service/v1"
 
-	"github.com/tx7do/kratos-blog/blog-backend/pkg/util/crypto"
-	"github.com/tx7do/kratos-blog/blog-backend/pkg/util/entgo"
+	"kratos-blog/pkg/util/crypto"
+	"kratos-blog/pkg/util/entgo"
 
-	"github.com/tx7do/kratos-blog/blog-backend/app/user/service/internal/biz"
-	"github.com/tx7do/kratos-blog/blog-backend/app/user/service/internal/data/ent"
-	"github.com/tx7do/kratos-blog/blog-backend/app/user/service/internal/data/ent/user"
+	"kratos-blog/app/user/service/internal/biz"
+	"kratos-blog/app/user/service/internal/data/ent"
+	"kratos-blog/app/user/service/internal/data/ent/user"
 )
 
 var _ biz.UserRepo = (*UserRepo)(nil)

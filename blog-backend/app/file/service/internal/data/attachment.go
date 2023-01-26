@@ -6,13 +6,13 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"gorm.io/gorm"
 
-	"github.com/tx7do/kratos-blog/blog-backend/app/file/service/internal/biz"
-	"github.com/tx7do/kratos-blog/blog-backend/app/file/service/internal/data/model"
+	"kratos-blog/app/file/service/internal/biz"
+	"kratos-blog/app/file/service/internal/data/model"
 
-	v1 "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/file/service/v1"
-	"github.com/tx7do/kratos-blog/blog-backend/gen/api/go/pagination"
+	v1 "kratos-blog/gen/api/go/file/service/v1"
+	"kratos-blog/gen/api/go/pagination"
 
-	paging "github.com/tx7do/kratos-blog/blog-backend/pkg/util/pagination"
+	paging "kratos-blog/pkg/util/pagination"
 )
 
 var _ biz.AttachmentRepo = (*AttachmentRepo)(nil)

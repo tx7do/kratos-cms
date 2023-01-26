@@ -1,37 +1,25 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
-load("@rules_proto//proto:defs.bzl", "proto_library")
-load("@rules_buf//buf:defs.bzl", "buf_lint_test")
 
 proto_library(
     name = "conf_proto",
     srcs = ["conf.proto"],
+    strip_import_prefix = "/api",
     visibility = ["//app/admin/service:__subpackages__"],
     deps = ["@com_google_protobuf//:duration_proto"],
-)
-
-buf_lint_test(
-    name = "conf_proto_lint",
-    config = "//:buf.yaml",
-    targets = [":conf_proto"],
-)
-
-go_library(
-    name = "conf",
-    srcs = ["generate.go"],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/admin/service/internal/conf",
-    visibility = ["//app/admin/service:__subpackages__"],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":conf",
-    visibility = ["//app/admin/service:__subpackages__"],
 )
 
 go_proto_library(
     name = "conf_go_proto",
     importpath = "app/admin/service/internal/conf",
     proto = ":conf_proto",
+    visibility = ["//app/admin/service:__subpackages__"],
+)
+
+go_library(
+    name = "conf",
+    srcs = ["generate.go"],
+    importpath = "kratos-blog/app/admin/service/internal/conf",
     visibility = ["//app/admin/service:__subpackages__"],
 )

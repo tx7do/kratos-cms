@@ -7,7 +7,7 @@ go_library(
         "registrar.go",
         "server.go",
     ],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/server",
+    importpath = "kratos-blog/app/content/service/internal/server",
     visibility = ["//app/content/service:__subpackages__"],
     deps = [
         "//api/content/service/v1:service",
@@ -23,10 +23,4 @@ go_library(
         "@com_github_google_wire//:wire",
         "@com_github_hashicorp_consul_api//:api",
     ],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":server",
-    visibility = ["//app/content/service:__subpackages__"],
 )

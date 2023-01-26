@@ -10,7 +10,7 @@ go_library(
         "post.go",
         "tag.go",
     ],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/schema",
+    importpath = "kratos-blog/app/content/service/internal/data/ent/schema",
     visibility = ["//app/content/service:__subpackages__"],
     deps = [
         "//pkg/util/entgo/mixin",
@@ -19,10 +19,4 @@ go_library(
         "@io_entgo_ent//schema",
         "@io_entgo_ent//schema/field",
     ],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":schema",
-    visibility = ["//app/content/service:__subpackages__"],
 )

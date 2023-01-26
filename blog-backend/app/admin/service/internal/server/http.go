@@ -19,12 +19,12 @@ import (
 	"github.com/tx7do/kratos-authz/engine/noop"
 	authz "github.com/tx7do/kratos-authz/middleware"
 
-	"github.com/tx7do/kratos-blog/blog-backend/pkg/middleware/auth"
+	"kratos-blog/pkg/middleware/auth"
 
-	v1 "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/admin/service/v1"
+	v1 "kratos-blog/gen/api/go/admin/service/v1"
 
-	"github.com/tx7do/kratos-blog/blog-backend/app/admin/service/internal/conf"
-	"github.com/tx7do/kratos-blog/blog-backend/app/admin/service/internal/service"
+	"kratos-blog/app/admin/service/internal/conf"
+	"kratos-blog/app/admin/service/internal/service"
 )
 
 // NewWhiteListMatcher 创建jwt白名单

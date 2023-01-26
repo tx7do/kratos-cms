@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "auth",
     srcs = ["auth.go"],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/pkg/middleware/auth",
+    importpath = "kratos-blog/pkg/middleware/auth",
     visibility = ["//visibility:public"],
     deps = [
         "@com_github_go_kratos_kratos_v2//middleware",
@@ -12,10 +12,4 @@ go_library(
         "@com_github_tx7do_kratos_authz//engine",
         "@com_github_tx7do_kratos_authz_middleware//:middleware",
     ],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":auth",
-    visibility = ["//visibility:public"],
 )

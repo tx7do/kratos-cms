@@ -6,7 +6,7 @@ go_library(
         "main.go",
         "wire_gen.go",
     ],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/comment/service/cmd/server",
+    importpath = "kratos-blog/app/comment/service/cmd/server",
     visibility = ["//visibility:private"],
     deps = [
         "//app/comment/service/internal/biz",

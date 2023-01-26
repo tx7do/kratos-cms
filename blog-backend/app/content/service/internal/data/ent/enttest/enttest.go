@@ -4,13 +4,13 @@ package enttest
 
 import (
 	"context"
-
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent"
+	"kratos-blog/app/content/service/internal/data/ent"
 	// required by schema hooks.
-	_ "github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/runtime"
+	_ "kratos-blog/app/content/service/internal/data/ent/runtime"
+
+	"kratos-blog/app/content/service/internal/data/ent/migrate"
 
 	"entgo.io/ent/dialect/sql/schema"
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/migrate"
 )
 
 type (

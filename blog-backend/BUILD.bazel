@@ -1,7 +1,9 @@
 load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 
-# gazelle:prefix github.com/tx7do/kratos-blog/blog-backend
-# gazelle:go_naming_convention import_alias
+# gazelle:prefix kratos-blog
+# gazelle:proto_strip_import_prefix /api
+# gazelle:resolve proto go //third_party/errors/errors.proto //third_party/errors:errors_proto
+
 gazelle(
     name = "gazelle",
 )
@@ -12,6 +14,7 @@ gazelle(
         "-from_file=go.mod",
         "-to_macro=repos.bzl%go_dependencies",
         "-prune",
+        "-build_file_proto_mode=disable_global",
     ],
     command = "update-repos",
 )
@@ -29,6 +32,18 @@ gazelle(
     ],
     command = "update-repos",
     gazelle = ":gazelle-buf",
+)
+
+#########################################
+
+gazelle_binary(
+    name = "gazelle-protobuf",
+    languages = [
+        "@bazel_gazelle//language/go",
+        "@bazel_gazelle//language/proto",
+        # must be after the proto extension (order matters)
+        "@build_stack_rules_proto//language/protobuf",
+    ],
 )
 
 gazelle_binary(

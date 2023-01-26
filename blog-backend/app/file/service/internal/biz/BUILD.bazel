@@ -6,7 +6,7 @@ go_library(
         "attachment.go",
         "biz.go",
     ],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/app/file/service/internal/biz",
+    importpath = "kratos-blog/app/file/service/internal/biz",
     visibility = ["//app/file/service:__subpackages__"],
     deps = [
         "//api/file/service/v1:service",
@@ -14,10 +14,4 @@ go_library(
         "@com_github_go_kratos_kratos_v2//log",
         "@com_github_google_wire//:wire",
     ],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":biz",
-    visibility = ["//app/file/service:__subpackages__"],
 )

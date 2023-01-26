@@ -5,13 +5,13 @@ package ent
 import (
 	"context"
 	"fmt"
+	"kratos-blog/app/content/service/internal/data/ent/post"
+	"kratos-blog/app/content/service/internal/data/ent/predicate"
 	"math"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/post"
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/predicate"
 )
 
 // PostQuery is the builder for querying Post entities.

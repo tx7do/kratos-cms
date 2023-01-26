@@ -8,7 +8,7 @@ go_library(
         "time.go",
         "uuid_id.go",
     ],
-    importpath = "github.com/tx7do/kratos-blog/blog-backend/pkg/util/entgo/mixin",
+    importpath = "kratos-blog/pkg/util/entgo/mixin",
     visibility = ["//visibility:public"],
     deps = [
         "@com_github_google_uuid//:uuid",
@@ -19,10 +19,4 @@ go_library(
         "@io_entgo_ent//schema/index",
         "@io_entgo_ent//schema/mixin",
     ],
-)
-
-alias(
-    name = "go_default_library",
-    actual = ":mixin",
-    visibility = ["//visibility:public"],
 )

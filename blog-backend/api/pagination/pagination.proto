@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package pagination;
-option go_package = "github.com/tx7do/kratos-blog/blog-backend/gen/api/go/pagination;pagination";
+option go_package = "kratos-blog/gen/api/go/pagination;pagination";
 
 import "google/protobuf/any.proto";
 

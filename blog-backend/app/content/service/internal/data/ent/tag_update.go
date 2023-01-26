@@ -6,12 +6,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"kratos-blog/app/content/service/internal/data/ent/predicate"
+	"kratos-blog/app/content/service/internal/data/ent/tag"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/predicate"
-	"github.com/tx7do/kratos-blog/blog-backend/app/content/service/internal/data/ent/tag"
 )
 
 // TagUpdate is the builder for updating Tag entities.

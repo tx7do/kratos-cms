@@ -8,9 +8,9 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/tx7do/kratos-blog/blog-backend/app/user/service/internal/data/ent/migrate"
+	"kratos-blog/app/user/service/internal/data/ent/migrate"
 
-	"github.com/tx7do/kratos-blog/blog-backend/app/user/service/internal/data/ent/user"
+	"kratos-blog/app/user/service/internal/data/ent/user"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
