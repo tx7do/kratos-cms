@@ -1,7 +1,7 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 def download_package():
-    # Load go bazel rules
+    # 下载 Bazel Go语言 规则集
     if not native.existing_rule("io_bazel_rules_go"):
         http_archive(
             name = "io_bazel_rules_go",
@@ -12,7 +12,7 @@ def download_package():
             ],
         )
 
-    # Load gazelle
+    # 下载 Bazel Gazelle 规则集
     if not native.existing_rule("bazel_gazelle"):
         http_archive(
             name = "bazel_gazelle",
@@ -23,7 +23,7 @@ def download_package():
             ],
         )
 
-    # Load Bazel/starlark utilities.
+    # 下载 Bazel 工具方法集
     if not native.existing_rule("bazel_skylib"):
         http_archive(
             name = "bazel_skylib",
@@ -34,7 +34,24 @@ def download_package():
             ],
         )
 
-    # Load buf.build rule.
+    # 下载 Bazel Docker 规则集
+    if not native.existing_rule("io_bazel_rules_docker"):
+        http_archive(
+            name = "io_bazel_rules_docker",
+            sha256 = "b1e80761a8a8243d03ebca8845e9cc1ba6c82ce7c5179ce2b295cd36f7e394bf",
+            urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.25.0/rules_docker-v0.25.0.tar.gz"],
+        )
+
+    # 下载 Bazel Kubernetes 规则集
+    if not native.existing_rule("io_bazel_rules_k8s"):
+        http_archive(
+            name = "io_bazel_rules_k8s",
+            strip_prefix = "rules_k8s-0.5",
+            urls = ["https://github.com/bazelbuild/rules_k8s/archive/v0.5.tar.gz"],
+            sha256 = "773aa45f2421a66c8aa651b8cecb8ea51db91799a405bd7b913d77052ac7261a",
+        )
+
+    # 下载 Bazel Buf 规则集
     if not native.existing_rule("rules_buf"):
         http_archive(
             name = "rules_buf",
@@ -45,7 +62,7 @@ def download_package():
             ],
         )
 
-    # Load protobuf dependencies.
+    # 下载 Bazel Protobuf 规则集
     if not native.existing_rule("rules_proto"):
         http_archive(
             name = "rules_proto",
@@ -57,7 +74,7 @@ def download_package():
             ],
         )
 
-    # Load grpc dependencies.
+    # 下载 Bazel gRPC 规则集
     if not native.existing_rule("rules_proto_grpc"):
         http_archive(
             name = "rules_proto_grpc",
@@ -66,6 +83,7 @@ def download_package():
             urls = ["https://github.com/rules-proto-grpc/rules_proto_grpc/archive/4.3.0.tar.gz"],
         )
 
+    # 下载 Bazel Protobuf 规则集
     if not native.existing_rule("build_stack_rules_proto"):
         # Release: v2.0.1
         # TargetCommitish: master
@@ -79,7 +97,7 @@ def download_package():
             urls = ["https://github.com/stackb/rules_proto/archive/v2.0.1.tar.gz"],
         )
 
-    # protoc
+    # 下载 Bazel protoc工具
     if not native.existing_rule("com_google_protobuf"):
         http_archive(
             name = "com_google_protobuf",
