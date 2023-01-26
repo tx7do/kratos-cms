@@ -39,7 +39,9 @@ def download_package():
         http_archive(
             name = "io_bazel_rules_docker",
             sha256 = "b1e80761a8a8243d03ebca8845e9cc1ba6c82ce7c5179ce2b295cd36f7e394bf",
-            urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.25.0/rules_docker-v0.25.0.tar.gz"],
+            urls = [
+                "https://github.com/bazelbuild/rules_docker/releases/download/v0.25.0/rules_docker-v0.25.0.tar.gz"
+            ],
         )
 
     # 下载 Bazel Kubernetes 规则集
@@ -47,8 +49,21 @@ def download_package():
         http_archive(
             name = "io_bazel_rules_k8s",
             strip_prefix = "rules_k8s-0.5",
-            urls = ["https://github.com/bazelbuild/rules_k8s/archive/v0.5.tar.gz"],
+            urls = [
+                "https://github.com/bazelbuild/rules_k8s/archive/v0.5.tar.gz"
+            ],
             sha256 = "773aa45f2421a66c8aa651b8cecb8ea51db91799a405bd7b913d77052ac7261a",
+        )
+
+    # 下载 Bazel 构建压缩包（tar、zip、deb 和 rpm） 规则集
+    if not native.existing_rule("rules_pkg"):
+        http_archive(
+            name = "rules_pkg",
+            urls = [
+                "https://mirror.bazel.build/github.com/bazelbuild/rules_pkg/releases/download/0.8.0/rules_pkg-0.8.0.tar.gz",
+                "https://github.com/bazelbuild/rules_pkg/releases/download/0.8.0/rules_pkg-0.8.0.tar.gz",
+            ],
+            sha256 = "eea0f59c28a9241156a47d7a8e32db9122f3d50b505fae0f33de6ce4d9b61834",
         )
 
     # 下载 Bazel Buf 规则集
@@ -80,7 +95,9 @@ def download_package():
             name = "rules_proto_grpc",
             sha256 = "fb7fc7a3c19a92b2f15ed7c4ffb2983e956625c1436f57a3430b897ba9864059",
             strip_prefix = "rules_proto_grpc-4.3.0",
-            urls = ["https://github.com/rules-proto-grpc/rules_proto_grpc/archive/4.3.0.tar.gz"],
+            urls = [
+                "https://github.com/rules-proto-grpc/rules_proto_grpc/archive/4.3.0.tar.gz"
+            ],
         )
 
     # 下载 Bazel Protobuf 规则集
@@ -94,7 +111,9 @@ def download_package():
             name = "build_stack_rules_proto",
             sha256 = "ac7e2966a78660e83e1ba84a06db6eda9a7659a841b6a7fd93028cd8757afbfb",
             strip_prefix = "rules_proto-2.0.1",
-            urls = ["https://github.com/stackb/rules_proto/archive/v2.0.1.tar.gz"],
+            urls = [
+                "https://github.com/stackb/rules_proto/archive/v2.0.1.tar.gz"
+            ],
         )
 
     # 下载 Bazel protoc工具

@@ -22,7 +22,7 @@ APP_NAME=$(shell echo $(APP_RELATIVE_PATH) | sed -En "s/\//-/p")
 APP_DOCKER_IMAGE=$(shell echo $(APP_NAME) |awk -F '@' '{print "kratos-blog/" $$0 ":0.1.0"}')
 
 
-.PHONY: init dep vendor build clean docker conf ent wire api openapi run test cover vet lint all
+.PHONY: init dep vendor build clean docker conf ent wire api openapi run test cover vet lint app
 
 # initialize develop environment
 init:
@@ -47,7 +47,7 @@ dep:
 vendor:
 	@go mod vendor
 
-# build application
+# build golang application
 build:
 ifeq ("$(wildcard ./bin/)","")
 	mkdir bin
@@ -118,8 +118,8 @@ vet:
 lint:
 	@golangci-lint run
 
-# build all
-all: api wire conf ent build test
+# build service app
+app: api wire conf ent build
 
 # show help
 help:
