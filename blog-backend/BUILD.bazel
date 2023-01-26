@@ -2,8 +2,7 @@ load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 
 # gazelle:prefix kratos-blog
 # gazelle:proto_strip_import_prefix /api
-# gazelle:resolve proto go //third_party/errors/errors.proto //third_party/errors:errors_proto
-
+# gazelle:exclude gen
 gazelle(
     name = "gazelle",
 )

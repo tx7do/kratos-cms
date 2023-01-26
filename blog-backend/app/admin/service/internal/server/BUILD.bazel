@@ -22,7 +22,6 @@ go_library(
         "@com_github_go_kratos_kratos_v2//middleware/tracing",
         "@com_github_go_kratos_kratos_v2//registry",
         "@com_github_go_kratos_kratos_v2//transport/http",
-        "@com_github_go_kratos_swagger_api//openapiv2",
         "@com_github_google_wire//:wire",
         "@com_github_gorilla_handlers//:handlers",
         "@com_github_hashicorp_consul_api//:api",

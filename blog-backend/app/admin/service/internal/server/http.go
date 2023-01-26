@@ -9,8 +9,6 @@ import (
 	"github.com/go-kratos/kratos/v2/middleware/selector"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/http"
-	"github.com/go-kratos/swagger-api/openapiv2"
-
 	"github.com/gorilla/handlers"
 
 	"github.com/tx7do/kratos-authn/authn"
@@ -86,8 +84,6 @@ func NewHTTPServer(
 		opts = append(opts, http.Timeout(c.Http.Timeout.AsDuration()))
 	}
 	srv := http.NewServer(opts...)
-
-	srv.HandlePrefix("/q/", openapiv2.NewHandler())
 
 	v1.RegisterPostServiceHTTPServer(srv, postSvc)
 	v1.RegisterCategoryServiceHTTPServer(srv, cateSvc)
