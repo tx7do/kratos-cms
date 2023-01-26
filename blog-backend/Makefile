@@ -1,4 +1,4 @@
-.PHONY: help wire conf ent build api all
+.PHONY: help wire conf ent build api openapi init all
 
 ifeq ($(OS),Windows_NT)
     IS_WINDOWS:=1
@@ -27,15 +27,23 @@ ent:
       make ent;\
     )
 
+api:
+	cd $(lastword $(dir $(realpath $(SRCS_MK))));\
+	make api;
+
+openapi:
+	cd $(lastword $(dir $(realpath $(SRCS_MK))));\
+	make openapi;
+
+init:
+	cd $(lastword $(dir $(realpath $(SRCS_MK))));\
+	make init;
+
 build:
 	$(foreach dir, $(dir $(realpath $(SRCS_MK))),\
       cd $(dir);\
       make build;\
     )
-
-api:
-	buf generate && \
-	$(if $(IS_WINDOWS), rmdir /s/q .\gen\api\go\third_party, rm -fr ./gen/api/go/third_party)
 
 all:
 	$(foreach dir, $(dir $(realpath $(SRCS_MK))),\
