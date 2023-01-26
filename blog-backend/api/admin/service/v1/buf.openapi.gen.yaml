@@ -5,13 +5,13 @@ managed:
 plugins:
   # generate openapi v2 json doc
 #  - name: openapiv2
-#    out: gen/api/go
+#    out: ../docs
 #    opt:
 #      - json_names_for_fields=true
 #      - logtostderr=true
   # generate openapi v2 yaml doc
   - name: openapi
-    out: gen/api/go/admin/service/v1
+    out: ../docs/admin
     opt:
       - naming=json
       - paths=source_relative

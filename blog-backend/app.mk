@@ -74,7 +74,7 @@ conf:
 
 # generate ent code
 ent:
-ifneq ("$(wildcard ./internal/data/ent/schema)","")
+ifneq ("$(wildcard ./internal/data/ent)","")
 	@go run -mod=mod entgo.io/ent/cmd/ent generate \
 				--feature privacy \
 				--feature sql/modifier \
@@ -90,7 +90,8 @@ wire:
 # generate api code
 api:
 	@cd ..\..\..\ && \
-	buf generate
+	buf generate && \
+	$(if $(IS_WINDOWS), rmdir /s/q .\gen\api\go\third_party, rm -fr ./gen/api/go/third_party)
 
 # generate OpenAPI doc
 openapi:
