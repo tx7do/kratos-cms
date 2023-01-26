@@ -5,7 +5,6 @@ load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 proto_library(
     name = "conf_proto",
     srcs = ["conf.proto"],
-    strip_import_prefix = "/api",
     visibility = ["//app/comment/service:__subpackages__"],
     deps = ["@com_google_protobuf//:duration_proto"],
 )
@@ -13,11 +12,17 @@ proto_library(
 go_library(
     name = "conf",
     srcs = [
+        "conf.pb.go",
         "generate_windows.go",
         "generate_xnix.go",
     ],
     importpath = "kratos-blog/app/comment/service/internal/conf",
     visibility = ["//app/comment/service:__subpackages__"],
+    deps = [
+        "@org_golang_google_protobuf//reflect/protoreflect",
+        "@org_golang_google_protobuf//runtime/protoimpl",
+        "@org_golang_google_protobuf//types/known/durationpb",
+    ],
 )
 
 go_proto_library(

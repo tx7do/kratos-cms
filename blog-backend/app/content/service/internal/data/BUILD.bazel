@@ -12,8 +12,6 @@ go_library(
     importpath = "kratos-blog/app/content/service/internal/data",
     visibility = ["//app/content/service:__subpackages__"],
     deps = [
-        "//api/content/service/v1:service",
-        "//api/pagination",
         "//app/content/service/internal/biz",
         "//app/content/service/internal/conf",
         "//app/content/service/internal/data/ent",
@@ -22,6 +20,8 @@ go_library(
         "//app/content/service/internal/data/ent/migrate",
         "//app/content/service/internal/data/ent/post",
         "//app/content/service/internal/data/ent/tag",
+        "//gen/api/go/content/service/v1:service",
+        "//gen/api/go/pagination",
         "//pkg/util/entgo",
         "//pkg/util/pagination",
         "@com_github_go_kratos_kratos_v2//log",

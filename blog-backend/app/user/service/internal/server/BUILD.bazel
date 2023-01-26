@@ -10,9 +10,9 @@ go_library(
     importpath = "kratos-blog/app/user/service/internal/server",
     visibility = ["//app/user/service:__subpackages__"],
     deps = [
-        "//api/user/service/v1:service",
         "//app/user/service/internal/conf",
         "//app/user/service/internal/service",
+        "//gen/api/go/user/service/v1:service",
         "@com_github_go_kratos_kratos_contrib_registry_consul_v2//:consul",
         "@com_github_go_kratos_kratos_v2//log",
         "@com_github_go_kratos_kratos_v2//middleware/logging",

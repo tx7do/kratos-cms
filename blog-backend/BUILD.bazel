@@ -1,8 +1,8 @@
 load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 
 # gazelle:prefix kratos-blog
-# gazelle:proto_strip_import_prefix /api
-# gazelle:exclude gen
+# gazelle:proto disable
+# gazelle:exclude api
 gazelle(
     name = "gazelle",
 )

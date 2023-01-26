@@ -5,5 +5,5 @@ go_library(
     srcs = ["error.go"],
     importpath = "kratos-blog/pkg/errors/auth",
     visibility = ["//visibility:public"],
-    deps = ["//api/third_party/errors"],
+    deps = ["@com_github_go_kratos_kratos_v2//errors"],
 )

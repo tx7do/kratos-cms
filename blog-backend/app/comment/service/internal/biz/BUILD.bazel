@@ -9,8 +9,8 @@ go_library(
     importpath = "kratos-blog/app/comment/service/internal/biz",
     visibility = ["//app/comment/service:__subpackages__"],
     deps = [
-        "//api/comment/service/v1:service",
-        "//api/pagination",
+        "//gen/api/go/comment/service/v1:service",
+        "//gen/api/go/pagination",
         "@com_github_go_kratos_kratos_v2//log",
         "@com_github_google_wire//:wire",
     ],

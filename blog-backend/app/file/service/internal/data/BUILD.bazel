@@ -9,11 +9,11 @@ go_library(
     importpath = "kratos-blog/app/file/service/internal/data",
     visibility = ["//app/file/service:__subpackages__"],
     deps = [
-        "//api/file/service/v1:service",
-        "//api/pagination",
         "//app/file/service/internal/biz",
         "//app/file/service/internal/conf",
         "//app/file/service/internal/data/model",
+        "//gen/api/go/file/service/v1:service",
+        "//gen/api/go/pagination",
         "//pkg/util/pagination",
         "@com_github_go_kratos_kratos_v2//log",
         "@com_github_go_redis_redis_extra_redisotel_v8//:redisotel",

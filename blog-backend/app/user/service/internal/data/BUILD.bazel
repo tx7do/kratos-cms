@@ -10,12 +10,12 @@ go_library(
     importpath = "kratos-blog/app/user/service/internal/data",
     visibility = ["//app/user/service:__subpackages__"],
     deps = [
-        "//api/user/service/v1:service",
         "//app/user/service/internal/biz",
         "//app/user/service/internal/conf",
         "//app/user/service/internal/data/ent",
         "//app/user/service/internal/data/ent/migrate",
         "//app/user/service/internal/data/ent/user",
+        "//gen/api/go/user/service/v1:service",
         "//pkg/util/crypto",
         "//pkg/util/entgo",
         "@com_github_go_kratos_kratos_v2//log",
