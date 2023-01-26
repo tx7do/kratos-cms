@@ -10,16 +10,16 @@ proto_library(
     deps = ["@com_google_protobuf//:duration_proto"],
 )
 
-go_proto_library(
-    name = "conf_go_proto",
-    importpath = "app/user/service/internal/conf",
-    proto = ":conf_proto",
-    visibility = ["//app/content/service:__subpackages__"],
-)
-
 go_library(
     name = "conf",
     srcs = ["generate.go"],
     importpath = "kratos-blog/app/content/service/internal/conf",
+    visibility = ["//app/content/service:__subpackages__"],
+)
+
+go_proto_library(
+    name = "conf_go_proto",
+    importpath = "app/user/service/internal/conf",
+    proto = ":conf_proto",
     visibility = ["//app/content/service:__subpackages__"],
 )
