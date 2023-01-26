@@ -21,11 +21,7 @@
 
 使用[buf.build](https://buf.build/)进行Protobuf API的构建。
 
-### 安装工具
-
-具体安装方法请参见：[Kratos微服务框架API工程化指南](https://juejin.cn/post/7191095845096259641)
-
-### 执行生成命令
+相关命令行工具和插件的具体安装方法请参见：[Kratos微服务框架API工程化指南](https://juejin.cn/post/7191095845096259641)
 
 在`blog-backend`根目录下执行命令：
 
@@ -57,10 +53,16 @@
    make init
    ```
 
-- 生成API
+- 生成API的go代码
 
    ```bash
    make api
+   ```
+
+- 生成API的OpenAPI v3 文档
+
+   ```bash
+   make openapi
    ```
 
 - 生成服务器配置结构代码
@@ -97,34 +99,14 @@
 
 使用[bazel.build](https://bazel.build/)进行服务器程序的构建。
 
-### 安装Bazel
-
 如何安装bazel.build的文档，请参考官方文档：<https://bazel.build/install>。
-
-- 安装Gazelle
-
-   ```shell
-   go install github.com/bazelbuild/bazel-gazelle/cmd/gazelle@latest
-   ```
-
-## Bazel命令使用
 
 在`blog-backend`根目录下执行命令：
 
 - 更新GO依赖库引入的构建配置文件repos.bzl
 
    ```bash
-   gazelle update-repos \
-           --from_file=go.mod --to_macro=repos.bzl%go_repositories \
-           --build_file_generation=on --build_file_proto_mode=disable \
-           --prune
-   ```
-   
-   或者
-   
-   ```bash
    bazel run //:gazelle-update-repos
-   bazel run //:gazelle-update-buf-repos
    ```
 
 - 生成构建配置文件BUILD.bazel
