@@ -87,13 +87,13 @@ endif
 wire:
 	@go run -mod=mod github.com/google/wire/cmd/wire ./cmd/server
 
-# generate api code
+# generate protobuf api go code
 api:
 	@cd ../../../ && \
 	buf generate && \
 	$(if $(IS_WINDOWS), rmdir /s/q .\gen\api\go\third_party, rm -fr ./gen/api/go/third_party)
 
-# generate OpenAPI doc
+# generate OpenAPI v3 doc
 openapi:
 	@cd ../../../ && \
 	buf generate --path api/admin/service/v1 --template api/admin/service/v1/buf.openapi.gen.yaml

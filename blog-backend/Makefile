@@ -9,42 +9,50 @@ ROOT_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 
 SRCS_MK := $(foreach dir, app, $(wildcard $(dir)/*/*/Makefile))
 
+# generate wire code
 wire:
 	$(foreach dir, $(dir $(realpath $(SRCS_MK))),\
       cd $(dir);\
       make wire;\
     )
 
+# generate config define code
 conf:
 	$(foreach dir, $(dir $(realpath $(SRCS_MK))),\
       cd $(dir);\
       make conf;\
     )
 
+# generate ent code
 ent:
 	$(foreach dir, $(dir $(realpath $(SRCS_MK))),\
       cd $(dir);\
       make ent;\
     )
 
+# generate protobuf api go code
 api:
 	cd $(lastword $(dir $(realpath $(SRCS_MK))));\
 	make api;
 
+# generate OpenAPI v3 docs.
 openapi:
 	cd $(lastword $(dir $(realpath $(SRCS_MK))));\
 	make openapi;
 
+# initialize develop environment
 init:
 	cd $(lastword $(dir $(realpath $(SRCS_MK))));\
 	make init;
 
+# build all service applications
 build:
 	$(foreach dir, $(dir $(realpath $(SRCS_MK))),\
       cd $(dir);\
       make build;\
     )
 
+# generate & build all service applications
 all:
 	$(foreach dir, $(dir $(realpath $(SRCS_MK))),\
       cd $(dir);\
