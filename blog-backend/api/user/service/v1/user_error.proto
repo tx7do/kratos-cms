@@ -3,7 +3,7 @@ syntax = "proto3";
 package user.service.v1;
 option go_package = "kratos-blog/gen/api/go/user/service/v1;v1";
 
-import "third_party/errors/errors.proto";
+import "errors/errors.proto";
 
 enum UserErrorReason {
     option (errors.default_code) = 500;

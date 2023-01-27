@@ -32,7 +32,7 @@ init:
 	@go install github.com/go-kratos/kratos/cmd/protoc-gen-go-errors/v2@latest
 	@go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
 	@go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
-	@go install github.com/bufbuild/protoc-gen-validate@latest
+	@go install github.com/envoyproxy/protoc-gen-validate@latest
 	@go install github.com/bufbuild/buf/cmd/buf@latest
 	@go install github.com/google/gnostic@latest
 	@go install entgo.io/ent/cmd/ent@latest
@@ -90,8 +90,7 @@ wire:
 # generate protobuf api go code
 api:
 	@cd ../../../ && \
-	buf generate && \
-	$(if $(IS_WINDOWS), rmdir /s/q .\gen\api\go\third_party, rm -fr ./gen/api/go/third_party)
+	buf generate
 
 # generate OpenAPI v3 doc
 openapi:

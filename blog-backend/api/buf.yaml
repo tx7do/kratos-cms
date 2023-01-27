@@ -1,6 +1,12 @@
 version: v1
-#deps:
-#  - buf.build/googleapis/googleapis
+build:
+  excludes: [third_party]
+deps:
+  - buf.build/googleapis/googleapis
+  - buf.build/envoyproxy/protoc-gen-validate
+  - buf.build/kratos/apis
+  - buf.build/tx7do/gnostic
+  - buf.build/gogo/protobuf
 breaking:
   use:
     - FILE

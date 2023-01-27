@@ -3,14 +3,14 @@ syntax = "proto3";
 package admin.service.v1;
 option go_package = "kratos-blog/gen/api/go/admin/service/v1;v1";
 
-import "third_party/openapiv3/annotations.proto";
-import "third_party/google/api/annotations.proto";
+import "gnostic/openapi/v3/annotations.proto";
+import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 
 import "pagination/pagination.proto";
 import "content/service/v1/post.proto";
 
-option (openapi.v3.document) = {
+option (gnostic.openapi.v3.document) = {
   info: {
     title: "帖子管理接口";
     description: "帖子管理";

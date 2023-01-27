@@ -3,7 +3,7 @@ syntax = "proto3";
 package user.service.v1;
 option go_package = "kratos-blog/gen/api/go/user/service/v1;v1";
 
-import "third_party/openapiv3/annotations.proto";
+import "gnostic/openapi/v3/annotations.proto";
 import "google/protobuf/empty.proto";
 
 // 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
@@ -34,7 +34,7 @@ message User {
   optional string password = 7;
   optional string createTime = 8;
   optional string updateTime = 9;
-  optional string status = 10 [(openapi.v3.property) = {
+  optional string status = 10 [(gnostic.openapi.v3.property) = {
     description: "用户状态"
     default: { string: "ON" }
     enum: [{yaml: "ON"}, {yaml: "OFF"}]

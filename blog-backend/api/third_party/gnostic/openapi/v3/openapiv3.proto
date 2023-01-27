@@ -16,7 +16,7 @@
 
 syntax = "proto3";
 
-package openapi.v3;
+package gnostic.openapi.v3;
 
 import "google/protobuf/any.proto";
 
@@ -669,4 +669,3 @@ message Xml {
   bool wrapped = 5;
   repeated NamedAny specification_extension = 6;
 }
-

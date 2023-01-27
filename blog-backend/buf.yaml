@@ -1,5 +1,4 @@
 version: v1
-deps:
 breaking:
   use:
     - FILE
