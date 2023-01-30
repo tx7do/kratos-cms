@@ -11,8 +11,8 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/gorilla/handlers"
 
-	"github.com/tx7do/kratos-authn/authn"
 	"github.com/tx7do/kratos-authn/engine/jwt"
+	authn "github.com/tx7do/kratos-authn/middleware"
 
 	"github.com/tx7do/kratos-authz/engine/noop"
 	authz "github.com/tx7do/kratos-authz/middleware"

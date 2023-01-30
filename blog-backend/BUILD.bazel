@@ -1,4 +1,4 @@
-load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
+load("@bazel_gazelle//:def.bzl", "gazelle")
 
 # gazelle:prefix kratos-blog
 # gazelle:proto disable
@@ -13,91 +13,25 @@ gazelle(
         "-from_file=go.mod",
         "-to_macro=repos.bzl%go_dependencies",
         "-prune",
-        "-build_file_proto_mode=disable_global",
+        "-build_file_proto_mode=disable",
     ],
     command = "update-repos",
 )
 
-gazelle(
-    name = "gazelle-update-buf-repos",
-    args = [
-        # This can also be `buf.yaml` and `buf.lock`.
-        "--from_file=buf.work.yaml",
-        # This is optional but recommended, if absent gazelle
-        # will add the rules directly to WORKSPACE
-        "-to_macro=buf_deps.bzl%buf_deps",
-        # Deletes outdated repo rules
-        "-prune",
-    ],
-    command = "update-repos",
-    gazelle = ":gazelle-buf",
-)
-
 #########################################
 
-gazelle_binary(
-    name = "gazelle-protobuf",
-    languages = [
-        "@bazel_gazelle//language/go",
-        "@bazel_gazelle//language/proto",
-        # must be after the proto extension (order matters)
-        "@build_stack_rules_proto//language/protobuf",
-    ],
-)
+load("//:utils.bzl", "publish_service")
 
-gazelle_binary(
-    name = "gazelle-buf",
-    languages = [
-        # Loads the native proto extension
-        "@bazel_gazelle//language/proto:go_default_library",
-        # Loads the Buf extension
-        "@rules_buf//gazelle/buf:buf",
-        # NOTE: This needs to be loaded after the proto language
-    ],
-)
+repository_name = "tx7do"
+repository_version = "latest"
+push_container = False
 
-#########################################
+publish_service("user", repository_name, repository_version, push_container)
 
-load("@io_bazel_rules_go//go:def.bzl", "go_binary")
+publish_service("file", repository_name, repository_version, push_container)
 
-go_binary(
-    name = "admin-server",
-    srcs = ["//app/admin/service/cmd/server"],
-    visibility = ["//visibility:private"],
-)
+publish_service("content", repository_name, repository_version, push_container)
 
-go_binary(
-    name = "comment-server",
-    srcs = ["//app/comment/service/cmd/server"],
-    visibility = ["//visibility:private"],
-)
+publish_service("comment", repository_name, repository_version, push_container)
 
-go_binary(
-    name = "content-server",
-    srcs = ["//app/content/service/cmd/server"],
-    visibility = ["//visibility:private"],
-)
-
-go_binary(
-    name = "file-server",
-    srcs = ["//app/file/service/cmd/server"],
-    visibility = ["//visibility:private"],
-)
-
-go_binary(
-    name = "user-server",
-    srcs = ["//app/user/service/cmd/server"],
-    visibility = ["//visibility:private"],
-)
-
-go_binary(
-    name = "all",
-    srcs = [
-        "//app/admin/service/cmd/server",
-        "//app/comment/service/cmd/server",
-        "//app/content/service/cmd/server",
-        "//app/file/service/cmd/server",
-        "//app/user/service/cmd/server",
-    ],
-    visibility = ["//visibility:private"],
-)
+publish_service("admin", repository_name, repository_version, push_container)

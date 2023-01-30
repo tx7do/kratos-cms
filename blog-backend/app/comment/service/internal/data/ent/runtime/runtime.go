@@ -5,6 +5,6 @@ package runtime
 // The schema-stitching logic is generated in kratos-blog/app/comment/service/internal/data/ent/runtime.go
 
 const (
-	Version = "v0.11.6"                                         // Version of ent codegen.
-	Sum     = "h1:qV1wlqehwEYkmkB2AArRghrQnruQmw8DqweeJYNre6I=" // Sum of ent codegen.
+	Version = "v0.11.7"                                         // Version of ent codegen.
+	Sum     = "h1:V+wKFh0jhAbY/FoU+PPbdMOf2Ma5vh07R/IdF+N/nFg=" // Sum of ent codegen.
 )

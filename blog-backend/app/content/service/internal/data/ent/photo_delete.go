@@ -69,6 +69,12 @@ type PhotoDeleteOne struct {
 	pd *PhotoDelete
 }
 
+// Where appends a list predicates to the PhotoDelete builder.
+func (pdo *PhotoDeleteOne) Where(ps ...predicate.Photo) *PhotoDeleteOne {
+	pdo.pd.mutation.Where(ps...)
+	return pdo
+}
+
 // Exec executes the deletion query.
 func (pdo *PhotoDeleteOne) Exec(ctx context.Context) error {
 	n, err := pdo.pd.Exec(ctx)
@@ -84,5 +90,7 @@ func (pdo *PhotoDeleteOne) Exec(ctx context.Context) error {
 
 // ExecX is like Exec, but panics if an error occurs.
 func (pdo *PhotoDeleteOne) ExecX(ctx context.Context) {
-	pdo.pd.ExecX(ctx)
+	if err := pdo.Exec(ctx); err != nil {
+		panic(err)
+	}
 }

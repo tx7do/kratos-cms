@@ -1,3 +1,6 @@
+startup --host_jvm_args=-XX:+UseParallelGC --host_jvm_args=-Xmx6g --host_jvm_args=-Xms1g
+startup --unlimit_coredumps
+
 # set GOPROXY
 test --action_env=GOPROXY=https://goproxy.cn
 build --action_env=GOPROXY=https://goproxy.cn
@@ -8,5 +11,6 @@ test --action_env=GOSUMDB=goproxy.cn/sumdb/sum.golang.org
 build --action_env=GOSUMDB=goproxy.cn/sumdb/sum.golang.org
 run --action_env=GOSUMDB=goproxy.cn/sumdb/sum.golang.org
 
-startup --host_jvm_args=-Xmx8g
-startup --unlimit_coredumps
+# set build platform
+build --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64
+run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64

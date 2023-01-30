@@ -8,7 +8,6 @@ go_library(
         "context.go",
         "ent.go",
         "entql.go",
-        "generate.go",
         "mutation.go",
         "runtime.go",
         "tx.go",

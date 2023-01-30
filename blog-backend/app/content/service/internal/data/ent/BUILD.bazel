@@ -13,7 +13,6 @@ go_library(
         "context.go",
         "ent.go",
         "entql.go",
-        "generate.go",
         "link.go",
         "link_create.go",
         "link_delete.go",

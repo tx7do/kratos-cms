@@ -69,6 +69,12 @@ type MenuDeleteOne struct {
 	md *MenuDelete
 }
 
+// Where appends a list predicates to the MenuDelete builder.
+func (mdo *MenuDeleteOne) Where(ps ...predicate.Menu) *MenuDeleteOne {
+	mdo.md.mutation.Where(ps...)
+	return mdo
+}
+
 // Exec executes the deletion query.
 func (mdo *MenuDeleteOne) Exec(ctx context.Context) error {
 	n, err := mdo.md.Exec(ctx)
@@ -84,5 +90,7 @@ func (mdo *MenuDeleteOne) Exec(ctx context.Context) error {
 
 // ExecX is like Exec, but panics if an error occurs.
 func (mdo *MenuDeleteOne) ExecX(ctx context.Context) {
-	mdo.md.ExecX(ctx)
+	if err := mdo.Exec(ctx); err != nil {
+		panic(err)
+	}
 }

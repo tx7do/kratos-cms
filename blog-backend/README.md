@@ -109,7 +109,7 @@
    bazel run //:gazelle-update-repos
    ```
 
-- 生成构建配置文件BUILD.bazel
+- 拉取依赖项，生成配置文件BUILD.bazel
 
    ```bash
    bazel run //:gazelle
@@ -135,10 +135,60 @@
   bazel build //:user-server
   ```
 
+- 运行单个服务
+
+  ```bash
+  bazel run //app/admin/service/cmd/server:server
+  bazel run //app/comment/service/cmd/server:server
+  bazel run //app/content/service/cmd/server:server
+  bazel run //app/file/service/cmd/server:server
+  bazel run //app/user/service/cmd/server:server
+  ```
+
+  或者
+
+  ```bash
+  bazel run //:admin-service
+  bazel run //:comment-service
+  bazel run //:content-service
+  bazel run //:file-service
+  bazel run //:user-service
+  ```
+
+- 单个服务生成Docker镜像tar文件
+
+  ```bash
+  bazel build //:admin-service-image
+  bazel build //:comment-service-image
+  bazel build //:content-service-image
+  bazel build //:file-service-image
+  bazel build //:user-service-image
+  ```
+
+- 单个服务生成Docker镜像
+
+  ```bash
+  bazel run //:admin-service-image
+  bazel run //:comment-service-image
+  bazel run //:content-service-image
+  bazel run //:file-service-image
+  bazel run //:user-service-image
+  ```
+
+- 单个服务推送Docker镜像到DockerHub
+
+  ```bash
+  bazel run //:admin-service-image-push
+  bazel run //:comment-service-image-push
+  bazel run //:content-service-image-push
+  bazel run //:file-service-image-push
+  bazel run //:user-service-image-push
+  ```
+
 - 构建全部服务
 
   ```bash
-  bazel build //:all
+  bazel build //...
   ```
 
 ## Docker部署

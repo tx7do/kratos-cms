@@ -69,6 +69,12 @@ type CategoryDeleteOne struct {
 	cd *CategoryDelete
 }
 
+// Where appends a list predicates to the CategoryDelete builder.
+func (cdo *CategoryDeleteOne) Where(ps ...predicate.Category) *CategoryDeleteOne {
+	cdo.cd.mutation.Where(ps...)
+	return cdo
+}
+
 // Exec executes the deletion query.
 func (cdo *CategoryDeleteOne) Exec(ctx context.Context) error {
 	n, err := cdo.cd.Exec(ctx)
@@ -84,5 +90,7 @@ func (cdo *CategoryDeleteOne) Exec(ctx context.Context) error {
 
 // ExecX is like Exec, but panics if an error occurs.
 func (cdo *CategoryDeleteOne) ExecX(ctx context.Context) {
-	cdo.cd.ExecX(ctx)
+	if err := cdo.Exec(ctx); err != nil {
+		panic(err)
+	}
 }
