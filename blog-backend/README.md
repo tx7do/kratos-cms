@@ -165,7 +165,7 @@
   bazel build //:user-service-image
   ```
 
-- 单个服务生成Docker镜像
+- 单个服务生成本地Docker镜像
 
   ```bash
   bazel run //:admin-service-image

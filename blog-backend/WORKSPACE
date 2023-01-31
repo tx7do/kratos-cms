@@ -31,7 +31,6 @@ go_dependencies()
 
 gazelle_dependencies()
 
-
 #########################################
 ## Bazel Docker 规则集 初始化
 #########################################
@@ -50,10 +49,35 @@ container_deps()
 load("@io_bazel_rules_docker//container:pull.bzl", "container_pull")
 
 # 拉取Alpine Linux
+# 该发行版使用musl libc，并且缺乏一些调试工具。
 container_pull(
     name = "alpine_linux_amd64",
     registry = "index.docker.io",
     repository = "library/alpine",
+    tag = "latest",
+)
+
+# 拉取Debian-Slim Linux
+container_pull(
+    name = "slim_linux_amd64",
+    registry = "index.docker.io",
+    repository = "library/debian",
+    tag = "stable-slim",
+)
+
+# 拉取Centos Linux
+container_pull(
+    name = "centos_linux_amd64",
+    registry = "index.docker.io",
+    repository = "library/centos",
+    tag = "7",
+)
+
+# 拉取Ubuntu Linux
+container_pull(
+    name = "ubuntu_linux_amd64",
+    registry = "index.docker.io",
+    repository = "library/ubuntu",
     tag = "latest",
 )
 

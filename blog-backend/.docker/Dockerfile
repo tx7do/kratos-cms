@@ -1,5 +1,7 @@
+############################
+# STEP 1 build optimized executable binary
+############################
 
-## Build
 FROM golang:1.18 AS builder
 
 COPY . /src
@@ -8,7 +10,10 @@ WORKDIR /src/app/${APP_RELATIVE_PATH}
 
 RUN GOPROXY=https://goproxy.cn make build
 
-## Deploy
+############################
+# STEP 2 build a small image
+############################
+
 FROM debian:stable-slim
 
 ARG APP_RELATIVE_PATH

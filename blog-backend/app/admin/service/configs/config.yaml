@@ -1,5 +1,5 @@
 trace:
-  endpoint: http://127.0.0.1:14268/api/traces
+  endpoint: http://host.docker.internal:14268/api/traces
 server:
   http:
     addr: 0.0.0.0:8800
@@ -12,7 +12,7 @@ data:
     driver: postgres
     source: host=localhost port=5432 user=postgres password=123456 dbname=blog sslmode=disable
   redis:
-    addr: 127.0.0.1:6379
+    addr: host.docker.internal:6379
     dial_timeout: 1s
     read_timeout: 0.4s
     write_timeout: 0.6s
