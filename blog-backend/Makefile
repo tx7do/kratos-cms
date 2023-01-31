@@ -1,3 +1,5 @@
+# Not Support Windows
+
 .PHONY: help wire conf ent build api openapi init all
 
 ifeq ($(OS),Windows_NT)

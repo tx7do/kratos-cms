@@ -67,9 +67,9 @@ docker:
 
 # generate config define code
 conf:
-	protoc --proto_path=. \
-	       --proto_path=../../../third_party \
-	       --go_out=paths=source_relative:. \
+	protoc --proto_path=./internal/conf/ \
+	       --proto_path=../../../api/third_party \
+	       --go_out=paths=source_relative:./internal/conf/ \
 	       ./internal/conf/conf.proto
 
 # generate ent code
