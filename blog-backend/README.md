@@ -128,11 +128,11 @@
   或者
 
   ```bash
-  bazel build //:admin-server
-  bazel build //:comment-server
-  bazel build //:content-server
-  bazel build //:file-server
-  bazel build //:user-server
+  bazel build //:admin-service
+  bazel build //:comment-service
+  bazel build //:content-service
+  bazel build //:file-service
+  bazel build //:user-service
   ```
 
 - 运行单个服务

@@ -20,7 +20,7 @@ gazelle(
 
 #########################################
 
-load("//:utils.bzl", "publish_service")
+load("//:docker.bzl", "publish_service")
 
 repository_name = "tx7do"
 
