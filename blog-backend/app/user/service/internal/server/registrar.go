@@ -8,5 +8,5 @@ import (
 )
 
 func NewRegistrar(conf *conf.Registry) registry.Registrar {
-	return bootstrap.NewConsulRegistrar(conf.Consul.Address, conf.Consul.Scheme, conf.Consul.HealthCheck)
+	return bootstrap.NewConsulRegistry(conf.Consul.Address, conf.Consul.Scheme, conf.Consul.HealthCheck)
 }

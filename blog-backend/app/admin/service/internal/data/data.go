@@ -5,17 +5,15 @@ import (
 	"time"
 
 	"github.com/google/wire"
-	consulAPI "github.com/hashicorp/consul/api"
 
-	"github.com/go-kratos/kratos/contrib/registry/consul/v2"
+	"github.com/go-redis/redis/extra/redisotel/v8"
+	"github.com/go-redis/redis/v8"
+
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/registry"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
-
-	"github.com/go-redis/redis/extra/redisotel/v8"
-	"github.com/go-redis/redis/v8"
 
 	commentV1 "kratos-blog/gen/api/go/comment/service/v1"
 	contentV1 "kratos-blog/gen/api/go/content/service/v1"
@@ -24,6 +22,7 @@ import (
 
 	"kratos-blog/app/admin/service/internal/conf"
 	"kratos-blog/pkg/service"
+	"kratos-blog/pkg/util/bootstrap"
 )
 
 // ProviderSet is data providers.
@@ -110,15 +109,7 @@ func NewRedisClient(conf *conf.Data, logger log.Logger) *redis.Client {
 
 // NewDiscovery 创建服务发现客户端
 func NewDiscovery(conf *conf.Registry) registry.Discovery {
-	c := consulAPI.DefaultConfig()
-	c.Address = conf.Consul.Address
-	c.Scheme = conf.Consul.Scheme
-	cli, err := consulAPI.NewClient(c)
-	if err != nil {
-		panic(err)
-	}
-	r := consul.New(cli, consul.WithHealthCheck(conf.Consul.HealthCheck))
-	return r
+	return bootstrap.NewConsulRegistry(conf.Consul.Address, conf.Consul.Scheme, conf.Consul.HealthCheck)
 }
 
 func NewUserServiceClient(r registry.Discovery) userV1.UserServiceClient {

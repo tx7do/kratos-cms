@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/go-kratos/kratos/v2/registry"
 
 	// etcd
 	etcdKratos "github.com/go-kratos/kratos/contrib/registry/etcd/v2"
@@ -45,8 +44,8 @@ import (
 	servicecombKratos "github.com/go-kratos/kratos/contrib/registry/servicecomb/v2"
 )
 
-// NewConsulRegistrar 创建一个注册中心 - Consul
-func NewConsulRegistrar(address, scheme string, healthCheck bool) registry.Registrar {
+// NewConsulRegistry 创建一个注册发现客户端 - Consul
+func NewConsulRegistry(address, scheme string, healthCheck bool) *consulKratos.Registry {
 	conf := consulClient.DefaultConfig()
 	conf.Address = address
 	conf.Scheme = scheme
@@ -62,10 +61,10 @@ func NewConsulRegistrar(address, scheme string, healthCheck bool) registry.Regis
 	return reg
 }
 
-// NewEtcdRegistrar 创建一个注册中心 - Etcd
-func NewEtcdRegistrar(address string) registry.Registrar {
+// NewEtcdRegistry 创建一个注册发现客户端 - Etcd
+func NewEtcdRegistry(address []string) *etcdKratos.Registry {
 	conf := etcdClient.Config{
-		Endpoints: []string{address},
+		Endpoints: address,
 	}
 
 	var err error
@@ -79,8 +78,8 @@ func NewEtcdRegistrar(address string) registry.Registrar {
 	return reg
 }
 
-// NewZooKeeperRegistrar 创建一个注册中心 - ZooKeeper
-func NewZooKeeperRegistrar(address []string) registry.Registrar {
+// NewZooKeeperRegistry 创建一个注册发现客户端 - ZooKeeper
+func NewZooKeeperRegistry(address []string) *zookeeperKratos.Registry {
 	conn, _, err := zk.Connect(address, time.Second*15)
 	if err != nil {
 		log.Fatal(err)
@@ -94,8 +93,8 @@ func NewZooKeeperRegistrar(address []string) registry.Registrar {
 	return reg
 }
 
-// NewNacosRegistrar 创建一个注册中心 - Nacos
-func NewNacosRegistrar(address string, port uint64) registry.Registrar {
+// NewNacosRegistry 创建一个注册发现客户端 - Nacos
+func NewNacosRegistry(address string, port uint64) *nacosKratos.Registry {
 	srvConf := []nacosConstant.ServerConfig{
 		*nacosConstant.NewServerConfig(address, port),
 	}
@@ -127,8 +126,8 @@ func NewNacosRegistrar(address string, port uint64) registry.Registrar {
 	return reg
 }
 
-// NewKubernetesRegistrar 创建一个注册中心 - Kubernetes
-func NewKubernetesRegistrar(address, scheme string) registry.Registrar {
+// NewKubernetesRegistry 创建一个注册发现客户端 - Kubernetes
+func NewKubernetesRegistry() *k8sRegistry.Registry {
 	restConfig, err := k8sRest.InClusterConfig()
 	if err != nil {
 		home := k8sUtil.HomeDir()
@@ -151,15 +150,15 @@ func NewKubernetesRegistrar(address, scheme string) registry.Registrar {
 	return reg
 }
 
-// NewEurekaRegistrar 创建一个注册中心 - Eureka
-func NewEurekaRegistrar(address []string) registry.Registrar {
+// NewEurekaRegistry 创建一个注册发现客户端 - Eureka
+func NewEurekaRegistry(address []string) *eurekaKratos.Registry {
 	var opts []eurekaKratos.Option
 	opts = append(opts, eurekaKratos.WithHeartbeat(time.Second))
 	opts = append(opts, eurekaKratos.WithRefresh(time.Second))
 	opts = append(opts, eurekaKratos.WithEurekaPath("eureka"))
 
 	var err error
-	var reg registry.Registrar
+	var reg *eurekaKratos.Registry
 	if reg, err = eurekaKratos.New(address, opts...); err != nil {
 		log.Fatal(err)
 	}
@@ -167,8 +166,8 @@ func NewEurekaRegistrar(address []string) registry.Registrar {
 	return reg
 }
 
-// NewPolarisRegistrar 创建一个注册中心 - Polaris
-func NewPolarisRegistrar(host string, startPort int, instanceCount int, namespace, service, token string) registry.Registrar {
+// NewPolarisRegistry 创建一个注册发现客户端 - Polaris
+func NewPolarisRegistry(host string, startPort int, instanceCount int, namespace, service, token string) *polarisKratos.Registry {
 	var provider polarisApi.ProviderAPI
 	var consumer polarisApi.ConsumerAPI
 
@@ -203,8 +202,8 @@ func NewPolarisRegistrar(host string, startPort int, instanceCount int, namespac
 	return reg
 }
 
-// NewServicecombRegistrar 创建一个注册中心 - Servicecomb
-func NewServicecombRegistrar(address []string) registry.Registrar {
+// NewServicecombRegistry 创建一个注册发现客户端 - Servicecomb
+func NewServicecombRegistry(address []string) *servicecombKratos.Registry {
 	conf := servicecombClient.Options{
 		Endpoints: address,
 	}
