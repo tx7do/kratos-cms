@@ -4,25 +4,28 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/go-kratos/kratos/v2/log"
+	"github.com/go-kratos/kratos/v2/registry"
+
 	// etcd
-	"github.com/go-kratos/kratos/contrib/registry/etcd/v2"
+	etcdKratos "github.com/go-kratos/kratos/contrib/registry/etcd/v2"
 	etcdClient "go.etcd.io/etcd/client/v3"
 
 	// consul
-	"github.com/go-kratos/kratos/contrib/registry/consul/v2"
+	consulKratos "github.com/go-kratos/kratos/contrib/registry/consul/v2"
 	consulClient "github.com/hashicorp/consul/api"
 
 	// eureka
-	"github.com/go-kratos/kratos/contrib/registry/eureka/v2"
+	eurekaKratos "github.com/go-kratos/kratos/contrib/registry/eureka/v2"
 
 	// nacos
-	"github.com/go-kratos/kratos/contrib/registry/nacos/v2"
+	nacosKratos "github.com/go-kratos/kratos/contrib/registry/nacos/v2"
 	nacosClients "github.com/nacos-group/nacos-sdk-go/clients"
 	nacosConstant "github.com/nacos-group/nacos-sdk-go/common/constant"
 	nacosVo "github.com/nacos-group/nacos-sdk-go/vo"
 
 	// zookeeper
-	"github.com/go-kratos/kratos/contrib/registry/zookeeper/v2"
+	zookeeperKratos "github.com/go-kratos/kratos/contrib/registry/zookeeper/v2"
 	"github.com/go-zookeeper/zk"
 
 	// kubernetes
@@ -33,16 +36,13 @@ import (
 	k8sUtil "k8s.io/client-go/util/homedir"
 
 	// polaris
-	"github.com/go-kratos/kratos/contrib/registry/polaris/v2"
+	polarisKratos "github.com/go-kratos/kratos/contrib/registry/polaris/v2"
 	polarisApi "github.com/polarismesh/polaris-go/api"
 	polarisModel "github.com/polarismesh/polaris-go/pkg/model"
 
 	// servicecomb
 	servicecombClient "github.com/go-chassis/sc-client"
-	"github.com/go-kratos/kratos/contrib/registry/servicecomb/v2"
-
-	"github.com/go-kratos/kratos/v2/log"
-	"github.com/go-kratos/kratos/v2/registry"
+	servicecombKratos "github.com/go-kratos/kratos/contrib/registry/servicecomb/v2"
 )
 
 // NewConsulRegistrar 创建一个注册中心 - Consul
@@ -57,7 +57,7 @@ func NewConsulRegistrar(address, scheme string, healthCheck bool) registry.Regis
 		log.Fatal(err)
 	}
 
-	reg := consul.New(cli, consul.WithHealthCheck(healthCheck))
+	reg := consulKratos.New(cli, consulKratos.WithHealthCheck(healthCheck))
 
 	return reg
 }
@@ -74,7 +74,7 @@ func NewEtcdRegistrar(address string) registry.Registrar {
 		log.Fatal(err)
 	}
 
-	reg := etcd.New(cli)
+	reg := etcdKratos.New(cli)
 
 	return reg
 }
@@ -86,7 +86,7 @@ func NewZooKeeperRegistrar(address []string) registry.Registrar {
 		log.Fatal(err)
 	}
 
-	reg := zookeeper.New(conn)
+	reg := zookeeperKratos.New(conn)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -96,11 +96,11 @@ func NewZooKeeperRegistrar(address []string) registry.Registrar {
 
 // NewNacosRegistrar 创建一个注册中心 - Nacos
 func NewNacosRegistrar(address string, port uint64) registry.Registrar {
-	sc := []nacosConstant.ServerConfig{
+	srvConf := []nacosConstant.ServerConfig{
 		*nacosConstant.NewServerConfig(address, port),
 	}
 
-	cc := nacosConstant.ClientConfig{
+	cliConf := nacosConstant.ClientConfig{
 		NamespaceId:          "public",
 		TimeoutMs:            10 * 1000, // http请求超时时间，单位毫秒
 		BeatInterval:         5 * 1000,  // 心跳间隔时间，单位毫秒
@@ -114,15 +114,15 @@ func NewNacosRegistrar(address string, port uint64) registry.Registrar {
 
 	cli, err := nacosClients.NewNamingClient(
 		nacosVo.NacosClientParam{
-			ClientConfig:  &cc,
-			ServerConfigs: sc,
+			ClientConfig:  &cliConf,
+			ServerConfigs: srvConf,
 		},
 	)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	reg := nacos.New(cli)
+	reg := nacosKratos.New(cli)
 
 	return reg
 }
@@ -153,14 +153,14 @@ func NewKubernetesRegistrar(address, scheme string) registry.Registrar {
 
 // NewEurekaRegistrar 创建一个注册中心 - Eureka
 func NewEurekaRegistrar(address []string) registry.Registrar {
-	var opts []eureka.Option
-	opts = append(opts, eureka.WithHeartbeat(time.Second))
-	opts = append(opts, eureka.WithRefresh(time.Second))
-	opts = append(opts, eureka.WithEurekaPath("eureka"))
+	var opts []eurekaKratos.Option
+	opts = append(opts, eurekaKratos.WithHeartbeat(time.Second))
+	opts = append(opts, eurekaKratos.WithRefresh(time.Second))
+	opts = append(opts, eurekaKratos.WithEurekaPath("eureka"))
 
 	var err error
 	var reg registry.Registrar
-	if reg, err = eureka.New(address, opts...); err != nil {
+	if reg, err = eurekaKratos.New(address, opts...); err != nil {
 		log.Fatal(err)
 	}
 
@@ -198,7 +198,7 @@ func NewPolarisRegistrar(host string, startPort int, instanceCount int, namespac
 		}
 	}
 
-	reg := polaris.NewRegistry(provider, consumer)
+	reg := polarisKratos.NewRegistry(provider, consumer)
 
 	return reg
 }
@@ -215,7 +215,7 @@ func NewServicecombRegistrar(address []string) registry.Registrar {
 		log.Fatal(err)
 	}
 
-	r := servicecomb.NewRegistry(cli)
+	r := servicecombKratos.NewRegistry(cli)
 
 	return r
 }
