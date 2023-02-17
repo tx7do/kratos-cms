@@ -18,6 +18,7 @@ import (
 	// etcd
 	etcdKratos "github.com/go-kratos/kratos/contrib/config/etcd/v2"
 	etcdClient "go.etcd.io/etcd/client/v3"
+
 	// consul
 	consulKratos "github.com/go-kratos/kratos/contrib/config/consul/v2"
 	consulApi "github.com/hashicorp/consul/api"

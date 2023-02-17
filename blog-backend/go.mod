@@ -47,6 +47,7 @@ require (
 	go.etcd.io/etcd/client/v3 v3.5.7
 	go.opentelemetry.io/otel v1.13.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.11.1
+	go.opentelemetry.io/otel/exporters/zipkin v1.13.0
 	go.opentelemetry.io/otel/sdk v1.13.0
 	golang.org/x/crypto v0.5.0
 	golang.org/x/tools v0.6.0
@@ -155,6 +156,7 @@ require (
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/natefinch/lumberjack v2.0.0+incompatible // indirect
 	github.com/opentracing/opentracing-go v1.2.1-0.20220228012449-10b1cf09e00b // indirect
+	github.com/openzipkin/zipkin-go v0.4.1 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
 	github.com/paulmach/orb v0.7.1 // indirect
 	github.com/pelletier/go-toml v1.9.4 // indirect
