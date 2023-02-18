@@ -72,7 +72,7 @@ func main() {
 		panic("load config failed")
 	}
 
-	err := bootstrap.NewTracerProvider(bc.Trace.Endpoint, Flags.Env, &Service)
+	err := bootstrap.NewTracerProvider(bc.Trace.Batcher, bc.Trace.Endpoint, Flags.Env, &Service)
 	if err != nil {
 		panic(err)
 	}

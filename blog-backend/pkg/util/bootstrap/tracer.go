@@ -36,7 +36,7 @@ func NewTracerExporter(exporterName, endpoint string) (traceSdk.SpanExporter, er
 }
 
 // NewTracerProvider 创建一个链路追踪器
-func NewTracerProvider(endpoint, devEnv string, serviceInfo *ServiceInfo) error {
+func NewTracerProvider(exporterName, endpoint, devEnv string, serviceInfo *ServiceInfo) error {
 	opts := []traceSdk.TracerProviderOption{
 		traceSdk.WithSampler(traceSdk.ParentBased(traceSdk.TraceIDRatioBased(1.0))),
 		traceSdk.WithResource(resource.NewSchemaless(
@@ -48,7 +48,7 @@ func NewTracerProvider(endpoint, devEnv string, serviceInfo *ServiceInfo) error 
 	}
 
 	if len(endpoint) > 0 {
-		exp, err := NewTracerExporter("jaeger", endpoint)
+		exp, err := NewTracerExporter(exporterName, endpoint)
 		if err != nil {
 			panic(err)
 		}

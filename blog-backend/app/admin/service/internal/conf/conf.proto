@@ -13,7 +13,10 @@ message Bootstrap {
 }
 
 message Trace {
-  string endpoint = 1;
+  string batcher = 1;
+  string endpoint = 2;
+  double sampler = 3;
+  string env = 4;
 }
 
 message Server {
