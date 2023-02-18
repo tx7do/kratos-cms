@@ -22,23 +22,23 @@ type Category struct {
 	UpdateTime *int64 `json:"update_time,omitempty"`
 	// 删除时间
 	DeleteTime *int64 `json:"delete_time,omitempty"`
-	// Name holds the value of the "name" field.
+	// 分类名
 	Name *string `json:"name,omitempty"`
-	// Slug holds the value of the "slug" field.
+	// 链接别名
 	Slug *string `json:"slug,omitempty"`
-	// Description holds the value of the "description" field.
+	// 描述
 	Description *string `json:"description,omitempty"`
-	// Thumbnail holds the value of the "thumbnail" field.
+	// 缩略图
 	Thumbnail *string `json:"thumbnail,omitempty"`
-	// Password holds the value of the "password" field.
+	// 密码
 	Password *string `json:"password,omitempty"`
-	// FullPath holds the value of the "full_path" field.
+	// 完整路径
 	FullPath *string `json:"full_path,omitempty"`
-	// ParentID holds the value of the "parent_id" field.
+	// 父分类ID
 	ParentID *uint32 `json:"parent_id,omitempty"`
-	// Priority holds the value of the "priority" field.
+	// 优先级
 	Priority *int32 `json:"priority,omitempty"`
-	// PostCount holds the value of the "post_count" field.
+	// 博文计数
 	PostCount *uint32 `json:"post_count,omitempty"`
 }
 

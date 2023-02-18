@@ -165,9 +165,9 @@ var schemaGraph = func() *sqlgraph.Schema {
 			tag.FieldUpdateTime: {Type: field.TypeInt64, Column: tag.FieldUpdateTime},
 			tag.FieldDeleteTime: {Type: field.TypeInt64, Column: tag.FieldDeleteTime},
 			tag.FieldName:       {Type: field.TypeString, Column: tag.FieldName},
-			tag.FieldSlug:       {Type: field.TypeString, Column: tag.FieldSlug},
 			tag.FieldColor:      {Type: field.TypeString, Column: tag.FieldColor},
 			tag.FieldThumbnail:  {Type: field.TypeString, Column: tag.FieldThumbnail},
+			tag.FieldSlug:       {Type: field.TypeString, Column: tag.FieldSlug},
 			tag.FieldSlugName:   {Type: field.TypeString, Column: tag.FieldSlugName},
 			tag.FieldPostCount:  {Type: field.TypeUint32, Column: tag.FieldPostCount},
 		},
@@ -771,11 +771,6 @@ func (f *TagFilter) WhereName(p entql.StringP) {
 	f.Where(p.Field(tag.FieldName))
 }
 
-// WhereSlug applies the entql string predicate on the slug field.
-func (f *TagFilter) WhereSlug(p entql.StringP) {
-	f.Where(p.Field(tag.FieldSlug))
-}
-
 // WhereColor applies the entql string predicate on the color field.
 func (f *TagFilter) WhereColor(p entql.StringP) {
 	f.Where(p.Field(tag.FieldColor))
@@ -784,6 +779,11 @@ func (f *TagFilter) WhereColor(p entql.StringP) {
 // WhereThumbnail applies the entql string predicate on the thumbnail field.
 func (f *TagFilter) WhereThumbnail(p entql.StringP) {
 	f.Where(p.Field(tag.FieldThumbnail))
+}
+
+// WhereSlug applies the entql string predicate on the slug field.
+func (f *TagFilter) WhereSlug(p entql.StringP) {
+	f.Where(p.Field(tag.FieldSlug))
 }
 
 // WhereSlugName applies the entql string predicate on the slug_name field.

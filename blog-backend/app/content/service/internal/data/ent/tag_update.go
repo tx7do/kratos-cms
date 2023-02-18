@@ -94,26 +94,6 @@ func (tu *TagUpdate) ClearName() *TagUpdate {
 	return tu
 }
 
-// SetSlug sets the "slug" field.
-func (tu *TagUpdate) SetSlug(s string) *TagUpdate {
-	tu.mutation.SetSlug(s)
-	return tu
-}
-
-// SetNillableSlug sets the "slug" field if the given value is not nil.
-func (tu *TagUpdate) SetNillableSlug(s *string) *TagUpdate {
-	if s != nil {
-		tu.SetSlug(*s)
-	}
-	return tu
-}
-
-// ClearSlug clears the value of the "slug" field.
-func (tu *TagUpdate) ClearSlug() *TagUpdate {
-	tu.mutation.ClearSlug()
-	return tu
-}
-
 // SetColor sets the "color" field.
 func (tu *TagUpdate) SetColor(s string) *TagUpdate {
 	tu.mutation.SetColor(s)
@@ -151,6 +131,26 @@ func (tu *TagUpdate) SetNillableThumbnail(s *string) *TagUpdate {
 // ClearThumbnail clears the value of the "thumbnail" field.
 func (tu *TagUpdate) ClearThumbnail() *TagUpdate {
 	tu.mutation.ClearThumbnail()
+	return tu
+}
+
+// SetSlug sets the "slug" field.
+func (tu *TagUpdate) SetSlug(s string) *TagUpdate {
+	tu.mutation.SetSlug(s)
+	return tu
+}
+
+// SetNillableSlug sets the "slug" field if the given value is not nil.
+func (tu *TagUpdate) SetNillableSlug(s *string) *TagUpdate {
+	if s != nil {
+		tu.SetSlug(*s)
+	}
+	return tu
+}
+
+// ClearSlug clears the value of the "slug" field.
+func (tu *TagUpdate) ClearSlug() *TagUpdate {
+	tu.mutation.ClearSlug()
 	return tu
 }
 
@@ -306,12 +306,6 @@ func (tu *TagUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if tu.mutation.NameCleared() {
 		_spec.ClearField(tag.FieldName, field.TypeString)
 	}
-	if value, ok := tu.mutation.Slug(); ok {
-		_spec.SetField(tag.FieldSlug, field.TypeString, value)
-	}
-	if tu.mutation.SlugCleared() {
-		_spec.ClearField(tag.FieldSlug, field.TypeString)
-	}
 	if value, ok := tu.mutation.Color(); ok {
 		_spec.SetField(tag.FieldColor, field.TypeString, value)
 	}
@@ -323,6 +317,12 @@ func (tu *TagUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if tu.mutation.ThumbnailCleared() {
 		_spec.ClearField(tag.FieldThumbnail, field.TypeString)
+	}
+	if value, ok := tu.mutation.Slug(); ok {
+		_spec.SetField(tag.FieldSlug, field.TypeString, value)
+	}
+	if tu.mutation.SlugCleared() {
+		_spec.ClearField(tag.FieldSlug, field.TypeString)
 	}
 	if value, ok := tu.mutation.SlugName(); ok {
 		_spec.SetField(tag.FieldSlugName, field.TypeString, value)
@@ -427,26 +427,6 @@ func (tuo *TagUpdateOne) ClearName() *TagUpdateOne {
 	return tuo
 }
 
-// SetSlug sets the "slug" field.
-func (tuo *TagUpdateOne) SetSlug(s string) *TagUpdateOne {
-	tuo.mutation.SetSlug(s)
-	return tuo
-}
-
-// SetNillableSlug sets the "slug" field if the given value is not nil.
-func (tuo *TagUpdateOne) SetNillableSlug(s *string) *TagUpdateOne {
-	if s != nil {
-		tuo.SetSlug(*s)
-	}
-	return tuo
-}
-
-// ClearSlug clears the value of the "slug" field.
-func (tuo *TagUpdateOne) ClearSlug() *TagUpdateOne {
-	tuo.mutation.ClearSlug()
-	return tuo
-}
-
 // SetColor sets the "color" field.
 func (tuo *TagUpdateOne) SetColor(s string) *TagUpdateOne {
 	tuo.mutation.SetColor(s)
@@ -484,6 +464,26 @@ func (tuo *TagUpdateOne) SetNillableThumbnail(s *string) *TagUpdateOne {
 // ClearThumbnail clears the value of the "thumbnail" field.
 func (tuo *TagUpdateOne) ClearThumbnail() *TagUpdateOne {
 	tuo.mutation.ClearThumbnail()
+	return tuo
+}
+
+// SetSlug sets the "slug" field.
+func (tuo *TagUpdateOne) SetSlug(s string) *TagUpdateOne {
+	tuo.mutation.SetSlug(s)
+	return tuo
+}
+
+// SetNillableSlug sets the "slug" field if the given value is not nil.
+func (tuo *TagUpdateOne) SetNillableSlug(s *string) *TagUpdateOne {
+	if s != nil {
+		tuo.SetSlug(*s)
+	}
+	return tuo
+}
+
+// ClearSlug clears the value of the "slug" field.
+func (tuo *TagUpdateOne) ClearSlug() *TagUpdateOne {
+	tuo.mutation.ClearSlug()
 	return tuo
 }
 
@@ -663,12 +663,6 @@ func (tuo *TagUpdateOne) sqlSave(ctx context.Context) (_node *Tag, err error) {
 	if tuo.mutation.NameCleared() {
 		_spec.ClearField(tag.FieldName, field.TypeString)
 	}
-	if value, ok := tuo.mutation.Slug(); ok {
-		_spec.SetField(tag.FieldSlug, field.TypeString, value)
-	}
-	if tuo.mutation.SlugCleared() {
-		_spec.ClearField(tag.FieldSlug, field.TypeString)
-	}
 	if value, ok := tuo.mutation.Color(); ok {
 		_spec.SetField(tag.FieldColor, field.TypeString, value)
 	}
@@ -680,6 +674,12 @@ func (tuo *TagUpdateOne) sqlSave(ctx context.Context) (_node *Tag, err error) {
 	}
 	if tuo.mutation.ThumbnailCleared() {
 		_spec.ClearField(tag.FieldThumbnail, field.TypeString)
+	}
+	if value, ok := tuo.mutation.Slug(); ok {
+		_spec.SetField(tag.FieldSlug, field.TypeString, value)
+	}
+	if tuo.mutation.SlugCleared() {
+		_spec.ClearField(tag.FieldSlug, field.TypeString)
 	}
 	if value, ok := tuo.mutation.SlugName(); ok {
 		_spec.SetField(tag.FieldSlugName, field.TypeString, value)

@@ -22,17 +22,17 @@ type Tag struct {
 	UpdateTime *int64 `json:"update_time,omitempty"`
 	// 删除时间
 	DeleteTime *int64 `json:"delete_time,omitempty"`
-	// Name holds the value of the "name" field.
+	// 表情名
 	Name *string `json:"name,omitempty"`
-	// Slug holds the value of the "slug" field.
-	Slug *string `json:"slug,omitempty"`
-	// Color holds the value of the "color" field.
+	// 颜色
 	Color *string `json:"color,omitempty"`
-	// Thumbnail holds the value of the "thumbnail" field.
+	// 缩略图
 	Thumbnail *string `json:"thumbnail,omitempty"`
-	// SlugName holds the value of the "slug_name" field.
+	// 链接别名
+	Slug *string `json:"slug,omitempty"`
+	// 链接别名
 	SlugName *string `json:"slug_name,omitempty"`
-	// PostCount holds the value of the "post_count" field.
+	// 博文计数
 	PostCount *uint32 `json:"post_count,omitempty"`
 }
 
@@ -43,7 +43,7 @@ func (*Tag) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case tag.FieldID, tag.FieldCreateTime, tag.FieldUpdateTime, tag.FieldDeleteTime, tag.FieldPostCount:
 			values[i] = new(sql.NullInt64)
-		case tag.FieldName, tag.FieldSlug, tag.FieldColor, tag.FieldThumbnail, tag.FieldSlugName:
+		case tag.FieldName, tag.FieldColor, tag.FieldThumbnail, tag.FieldSlug, tag.FieldSlugName:
 			values[i] = new(sql.NullString)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type Tag", columns[i])
@@ -94,13 +94,6 @@ func (t *Tag) assignValues(columns []string, values []any) error {
 				t.Name = new(string)
 				*t.Name = value.String
 			}
-		case tag.FieldSlug:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field slug", values[i])
-			} else if value.Valid {
-				t.Slug = new(string)
-				*t.Slug = value.String
-			}
 		case tag.FieldColor:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field color", values[i])
@@ -114,6 +107,13 @@ func (t *Tag) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				t.Thumbnail = new(string)
 				*t.Thumbnail = value.String
+			}
+		case tag.FieldSlug:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field slug", values[i])
+			} else if value.Valid {
+				t.Slug = new(string)
+				*t.Slug = value.String
 			}
 		case tag.FieldSlugName:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -177,11 +177,6 @@ func (t *Tag) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := t.Slug; v != nil {
-		builder.WriteString("slug=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
 	if v := t.Color; v != nil {
 		builder.WriteString("color=")
 		builder.WriteString(*v)
@@ -189,6 +184,11 @@ func (t *Tag) String() string {
 	builder.WriteString(", ")
 	if v := t.Thumbnail; v != nil {
 		builder.WriteString("thumbnail=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := t.Slug; v != nil {
+		builder.WriteString("slug=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

@@ -11,22 +11,22 @@ import (
 var (
 	// CommentColumns holds the columns for the "comment" table.
 	CommentColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUint32, Increment: true, SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
-		{Name: "create_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "update_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "delete_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "author", Type: field.TypeString, Nullable: true},
-		{Name: "email", Type: field.TypeString, Nullable: true},
-		{Name: "ip_address", Type: field.TypeString, Nullable: true},
-		{Name: "author_url", Type: field.TypeString, Nullable: true},
-		{Name: "gravatar_md5", Type: field.TypeString, Nullable: true},
-		{Name: "content", Type: field.TypeString, Nullable: true},
-		{Name: "user_agent", Type: field.TypeString, Nullable: true},
-		{Name: "avatar", Type: field.TypeString, Nullable: true},
-		{Name: "parent_id", Type: field.TypeUint32, Nullable: true},
-		{Name: "status", Type: field.TypeUint32, Nullable: true},
-		{Name: "is_admin", Type: field.TypeBool, Nullable: true},
-		{Name: "allow_notification", Type: field.TypeBool, Nullable: true},
+		{Name: "id", Type: field.TypeUint32, Increment: true, Comment: "id", SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
+		{Name: "create_time", Type: field.TypeInt64, Nullable: true, Comment: "创建时间"},
+		{Name: "update_time", Type: field.TypeInt64, Nullable: true, Comment: "更新时间"},
+		{Name: "delete_time", Type: field.TypeInt64, Nullable: true, Comment: "删除时间"},
+		{Name: "author", Type: field.TypeString, Nullable: true, Comment: "作者"},
+		{Name: "email", Type: field.TypeString, Nullable: true, Comment: "邮箱地址"},
+		{Name: "ip_address", Type: field.TypeString, Nullable: true, Comment: "IP地址"},
+		{Name: "author_url", Type: field.TypeString, Nullable: true, Comment: "作者链接"},
+		{Name: "gravatar_md5", Type: field.TypeString, Nullable: true, Comment: "MD5"},
+		{Name: "content", Type: field.TypeString, Nullable: true, Comment: "内容"},
+		{Name: "user_agent", Type: field.TypeString, Nullable: true, Comment: "用户浏览器信息"},
+		{Name: "avatar", Type: field.TypeString, Nullable: true, Comment: "头像"},
+		{Name: "parent_id", Type: field.TypeUint32, Nullable: true, Comment: "父评论ID"},
+		{Name: "status", Type: field.TypeUint32, Nullable: true, Comment: "状态"},
+		{Name: "is_admin", Type: field.TypeBool, Nullable: true, Comment: "是否管理员"},
+		{Name: "allow_notification", Type: field.TypeBool, Nullable: true, Comment: "允许通知"},
 	}
 	// CommentTable holds the schema information for the "comment" table.
 	CommentTable = &schema.Table{

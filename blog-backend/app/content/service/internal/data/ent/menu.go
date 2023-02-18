@@ -22,19 +22,19 @@ type Menu struct {
 	UpdateTime *int64 `json:"update_time,omitempty"`
 	// 删除时间
 	DeleteTime *int64 `json:"delete_time,omitempty"`
-	// Name holds the value of the "name" field.
+	// 目录名
 	Name *string `json:"name,omitempty"`
-	// URL holds the value of the "url" field.
+	// 链接
 	URL *string `json:"url,omitempty"`
-	// Priority holds the value of the "priority" field.
+	// 优先级
 	Priority *int32 `json:"priority,omitempty"`
-	// Target holds the value of the "target" field.
+	// 目标
 	Target *string `json:"target,omitempty"`
-	// Icon holds the value of the "icon" field.
+	// 图标
 	Icon *string `json:"icon,omitempty"`
-	// ParentID holds the value of the "parent_id" field.
+	// 父目录ID
 	ParentID *uint32 `json:"parent_id,omitempty"`
-	// Team holds the value of the "team" field.
+	// 分组
 	Team *string `json:"team,omitempty"`
 }
 

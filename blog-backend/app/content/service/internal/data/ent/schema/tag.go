@@ -20,6 +20,7 @@ func (Tag) Annotations() []schema.Annotation {
 			Charset:   "utf8mb4",
 			Collation: "utf8mb4_bin",
 		},
+		entsql.WithComments(true),
 	}
 }
 
@@ -27,28 +28,34 @@ func (Tag) Annotations() []schema.Annotation {
 func (Tag) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("name").
+			Comment("表情名").
 			Unique().
 			NotEmpty().
 			Optional().
 			Nillable(),
 
-		field.String("slug").
-			Optional().
-			Nillable(),
-
 		field.String("color").
+			Comment("颜色").
 			Optional().
 			Nillable(),
 
 		field.String("thumbnail").
+			Comment("缩略图").
+			Optional().
+			Nillable(),
+
+		field.String("slug").
+			Comment("链接别名").
 			Optional().
 			Nillable(),
 
 		field.String("slug_name").
+			Comment("链接别名").
 			Optional().
 			Nillable(),
 
 		field.Uint32("post_count").
+			Comment("博文计数").
 			Optional().
 			Nillable(),
 	}

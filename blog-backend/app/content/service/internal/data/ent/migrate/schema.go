@@ -11,19 +11,19 @@ import (
 var (
 	// CategoryColumns holds the columns for the "category" table.
 	CategoryColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUint32, Increment: true, SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
-		{Name: "create_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "update_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "delete_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "name", Type: field.TypeString, Unique: true, Nullable: true},
-		{Name: "slug", Type: field.TypeString, Nullable: true},
-		{Name: "description", Type: field.TypeString, Nullable: true, Size: 100},
-		{Name: "thumbnail", Type: field.TypeString, Nullable: true, Size: 1023},
-		{Name: "password", Type: field.TypeString, Nullable: true},
-		{Name: "full_path", Type: field.TypeString, Nullable: true},
-		{Name: "parent_id", Type: field.TypeUint32, Nullable: true},
-		{Name: "priority", Type: field.TypeInt32, Nullable: true},
-		{Name: "post_count", Type: field.TypeUint32, Nullable: true},
+		{Name: "id", Type: field.TypeUint32, Increment: true, Comment: "id", SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
+		{Name: "create_time", Type: field.TypeInt64, Nullable: true, Comment: "创建时间"},
+		{Name: "update_time", Type: field.TypeInt64, Nullable: true, Comment: "更新时间"},
+		{Name: "delete_time", Type: field.TypeInt64, Nullable: true, Comment: "删除时间"},
+		{Name: "name", Type: field.TypeString, Unique: true, Nullable: true, Comment: "分类名"},
+		{Name: "slug", Type: field.TypeString, Nullable: true, Comment: "链接别名"},
+		{Name: "description", Type: field.TypeString, Nullable: true, Size: 100, Comment: "描述"},
+		{Name: "thumbnail", Type: field.TypeString, Nullable: true, Size: 1023, Comment: "缩略图"},
+		{Name: "password", Type: field.TypeString, Nullable: true, Comment: "密码"},
+		{Name: "full_path", Type: field.TypeString, Nullable: true, Comment: "完整路径"},
+		{Name: "parent_id", Type: field.TypeUint32, Nullable: true, Comment: "父分类ID"},
+		{Name: "priority", Type: field.TypeInt32, Nullable: true, Comment: "优先级"},
+		{Name: "post_count", Type: field.TypeUint32, Nullable: true, Comment: "博文计数"},
 	}
 	// CategoryTable holds the schema information for the "category" table.
 	CategoryTable = &schema.Table{
@@ -40,16 +40,16 @@ var (
 	}
 	// LinkColumns holds the columns for the "link" table.
 	LinkColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUint32, Increment: true, SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
-		{Name: "create_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "update_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "delete_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "name", Type: field.TypeString, Unique: true, Nullable: true},
-		{Name: "url", Type: field.TypeString, Nullable: true, Size: 1023},
-		{Name: "logo", Type: field.TypeString, Nullable: true, Size: 1023},
-		{Name: "description", Type: field.TypeString, Nullable: true},
-		{Name: "team", Type: field.TypeString, Nullable: true},
-		{Name: "priority", Type: field.TypeInt32, Nullable: true},
+		{Name: "id", Type: field.TypeUint32, Increment: true, Comment: "id", SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
+		{Name: "create_time", Type: field.TypeInt64, Nullable: true, Comment: "创建时间"},
+		{Name: "update_time", Type: field.TypeInt64, Nullable: true, Comment: "更新时间"},
+		{Name: "delete_time", Type: field.TypeInt64, Nullable: true, Comment: "删除时间"},
+		{Name: "name", Type: field.TypeString, Unique: true, Nullable: true, Comment: "链接名"},
+		{Name: "url", Type: field.TypeString, Nullable: true, Size: 1023, Comment: "链接"},
+		{Name: "logo", Type: field.TypeString, Nullable: true, Size: 1023, Comment: "图标"},
+		{Name: "description", Type: field.TypeString, Nullable: true, Comment: "说明"},
+		{Name: "team", Type: field.TypeString, Nullable: true, Comment: "分组"},
+		{Name: "priority", Type: field.TypeInt32, Nullable: true, Comment: "优先级"},
 	}
 	// LinkTable holds the schema information for the "link" table.
 	LinkTable = &schema.Table{
@@ -66,17 +66,17 @@ var (
 	}
 	// MenuColumns holds the columns for the "menu" table.
 	MenuColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUint32, Increment: true, SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
-		{Name: "create_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "update_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "delete_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "name", Type: field.TypeString, Unique: true, Nullable: true},
-		{Name: "url", Type: field.TypeString, Nullable: true},
-		{Name: "priority", Type: field.TypeInt32, Nullable: true},
-		{Name: "target", Type: field.TypeString, Nullable: true},
-		{Name: "icon", Type: field.TypeString, Nullable: true},
-		{Name: "parent_id", Type: field.TypeUint32, Nullable: true},
-		{Name: "team", Type: field.TypeString, Nullable: true},
+		{Name: "id", Type: field.TypeUint32, Increment: true, Comment: "id", SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
+		{Name: "create_time", Type: field.TypeInt64, Nullable: true, Comment: "创建时间"},
+		{Name: "update_time", Type: field.TypeInt64, Nullable: true, Comment: "更新时间"},
+		{Name: "delete_time", Type: field.TypeInt64, Nullable: true, Comment: "删除时间"},
+		{Name: "name", Type: field.TypeString, Unique: true, Nullable: true, Comment: "目录名"},
+		{Name: "url", Type: field.TypeString, Nullable: true, Comment: "链接"},
+		{Name: "priority", Type: field.TypeInt32, Nullable: true, Comment: "优先级"},
+		{Name: "target", Type: field.TypeString, Nullable: true, Comment: "目标"},
+		{Name: "icon", Type: field.TypeString, Nullable: true, Comment: "图标"},
+		{Name: "parent_id", Type: field.TypeUint32, Nullable: true, Comment: "父目录ID"},
+		{Name: "team", Type: field.TypeString, Nullable: true, Comment: "分组"},
 	}
 	// MenuTable holds the schema information for the "menu" table.
 	MenuTable = &schema.Table{
@@ -93,18 +93,18 @@ var (
 	}
 	// PhotoColumns holds the columns for the "photo" table.
 	PhotoColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUint32, Increment: true, SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
-		{Name: "create_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "update_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "delete_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "name", Type: field.TypeString, Nullable: true},
-		{Name: "thumbnail", Type: field.TypeString, Nullable: true},
-		{Name: "take_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "url", Type: field.TypeString, Nullable: true},
-		{Name: "team", Type: field.TypeString, Nullable: true},
-		{Name: "location", Type: field.TypeString, Nullable: true},
-		{Name: "description", Type: field.TypeString, Nullable: true},
-		{Name: "likes", Type: field.TypeInt32, Nullable: true},
+		{Name: "id", Type: field.TypeUint32, Increment: true, Comment: "id", SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
+		{Name: "create_time", Type: field.TypeInt64, Nullable: true, Comment: "创建时间"},
+		{Name: "update_time", Type: field.TypeInt64, Nullable: true, Comment: "更新时间"},
+		{Name: "delete_time", Type: field.TypeInt64, Nullable: true, Comment: "删除时间"},
+		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "图片名"},
+		{Name: "thumbnail", Type: field.TypeString, Nullable: true, Comment: "缩略图"},
+		{Name: "take_time", Type: field.TypeInt64, Nullable: true, Comment: "更新时间"},
+		{Name: "url", Type: field.TypeString, Nullable: true, Comment: "链接"},
+		{Name: "team", Type: field.TypeString, Nullable: true, Comment: "分组"},
+		{Name: "location", Type: field.TypeString, Nullable: true, Comment: "地理位置"},
+		{Name: "description", Type: field.TypeString, Nullable: true, Comment: "描述"},
+		{Name: "likes", Type: field.TypeInt32, Nullable: true, Comment: "点赞数"},
 	}
 	// PhotoTable holds the schema information for the "photo" table.
 	PhotoTable = &schema.Table{
@@ -121,31 +121,31 @@ var (
 	}
 	// PostColumns holds the columns for the "post" table.
 	PostColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUint32, Increment: true, SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
-		{Name: "create_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "update_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "delete_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "title", Type: field.TypeString, Nullable: true},
-		{Name: "slug", Type: field.TypeString, Nullable: true},
-		{Name: "meta_keywords", Type: field.TypeString, Nullable: true},
-		{Name: "meta_description", Type: field.TypeString, Nullable: true},
-		{Name: "full_path", Type: field.TypeString, Nullable: true},
-		{Name: "original_content", Type: field.TypeString, Nullable: true},
-		{Name: "content", Type: field.TypeString, Nullable: true},
-		{Name: "summary", Type: field.TypeString, Nullable: true},
-		{Name: "thumbnail", Type: field.TypeString, Nullable: true},
-		{Name: "password", Type: field.TypeString, Nullable: true},
-		{Name: "template", Type: field.TypeString, Nullable: true},
-		{Name: "comment_count", Type: field.TypeInt32, Nullable: true},
-		{Name: "visits", Type: field.TypeInt32, Nullable: true},
-		{Name: "likes", Type: field.TypeInt32, Nullable: true},
-		{Name: "word_count", Type: field.TypeInt32, Nullable: true},
-		{Name: "top_priority", Type: field.TypeInt32, Nullable: true},
-		{Name: "status", Type: field.TypeInt32, Nullable: true},
-		{Name: "editor_type", Type: field.TypeInt32, Nullable: true},
-		{Name: "edit_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "disallow_comment", Type: field.TypeBool, Nullable: true},
-		{Name: "in_progress", Type: field.TypeBool, Nullable: true},
+		{Name: "id", Type: field.TypeUint32, Increment: true, Comment: "id", SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
+		{Name: "create_time", Type: field.TypeInt64, Nullable: true, Comment: "创建时间"},
+		{Name: "update_time", Type: field.TypeInt64, Nullable: true, Comment: "更新时间"},
+		{Name: "delete_time", Type: field.TypeInt64, Nullable: true, Comment: "删除时间"},
+		{Name: "title", Type: field.TypeString, Nullable: true, Comment: "博文标题"},
+		{Name: "slug", Type: field.TypeString, Nullable: true, Comment: "链接别名"},
+		{Name: "meta_keywords", Type: field.TypeString, Nullable: true, Comment: "关键词列表"},
+		{Name: "meta_description", Type: field.TypeString, Nullable: true, Comment: "描述信息"},
+		{Name: "full_path", Type: field.TypeString, Nullable: true, Comment: "全路径"},
+		{Name: "original_content", Type: field.TypeString, Nullable: true, Comment: "原始内容"},
+		{Name: "content", Type: field.TypeString, Nullable: true, Comment: "内容"},
+		{Name: "summary", Type: field.TypeString, Nullable: true, Comment: "概要信息"},
+		{Name: "thumbnail", Type: field.TypeString, Nullable: true, Comment: "缩略图"},
+		{Name: "password", Type: field.TypeString, Nullable: true, Comment: "密码"},
+		{Name: "template", Type: field.TypeString, Nullable: true, Comment: "模板"},
+		{Name: "comment_count", Type: field.TypeInt32, Nullable: true, Comment: "评论数"},
+		{Name: "visits", Type: field.TypeInt32, Nullable: true, Comment: "访问数"},
+		{Name: "likes", Type: field.TypeInt32, Nullable: true, Comment: "点赞数"},
+		{Name: "word_count", Type: field.TypeInt32, Nullable: true, Comment: "文章字数"},
+		{Name: "top_priority", Type: field.TypeInt32, Nullable: true, Comment: "优先级"},
+		{Name: "status", Type: field.TypeInt32, Nullable: true, Comment: "状态"},
+		{Name: "editor_type", Type: field.TypeInt32, Nullable: true, Comment: "编辑器类型"},
+		{Name: "edit_time", Type: field.TypeInt64, Nullable: true, Comment: "编辑时间"},
+		{Name: "disallow_comment", Type: field.TypeBool, Nullable: true, Comment: "不允许评论"},
+		{Name: "in_progress", Type: field.TypeBool, Nullable: true, Comment: "审核中"},
 	}
 	// PostTable holds the schema information for the "post" table.
 	PostTable = &schema.Table{
@@ -162,16 +162,16 @@ var (
 	}
 	// TagColumns holds the columns for the "tag" table.
 	TagColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUint32, Increment: true, SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
-		{Name: "create_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "update_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "delete_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "name", Type: field.TypeString, Unique: true, Nullable: true},
-		{Name: "slug", Type: field.TypeString, Nullable: true},
-		{Name: "color", Type: field.TypeString, Nullable: true},
-		{Name: "thumbnail", Type: field.TypeString, Nullable: true},
-		{Name: "slug_name", Type: field.TypeString, Nullable: true},
-		{Name: "post_count", Type: field.TypeUint32, Nullable: true},
+		{Name: "id", Type: field.TypeUint32, Increment: true, Comment: "id", SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
+		{Name: "create_time", Type: field.TypeInt64, Nullable: true, Comment: "创建时间"},
+		{Name: "update_time", Type: field.TypeInt64, Nullable: true, Comment: "更新时间"},
+		{Name: "delete_time", Type: field.TypeInt64, Nullable: true, Comment: "删除时间"},
+		{Name: "name", Type: field.TypeString, Unique: true, Nullable: true, Comment: "表情名"},
+		{Name: "color", Type: field.TypeString, Nullable: true, Comment: "颜色"},
+		{Name: "thumbnail", Type: field.TypeString, Nullable: true, Comment: "缩略图"},
+		{Name: "slug", Type: field.TypeString, Nullable: true, Comment: "链接别名"},
+		{Name: "slug_name", Type: field.TypeString, Nullable: true, Comment: "链接别名"},
+		{Name: "post_count", Type: field.TypeUint32, Nullable: true, Comment: "博文计数"},
 	}
 	// TagTable holds the schema information for the "tag" table.
 	TagTable = &schema.Table{

@@ -20,6 +20,7 @@ func (Link) Annotations() []schema.Annotation {
 			Charset:   "utf8mb4",
 			Collation: "utf8mb4_bin",
 		},
+		entsql.WithComments(true),
 	}
 }
 
@@ -27,17 +28,20 @@ func (Link) Annotations() []schema.Annotation {
 func (Link) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("name").
+			Comment("链接名").
 			Unique().
 			NotEmpty().
 			Optional().
 			Nillable(),
 
 		field.String("url").
+			Comment("链接").
 			MaxLen(1023).
 			Optional().
 			Nillable(),
 
 		field.String("logo").
+			Comment("图标").
 			MaxLen(1023).
 			Optional().
 			Nillable(),
@@ -48,10 +52,12 @@ func (Link) Fields() []ent.Field {
 			Nillable(),
 
 		field.String("team").
+			Comment("分组").
 			Optional().
 			Nillable(),
 
 		field.Int32("priority").
+			Comment("优先级").
 			Optional().
 			Nillable(),
 	}

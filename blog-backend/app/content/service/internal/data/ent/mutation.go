@@ -7341,9 +7341,9 @@ type TagMutation struct {
 	delete_time    *int64
 	adddelete_time *int64
 	name           *string
-	slug           *string
 	color          *string
 	thumbnail      *string
+	slug           *string
 	slug_name      *string
 	post_count     *uint32
 	addpost_count  *int32
@@ -7716,55 +7716,6 @@ func (m *TagMutation) ResetName() {
 	delete(m.clearedFields, tag.FieldName)
 }
 
-// SetSlug sets the "slug" field.
-func (m *TagMutation) SetSlug(s string) {
-	m.slug = &s
-}
-
-// Slug returns the value of the "slug" field in the mutation.
-func (m *TagMutation) Slug() (r string, exists bool) {
-	v := m.slug
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldSlug returns the old "slug" field's value of the Tag entity.
-// If the Tag object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *TagMutation) OldSlug(ctx context.Context) (v *string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldSlug is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldSlug requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldSlug: %w", err)
-	}
-	return oldValue.Slug, nil
-}
-
-// ClearSlug clears the value of the "slug" field.
-func (m *TagMutation) ClearSlug() {
-	m.slug = nil
-	m.clearedFields[tag.FieldSlug] = struct{}{}
-}
-
-// SlugCleared returns if the "slug" field was cleared in this mutation.
-func (m *TagMutation) SlugCleared() bool {
-	_, ok := m.clearedFields[tag.FieldSlug]
-	return ok
-}
-
-// ResetSlug resets all changes to the "slug" field.
-func (m *TagMutation) ResetSlug() {
-	m.slug = nil
-	delete(m.clearedFields, tag.FieldSlug)
-}
-
 // SetColor sets the "color" field.
 func (m *TagMutation) SetColor(s string) {
 	m.color = &s
@@ -7861,6 +7812,55 @@ func (m *TagMutation) ThumbnailCleared() bool {
 func (m *TagMutation) ResetThumbnail() {
 	m.thumbnail = nil
 	delete(m.clearedFields, tag.FieldThumbnail)
+}
+
+// SetSlug sets the "slug" field.
+func (m *TagMutation) SetSlug(s string) {
+	m.slug = &s
+}
+
+// Slug returns the value of the "slug" field in the mutation.
+func (m *TagMutation) Slug() (r string, exists bool) {
+	v := m.slug
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSlug returns the old "slug" field's value of the Tag entity.
+// If the Tag object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *TagMutation) OldSlug(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldSlug is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldSlug requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSlug: %w", err)
+	}
+	return oldValue.Slug, nil
+}
+
+// ClearSlug clears the value of the "slug" field.
+func (m *TagMutation) ClearSlug() {
+	m.slug = nil
+	m.clearedFields[tag.FieldSlug] = struct{}{}
+}
+
+// SlugCleared returns if the "slug" field was cleared in this mutation.
+func (m *TagMutation) SlugCleared() bool {
+	_, ok := m.clearedFields[tag.FieldSlug]
+	return ok
+}
+
+// ResetSlug resets all changes to the "slug" field.
+func (m *TagMutation) ResetSlug() {
+	m.slug = nil
+	delete(m.clearedFields, tag.FieldSlug)
 }
 
 // SetSlugName sets the "slug_name" field.
@@ -8029,14 +8029,14 @@ func (m *TagMutation) Fields() []string {
 	if m.name != nil {
 		fields = append(fields, tag.FieldName)
 	}
-	if m.slug != nil {
-		fields = append(fields, tag.FieldSlug)
-	}
 	if m.color != nil {
 		fields = append(fields, tag.FieldColor)
 	}
 	if m.thumbnail != nil {
 		fields = append(fields, tag.FieldThumbnail)
+	}
+	if m.slug != nil {
+		fields = append(fields, tag.FieldSlug)
 	}
 	if m.slug_name != nil {
 		fields = append(fields, tag.FieldSlugName)
@@ -8060,12 +8060,12 @@ func (m *TagMutation) Field(name string) (ent.Value, bool) {
 		return m.DeleteTime()
 	case tag.FieldName:
 		return m.Name()
-	case tag.FieldSlug:
-		return m.Slug()
 	case tag.FieldColor:
 		return m.Color()
 	case tag.FieldThumbnail:
 		return m.Thumbnail()
+	case tag.FieldSlug:
+		return m.Slug()
 	case tag.FieldSlugName:
 		return m.SlugName()
 	case tag.FieldPostCount:
@@ -8087,12 +8087,12 @@ func (m *TagMutation) OldField(ctx context.Context, name string) (ent.Value, err
 		return m.OldDeleteTime(ctx)
 	case tag.FieldName:
 		return m.OldName(ctx)
-	case tag.FieldSlug:
-		return m.OldSlug(ctx)
 	case tag.FieldColor:
 		return m.OldColor(ctx)
 	case tag.FieldThumbnail:
 		return m.OldThumbnail(ctx)
+	case tag.FieldSlug:
+		return m.OldSlug(ctx)
 	case tag.FieldSlugName:
 		return m.OldSlugName(ctx)
 	case tag.FieldPostCount:
@@ -8134,13 +8134,6 @@ func (m *TagMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetName(v)
 		return nil
-	case tag.FieldSlug:
-		v, ok := value.(string)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetSlug(v)
-		return nil
 	case tag.FieldColor:
 		v, ok := value.(string)
 		if !ok {
@@ -8154,6 +8147,13 @@ func (m *TagMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetThumbnail(v)
+		return nil
+	case tag.FieldSlug:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSlug(v)
 		return nil
 	case tag.FieldSlugName:
 		v, ok := value.(string)
@@ -8262,14 +8262,14 @@ func (m *TagMutation) ClearedFields() []string {
 	if m.FieldCleared(tag.FieldName) {
 		fields = append(fields, tag.FieldName)
 	}
-	if m.FieldCleared(tag.FieldSlug) {
-		fields = append(fields, tag.FieldSlug)
-	}
 	if m.FieldCleared(tag.FieldColor) {
 		fields = append(fields, tag.FieldColor)
 	}
 	if m.FieldCleared(tag.FieldThumbnail) {
 		fields = append(fields, tag.FieldThumbnail)
+	}
+	if m.FieldCleared(tag.FieldSlug) {
+		fields = append(fields, tag.FieldSlug)
 	}
 	if m.FieldCleared(tag.FieldSlugName) {
 		fields = append(fields, tag.FieldSlugName)
@@ -8303,14 +8303,14 @@ func (m *TagMutation) ClearField(name string) error {
 	case tag.FieldName:
 		m.ClearName()
 		return nil
-	case tag.FieldSlug:
-		m.ClearSlug()
-		return nil
 	case tag.FieldColor:
 		m.ClearColor()
 		return nil
 	case tag.FieldThumbnail:
 		m.ClearThumbnail()
+		return nil
+	case tag.FieldSlug:
+		m.ClearSlug()
 		return nil
 	case tag.FieldSlugName:
 		m.ClearSlugName()
@@ -8338,14 +8338,14 @@ func (m *TagMutation) ResetField(name string) error {
 	case tag.FieldName:
 		m.ResetName()
 		return nil
-	case tag.FieldSlug:
-		m.ResetSlug()
-		return nil
 	case tag.FieldColor:
 		m.ResetColor()
 		return nil
 	case tag.FieldThumbnail:
 		m.ResetThumbnail()
+		return nil
+	case tag.FieldSlug:
+		m.ResetSlug()
 		return nil
 	case tag.FieldSlugName:
 		m.ResetSlugName()

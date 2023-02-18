@@ -22,29 +22,29 @@ type Comment struct {
 	UpdateTime *int64 `json:"update_time,omitempty"`
 	// 删除时间
 	DeleteTime *int64 `json:"delete_time,omitempty"`
-	// Author holds the value of the "author" field.
+	// 作者
 	Author *string `json:"author,omitempty"`
-	// Email holds the value of the "email" field.
+	// 邮箱地址
 	Email *string `json:"email,omitempty"`
-	// IPAddress holds the value of the "ip_address" field.
+	// IP地址
 	IPAddress *string `json:"ip_address,omitempty"`
-	// AuthorURL holds the value of the "author_url" field.
+	// 作者链接
 	AuthorURL *string `json:"author_url,omitempty"`
-	// GravatarMd5 holds the value of the "gravatar_md5" field.
+	// MD5
 	GravatarMd5 *string `json:"gravatar_md5,omitempty"`
-	// Content holds the value of the "content" field.
+	// 内容
 	Content *string `json:"content,omitempty"`
-	// UserAgent holds the value of the "user_agent" field.
+	// 用户浏览器信息
 	UserAgent *string `json:"user_agent,omitempty"`
-	// Avatar holds the value of the "avatar" field.
+	// 头像
 	Avatar *string `json:"avatar,omitempty"`
-	// ParentID holds the value of the "parent_id" field.
+	// 父评论ID
 	ParentID *uint32 `json:"parent_id,omitempty"`
-	// Status holds the value of the "status" field.
+	// 状态
 	Status *uint32 `json:"status,omitempty"`
-	// IsAdmin holds the value of the "is_admin" field.
+	// 是否管理员
 	IsAdmin *bool `json:"is_admin,omitempty"`
-	// AllowNotification holds the value of the "allow_notification" field.
+	// 允许通知
 	AllowNotification *bool `json:"allow_notification,omitempty"`
 }
 

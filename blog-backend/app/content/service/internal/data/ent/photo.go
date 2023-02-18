@@ -22,21 +22,21 @@ type Photo struct {
 	UpdateTime *int64 `json:"update_time,omitempty"`
 	// 删除时间
 	DeleteTime *int64 `json:"delete_time,omitempty"`
-	// Name holds the value of the "name" field.
+	// 图片名
 	Name *string `json:"name,omitempty"`
-	// Thumbnail holds the value of the "thumbnail" field.
+	// 缩略图
 	Thumbnail *string `json:"thumbnail,omitempty"`
 	// 更新时间
 	TakeTime *int64 `json:"take_time,omitempty"`
-	// URL holds the value of the "url" field.
+	// 链接
 	URL *string `json:"url,omitempty"`
-	// Team holds the value of the "team" field.
+	// 分组
 	Team *string `json:"team,omitempty"`
-	// Location holds the value of the "location" field.
+	// 地理位置
 	Location *string `json:"location,omitempty"`
-	// Description holds the value of the "description" field.
+	// 描述
 	Description *string `json:"description,omitempty"`
-	// Likes holds the value of the "likes" field.
+	// 点赞数
 	Likes *int32 `json:"likes,omitempty"`
 }
 

@@ -22,47 +22,47 @@ type Post struct {
 	UpdateTime *int64 `json:"update_time,omitempty"`
 	// 删除时间
 	DeleteTime *int64 `json:"delete_time,omitempty"`
-	// Title holds the value of the "title" field.
+	// 博文标题
 	Title *string `json:"title,omitempty"`
-	// Slug holds the value of the "slug" field.
+	// 链接别名
 	Slug *string `json:"slug,omitempty"`
-	// MetaKeywords holds the value of the "meta_keywords" field.
+	// 关键词列表
 	MetaKeywords *string `json:"meta_keywords,omitempty"`
-	// MetaDescription holds the value of the "meta_description" field.
+	// 描述信息
 	MetaDescription *string `json:"meta_description,omitempty"`
-	// FullPath holds the value of the "full_path" field.
+	// 全路径
 	FullPath *string `json:"full_path,omitempty"`
-	// OriginalContent holds the value of the "original_content" field.
+	// 原始内容
 	OriginalContent *string `json:"original_content,omitempty"`
-	// Content holds the value of the "content" field.
+	// 内容
 	Content *string `json:"content,omitempty"`
-	// Summary holds the value of the "summary" field.
+	// 概要信息
 	Summary *string `json:"summary,omitempty"`
-	// Thumbnail holds the value of the "thumbnail" field.
+	// 缩略图
 	Thumbnail *string `json:"thumbnail,omitempty"`
-	// Password holds the value of the "password" field.
+	// 密码
 	Password *string `json:"password,omitempty"`
-	// Template holds the value of the "template" field.
+	// 模板
 	Template *string `json:"template,omitempty"`
-	// CommentCount holds the value of the "comment_count" field.
+	// 评论数
 	CommentCount *int32 `json:"comment_count,omitempty"`
-	// Visits holds the value of the "visits" field.
+	// 访问数
 	Visits *int32 `json:"visits,omitempty"`
-	// Likes holds the value of the "likes" field.
+	// 点赞数
 	Likes *int32 `json:"likes,omitempty"`
-	// WordCount holds the value of the "word_count" field.
+	// 文章字数
 	WordCount *int32 `json:"word_count,omitempty"`
-	// TopPriority holds the value of the "top_priority" field.
+	// 优先级
 	TopPriority *int32 `json:"top_priority,omitempty"`
-	// Status holds the value of the "status" field.
+	// 状态
 	Status *int32 `json:"status,omitempty"`
-	// EditorType holds the value of the "editor_type" field.
+	// 编辑器类型
 	EditorType *int32 `json:"editor_type,omitempty"`
 	// 编辑时间
 	EditTime *int64 `json:"edit_time,omitempty"`
-	// DisallowComment holds the value of the "disallow_comment" field.
+	// 不允许评论
 	DisallowComment *bool `json:"disallow_comment,omitempty"`
-	// InProgress holds the value of the "in_progress" field.
+	// 审核中
 	InProgress *bool `json:"in_progress,omitempty"`
 }
 

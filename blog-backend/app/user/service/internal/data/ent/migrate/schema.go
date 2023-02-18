@@ -11,16 +11,16 @@ import (
 var (
 	// UserColumns holds the columns for the "user" table.
 	UserColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUint32, Increment: true, SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
-		{Name: "create_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "update_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "delete_time", Type: field.TypeInt64, Nullable: true},
-		{Name: "username", Type: field.TypeString, Unique: true, Nullable: true, Size: 50},
-		{Name: "nickname", Type: field.TypeString, Nullable: true, Size: 128},
-		{Name: "email", Type: field.TypeString, Nullable: true, Size: 127},
-		{Name: "avatar", Type: field.TypeString, Nullable: true, Size: 1023},
-		{Name: "description", Type: field.TypeString, Nullable: true, Size: 1023},
-		{Name: "password", Type: field.TypeString, Unique: true, Nullable: true, Size: 255},
+		{Name: "id", Type: field.TypeUint32, Increment: true, Comment: "id", SchemaType: map[string]string{"mysql": "int", "postgres": "serial"}},
+		{Name: "create_time", Type: field.TypeInt64, Nullable: true, Comment: "创建时间"},
+		{Name: "update_time", Type: field.TypeInt64, Nullable: true, Comment: "更新时间"},
+		{Name: "delete_time", Type: field.TypeInt64, Nullable: true, Comment: "删除时间"},
+		{Name: "username", Type: field.TypeString, Unique: true, Nullable: true, Size: 50, Comment: "用户名"},
+		{Name: "nickname", Type: field.TypeString, Nullable: true, Size: 128, Comment: "昵称"},
+		{Name: "email", Type: field.TypeString, Nullable: true, Size: 127, Comment: "电子邮箱"},
+		{Name: "avatar", Type: field.TypeString, Nullable: true, Size: 1023, Comment: "头像"},
+		{Name: "description", Type: field.TypeString, Nullable: true, Size: 1023, Comment: "个人说明"},
+		{Name: "password", Type: field.TypeString, Unique: true, Nullable: true, Size: 255, Comment: "登陆密码"},
 	}
 	// UserTable holds the schema information for the "user" table.
 	UserTable = &schema.Table{

@@ -20,6 +20,7 @@ func (Photo) Annotations() []schema.Annotation {
 			Charset:   "utf8mb4",
 			Collation: "utf8mb4_bin",
 		},
+		entsql.WithComments(true),
 	}
 }
 
@@ -27,10 +28,12 @@ func (Photo) Annotations() []schema.Annotation {
 func (Photo) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("name").
+			Comment("图片名").
 			Optional().
 			Nillable(),
 
 		field.String("thumbnail").
+			Comment("缩略图").
 			Optional().
 			Nillable(),
 
@@ -40,22 +43,27 @@ func (Photo) Fields() []ent.Field {
 			Nillable(),
 
 		field.String("url").
+			Comment("链接").
 			Optional().
 			Nillable(),
 
 		field.String("team").
+			Comment("分组").
 			Optional().
 			Nillable(),
 
 		field.String("location").
+			Comment("地理位置").
 			Optional().
 			Nillable(),
 
 		field.String("description").
+			Comment("描述").
 			Optional().
 			Nillable(),
 
 		field.Int32("likes").
+			Comment("点赞数").
 			Optional().
 			Nillable(),
 	}

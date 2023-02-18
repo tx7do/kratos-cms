@@ -15,12 +15,12 @@ const (
 	FieldDeleteTime = "delete_time"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
-	// FieldSlug holds the string denoting the slug field in the database.
-	FieldSlug = "slug"
 	// FieldColor holds the string denoting the color field in the database.
 	FieldColor = "color"
 	// FieldThumbnail holds the string denoting the thumbnail field in the database.
 	FieldThumbnail = "thumbnail"
+	// FieldSlug holds the string denoting the slug field in the database.
+	FieldSlug = "slug"
 	// FieldSlugName holds the string denoting the slug_name field in the database.
 	FieldSlugName = "slug_name"
 	// FieldPostCount holds the string denoting the post_count field in the database.
@@ -36,9 +36,9 @@ var Columns = []string{
 	FieldUpdateTime,
 	FieldDeleteTime,
 	FieldName,
-	FieldSlug,
 	FieldColor,
 	FieldThumbnail,
+	FieldSlug,
 	FieldSlugName,
 	FieldPostCount,
 }

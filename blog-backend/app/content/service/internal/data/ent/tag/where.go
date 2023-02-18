@@ -73,11 +73,6 @@ func Name(v string) predicate.Tag {
 	return predicate.Tag(sql.FieldEQ(FieldName, v))
 }
 
-// Slug applies equality check predicate on the "slug" field. It's identical to SlugEQ.
-func Slug(v string) predicate.Tag {
-	return predicate.Tag(sql.FieldEQ(FieldSlug, v))
-}
-
 // Color applies equality check predicate on the "color" field. It's identical to ColorEQ.
 func Color(v string) predicate.Tag {
 	return predicate.Tag(sql.FieldEQ(FieldColor, v))
@@ -86,6 +81,11 @@ func Color(v string) predicate.Tag {
 // Thumbnail applies equality check predicate on the "thumbnail" field. It's identical to ThumbnailEQ.
 func Thumbnail(v string) predicate.Tag {
 	return predicate.Tag(sql.FieldEQ(FieldThumbnail, v))
+}
+
+// Slug applies equality check predicate on the "slug" field. It's identical to SlugEQ.
+func Slug(v string) predicate.Tag {
+	return predicate.Tag(sql.FieldEQ(FieldSlug, v))
 }
 
 // SlugName applies equality check predicate on the "slug_name" field. It's identical to SlugNameEQ.
@@ -323,81 +323,6 @@ func NameContainsFold(v string) predicate.Tag {
 	return predicate.Tag(sql.FieldContainsFold(FieldName, v))
 }
 
-// SlugEQ applies the EQ predicate on the "slug" field.
-func SlugEQ(v string) predicate.Tag {
-	return predicate.Tag(sql.FieldEQ(FieldSlug, v))
-}
-
-// SlugNEQ applies the NEQ predicate on the "slug" field.
-func SlugNEQ(v string) predicate.Tag {
-	return predicate.Tag(sql.FieldNEQ(FieldSlug, v))
-}
-
-// SlugIn applies the In predicate on the "slug" field.
-func SlugIn(vs ...string) predicate.Tag {
-	return predicate.Tag(sql.FieldIn(FieldSlug, vs...))
-}
-
-// SlugNotIn applies the NotIn predicate on the "slug" field.
-func SlugNotIn(vs ...string) predicate.Tag {
-	return predicate.Tag(sql.FieldNotIn(FieldSlug, vs...))
-}
-
-// SlugGT applies the GT predicate on the "slug" field.
-func SlugGT(v string) predicate.Tag {
-	return predicate.Tag(sql.FieldGT(FieldSlug, v))
-}
-
-// SlugGTE applies the GTE predicate on the "slug" field.
-func SlugGTE(v string) predicate.Tag {
-	return predicate.Tag(sql.FieldGTE(FieldSlug, v))
-}
-
-// SlugLT applies the LT predicate on the "slug" field.
-func SlugLT(v string) predicate.Tag {
-	return predicate.Tag(sql.FieldLT(FieldSlug, v))
-}
-
-// SlugLTE applies the LTE predicate on the "slug" field.
-func SlugLTE(v string) predicate.Tag {
-	return predicate.Tag(sql.FieldLTE(FieldSlug, v))
-}
-
-// SlugContains applies the Contains predicate on the "slug" field.
-func SlugContains(v string) predicate.Tag {
-	return predicate.Tag(sql.FieldContains(FieldSlug, v))
-}
-
-// SlugHasPrefix applies the HasPrefix predicate on the "slug" field.
-func SlugHasPrefix(v string) predicate.Tag {
-	return predicate.Tag(sql.FieldHasPrefix(FieldSlug, v))
-}
-
-// SlugHasSuffix applies the HasSuffix predicate on the "slug" field.
-func SlugHasSuffix(v string) predicate.Tag {
-	return predicate.Tag(sql.FieldHasSuffix(FieldSlug, v))
-}
-
-// SlugIsNil applies the IsNil predicate on the "slug" field.
-func SlugIsNil() predicate.Tag {
-	return predicate.Tag(sql.FieldIsNull(FieldSlug))
-}
-
-// SlugNotNil applies the NotNil predicate on the "slug" field.
-func SlugNotNil() predicate.Tag {
-	return predicate.Tag(sql.FieldNotNull(FieldSlug))
-}
-
-// SlugEqualFold applies the EqualFold predicate on the "slug" field.
-func SlugEqualFold(v string) predicate.Tag {
-	return predicate.Tag(sql.FieldEqualFold(FieldSlug, v))
-}
-
-// SlugContainsFold applies the ContainsFold predicate on the "slug" field.
-func SlugContainsFold(v string) predicate.Tag {
-	return predicate.Tag(sql.FieldContainsFold(FieldSlug, v))
-}
-
 // ColorEQ applies the EQ predicate on the "color" field.
 func ColorEQ(v string) predicate.Tag {
 	return predicate.Tag(sql.FieldEQ(FieldColor, v))
@@ -546,6 +471,81 @@ func ThumbnailEqualFold(v string) predicate.Tag {
 // ThumbnailContainsFold applies the ContainsFold predicate on the "thumbnail" field.
 func ThumbnailContainsFold(v string) predicate.Tag {
 	return predicate.Tag(sql.FieldContainsFold(FieldThumbnail, v))
+}
+
+// SlugEQ applies the EQ predicate on the "slug" field.
+func SlugEQ(v string) predicate.Tag {
+	return predicate.Tag(sql.FieldEQ(FieldSlug, v))
+}
+
+// SlugNEQ applies the NEQ predicate on the "slug" field.
+func SlugNEQ(v string) predicate.Tag {
+	return predicate.Tag(sql.FieldNEQ(FieldSlug, v))
+}
+
+// SlugIn applies the In predicate on the "slug" field.
+func SlugIn(vs ...string) predicate.Tag {
+	return predicate.Tag(sql.FieldIn(FieldSlug, vs...))
+}
+
+// SlugNotIn applies the NotIn predicate on the "slug" field.
+func SlugNotIn(vs ...string) predicate.Tag {
+	return predicate.Tag(sql.FieldNotIn(FieldSlug, vs...))
+}
+
+// SlugGT applies the GT predicate on the "slug" field.
+func SlugGT(v string) predicate.Tag {
+	return predicate.Tag(sql.FieldGT(FieldSlug, v))
+}
+
+// SlugGTE applies the GTE predicate on the "slug" field.
+func SlugGTE(v string) predicate.Tag {
+	return predicate.Tag(sql.FieldGTE(FieldSlug, v))
+}
+
+// SlugLT applies the LT predicate on the "slug" field.
+func SlugLT(v string) predicate.Tag {
+	return predicate.Tag(sql.FieldLT(FieldSlug, v))
+}
+
+// SlugLTE applies the LTE predicate on the "slug" field.
+func SlugLTE(v string) predicate.Tag {
+	return predicate.Tag(sql.FieldLTE(FieldSlug, v))
+}
+
+// SlugContains applies the Contains predicate on the "slug" field.
+func SlugContains(v string) predicate.Tag {
+	return predicate.Tag(sql.FieldContains(FieldSlug, v))
+}
+
+// SlugHasPrefix applies the HasPrefix predicate on the "slug" field.
+func SlugHasPrefix(v string) predicate.Tag {
+	return predicate.Tag(sql.FieldHasPrefix(FieldSlug, v))
+}
+
+// SlugHasSuffix applies the HasSuffix predicate on the "slug" field.
+func SlugHasSuffix(v string) predicate.Tag {
+	return predicate.Tag(sql.FieldHasSuffix(FieldSlug, v))
+}
+
+// SlugIsNil applies the IsNil predicate on the "slug" field.
+func SlugIsNil() predicate.Tag {
+	return predicate.Tag(sql.FieldIsNull(FieldSlug))
+}
+
+// SlugNotNil applies the NotNil predicate on the "slug" field.
+func SlugNotNil() predicate.Tag {
+	return predicate.Tag(sql.FieldNotNull(FieldSlug))
+}
+
+// SlugEqualFold applies the EqualFold predicate on the "slug" field.
+func SlugEqualFold(v string) predicate.Tag {
+	return predicate.Tag(sql.FieldEqualFold(FieldSlug, v))
+}
+
+// SlugContainsFold applies the ContainsFold predicate on the "slug" field.
+func SlugContainsFold(v string) predicate.Tag {
+	return predicate.Tag(sql.FieldContainsFold(FieldSlug, v))
 }
 
 // SlugNameEQ applies the EQ predicate on the "slug_name" field.

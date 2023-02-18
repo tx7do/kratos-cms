@@ -77,20 +77,6 @@ func (tc *TagCreate) SetNillableName(s *string) *TagCreate {
 	return tc
 }
 
-// SetSlug sets the "slug" field.
-func (tc *TagCreate) SetSlug(s string) *TagCreate {
-	tc.mutation.SetSlug(s)
-	return tc
-}
-
-// SetNillableSlug sets the "slug" field if the given value is not nil.
-func (tc *TagCreate) SetNillableSlug(s *string) *TagCreate {
-	if s != nil {
-		tc.SetSlug(*s)
-	}
-	return tc
-}
-
 // SetColor sets the "color" field.
 func (tc *TagCreate) SetColor(s string) *TagCreate {
 	tc.mutation.SetColor(s)
@@ -115,6 +101,20 @@ func (tc *TagCreate) SetThumbnail(s string) *TagCreate {
 func (tc *TagCreate) SetNillableThumbnail(s *string) *TagCreate {
 	if s != nil {
 		tc.SetThumbnail(*s)
+	}
+	return tc
+}
+
+// SetSlug sets the "slug" field.
+func (tc *TagCreate) SetSlug(s string) *TagCreate {
+	tc.mutation.SetSlug(s)
+	return tc
+}
+
+// SetNillableSlug sets the "slug" field if the given value is not nil.
+func (tc *TagCreate) SetNillableSlug(s *string) *TagCreate {
+	if s != nil {
+		tc.SetSlug(*s)
 	}
 	return tc
 }
@@ -261,10 +261,6 @@ func (tc *TagCreate) createSpec() (*Tag, *sqlgraph.CreateSpec) {
 		_spec.SetField(tag.FieldName, field.TypeString, value)
 		_node.Name = &value
 	}
-	if value, ok := tc.mutation.Slug(); ok {
-		_spec.SetField(tag.FieldSlug, field.TypeString, value)
-		_node.Slug = &value
-	}
 	if value, ok := tc.mutation.Color(); ok {
 		_spec.SetField(tag.FieldColor, field.TypeString, value)
 		_node.Color = &value
@@ -272,6 +268,10 @@ func (tc *TagCreate) createSpec() (*Tag, *sqlgraph.CreateSpec) {
 	if value, ok := tc.mutation.Thumbnail(); ok {
 		_spec.SetField(tag.FieldThumbnail, field.TypeString, value)
 		_node.Thumbnail = &value
+	}
+	if value, ok := tc.mutation.Slug(); ok {
+		_spec.SetField(tag.FieldSlug, field.TypeString, value)
+		_node.Slug = &value
 	}
 	if value, ok := tc.mutation.SlugName(); ok {
 		_spec.SetField(tag.FieldSlugName, field.TypeString, value)
@@ -399,24 +399,6 @@ func (u *TagUpsert) ClearName() *TagUpsert {
 	return u
 }
 
-// SetSlug sets the "slug" field.
-func (u *TagUpsert) SetSlug(v string) *TagUpsert {
-	u.Set(tag.FieldSlug, v)
-	return u
-}
-
-// UpdateSlug sets the "slug" field to the value that was provided on create.
-func (u *TagUpsert) UpdateSlug() *TagUpsert {
-	u.SetExcluded(tag.FieldSlug)
-	return u
-}
-
-// ClearSlug clears the value of the "slug" field.
-func (u *TagUpsert) ClearSlug() *TagUpsert {
-	u.SetNull(tag.FieldSlug)
-	return u
-}
-
 // SetColor sets the "color" field.
 func (u *TagUpsert) SetColor(v string) *TagUpsert {
 	u.Set(tag.FieldColor, v)
@@ -450,6 +432,24 @@ func (u *TagUpsert) UpdateThumbnail() *TagUpsert {
 // ClearThumbnail clears the value of the "thumbnail" field.
 func (u *TagUpsert) ClearThumbnail() *TagUpsert {
 	u.SetNull(tag.FieldThumbnail)
+	return u
+}
+
+// SetSlug sets the "slug" field.
+func (u *TagUpsert) SetSlug(v string) *TagUpsert {
+	u.Set(tag.FieldSlug, v)
+	return u
+}
+
+// UpdateSlug sets the "slug" field to the value that was provided on create.
+func (u *TagUpsert) UpdateSlug() *TagUpsert {
+	u.SetExcluded(tag.FieldSlug)
+	return u
+}
+
+// ClearSlug clears the value of the "slug" field.
+func (u *TagUpsert) ClearSlug() *TagUpsert {
+	u.SetNull(tag.FieldSlug)
 	return u
 }
 
@@ -623,27 +623,6 @@ func (u *TagUpsertOne) ClearName() *TagUpsertOne {
 	})
 }
 
-// SetSlug sets the "slug" field.
-func (u *TagUpsertOne) SetSlug(v string) *TagUpsertOne {
-	return u.Update(func(s *TagUpsert) {
-		s.SetSlug(v)
-	})
-}
-
-// UpdateSlug sets the "slug" field to the value that was provided on create.
-func (u *TagUpsertOne) UpdateSlug() *TagUpsertOne {
-	return u.Update(func(s *TagUpsert) {
-		s.UpdateSlug()
-	})
-}
-
-// ClearSlug clears the value of the "slug" field.
-func (u *TagUpsertOne) ClearSlug() *TagUpsertOne {
-	return u.Update(func(s *TagUpsert) {
-		s.ClearSlug()
-	})
-}
-
 // SetColor sets the "color" field.
 func (u *TagUpsertOne) SetColor(v string) *TagUpsertOne {
 	return u.Update(func(s *TagUpsert) {
@@ -683,6 +662,27 @@ func (u *TagUpsertOne) UpdateThumbnail() *TagUpsertOne {
 func (u *TagUpsertOne) ClearThumbnail() *TagUpsertOne {
 	return u.Update(func(s *TagUpsert) {
 		s.ClearThumbnail()
+	})
+}
+
+// SetSlug sets the "slug" field.
+func (u *TagUpsertOne) SetSlug(v string) *TagUpsertOne {
+	return u.Update(func(s *TagUpsert) {
+		s.SetSlug(v)
+	})
+}
+
+// UpdateSlug sets the "slug" field to the value that was provided on create.
+func (u *TagUpsertOne) UpdateSlug() *TagUpsertOne {
+	return u.Update(func(s *TagUpsert) {
+		s.UpdateSlug()
+	})
+}
+
+// ClearSlug clears the value of the "slug" field.
+func (u *TagUpsertOne) ClearSlug() *TagUpsertOne {
+	return u.Update(func(s *TagUpsert) {
+		s.ClearSlug()
 	})
 }
 
@@ -1025,27 +1025,6 @@ func (u *TagUpsertBulk) ClearName() *TagUpsertBulk {
 	})
 }
 
-// SetSlug sets the "slug" field.
-func (u *TagUpsertBulk) SetSlug(v string) *TagUpsertBulk {
-	return u.Update(func(s *TagUpsert) {
-		s.SetSlug(v)
-	})
-}
-
-// UpdateSlug sets the "slug" field to the value that was provided on create.
-func (u *TagUpsertBulk) UpdateSlug() *TagUpsertBulk {
-	return u.Update(func(s *TagUpsert) {
-		s.UpdateSlug()
-	})
-}
-
-// ClearSlug clears the value of the "slug" field.
-func (u *TagUpsertBulk) ClearSlug() *TagUpsertBulk {
-	return u.Update(func(s *TagUpsert) {
-		s.ClearSlug()
-	})
-}
-
 // SetColor sets the "color" field.
 func (u *TagUpsertBulk) SetColor(v string) *TagUpsertBulk {
 	return u.Update(func(s *TagUpsert) {
@@ -1085,6 +1064,27 @@ func (u *TagUpsertBulk) UpdateThumbnail() *TagUpsertBulk {
 func (u *TagUpsertBulk) ClearThumbnail() *TagUpsertBulk {
 	return u.Update(func(s *TagUpsert) {
 		s.ClearThumbnail()
+	})
+}
+
+// SetSlug sets the "slug" field.
+func (u *TagUpsertBulk) SetSlug(v string) *TagUpsertBulk {
+	return u.Update(func(s *TagUpsert) {
+		s.SetSlug(v)
+	})
+}
+
+// UpdateSlug sets the "slug" field to the value that was provided on create.
+func (u *TagUpsertBulk) UpdateSlug() *TagUpsertBulk {
+	return u.Update(func(s *TagUpsert) {
+		s.UpdateSlug()
+	})
+}
+
+// ClearSlug clears the value of the "slug" field.
+func (u *TagUpsertBulk) ClearSlug() *TagUpsertBulk {
+	return u.Update(func(s *TagUpsert) {
+		s.ClearSlug()
 	})
 }
 
