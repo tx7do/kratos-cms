@@ -25,6 +25,10 @@ func NewZipkinExporter(endpoint string) (traceSdk.SpanExporter, error) {
 
 // NewTracerExporter 创建一个导出器，支持：jaeger和zipkin
 func NewTracerExporter(exporterName, endpoint string) (traceSdk.SpanExporter, error) {
+	if exporterName == "" {
+		exporterName = "jaeger"
+	}
+
 	switch exporterName {
 	case "jaeger":
 		return NewJaegerExporter(endpoint)
