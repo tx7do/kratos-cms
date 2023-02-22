@@ -37,7 +37,7 @@ init:
 	@go install github.com/google/gnostic@latest
 	@go install entgo.io/ent/cmd/ent@latest
 	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-
+	@go install github.com/go-kratos/kratos/cmd/kratos/v2@latest
 
 # download dependencies of module
 dep:
