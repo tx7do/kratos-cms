@@ -7,8 +7,8 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 
 	v1 "kratos-blog/gen/api/go/admin/service/v1"
+	"kratos-blog/gen/api/go/common/pagination"
 	contentV1 "kratos-blog/gen/api/go/content/service/v1"
-	"kratos-blog/gen/api/go/pagination"
 )
 
 type PostService struct {

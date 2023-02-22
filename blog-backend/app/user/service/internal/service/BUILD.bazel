@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "service",
     srcs = [
-        "service.go",
+        "init.go",
         "user.go",
     ],
     importpath = "kratos-blog/app/user/service/internal/service",

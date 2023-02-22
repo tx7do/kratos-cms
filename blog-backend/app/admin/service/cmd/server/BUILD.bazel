@@ -9,10 +9,10 @@ go_library(
     importpath = "kratos-blog/app/admin/service/cmd/server",
     visibility = ["//visibility:private"],
     deps = [
-        "//app/admin/service/internal/conf",
         "//app/admin/service/internal/data",
         "//app/admin/service/internal/server",
         "//app/admin/service/internal/service",
+        "//gen/api/go/common/conf",
         "//pkg/service",
         "//pkg/util/bootstrap",
         "@com_github_go_kratos_kratos_v2//:kratos",

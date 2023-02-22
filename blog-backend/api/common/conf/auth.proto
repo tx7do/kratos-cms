@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package common.conf;
+
+option go_package = "kratos-blog/gen/api/go/common/conf;conf";
+
+// 密钥
+message Auth {
+  string service_key = 1; // 服务密钥
+  string api_key = 2; // 接口密钥
+}

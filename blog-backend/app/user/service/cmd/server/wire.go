@@ -12,10 +12,10 @@ import (
 	"github.com/google/wire"
 
 	"kratos-blog/app/user/service/internal/biz"
-	"kratos-blog/app/user/service/internal/conf"
 	"kratos-blog/app/user/service/internal/data"
 	"kratos-blog/app/user/service/internal/server"
 	"kratos-blog/app/user/service/internal/service"
+	"kratos-blog/gen/api/go/common/conf"
 )
 
 // initApp init kratos application.

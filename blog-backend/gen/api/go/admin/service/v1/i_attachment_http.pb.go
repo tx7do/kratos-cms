@@ -11,8 +11,8 @@ import (
 	http "github.com/go-kratos/kratos/v2/transport/http"
 	binding "github.com/go-kratos/kratos/v2/transport/http/binding"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	pagination "kratos-blog/gen/api/go/common/pagination"
 	v1 "kratos-blog/gen/api/go/file/service/v1"
-	pagination "kratos-blog/gen/api/go/pagination"
 )
 
 // This is a compile-time assertion to ensure that this generated file

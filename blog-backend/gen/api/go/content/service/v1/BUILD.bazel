@@ -25,7 +25,7 @@ go_library(
     importpath = "kratos-blog/gen/api/go/content/service/v1",
     visibility = ["//visibility:public"],
     deps = [
-        "//gen/api/go/pagination",
+        "//gen/api/go/common/pagination",
         "@org_golang_google_grpc//:go_default_library",
         "@org_golang_google_grpc//codes",
         "@org_golang_google_grpc//status",

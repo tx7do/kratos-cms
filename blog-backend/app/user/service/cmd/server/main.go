@@ -8,7 +8,7 @@ import (
 	"github.com/go-kratos/kratos/v2/registry"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 
-	"kratos-blog/app/user/service/internal/conf"
+	"kratos-blog/gen/api/go/common/conf"
 	"kratos-blog/pkg/service"
 	"kratos-blog/pkg/util/bootstrap"
 )

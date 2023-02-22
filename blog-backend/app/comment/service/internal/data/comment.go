@@ -10,7 +10,7 @@ import (
 	"kratos-blog/app/comment/service/internal/data/ent/comment"
 
 	v1 "kratos-blog/gen/api/go/comment/service/v1"
-	"kratos-blog/gen/api/go/pagination"
+	"kratos-blog/gen/api/go/common/pagination"
 
 	"kratos-blog/pkg/util/entgo"
 	paging "kratos-blog/pkg/util/pagination"

@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "biz",
     srcs = [
-        "biz.go",
+        "init.go",
         "user.go",
         "user_token.go",
     ],

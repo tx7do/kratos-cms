@@ -9,8 +9,8 @@ import (
 
 	v1 "kratos-blog/gen/api/go/content/service/v1"
 
-	"kratos-blog/app/content/service/internal/conf"
 	"kratos-blog/app/content/service/internal/service"
+	"kratos-blog/gen/api/go/common/conf"
 )
 
 // NewGRPCServer new a gRPC server.

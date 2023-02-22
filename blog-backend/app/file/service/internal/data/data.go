@@ -9,23 +9,11 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/google/wire"
-
 	"github.com/go-redis/redis/extra/redisotel/v8"
 	"github.com/go-redis/redis/v8"
 
-	"kratos-blog/app/file/service/internal/conf"
 	"kratos-blog/app/file/service/internal/data/model"
-)
-
-// ProviderSet is data providers.
-var ProviderSet = wire.NewSet(
-	NewData,
-
-	NewGormClient,
-	NewRedisClient,
-
-	NewAttachmentRepo,
+	"kratos-blog/gen/api/go/common/conf"
 )
 
 // Data .

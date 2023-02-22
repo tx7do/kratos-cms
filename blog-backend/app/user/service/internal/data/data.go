@@ -5,8 +5,6 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 
-	"github.com/google/wire"
-
 	"github.com/go-redis/redis/extra/redisotel/v8"
 	"github.com/go-redis/redis/v8"
 
@@ -14,20 +12,9 @@ import (
 	_ "github.com/jackc/pgx/v4/stdlib"
 	_ "github.com/lib/pq"
 
-	"kratos-blog/app/user/service/internal/conf"
 	"kratos-blog/app/user/service/internal/data/ent"
 	"kratos-blog/app/user/service/internal/data/ent/migrate"
-)
-
-// ProviderSet is data providers.
-var ProviderSet = wire.NewSet(
-	NewData,
-
-	NewEntClient,
-	NewRedisClient,
-
-	NewUserRepo,
-	NewUserTokenRepo,
+	"kratos-blog/gen/api/go/common/conf"
 )
 
 // Data .

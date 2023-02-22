@@ -12,7 +12,7 @@ import (
 	jwtV4 "github.com/golang-jwt/jwt/v4"
 
 	"kratos-blog/app/user/service/internal/biz"
-	"kratos-blog/app/user/service/internal/conf"
+	"kratos-blog/gen/api/go/common/conf"
 
 	v1 "kratos-blog/gen/api/go/user/service/v1"
 )

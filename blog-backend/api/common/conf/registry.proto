@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package common.conf;
+
+option go_package = "kratos-blog/gen/api/go/common/conf;conf";
+
+// Consul
+message Consul {
+  string scheme = 1;  // 网络样式
+  string address = 2; // 服务端地址
+  bool health_check = 3;  // 健康检查
+}
+
+// 注册发现中心
+message Registry {
+  Consul consul = 1;  // Consul
+}

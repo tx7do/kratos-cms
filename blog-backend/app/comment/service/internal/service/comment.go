@@ -9,7 +9,7 @@ import (
 	"kratos-blog/app/comment/service/internal/biz"
 
 	v1 "kratos-blog/gen/api/go/comment/service/v1"
-	"kratos-blog/gen/api/go/pagination"
+	"kratos-blog/gen/api/go/common/pagination"
 )
 
 type CommentService struct {

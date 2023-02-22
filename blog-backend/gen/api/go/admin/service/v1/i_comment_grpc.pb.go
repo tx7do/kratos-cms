@@ -13,7 +13,7 @@ import (
 	status "google.golang.org/grpc/status"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	v1 "kratos-blog/gen/api/go/comment/service/v1"
-	pagination "kratos-blog/gen/api/go/pagination"
+	pagination "kratos-blog/gen/api/go/common/pagination"
 )
 
 // This is a compile-time assertion to ensure that this generated file

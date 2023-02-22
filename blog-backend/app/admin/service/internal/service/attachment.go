@@ -7,8 +7,8 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 
 	v1 "kratos-blog/gen/api/go/admin/service/v1"
+	"kratos-blog/gen/api/go/common/pagination"
 	fileV1 "kratos-blog/gen/api/go/file/service/v1"
-	"kratos-blog/gen/api/go/pagination"
 )
 
 type AttachmentService struct {

@@ -2,7 +2,7 @@ package biz
 
 import (
 	"context"
-	"kratos-blog/gen/api/go/pagination"
+	"kratos-blog/gen/api/go/common/pagination"
 
 	"github.com/go-kratos/kratos/v2/log"
 

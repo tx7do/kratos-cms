@@ -8,8 +8,8 @@ import (
 
 	"kratos-blog/app/content/service/internal/biz"
 
+	"kratos-blog/gen/api/go/common/pagination"
 	v1 "kratos-blog/gen/api/go/content/service/v1"
-	"kratos-blog/gen/api/go/pagination"
 )
 
 type TagService struct {

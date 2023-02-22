@@ -9,10 +9,10 @@ package main
 import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
-	"kratos-blog/app/admin/service/internal/conf"
 	"kratos-blog/app/admin/service/internal/data"
 	"kratos-blog/app/admin/service/internal/server"
 	"kratos-blog/app/admin/service/internal/service"
+	"kratos-blog/gen/api/go/common/conf"
 )
 
 // Injectors from wire.go:
@@ -20,19 +20,19 @@ import (
 // initApp init kratos application.
 func initApp(confServer *conf.Server, registry *conf.Registry, confData *conf.Data, auth *conf.Auth, logger log.Logger) (*kratos.App, func(), error) {
 	discovery := data.NewDiscovery(registry)
-	userServiceClient := data.NewUserServiceClient(discovery)
+	userServiceClient := data.NewUserServiceClient(discovery, confServer)
 	userService := service.NewUserService(logger, userServiceClient)
-	postServiceClient := data.NewPostServiceClient(discovery)
+	postServiceClient := data.NewPostServiceClient(discovery, confServer)
 	postService := service.NewPostService(logger, postServiceClient)
-	linkServiceClient := data.NewLinkServiceClient(discovery)
+	linkServiceClient := data.NewLinkServiceClient(discovery, confServer)
 	linkService := service.NewLinkService(logger, linkServiceClient)
-	categoryServiceClient := data.NewCategoryServiceClient(discovery)
+	categoryServiceClient := data.NewCategoryServiceClient(discovery, confServer)
 	categoryService := service.NewCategoryService(logger, categoryServiceClient)
-	commentServiceClient := data.NewCommentServiceClient(discovery)
+	commentServiceClient := data.NewCommentServiceClient(discovery, confServer)
 	commentService := service.NewCommentService(logger, commentServiceClient)
-	tagServiceClient := data.NewTagServiceClient(discovery)
+	tagServiceClient := data.NewTagServiceClient(discovery, confServer)
 	tagService := service.NewTagService(logger, tagServiceClient)
-	attachmentServiceClient := data.NewAttachmentServiceClient(discovery)
+	attachmentServiceClient := data.NewAttachmentServiceClient(discovery, confServer)
 	attachmentService := service.NewAttachmentService(logger, attachmentServiceClient)
 	httpServer := server.NewHTTPServer(confServer, auth, logger, userService, postService, linkService, categoryService, commentService, tagService, attachmentService)
 	registrar := server.NewRegistrar(registry)

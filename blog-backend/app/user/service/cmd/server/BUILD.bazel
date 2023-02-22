@@ -10,10 +10,10 @@ go_library(
     visibility = ["//visibility:private"],
     deps = [
         "//app/user/service/internal/biz",
-        "//app/user/service/internal/conf",
         "//app/user/service/internal/data",
         "//app/user/service/internal/server",
         "//app/user/service/internal/service",
+        "//gen/api/go/common/conf",
         "//pkg/service",
         "//pkg/util/bootstrap",
         "@com_github_go_kratos_kratos_v2//:kratos",

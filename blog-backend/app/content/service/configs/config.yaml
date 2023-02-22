@@ -4,7 +4,7 @@ trace:
   sampler: 1.0
   env: dev
 server:
-  http:
+  rest:
     addr: 0.0.0.0:0
     timeout: 1s
   grpc:

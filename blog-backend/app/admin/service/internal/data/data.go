@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/google/wire"
+	GRPC "google.golang.org/grpc"
 
 	"github.com/go-redis/redis/extra/redisotel/v8"
 	"github.com/go-redis/redis/v8"
@@ -20,26 +20,12 @@ import (
 	fileV1 "kratos-blog/gen/api/go/file/service/v1"
 	userV1 "kratos-blog/gen/api/go/user/service/v1"
 
-	"kratos-blog/app/admin/service/internal/conf"
+	"kratos-blog/gen/api/go/common/conf"
 	"kratos-blog/pkg/service"
 	"kratos-blog/pkg/util/bootstrap"
 )
 
-// ProviderSet is data providers.
-var ProviderSet = wire.NewSet(
-	NewData,
-
-	NewRedisClient,
-	NewDiscovery,
-
-	NewUserServiceClient,
-	NewAttachmentServiceClient,
-	NewCommentServiceClient,
-	NewCategoryServiceClient,
-	NewLinkServiceClient,
-	NewPostServiceClient,
-	NewTagServiceClient,
-)
+const defaultTimeout = 5 * time.Second
 
 // Data .
 type Data struct {
@@ -112,121 +98,52 @@ func NewDiscovery(conf *conf.Registry) registry.Discovery {
 	return bootstrap.NewConsulRegistry(conf.Consul.Address, conf.Consul.Scheme, conf.Consul.HealthCheck)
 }
 
-func NewUserServiceClient(r registry.Discovery) userV1.UserServiceClient {
+func createGrpcConnection(serviceName string, r registry.Discovery, c *conf.Server) GRPC.ClientConnInterface {
+	timeout := defaultTimeout
+	if c.Grpc != nil && c.Grpc.Timeout != nil {
+		timeout = c.Grpc.GetTimeout().AsDuration()
+	}
+
 	conn, err := grpc.DialInsecure(
 		context.Background(),
-		grpc.WithEndpoint("discovery:///"+service.UserService),
+		grpc.WithEndpoint("discovery:///"+serviceName),
 		grpc.WithDiscovery(r),
 		grpc.WithMiddleware(
 			tracing.Client(),
 			recovery.Recovery(),
 		),
-		grpc.WithTimeout(2*time.Second),
+		grpc.WithTimeout(timeout),
 	)
 	if err != nil {
-		panic(err)
+		log.Fatalf("dial grpc client [%s] failed: %s", serviceName, err.Error())
 	}
-	return userV1.NewUserServiceClient(conn)
+	return conn
 }
 
-func NewAttachmentServiceClient(r registry.Discovery) fileV1.AttachmentServiceClient {
-	conn, err := grpc.DialInsecure(
-		context.Background(),
-		grpc.WithEndpoint("discovery:///"+service.FileService),
-		grpc.WithDiscovery(r),
-		grpc.WithMiddleware(
-			tracing.Client(),
-			recovery.Recovery(),
-		),
-		grpc.WithTimeout(2*time.Second),
-	)
-	if err != nil {
-		panic(err)
-	}
-	return fileV1.NewAttachmentServiceClient(conn)
+func NewUserServiceClient(r registry.Discovery, c *conf.Server) userV1.UserServiceClient {
+	return userV1.NewUserServiceClient(createGrpcConnection(service.UserService, r, c))
 }
 
-func NewCommentServiceClient(r registry.Discovery) commentV1.CommentServiceClient {
-	conn, err := grpc.DialInsecure(
-		context.Background(),
-		grpc.WithEndpoint("discovery:///"+service.CommentService),
-		grpc.WithDiscovery(r),
-		grpc.WithMiddleware(
-			tracing.Client(),
-			recovery.Recovery(),
-		),
-		grpc.WithTimeout(2*time.Second),
-	)
-	if err != nil {
-		panic(err)
-	}
-	return commentV1.NewCommentServiceClient(conn)
+func NewAttachmentServiceClient(r registry.Discovery, c *conf.Server) fileV1.AttachmentServiceClient {
+	return fileV1.NewAttachmentServiceClient(createGrpcConnection(service.FileService, r, c))
 }
 
-func NewCategoryServiceClient(r registry.Discovery) contentV1.CategoryServiceClient {
-	conn, err := grpc.DialInsecure(
-		context.Background(),
-		grpc.WithEndpoint("discovery:///"+service.ContentService),
-		grpc.WithDiscovery(r),
-		grpc.WithMiddleware(
-			tracing.Client(),
-			recovery.Recovery(),
-		),
-		grpc.WithTimeout(2*time.Second),
-	)
-	if err != nil {
-		panic(err)
-	}
-	return contentV1.NewCategoryServiceClient(conn)
+func NewCommentServiceClient(r registry.Discovery, c *conf.Server) commentV1.CommentServiceClient {
+	return commentV1.NewCommentServiceClient(createGrpcConnection(service.CommentService, r, c))
 }
 
-func NewLinkServiceClient(r registry.Discovery) contentV1.LinkServiceClient {
-	conn, err := grpc.DialInsecure(
-		context.Background(),
-		grpc.WithEndpoint("discovery:///"+service.ContentService),
-		grpc.WithDiscovery(r),
-		grpc.WithMiddleware(
-			tracing.Client(),
-			recovery.Recovery(),
-		),
-		grpc.WithTimeout(2*time.Second),
-	)
-	if err != nil {
-		panic(err)
-	}
-	return contentV1.NewLinkServiceClient(conn)
+func NewCategoryServiceClient(r registry.Discovery, c *conf.Server) contentV1.CategoryServiceClient {
+	return contentV1.NewCategoryServiceClient(createGrpcConnection(service.ContentService, r, c))
 }
 
-func NewPostServiceClient(r registry.Discovery) contentV1.PostServiceClient {
-	conn, err := grpc.DialInsecure(
-		context.Background(),
-		grpc.WithEndpoint("discovery:///"+service.ContentService),
-		grpc.WithDiscovery(r),
-		grpc.WithMiddleware(
-			tracing.Client(),
-			recovery.Recovery(),
-		),
-		grpc.WithTimeout(2*time.Second),
-	)
-	if err != nil {
-		panic(err)
-	}
-	return contentV1.NewPostServiceClient(conn)
+func NewLinkServiceClient(r registry.Discovery, c *conf.Server) contentV1.LinkServiceClient {
+	return contentV1.NewLinkServiceClient(createGrpcConnection(service.ContentService, r, c))
 }
 
-func NewTagServiceClient(r registry.Discovery) contentV1.TagServiceClient {
-	conn, err := grpc.DialInsecure(
-		context.Background(),
-		grpc.WithEndpoint("discovery:///"+service.ContentService),
-		grpc.WithDiscovery(r),
-		grpc.WithMiddleware(
-			tracing.Client(),
-			recovery.Recovery(),
-		),
-		grpc.WithTimeout(2*time.Second),
-	)
-	if err != nil {
-		panic(err)
-	}
-	return contentV1.NewTagServiceClient(conn)
+func NewPostServiceClient(r registry.Discovery, c *conf.Server) contentV1.PostServiceClient {
+	return contentV1.NewPostServiceClient(createGrpcConnection(service.ContentService, r, c))
+}
+
+func NewTagServiceClient(r registry.Discovery, c *conf.Server) contentV1.TagServiceClient {
+	return contentV1.NewTagServiceClient(createGrpcConnection(service.ContentService, r, c))
 }

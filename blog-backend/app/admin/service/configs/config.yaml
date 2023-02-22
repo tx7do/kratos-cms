@@ -1,7 +1,7 @@
 trace:
   endpoint: http://host.docker.internal:14268/api/traces
 server:
-  http:
+  rest:
     addr: 0.0.0.0:8800
     timeout: 1s
   grpc:
