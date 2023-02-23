@@ -9,6 +9,8 @@ go_library(
         "conf.pb.validate.go",
         "data.pb.go",
         "data.pb.validate.go",
+        "logger.pb.go",
+        "logger.pb.validate.go",
         "oss.pb.go",
         "oss.pb.validate.go",
         "registry.pb.go",

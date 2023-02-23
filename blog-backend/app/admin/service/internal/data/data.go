@@ -4,25 +4,19 @@ import (
 	"context"
 	"time"
 
-	GRPC "google.golang.org/grpc"
-
 	"github.com/go-redis/redis/extra/redisotel/v8"
 	"github.com/go-redis/redis/v8"
 
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/go-kratos/kratos/v2/middleware/recovery"
-	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/registry"
-	"github.com/go-kratos/kratos/v2/transport/grpc"
-
 	commentV1 "kratos-blog/gen/api/go/comment/service/v1"
 	contentV1 "kratos-blog/gen/api/go/content/service/v1"
 	fileV1 "kratos-blog/gen/api/go/file/service/v1"
 	userV1 "kratos-blog/gen/api/go/user/service/v1"
 
 	"kratos-blog/gen/api/go/common/conf"
+	"kratos-blog/pkg/bootstrap"
 	"kratos-blog/pkg/service"
-	"kratos-blog/pkg/util/bootstrap"
 )
 
 const defaultTimeout = 5 * time.Second
@@ -94,56 +88,34 @@ func NewRedisClient(conf *conf.Data, logger log.Logger) *redis.Client {
 }
 
 // NewDiscovery 创建服务发现客户端
-func NewDiscovery(conf *conf.Registry) registry.Discovery {
-	return bootstrap.NewConsulRegistry(conf.Consul.Address, conf.Consul.Scheme, conf.Consul.HealthCheck)
-}
-
-func createGrpcConnection(serviceName string, r registry.Discovery, c *conf.Server) GRPC.ClientConnInterface {
-	timeout := defaultTimeout
-	if c.Grpc != nil && c.Grpc.Timeout != nil {
-		timeout = c.Grpc.GetTimeout().AsDuration()
-	}
-
-	conn, err := grpc.DialInsecure(
-		context.Background(),
-		grpc.WithEndpoint("discovery:///"+serviceName),
-		grpc.WithDiscovery(r),
-		grpc.WithMiddleware(
-			tracing.Client(),
-			recovery.Recovery(),
-		),
-		grpc.WithTimeout(timeout),
-	)
-	if err != nil {
-		log.Fatalf("dial grpc client [%s] failed: %s", serviceName, err.Error())
-	}
-	return conn
+func NewDiscovery(cfg *conf.Registry) registry.Discovery {
+	return bootstrap.NewConsulRegistry(cfg)
 }
 
 func NewUserServiceClient(r registry.Discovery, c *conf.Server) userV1.UserServiceClient {
-	return userV1.NewUserServiceClient(createGrpcConnection(service.UserService, r, c))
+	return userV1.NewUserServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.UserService, c.Grpc.GetTimeout()))
 }
 
 func NewAttachmentServiceClient(r registry.Discovery, c *conf.Server) fileV1.AttachmentServiceClient {
-	return fileV1.NewAttachmentServiceClient(createGrpcConnection(service.FileService, r, c))
+	return fileV1.NewAttachmentServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.FileService, c.Grpc.GetTimeout()))
 }
 
 func NewCommentServiceClient(r registry.Discovery, c *conf.Server) commentV1.CommentServiceClient {
-	return commentV1.NewCommentServiceClient(createGrpcConnection(service.CommentService, r, c))
+	return commentV1.NewCommentServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.CommentService, c.Grpc.GetTimeout()))
 }
 
 func NewCategoryServiceClient(r registry.Discovery, c *conf.Server) contentV1.CategoryServiceClient {
-	return contentV1.NewCategoryServiceClient(createGrpcConnection(service.ContentService, r, c))
+	return contentV1.NewCategoryServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.ContentService, c.Grpc.GetTimeout()))
 }
 
 func NewLinkServiceClient(r registry.Discovery, c *conf.Server) contentV1.LinkServiceClient {
-	return contentV1.NewLinkServiceClient(createGrpcConnection(service.ContentService, r, c))
+	return contentV1.NewLinkServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.ContentService, c.Grpc.GetTimeout()))
 }
 
 func NewPostServiceClient(r registry.Discovery, c *conf.Server) contentV1.PostServiceClient {
-	return contentV1.NewPostServiceClient(createGrpcConnection(service.ContentService, r, c))
+	return contentV1.NewPostServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.ContentService, c.Grpc.GetTimeout()))
 }
 
 func NewTagServiceClient(r registry.Discovery, c *conf.Server) contentV1.TagServiceClient {
-	return contentV1.NewTagServiceClient(createGrpcConnection(service.ContentService, r, c))
+	return contentV1.NewTagServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.ContentService, c.Grpc.GetTimeout()))
 }

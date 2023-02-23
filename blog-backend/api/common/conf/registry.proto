@@ -4,6 +4,20 @@ package common.conf;
 
 option go_package = "kratos-blog/gen/api/go/common/conf;conf";
 
+import "google/protobuf/duration.proto";
+
+// 注册发现中心
+message Registry {
+  Consul consul = 1;  // Consul
+  Etcd Etcd = 3;  // Etcd
+  ZooKeeper zookeeper = 4;  // ZooKeeper
+  Nacos nacos = 5;  // Nacos
+  Kubernetes kubernetes = 6;  // Kubernetes
+  Eureka eureka = 7;  // Eureka
+  Polaris polaris = 8;  // Polaris
+  Servicecomb servicecomb = 9;  // Servicecomb
+}
+
 // Consul
 message Consul {
   string scheme = 1;  // 网络样式
@@ -11,7 +25,47 @@ message Consul {
   bool health_check = 3;  // 健康检查
 }
 
-// 注册发现中心
-message Registry {
-  Consul consul = 1;  // Consul
+// Etcd
+message Etcd {
+  repeated string endpoints = 1;
+}
+
+// ZooKeeper
+message ZooKeeper {
+  repeated string endpoints = 1;
+  google.protobuf.Duration timeout = 2;
+}
+
+// Nacos
+message Nacos {
+  string address = 1; // 服务端地址
+  uint64 port = 2; // 服务端端口
+}
+
+// Kubernetes
+message Kubernetes {
+
+}
+
+// Eureka
+message Eureka {
+  repeated string endpoints = 1;
+  google.protobuf.Duration heartbeat_interval = 2;
+  google.protobuf.Duration refresh_interval = 3;
+  string path = 4;
+}
+
+// Polaris
+message Polaris {
+  string address = 1; // 服务端地址
+  int32 port = 2; // 服务端端口
+  int32 instance_count = 3;
+  string namespace = 4;
+  string service = 5;
+  string token = 6;
+}
+
+// Servicecomb
+message Servicecomb {
+  repeated string endpoints = 1;
 }

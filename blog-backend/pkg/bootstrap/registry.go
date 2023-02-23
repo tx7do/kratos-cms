@@ -42,34 +42,36 @@ import (
 	// servicecomb
 	servicecombClient "github.com/go-chassis/sc-client"
 	servicecombKratos "github.com/go-kratos/kratos/contrib/registry/servicecomb/v2"
+
+	"kratos-blog/gen/api/go/common/conf"
 )
 
 // NewConsulRegistry 创建一个注册发现客户端 - Consul
-func NewConsulRegistry(address, scheme string, healthCheck bool) *consulKratos.Registry {
-	conf := consulClient.DefaultConfig()
-	conf.Address = address
-	conf.Scheme = scheme
+func NewConsulRegistry(c *conf.Registry) *consulKratos.Registry {
+	cfg := consulClient.DefaultConfig()
+	cfg.Address = c.Consul.Address
+	cfg.Scheme = c.Consul.Scheme
 
 	var cli *consulClient.Client
 	var err error
-	if cli, err = consulClient.NewClient(conf); err != nil {
+	if cli, err = consulClient.NewClient(cfg); err != nil {
 		log.Fatal(err)
 	}
 
-	reg := consulKratos.New(cli, consulKratos.WithHealthCheck(healthCheck))
+	reg := consulKratos.New(cli, consulKratos.WithHealthCheck(c.Consul.HealthCheck))
 
 	return reg
 }
 
 // NewEtcdRegistry 创建一个注册发现客户端 - Etcd
-func NewEtcdRegistry(address []string) *etcdKratos.Registry {
-	conf := etcdClient.Config{
-		Endpoints: address,
+func NewEtcdRegistry(c *conf.Registry) *etcdKratos.Registry {
+	cfg := etcdClient.Config{
+		Endpoints: c.Etcd.Endpoints,
 	}
 
 	var err error
 	var cli *etcdClient.Client
-	if cli, err = etcdClient.New(conf); err != nil {
+	if cli, err = etcdClient.New(cfg); err != nil {
 		log.Fatal(err)
 	}
 
@@ -79,8 +81,8 @@ func NewEtcdRegistry(address []string) *etcdKratos.Registry {
 }
 
 // NewZooKeeperRegistry 创建一个注册发现客户端 - ZooKeeper
-func NewZooKeeperRegistry(address []string) *zookeeperKratos.Registry {
-	conn, _, err := zk.Connect(address, time.Second*15)
+func NewZooKeeperRegistry(c *conf.Registry) *zookeeperKratos.Registry {
+	conn, _, err := zk.Connect(c.Zookeeper.Endpoints, c.Zookeeper.Timeout.AsDuration())
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -94,9 +96,9 @@ func NewZooKeeperRegistry(address []string) *zookeeperKratos.Registry {
 }
 
 // NewNacosRegistry 创建一个注册发现客户端 - Nacos
-func NewNacosRegistry(address string, port uint64) *nacosKratos.Registry {
+func NewNacosRegistry(c *conf.Registry) *nacosKratos.Registry {
 	srvConf := []nacosConstant.ServerConfig{
-		*nacosConstant.NewServerConfig(address, port),
+		*nacosConstant.NewServerConfig(c.Nacos.Address, c.Nacos.Port),
 	}
 
 	cliConf := nacosConstant.ClientConfig{
@@ -127,7 +129,7 @@ func NewNacosRegistry(address string, port uint64) *nacosKratos.Registry {
 }
 
 // NewKubernetesRegistry 创建一个注册发现客户端 - Kubernetes
-func NewKubernetesRegistry() *k8sRegistry.Registry {
+func NewKubernetesRegistry(_ *conf.Registry) *k8sRegistry.Registry {
 	restConfig, err := k8sRest.InClusterConfig()
 	if err != nil {
 		home := k8sUtil.HomeDir()
@@ -151,7 +153,7 @@ func NewKubernetesRegistry() *k8sRegistry.Registry {
 }
 
 // NewEurekaRegistry 创建一个注册发现客户端 - Eureka
-func NewEurekaRegistry(address []string) *eurekaKratos.Registry {
+func NewEurekaRegistry(c *conf.Registry) *eurekaKratos.Registry {
 	var opts []eurekaKratos.Option
 	opts = append(opts, eurekaKratos.WithHeartbeat(time.Second))
 	opts = append(opts, eurekaKratos.WithRefresh(time.Second))
@@ -159,7 +161,7 @@ func NewEurekaRegistry(address []string) *eurekaKratos.Registry {
 
 	var err error
 	var reg *eurekaKratos.Registry
-	if reg, err = eurekaKratos.New(address, opts...); err != nil {
+	if reg, err = eurekaKratos.New(c.Eureka.Endpoints, opts...); err != nil {
 		log.Fatal(err)
 	}
 
@@ -167,7 +169,7 @@ func NewEurekaRegistry(address []string) *eurekaKratos.Registry {
 }
 
 // NewPolarisRegistry 创建一个注册发现客户端 - Polaris
-func NewPolarisRegistry(host string, startPort int, instanceCount int, namespace, service, token string) *polarisKratos.Registry {
+func NewPolarisRegistry(c *conf.Registry) *polarisKratos.Registry {
 	var provider polarisApi.ProviderAPI
 	var consumer polarisApi.ConsumerAPI
 
@@ -179,16 +181,16 @@ func NewPolarisRegistry(host string, startPort int, instanceCount int, namespace
 
 	provider = polarisApi.NewProviderAPIByContext(consumer.SDKContext())
 
-	log.Infof("start to register instances, count %d", instanceCount)
+	log.Infof("start to register instances, count %d", c.Polaris.InstanceCount)
 
 	var resp *polarisModel.InstanceRegisterResponse
-	for i := 0; i < instanceCount; i++ {
+	for i := 0; i < (int)(c.Polaris.InstanceCount); i++ {
 		registerRequest := &polarisApi.InstanceRegisterRequest{}
-		registerRequest.Service = service
-		registerRequest.Namespace = namespace
-		registerRequest.Host = host
-		registerRequest.Port = startPort + i
-		registerRequest.ServiceToken = token
+		registerRequest.Service = c.Polaris.Service
+		registerRequest.Namespace = c.Polaris.Namespace
+		registerRequest.Host = c.Polaris.Address
+		registerRequest.Port = (int)(c.Polaris.Port) + i
+		registerRequest.ServiceToken = c.Polaris.Token
 		registerRequest.SetHealthy(true)
 		if resp, err = provider.RegisterInstance(registerRequest); err != nil {
 			log.Fatalf("fail to register instance %d, err is %v", i, err)
@@ -203,18 +205,18 @@ func NewPolarisRegistry(host string, startPort int, instanceCount int, namespace
 }
 
 // NewServicecombRegistry 创建一个注册发现客户端 - Servicecomb
-func NewServicecombRegistry(address []string) *servicecombKratos.Registry {
-	conf := servicecombClient.Options{
-		Endpoints: address,
+func NewServicecombRegistry(c *conf.Registry) *servicecombKratos.Registry {
+	cfg := servicecombClient.Options{
+		Endpoints: c.Servicecomb.Endpoints,
 	}
 
 	var cli *servicecombClient.Client
 	var err error
-	if cli, err = servicecombClient.NewClient(conf); err != nil {
+	if cli, err = servicecombClient.NewClient(cfg); err != nil {
 		log.Fatal(err)
 	}
 
-	r := servicecombKratos.NewRegistry(cli)
+	reg := servicecombKratos.NewRegistry(cli)
 
-	return r
+	return reg
 }

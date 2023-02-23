@@ -10,8 +10,8 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/http"
 
 	"kratos-blog/gen/api/go/common/conf"
+	"kratos-blog/pkg/bootstrap"
 	"kratos-blog/pkg/service"
-	"kratos-blog/pkg/util/bootstrap"
 )
 
 // go build -ldflags "-X main.Service.Version=x.y.z"
@@ -66,14 +66,14 @@ func loadConfig() (*conf.Bootstrap, *conf.Registry) {
 func main() {
 	flag.Parse()
 
-	logger := bootstrap.NewLoggerProvider(&Service)
-
 	bc, rc := loadConfig()
 	if bc == nil || rc == nil {
 		panic("load config failed")
 	}
 
-	err := bootstrap.NewTracerProvider(bc.Trace.Batcher, bc.Trace.Endpoint, Flags.Env, &Service)
+	logger := bootstrap.NewLoggerProvider(bootstrap.LoggerTypeStd, bc.Logger, &Service)
+
+	err := bootstrap.NewTracerProvider(bc.Trace, &Service)
 	if err != nil {
 		panic(err)
 	}

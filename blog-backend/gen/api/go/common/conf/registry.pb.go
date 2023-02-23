@@ -9,6 +9,7 @@ package conf
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	durationpb "google.golang.org/protobuf/types/known/durationpb"
 	reflect "reflect"
 	sync "sync"
 )
@@ -19,6 +20,110 @@ const (
 	// Verify that runtime/protoimpl is sufficiently up-to-date.
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
+
+// 注册发现中心
+type Registry struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Consul      *Consul      `protobuf:"bytes,1,opt,name=consul,proto3" json:"consul,omitempty"`           // Consul
+	Etcd        *Etcd        `protobuf:"bytes,3,opt,name=Etcd,proto3" json:"Etcd,omitempty"`               // Etcd
+	Zookeeper   *ZooKeeper   `protobuf:"bytes,4,opt,name=zookeeper,proto3" json:"zookeeper,omitempty"`     // ZooKeeper
+	Nacos       *Nacos       `protobuf:"bytes,5,opt,name=nacos,proto3" json:"nacos,omitempty"`             // Nacos
+	Kubernetes  *Kubernetes  `protobuf:"bytes,6,opt,name=kubernetes,proto3" json:"kubernetes,omitempty"`   // Kubernetes
+	Eureka      *Eureka      `protobuf:"bytes,7,opt,name=eureka,proto3" json:"eureka,omitempty"`           // Eureka
+	Polaris     *Polaris     `protobuf:"bytes,8,opt,name=polaris,proto3" json:"polaris,omitempty"`         // Polaris
+	Servicecomb *Servicecomb `protobuf:"bytes,9,opt,name=servicecomb,proto3" json:"servicecomb,omitempty"` // Servicecomb
+}
+
+func (x *Registry) Reset() {
+	*x = Registry{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_common_conf_registry_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Registry) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Registry) ProtoMessage() {}
+
+func (x *Registry) ProtoReflect() protoreflect.Message {
+	mi := &file_common_conf_registry_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Registry.ProtoReflect.Descriptor instead.
+func (*Registry) Descriptor() ([]byte, []int) {
+	return file_common_conf_registry_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *Registry) GetConsul() *Consul {
+	if x != nil {
+		return x.Consul
+	}
+	return nil
+}
+
+func (x *Registry) GetEtcd() *Etcd {
+	if x != nil {
+		return x.Etcd
+	}
+	return nil
+}
+
+func (x *Registry) GetZookeeper() *ZooKeeper {
+	if x != nil {
+		return x.Zookeeper
+	}
+	return nil
+}
+
+func (x *Registry) GetNacos() *Nacos {
+	if x != nil {
+		return x.Nacos
+	}
+	return nil
+}
+
+func (x *Registry) GetKubernetes() *Kubernetes {
+	if x != nil {
+		return x.Kubernetes
+	}
+	return nil
+}
+
+func (x *Registry) GetEureka() *Eureka {
+	if x != nil {
+		return x.Eureka
+	}
+	return nil
+}
+
+func (x *Registry) GetPolaris() *Polaris {
+	if x != nil {
+		return x.Polaris
+	}
+	return nil
+}
+
+func (x *Registry) GetServicecomb() *Servicecomb {
+	if x != nil {
+		return x.Servicecomb
+	}
+	return nil
+}
 
 // Consul
 type Consul struct {
@@ -34,7 +139,7 @@ type Consul struct {
 func (x *Consul) Reset() {
 	*x = Consul{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_common_conf_registry_proto_msgTypes[0]
+		mi := &file_common_conf_registry_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -47,7 +152,7 @@ func (x *Consul) String() string {
 func (*Consul) ProtoMessage() {}
 
 func (x *Consul) ProtoReflect() protoreflect.Message {
-	mi := &file_common_conf_registry_proto_msgTypes[0]
+	mi := &file_common_conf_registry_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -60,7 +165,7 @@ func (x *Consul) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Consul.ProtoReflect.Descriptor instead.
 func (*Consul) Descriptor() ([]byte, []int) {
-	return file_common_conf_registry_proto_rawDescGZIP(), []int{0}
+	return file_common_conf_registry_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *Consul) GetScheme() string {
@@ -84,32 +189,32 @@ func (x *Consul) GetHealthCheck() bool {
 	return false
 }
 
-// 注册发现中心
-type Registry struct {
+// Etcd
+type Etcd struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Consul *Consul `protobuf:"bytes,1,opt,name=consul,proto3" json:"consul,omitempty"` // Consul
+	Endpoints []string `protobuf:"bytes,1,rep,name=endpoints,proto3" json:"endpoints,omitempty"`
 }
 
-func (x *Registry) Reset() {
-	*x = Registry{}
+func (x *Etcd) Reset() {
+	*x = Etcd{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_common_conf_registry_proto_msgTypes[1]
+		mi := &file_common_conf_registry_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
 }
 
-func (x *Registry) String() string {
+func (x *Etcd) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Registry) ProtoMessage() {}
+func (*Etcd) ProtoMessage() {}
 
-func (x *Registry) ProtoReflect() protoreflect.Message {
-	mi := &file_common_conf_registry_proto_msgTypes[1]
+func (x *Etcd) ProtoReflect() protoreflect.Message {
+	mi := &file_common_conf_registry_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -120,14 +225,373 @@ func (x *Registry) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Registry.ProtoReflect.Descriptor instead.
-func (*Registry) Descriptor() ([]byte, []int) {
-	return file_common_conf_registry_proto_rawDescGZIP(), []int{1}
+// Deprecated: Use Etcd.ProtoReflect.Descriptor instead.
+func (*Etcd) Descriptor() ([]byte, []int) {
+	return file_common_conf_registry_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *Registry) GetConsul() *Consul {
+func (x *Etcd) GetEndpoints() []string {
 	if x != nil {
-		return x.Consul
+		return x.Endpoints
+	}
+	return nil
+}
+
+// ZooKeeper
+type ZooKeeper struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Endpoints []string             `protobuf:"bytes,1,rep,name=endpoints,proto3" json:"endpoints,omitempty"`
+	Timeout   *durationpb.Duration `protobuf:"bytes,2,opt,name=timeout,proto3" json:"timeout,omitempty"`
+}
+
+func (x *ZooKeeper) Reset() {
+	*x = ZooKeeper{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_common_conf_registry_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ZooKeeper) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ZooKeeper) ProtoMessage() {}
+
+func (x *ZooKeeper) ProtoReflect() protoreflect.Message {
+	mi := &file_common_conf_registry_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ZooKeeper.ProtoReflect.Descriptor instead.
+func (*ZooKeeper) Descriptor() ([]byte, []int) {
+	return file_common_conf_registry_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *ZooKeeper) GetEndpoints() []string {
+	if x != nil {
+		return x.Endpoints
+	}
+	return nil
+}
+
+func (x *ZooKeeper) GetTimeout() *durationpb.Duration {
+	if x != nil {
+		return x.Timeout
+	}
+	return nil
+}
+
+// Nacos
+type Nacos struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Address string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"` // 服务端地址
+	Port    uint64 `protobuf:"varint,2,opt,name=port,proto3" json:"port,omitempty"`      // 服务端端口
+}
+
+func (x *Nacos) Reset() {
+	*x = Nacos{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_common_conf_registry_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Nacos) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Nacos) ProtoMessage() {}
+
+func (x *Nacos) ProtoReflect() protoreflect.Message {
+	mi := &file_common_conf_registry_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Nacos.ProtoReflect.Descriptor instead.
+func (*Nacos) Descriptor() ([]byte, []int) {
+	return file_common_conf_registry_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *Nacos) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
+func (x *Nacos) GetPort() uint64 {
+	if x != nil {
+		return x.Port
+	}
+	return 0
+}
+
+// Kubernetes
+type Kubernetes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *Kubernetes) Reset() {
+	*x = Kubernetes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_common_conf_registry_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Kubernetes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Kubernetes) ProtoMessage() {}
+
+func (x *Kubernetes) ProtoReflect() protoreflect.Message {
+	mi := &file_common_conf_registry_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Kubernetes.ProtoReflect.Descriptor instead.
+func (*Kubernetes) Descriptor() ([]byte, []int) {
+	return file_common_conf_registry_proto_rawDescGZIP(), []int{5}
+}
+
+// Eureka
+type Eureka struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Endpoints         []string             `protobuf:"bytes,1,rep,name=endpoints,proto3" json:"endpoints,omitempty"`
+	HeartbeatInterval *durationpb.Duration `protobuf:"bytes,2,opt,name=heartbeat_interval,json=heartbeatInterval,proto3" json:"heartbeat_interval,omitempty"`
+	RefreshInterval   *durationpb.Duration `protobuf:"bytes,3,opt,name=refresh_interval,json=refreshInterval,proto3" json:"refresh_interval,omitempty"`
+	Path              string               `protobuf:"bytes,4,opt,name=path,proto3" json:"path,omitempty"`
+}
+
+func (x *Eureka) Reset() {
+	*x = Eureka{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_common_conf_registry_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Eureka) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Eureka) ProtoMessage() {}
+
+func (x *Eureka) ProtoReflect() protoreflect.Message {
+	mi := &file_common_conf_registry_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Eureka.ProtoReflect.Descriptor instead.
+func (*Eureka) Descriptor() ([]byte, []int) {
+	return file_common_conf_registry_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *Eureka) GetEndpoints() []string {
+	if x != nil {
+		return x.Endpoints
+	}
+	return nil
+}
+
+func (x *Eureka) GetHeartbeatInterval() *durationpb.Duration {
+	if x != nil {
+		return x.HeartbeatInterval
+	}
+	return nil
+}
+
+func (x *Eureka) GetRefreshInterval() *durationpb.Duration {
+	if x != nil {
+		return x.RefreshInterval
+	}
+	return nil
+}
+
+func (x *Eureka) GetPath() string {
+	if x != nil {
+		return x.Path
+	}
+	return ""
+}
+
+// Polaris
+type Polaris struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Address       string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"` // 服务端地址
+	Port          int32  `protobuf:"varint,2,opt,name=port,proto3" json:"port,omitempty"`      // 服务端端口
+	InstanceCount int32  `protobuf:"varint,3,opt,name=instance_count,json=instanceCount,proto3" json:"instance_count,omitempty"`
+	Namespace     string `protobuf:"bytes,4,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Service       string `protobuf:"bytes,5,opt,name=service,proto3" json:"service,omitempty"`
+	Token         string `protobuf:"bytes,6,opt,name=token,proto3" json:"token,omitempty"`
+}
+
+func (x *Polaris) Reset() {
+	*x = Polaris{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_common_conf_registry_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Polaris) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Polaris) ProtoMessage() {}
+
+func (x *Polaris) ProtoReflect() protoreflect.Message {
+	mi := &file_common_conf_registry_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Polaris.ProtoReflect.Descriptor instead.
+func (*Polaris) Descriptor() ([]byte, []int) {
+	return file_common_conf_registry_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *Polaris) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
+func (x *Polaris) GetPort() int32 {
+	if x != nil {
+		return x.Port
+	}
+	return 0
+}
+
+func (x *Polaris) GetInstanceCount() int32 {
+	if x != nil {
+		return x.InstanceCount
+	}
+	return 0
+}
+
+func (x *Polaris) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+func (x *Polaris) GetService() string {
+	if x != nil {
+		return x.Service
+	}
+	return ""
+}
+
+func (x *Polaris) GetToken() string {
+	if x != nil {
+		return x.Token
+	}
+	return ""
+}
+
+// Servicecomb
+type Servicecomb struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Endpoints []string `protobuf:"bytes,1,rep,name=endpoints,proto3" json:"endpoints,omitempty"`
+}
+
+func (x *Servicecomb) Reset() {
+	*x = Servicecomb{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_common_conf_registry_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Servicecomb) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Servicecomb) ProtoMessage() {}
+
+func (x *Servicecomb) ProtoReflect() protoreflect.Message {
+	mi := &file_common_conf_registry_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Servicecomb.ProtoReflect.Descriptor instead.
+func (*Servicecomb) Descriptor() ([]byte, []int) {
+	return file_common_conf_registry_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *Servicecomb) GetEndpoints() []string {
+	if x != nil {
+		return x.Endpoints
 	}
 	return nil
 }
@@ -137,20 +601,83 @@ var File_common_conf_registry_proto protoreflect.FileDescriptor
 var file_common_conf_registry_proto_rawDesc = []byte{
 	0x0a, 0x1a, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2f, 0x63, 0x6f, 0x6e, 0x66, 0x2f, 0x72, 0x65,
 	0x67, 0x69, 0x73, 0x74, 0x72, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x0b, 0x63, 0x6f,
-	0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x63, 0x6f, 0x6e, 0x66, 0x22, 0x5d, 0x0a, 0x06, 0x43, 0x6f, 0x6e,
-	0x73, 0x75, 0x6c, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x63, 0x68, 0x65, 0x6d, 0x65, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x06, 0x73, 0x63, 0x68, 0x65, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x61,
-	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64,
-	0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x21, 0x0a, 0x0c, 0x68, 0x65, 0x61, 0x6c, 0x74, 0x68, 0x5f,
-	0x63, 0x68, 0x65, 0x63, 0x6b, 0x18, 0x03, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0b, 0x68, 0x65, 0x61,
-	0x6c, 0x74, 0x68, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x22, 0x37, 0x0a, 0x08, 0x52, 0x65, 0x67, 0x69,
-	0x73, 0x74, 0x72, 0x79, 0x12, 0x2b, 0x0a, 0x06, 0x63, 0x6f, 0x6e, 0x73, 0x75, 0x6c, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x63, 0x6f,
-	0x6e, 0x66, 0x2e, 0x43, 0x6f, 0x6e, 0x73, 0x75, 0x6c, 0x52, 0x06, 0x63, 0x6f, 0x6e, 0x73, 0x75,
-	0x6c, 0x42, 0x29, 0x5a, 0x27, 0x6b, 0x72, 0x61, 0x74, 0x6f, 0x73, 0x2d, 0x62, 0x6c, 0x6f, 0x67,
-	0x2f, 0x67, 0x65, 0x6e, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x67, 0x6f, 0x2f, 0x63, 0x6f, 0x6d, 0x6d,
-	0x6f, 0x6e, 0x2f, 0x63, 0x6f, 0x6e, 0x66, 0x3b, 0x63, 0x6f, 0x6e, 0x66, 0x62, 0x06, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x33,
+	0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x63, 0x6f, 0x6e, 0x66, 0x1a, 0x1e, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
+	0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x64, 0x75, 0x72, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x90, 0x03, 0x0a, 0x08, 0x52, 0x65,
+	0x67, 0x69, 0x73, 0x74, 0x72, 0x79, 0x12, 0x2b, 0x0a, 0x06, 0x63, 0x6f, 0x6e, 0x73, 0x75, 0x6c,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e,
+	0x63, 0x6f, 0x6e, 0x66, 0x2e, 0x43, 0x6f, 0x6e, 0x73, 0x75, 0x6c, 0x52, 0x06, 0x63, 0x6f, 0x6e,
+	0x73, 0x75, 0x6c, 0x12, 0x25, 0x0a, 0x04, 0x45, 0x74, 0x63, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x11, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x63, 0x6f, 0x6e, 0x66, 0x2e,
+	0x45, 0x74, 0x63, 0x64, 0x52, 0x04, 0x45, 0x74, 0x63, 0x64, 0x12, 0x34, 0x0a, 0x09, 0x7a, 0x6f,
+	0x6f, 0x6b, 0x65, 0x65, 0x70, 0x65, 0x72, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e,
+	0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x63, 0x6f, 0x6e, 0x66, 0x2e, 0x5a, 0x6f, 0x6f, 0x4b,
+	0x65, 0x65, 0x70, 0x65, 0x72, 0x52, 0x09, 0x7a, 0x6f, 0x6f, 0x6b, 0x65, 0x65, 0x70, 0x65, 0x72,
+	0x12, 0x28, 0x0a, 0x05, 0x6e, 0x61, 0x63, 0x6f, 0x73, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x12, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x63, 0x6f, 0x6e, 0x66, 0x2e, 0x4e, 0x61,
+	0x63, 0x6f, 0x73, 0x52, 0x05, 0x6e, 0x61, 0x63, 0x6f, 0x73, 0x12, 0x37, 0x0a, 0x0a, 0x6b, 0x75,
+	0x62, 0x65, 0x72, 0x6e, 0x65, 0x74, 0x65, 0x73, 0x18, 0x06, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17,
+	0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x63, 0x6f, 0x6e, 0x66, 0x2e, 0x4b, 0x75, 0x62,
+	0x65, 0x72, 0x6e, 0x65, 0x74, 0x65, 0x73, 0x52, 0x0a, 0x6b, 0x75, 0x62, 0x65, 0x72, 0x6e, 0x65,
+	0x74, 0x65, 0x73, 0x12, 0x2b, 0x0a, 0x06, 0x65, 0x75, 0x72, 0x65, 0x6b, 0x61, 0x18, 0x07, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x63, 0x6f, 0x6e,
+	0x66, 0x2e, 0x45, 0x75, 0x72, 0x65, 0x6b, 0x61, 0x52, 0x06, 0x65, 0x75, 0x72, 0x65, 0x6b, 0x61,
+	0x12, 0x2e, 0x0a, 0x07, 0x70, 0x6f, 0x6c, 0x61, 0x72, 0x69, 0x73, 0x18, 0x08, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x14, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x63, 0x6f, 0x6e, 0x66, 0x2e,
+	0x50, 0x6f, 0x6c, 0x61, 0x72, 0x69, 0x73, 0x52, 0x07, 0x70, 0x6f, 0x6c, 0x61, 0x72, 0x69, 0x73,
+	0x12, 0x3a, 0x0a, 0x0b, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x63, 0x6f, 0x6d, 0x62, 0x18,
+	0x09, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x63,
+	0x6f, 0x6e, 0x66, 0x2e, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x63, 0x6f, 0x6d, 0x62, 0x52,
+	0x0b, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x63, 0x6f, 0x6d, 0x62, 0x22, 0x5d, 0x0a, 0x06,
+	0x43, 0x6f, 0x6e, 0x73, 0x75, 0x6c, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x63, 0x68, 0x65, 0x6d, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x73, 0x63, 0x68, 0x65, 0x6d, 0x65, 0x12, 0x18,
+	0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x21, 0x0a, 0x0c, 0x68, 0x65, 0x61, 0x6c,
+	0x74, 0x68, 0x5f, 0x63, 0x68, 0x65, 0x63, 0x6b, 0x18, 0x03, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0b,
+	0x68, 0x65, 0x61, 0x6c, 0x74, 0x68, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x22, 0x24, 0x0a, 0x04, 0x45,
+	0x74, 0x63, 0x64, 0x12, 0x1c, 0x0a, 0x09, 0x65, 0x6e, 0x64, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x73,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x09, 0x65, 0x6e, 0x64, 0x70, 0x6f, 0x69, 0x6e, 0x74,
+	0x73, 0x22, 0x5e, 0x0a, 0x09, 0x5a, 0x6f, 0x6f, 0x4b, 0x65, 0x65, 0x70, 0x65, 0x72, 0x12, 0x1c,
+	0x0a, 0x09, 0x65, 0x6e, 0x64, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28,
+	0x09, 0x52, 0x09, 0x65, 0x6e, 0x64, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x12, 0x33, 0x0a, 0x07,
+	0x74, 0x69, 0x6d, 0x65, 0x6f, 0x75, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e,
+	0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e,
+	0x44, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x07, 0x74, 0x69, 0x6d, 0x65, 0x6f, 0x75,
+	0x74, 0x22, 0x35, 0x0a, 0x05, 0x4e, 0x61, 0x63, 0x6f, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64,
+	0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64, 0x64,
+	0x72, 0x65, 0x73, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x04, 0x52, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x22, 0x0c, 0x0a, 0x0a, 0x4b, 0x75, 0x62, 0x65,
+	0x72, 0x6e, 0x65, 0x74, 0x65, 0x73, 0x22, 0xca, 0x01, 0x0a, 0x06, 0x45, 0x75, 0x72, 0x65, 0x6b,
+	0x61, 0x12, 0x1c, 0x0a, 0x09, 0x65, 0x6e, 0x64, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x18, 0x01,
+	0x20, 0x03, 0x28, 0x09, 0x52, 0x09, 0x65, 0x6e, 0x64, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x12,
+	0x48, 0x0a, 0x12, 0x68, 0x65, 0x61, 0x72, 0x74, 0x62, 0x65, 0x61, 0x74, 0x5f, 0x69, 0x6e, 0x74,
+	0x65, 0x72, 0x76, 0x61, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x67, 0x6f,
+	0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x44, 0x75,
+	0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x11, 0x68, 0x65, 0x61, 0x72, 0x74, 0x62, 0x65, 0x61,
+	0x74, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x12, 0x44, 0x0a, 0x10, 0x72, 0x65, 0x66,
+	0x72, 0x65, 0x73, 0x68, 0x5f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x44, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x0f,
+	0x72, 0x65, 0x66, 0x72, 0x65, 0x73, 0x68, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x12,
+	0x12, 0x0a, 0x04, 0x70, 0x61, 0x74, 0x68, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x70,
+	0x61, 0x74, 0x68, 0x22, 0xac, 0x01, 0x0a, 0x07, 0x50, 0x6f, 0x6c, 0x61, 0x72, 0x69, 0x73, 0x12,
+	0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x6f, 0x72,
+	0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x12, 0x25, 0x0a,
+	0x0e, 0x69, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0d, 0x69, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43,
+	0x6f, 0x75, 0x6e, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x6e, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63,
+	0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6e, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61,
+	0x63, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x18, 0x05, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x14, 0x0a, 0x05,
+	0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x74, 0x6f, 0x6b,
+	0x65, 0x6e, 0x22, 0x2b, 0x0a, 0x0b, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x63, 0x6f, 0x6d,
+	0x62, 0x12, 0x1c, 0x0a, 0x09, 0x65, 0x6e, 0x64, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x18, 0x01,
+	0x20, 0x03, 0x28, 0x09, 0x52, 0x09, 0x65, 0x6e, 0x64, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x42,
+	0x29, 0x5a, 0x27, 0x6b, 0x72, 0x61, 0x74, 0x6f, 0x73, 0x2d, 0x62, 0x6c, 0x6f, 0x67, 0x2f, 0x67,
+	0x65, 0x6e, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x67, 0x6f, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e,
+	0x2f, 0x63, 0x6f, 0x6e, 0x66, 0x3b, 0x63, 0x6f, 0x6e, 0x66, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
@@ -165,18 +692,36 @@ func file_common_conf_registry_proto_rawDescGZIP() []byte {
 	return file_common_conf_registry_proto_rawDescData
 }
 
-var file_common_conf_registry_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_common_conf_registry_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_common_conf_registry_proto_goTypes = []interface{}{
-	(*Consul)(nil),   // 0: common.conf.Consul
-	(*Registry)(nil), // 1: common.conf.Registry
+	(*Registry)(nil),            // 0: common.conf.Registry
+	(*Consul)(nil),              // 1: common.conf.Consul
+	(*Etcd)(nil),                // 2: common.conf.Etcd
+	(*ZooKeeper)(nil),           // 3: common.conf.ZooKeeper
+	(*Nacos)(nil),               // 4: common.conf.Nacos
+	(*Kubernetes)(nil),          // 5: common.conf.Kubernetes
+	(*Eureka)(nil),              // 6: common.conf.Eureka
+	(*Polaris)(nil),             // 7: common.conf.Polaris
+	(*Servicecomb)(nil),         // 8: common.conf.Servicecomb
+	(*durationpb.Duration)(nil), // 9: google.protobuf.Duration
 }
 var file_common_conf_registry_proto_depIdxs = []int32{
-	0, // 0: common.conf.Registry.consul:type_name -> common.conf.Consul
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	1,  // 0: common.conf.Registry.consul:type_name -> common.conf.Consul
+	2,  // 1: common.conf.Registry.Etcd:type_name -> common.conf.Etcd
+	3,  // 2: common.conf.Registry.zookeeper:type_name -> common.conf.ZooKeeper
+	4,  // 3: common.conf.Registry.nacos:type_name -> common.conf.Nacos
+	5,  // 4: common.conf.Registry.kubernetes:type_name -> common.conf.Kubernetes
+	6,  // 5: common.conf.Registry.eureka:type_name -> common.conf.Eureka
+	7,  // 6: common.conf.Registry.polaris:type_name -> common.conf.Polaris
+	8,  // 7: common.conf.Registry.servicecomb:type_name -> common.conf.Servicecomb
+	9,  // 8: common.conf.ZooKeeper.timeout:type_name -> google.protobuf.Duration
+	9,  // 9: common.conf.Eureka.heartbeat_interval:type_name -> google.protobuf.Duration
+	9,  // 10: common.conf.Eureka.refresh_interval:type_name -> google.protobuf.Duration
+	11, // [11:11] is the sub-list for method output_type
+	11, // [11:11] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_common_conf_registry_proto_init() }
@@ -186,7 +731,7 @@ func file_common_conf_registry_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_common_conf_registry_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Consul); i {
+			switch v := v.(*Registry); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -198,7 +743,91 @@ func file_common_conf_registry_proto_init() {
 			}
 		}
 		file_common_conf_registry_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Registry); i {
+			switch v := v.(*Consul); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_common_conf_registry_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Etcd); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_common_conf_registry_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ZooKeeper); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_common_conf_registry_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Nacos); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_common_conf_registry_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Kubernetes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_common_conf_registry_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Eureka); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_common_conf_registry_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Polaris); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_common_conf_registry_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Servicecomb); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -216,7 +845,7 @@ func file_common_conf_registry_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_common_conf_registry_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

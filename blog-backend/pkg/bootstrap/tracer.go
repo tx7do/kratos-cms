@@ -11,6 +11,8 @@ import (
 	"go.opentelemetry.io/otel/sdk/resource"
 	traceSdk "go.opentelemetry.io/otel/sdk/trace"
 	semConv "go.opentelemetry.io/otel/semconv/v1.4.0"
+
+	"kratos-blog/gen/api/go/common/conf"
 )
 
 // NewJaegerExporter 创建一个jaeger导出器
@@ -40,19 +42,27 @@ func NewTracerExporter(exporterName, endpoint string) (traceSdk.SpanExporter, er
 }
 
 // NewTracerProvider 创建一个链路追踪器
-func NewTracerProvider(exporterName, endpoint, devEnv string, serviceInfo *ServiceInfo) error {
+func NewTracerProvider(cfg *conf.Trace, serviceInfo *ServiceInfo) error {
+	if cfg.Sampler == 0 {
+		cfg.Sampler = 1.0
+	}
+
+	if cfg.Env == "" {
+		cfg.Env = "dev"
+	}
+
 	opts := []traceSdk.TracerProviderOption{
-		traceSdk.WithSampler(traceSdk.ParentBased(traceSdk.TraceIDRatioBased(1.0))),
+		traceSdk.WithSampler(traceSdk.ParentBased(traceSdk.TraceIDRatioBased(cfg.Sampler))),
 		traceSdk.WithResource(resource.NewSchemaless(
 			semConv.ServiceNameKey.String(serviceInfo.Name),
 			semConv.ServiceVersionKey.String(serviceInfo.Version),
 			semConv.ServiceInstanceIDKey.String(serviceInfo.Id),
-			attribute.String("env", devEnv),
+			attribute.String("env", cfg.Env),
 		)),
 	}
 
-	if len(endpoint) > 0 {
-		exp, err := NewTracerExporter(exporterName, endpoint)
+	if len(cfg.Endpoint) > 0 {
+		exp, err := NewTracerExporter(cfg.Batcher, cfg.Endpoint)
 		if err != nil {
 			panic(err)
 		}

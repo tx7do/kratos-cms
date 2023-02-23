@@ -13,7 +13,7 @@ go_library(
         "//app/comment/service/internal/service",
         "//gen/api/go/comment/service/v1:service",
         "//gen/api/go/common/conf",
-        "//pkg/util/bootstrap",
+        "//pkg/bootstrap",
         "@com_github_go_kratos_kratos_v2//log",
         "@com_github_go_kratos_kratos_v2//middleware/logging",
         "@com_github_go_kratos_kratos_v2//middleware/recovery",
