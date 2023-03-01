@@ -2,6 +2,7 @@ package data
 
 import (
 	"context"
+	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
 
@@ -118,6 +119,7 @@ func (r *TagRepo) Create(ctx context.Context, req *v1.CreateTagRequest) (*v1.Tag
 		SetNillableThumbnail(req.Tag.Thumbnail).
 		SetNillableSlugName(req.Tag.SlugName).
 		SetNillablePostCount(req.Tag.PostCount).
+		SetCreateTime(time.Now().UnixMilli()).
 		Save(ctx)
 	if err != nil {
 		return nil, err
@@ -133,7 +135,8 @@ func (r *TagRepo) Update(ctx context.Context, req *v1.UpdateTagRequest) (*v1.Tag
 		SetNillableColor(req.Tag.Color).
 		SetNillableThumbnail(req.Tag.Thumbnail).
 		SetNillableSlugName(req.Tag.SlugName).
-		SetNillablePostCount(req.Tag.PostCount)
+		SetNillablePostCount(req.Tag.PostCount).
+		SetUpdateTime(time.Now().UnixMilli())
 
 	po, err := builder.Save(ctx)
 	if err != nil {

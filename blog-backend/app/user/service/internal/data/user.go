@@ -2,6 +2,7 @@ package data
 
 import (
 	"context"
+	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
 
@@ -58,6 +59,7 @@ func (r *UserRepo) Create(ctx context.Context, req *v1.RegisterRequest) (*v1.Use
 		SetNillableNickname(req.User.NickName).
 		SetNillableEmail(req.User.Email).
 		SetPassword(ph).
+		SetCreateTime(time.Now().UnixMilli()).
 		Save(ctx)
 	if err != nil {
 		return nil, err
@@ -75,7 +77,8 @@ func (r *UserRepo) Update(ctx context.Context, req *v1.UpdateUserRequest) (*v1.U
 	builder := r.data.db.User.UpdateOneID(req.Id).
 		SetNillableNickname(req.User.NickName).
 		SetNillableEmail(req.User.Email).
-		SetPassword(ph)
+		SetPassword(ph).
+		SetUpdateTime(time.Now().UnixMilli())
 
 	po, err := builder.Save(ctx)
 	if err != nil {

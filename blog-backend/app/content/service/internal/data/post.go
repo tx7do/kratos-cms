@@ -148,6 +148,7 @@ func (r *PostRepo) Create(ctx context.Context, req *v1.CreatePostRequest) (*v1.P
 		SetNillableCommentCount(req.Post.CommentCount).
 		SetNillableDisallowComment(req.Post.DisallowComment).
 		SetNillableInProgress(req.Post.InProgress).
+		SetCreateTime(time.Now().UnixMilli()).
 		Save(ctx)
 	if err != nil {
 		return nil, err
@@ -178,7 +179,8 @@ func (r *PostRepo) Update(ctx context.Context, req *v1.UpdatePostRequest) (*v1.P
 		SetNillableCommentCount(req.Post.CommentCount).
 		SetNillableDisallowComment(req.Post.DisallowComment).
 		SetNillableInProgress(req.Post.InProgress).
-		SetEditTime(time.Now().UnixMilli())
+		SetEditTime(time.Now().UnixMilli()).
+		SetUpdateTime(time.Now().UnixMilli())
 
 	po, err := builder.Save(ctx)
 	if err != nil {

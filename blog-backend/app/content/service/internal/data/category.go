@@ -2,6 +2,7 @@ package data
 
 import (
 	"context"
+	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
 
@@ -124,6 +125,7 @@ func (r *CategoryRepo) Create(ctx context.Context, req *v1.CreateCategoryRequest
 		SetNillableFullPath(req.Category.FullPath).
 		SetNillablePriority(req.Category.Priority).
 		SetNillablePostCount(req.Category.PostCount).
+		SetCreateTime(time.Now().UnixMilli()).
 		Save(ctx)
 	if err != nil {
 		return nil, err
@@ -142,7 +144,8 @@ func (r *CategoryRepo) Update(ctx context.Context, req *v1.UpdateCategoryRequest
 		SetNillablePassword(req.Category.Password).
 		SetNillableFullPath(req.Category.FullPath).
 		SetNillablePriority(req.Category.Priority).
-		SetNillablePostCount(req.Category.PostCount)
+		SetNillablePostCount(req.Category.PostCount).
+		SetUpdateTime(time.Now().UnixMilli())
 
 	po, err := builder.Save(ctx)
 	if err != nil {

@@ -2,6 +2,7 @@ package data
 
 import (
 	"context"
+	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
 
@@ -130,6 +131,7 @@ func (r *CommentRepo) Create(ctx context.Context, req *v1.CreateCommentRequest) 
 		SetNillableIsAdmin(req.Comment.IsAdmin).
 		SetNillableAllowNotification(req.Comment.AllowNotification).
 		SetNillableAvatar(req.Comment.Avatar).
+		SetCreateTime(time.Now().UnixMilli()).
 		Save(ctx)
 	if err != nil {
 		return nil, err
@@ -151,7 +153,8 @@ func (r *CommentRepo) Update(ctx context.Context, req *v1.UpdateCommentRequest) 
 		SetNillableParentID(req.Comment.ParentId).
 		SetNillableIsAdmin(req.Comment.IsAdmin).
 		SetNillableAllowNotification(req.Comment.AllowNotification).
-		SetNillableAvatar(req.Comment.Avatar)
+		SetNillableAvatar(req.Comment.Avatar).
+		SetUpdateTime(time.Now().UnixMilli())
 
 	po, err := builder.Save(ctx)
 	if err != nil {

@@ -2,6 +2,7 @@ package data
 
 import (
 	"context"
+	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
 
@@ -118,6 +119,7 @@ func (r *LinkRepo) Create(ctx context.Context, req *v1.CreateLinkRequest) (*v1.L
 		SetNillableDescription(req.Link.Description).
 		SetNillableTeam(req.Link.Team).
 		SetNillablePriority(req.Link.Priority).
+		SetCreateTime(time.Now().UnixMilli()).
 		Save(ctx)
 	if err != nil {
 		return nil, err
@@ -133,7 +135,8 @@ func (r *LinkRepo) Update(ctx context.Context, req *v1.UpdateLinkRequest) (*v1.L
 		SetNillableLogo(req.Link.Logo).
 		SetNillableDescription(req.Link.Description).
 		SetNillableTeam(req.Link.Team).
-		SetNillablePriority(req.Link.Priority)
+		SetNillablePriority(req.Link.Priority).
+		SetUpdateTime(time.Now().UnixMilli())
 
 	po, err := builder.Save(ctx)
 	if err != nil {
