@@ -2,6 +2,8 @@ package bootstrap
 
 import (
 	"context"
+	"github.com/go-kratos/kratos/v2/middleware/logging"
+	"kratos-blog/gen/api/go/common/conf"
 	"time"
 
 	GRPC "google.golang.org/grpc"
@@ -16,6 +18,7 @@ import (
 
 const defaultTimeout = 5 * time.Second
 
+// CreateGrpcClient 创建GRPC客户端
 func CreateGrpcClient(ctx context.Context, r registry.Discovery, serviceName string, timeoutDuration *durationpb.Duration) GRPC.ClientConnInterface {
 	timeout := defaultTimeout
 	if timeoutDuration != nil {
@@ -39,4 +42,26 @@ func CreateGrpcClient(ctx context.Context, r registry.Discovery, serviceName str
 	}
 
 	return conn
+}
+
+// CreateGrpcServer 创建GRPC服务端
+func CreateGrpcServer(cfg *conf.Bootstrap, ll log.Logger) *grpc.Server {
+	var opts = []grpc.ServerOption{
+		grpc.Middleware(
+			recovery.Recovery(),
+			tracing.Server(),
+			logging.Server(ll),
+		),
+	}
+	if cfg.Server.Grpc.Network != "" {
+		opts = append(opts, grpc.Network(cfg.Server.Grpc.Network))
+	}
+	if cfg.Server.Grpc.Addr != "" {
+		opts = append(opts, grpc.Address(cfg.Server.Grpc.Addr))
+	}
+	if cfg.Server.Grpc.Timeout != nil {
+		opts = append(opts, grpc.Timeout(cfg.Server.Grpc.Timeout.AsDuration()))
+	}
+
+	return grpc.NewServer(opts...)
 }
