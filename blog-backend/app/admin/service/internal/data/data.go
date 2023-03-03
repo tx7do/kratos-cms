@@ -68,16 +68,16 @@ func NewData(redisClient *redis.Client,
 }
 
 // NewRedisClient 创建Redis客户端
-func NewRedisClient(conf *conf.Data, logger log.Logger) *redis.Client {
+func NewRedisClient(cfg *conf.Bootstrap, logger log.Logger) *redis.Client {
 	l := log.NewHelper(log.With(logger, "module", "redis/data/admin-service"))
 
 	rdb := redis.NewClient(&redis.Options{
-		Addr:         conf.Redis.Addr,
-		Password:     conf.Redis.Password,
-		DB:           int(conf.Redis.Db),
-		DialTimeout:  conf.Redis.DialTimeout.AsDuration(),
-		WriteTimeout: conf.Redis.WriteTimeout.AsDuration(),
-		ReadTimeout:  conf.Redis.ReadTimeout.AsDuration(),
+		Addr:         cfg.Data.Redis.Addr,
+		Password:     cfg.Data.Redis.Password,
+		DB:           int(cfg.Data.Redis.Db),
+		DialTimeout:  cfg.Data.Redis.DialTimeout.AsDuration(),
+		WriteTimeout: cfg.Data.Redis.WriteTimeout.AsDuration(),
+		ReadTimeout:  cfg.Data.Redis.ReadTimeout.AsDuration(),
 	})
 	if rdb == nil {
 		l.Fatalf("failed opening connection to redis")
@@ -88,34 +88,34 @@ func NewRedisClient(conf *conf.Data, logger log.Logger) *redis.Client {
 }
 
 // NewDiscovery 创建服务发现客户端
-func NewDiscovery(cfg *conf.Registry) registry.Discovery {
-	return bootstrap.NewConsulRegistry(cfg)
+func NewDiscovery(cfg *conf.Bootstrap) registry.Discovery {
+	return bootstrap.NewConsulRegistry(cfg.Registry)
 }
 
-func NewUserServiceClient(r registry.Discovery, c *conf.Server) userV1.UserServiceClient {
-	return userV1.NewUserServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.UserService, c.Grpc.GetTimeout()))
+func NewUserServiceClient(r registry.Discovery, c *conf.Bootstrap) userV1.UserServiceClient {
+	return userV1.NewUserServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.UserService, c.Server.Grpc.GetTimeout()))
 }
 
-func NewAttachmentServiceClient(r registry.Discovery, c *conf.Server) fileV1.AttachmentServiceClient {
-	return fileV1.NewAttachmentServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.FileService, c.Grpc.GetTimeout()))
+func NewAttachmentServiceClient(r registry.Discovery, c *conf.Bootstrap) fileV1.AttachmentServiceClient {
+	return fileV1.NewAttachmentServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.FileService, c.Server.Grpc.GetTimeout()))
 }
 
-func NewCommentServiceClient(r registry.Discovery, c *conf.Server) commentV1.CommentServiceClient {
-	return commentV1.NewCommentServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.CommentService, c.Grpc.GetTimeout()))
+func NewCommentServiceClient(r registry.Discovery, c *conf.Bootstrap) commentV1.CommentServiceClient {
+	return commentV1.NewCommentServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.CommentService, c.Server.Grpc.GetTimeout()))
 }
 
-func NewCategoryServiceClient(r registry.Discovery, c *conf.Server) contentV1.CategoryServiceClient {
-	return contentV1.NewCategoryServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.ContentService, c.Grpc.GetTimeout()))
+func NewCategoryServiceClient(r registry.Discovery, c *conf.Bootstrap) contentV1.CategoryServiceClient {
+	return contentV1.NewCategoryServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.ContentService, c.Server.Grpc.GetTimeout()))
 }
 
-func NewLinkServiceClient(r registry.Discovery, c *conf.Server) contentV1.LinkServiceClient {
-	return contentV1.NewLinkServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.ContentService, c.Grpc.GetTimeout()))
+func NewLinkServiceClient(r registry.Discovery, c *conf.Bootstrap) contentV1.LinkServiceClient {
+	return contentV1.NewLinkServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.ContentService, c.Server.Grpc.GetTimeout()))
 }
 
-func NewPostServiceClient(r registry.Discovery, c *conf.Server) contentV1.PostServiceClient {
-	return contentV1.NewPostServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.ContentService, c.Grpc.GetTimeout()))
+func NewPostServiceClient(r registry.Discovery, c *conf.Bootstrap) contentV1.PostServiceClient {
+	return contentV1.NewPostServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.ContentService, c.Server.Grpc.GetTimeout()))
 }
 
-func NewTagServiceClient(r registry.Discovery, c *conf.Server) contentV1.TagServiceClient {
-	return contentV1.NewTagServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.ContentService, c.Grpc.GetTimeout()))
+func NewTagServiceClient(r registry.Discovery, c *conf.Bootstrap) contentV1.TagServiceClient {
+	return contentV1.NewTagServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.ContentService, c.Server.Grpc.GetTimeout()))
 }

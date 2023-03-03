@@ -14,7 +14,7 @@ import (
 )
 
 // NewGRPCServer new a gRPC server.
-func NewGRPCServer(c *conf.Server, logger log.Logger,
+func NewGRPCServer(cfg *conf.Bootstrap, logger log.Logger,
 	postSvc *service.PostService,
 	linkSvc *service.LinkService,
 	cateSvc *service.CategoryService,
@@ -27,14 +27,14 @@ func NewGRPCServer(c *conf.Server, logger log.Logger,
 			logging.Server(logger),
 		),
 	}
-	if c.Grpc.Network != "" {
-		opts = append(opts, grpc.Network(c.Grpc.Network))
+	if cfg.Server.Grpc.Network != "" {
+		opts = append(opts, grpc.Network(cfg.Server.Grpc.Network))
 	}
-	if c.Grpc.Addr != "" {
-		opts = append(opts, grpc.Address(c.Grpc.Addr))
+	if cfg.Server.Grpc.Addr != "" {
+		opts = append(opts, grpc.Address(cfg.Server.Grpc.Addr))
 	}
-	if c.Grpc.Timeout != nil {
-		opts = append(opts, grpc.Timeout(c.Grpc.Timeout.AsDuration()))
+	if cfg.Server.Grpc.Timeout != nil {
+		opts = append(opts, grpc.Timeout(cfg.Server.Grpc.Timeout.AsDuration()))
 	}
 	srv := grpc.NewServer(opts...)
 

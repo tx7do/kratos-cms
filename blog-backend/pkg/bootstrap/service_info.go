@@ -9,11 +9,11 @@ type ServiceInfo struct {
 	Metadata map[string]string
 }
 
-func NewServiceInfo(name, version, id string) ServiceInfo {
+func NewServiceInfo(name, version, id string) *ServiceInfo {
 	if id == "" {
 		id, _ = os.Hostname()
 	}
-	return ServiceInfo{
+	return &ServiceInfo{
 		Name:     name,
 		Version:  version,
 		Id:       id,

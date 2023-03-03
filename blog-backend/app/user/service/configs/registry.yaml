@@ -1,4 +1,7 @@
-consul:
-  address: host.docker.internal:8500
-  scheme: http
-  health_check: false
+registry:
+  type: "consul"
+
+  consul:
+    address: "localhost:8500"
+    scheme: "http"
+    health_check: false

@@ -9,12 +9,18 @@ import "common/conf/data.proto";
 import "common/conf/server.proto";
 import "common/conf/auth.proto";
 import "common/conf/logger.proto";
+import "common/conf/registry.proto";
+import "common/conf/oss.proto";
+import "common/conf/config.proto";
 
 // 引导信息
 message Bootstrap {
   Server server = 1;
   Data data = 2;
   Auth auth = 3;
-  Trace trace = 4;
+  Tracer trace = 4;
   Logger logger = 5;
+  Registry registry = 6;
+  RemoteConfig config = 7;
+  OSS oss = 8;
 }

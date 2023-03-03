@@ -42,16 +42,16 @@ func NewData(gormClient *gorm.DB, redisClient *redis.Client, logger log.Logger) 
 }
 
 // NewRedisClient 创建Redis客户端
-func NewRedisClient(conf *conf.Data, logger log.Logger) *redis.Client {
+func NewRedisClient(cfg *conf.Bootstrap, logger log.Logger) *redis.Client {
 	l := log.NewHelper(log.With(logger, "module", "redis/data/file-service"))
 
 	rdb := redis.NewClient(&redis.Options{
-		Addr:         conf.Redis.Addr,
-		Password:     conf.Redis.Password,
-		DB:           int(conf.Redis.Db),
-		DialTimeout:  conf.Redis.DialTimeout.AsDuration(),
-		WriteTimeout: conf.Redis.WriteTimeout.AsDuration(),
-		ReadTimeout:  conf.Redis.ReadTimeout.AsDuration(),
+		Addr:         cfg.Data.Redis.Addr,
+		Password:     cfg.Data.Redis.Password,
+		DB:           int(cfg.Data.Redis.Db),
+		DialTimeout:  cfg.Data.Redis.DialTimeout.AsDuration(),
+		WriteTimeout: cfg.Data.Redis.WriteTimeout.AsDuration(),
+		ReadTimeout:  cfg.Data.Redis.ReadTimeout.AsDuration(),
 	})
 	if rdb == nil {
 		l.Fatalf("failed opening connection to redis")
@@ -79,21 +79,21 @@ func createGormDialector(driver string, dsn string) gorm.Dialector {
 }
 
 // NewGormClient 创建数据库客户端
-func NewGormClient(conf *conf.Data, logger log.Logger) *gorm.DB {
+func NewGormClient(cfg *conf.Bootstrap, logger log.Logger) *gorm.DB {
 	l := log.NewHelper(log.With(logger, "module", "db/data/file-service"))
 
 	var client *gorm.DB
 	var err error
 
 	// 连接数据库
-	client, err = gorm.Open(createGormDialector(conf.Database.Driver, conf.Database.Source), &gorm.Config{})
+	client, err = gorm.Open(createGormDialector(cfg.Data.Database.Driver, cfg.Data.Database.Source), &gorm.Config{})
 
 	if err != nil {
 		l.Fatalf("failed opening connection to db: %v", err)
 	}
 
 	// 运行数据库迁移工具
-	if true {
+	if cfg.Data.Database.Migrate {
 		if err := client.AutoMigrate(&model.Attachment{}); err != nil {
 			l.Fatalf("failed creating schema resources: %v", err)
 		}

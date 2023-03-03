@@ -38,16 +38,16 @@ func NewData(db *ent.Client, redisClient *redis.Client, logger log.Logger) (*Dat
 }
 
 // NewRedisClient 创建Redis客户端
-func NewRedisClient(conf *conf.Data, logger log.Logger) *redis.Client {
+func NewRedisClient(cfg *conf.Bootstrap, logger log.Logger) *redis.Client {
 	l := log.NewHelper(log.With(logger, "module", "redis/data/content-service"))
 
 	rdb := redis.NewClient(&redis.Options{
-		Addr:         conf.Redis.Addr,
-		Password:     conf.Redis.Password,
-		DB:           int(conf.Redis.Db),
-		DialTimeout:  conf.Redis.DialTimeout.AsDuration(),
-		WriteTimeout: conf.Redis.WriteTimeout.AsDuration(),
-		ReadTimeout:  conf.Redis.ReadTimeout.AsDuration(),
+		Addr:         cfg.Data.Redis.Addr,
+		Password:     cfg.Data.Redis.Password,
+		DB:           int(cfg.Data.Redis.Db),
+		DialTimeout:  cfg.Data.Redis.DialTimeout.AsDuration(),
+		WriteTimeout: cfg.Data.Redis.WriteTimeout.AsDuration(),
+		ReadTimeout:  cfg.Data.Redis.ReadTimeout.AsDuration(),
 	})
 	if rdb == nil {
 		l.Fatalf("failed opening connection to redis")
@@ -58,19 +58,19 @@ func NewRedisClient(conf *conf.Data, logger log.Logger) *redis.Client {
 }
 
 // NewEntClient 创建数据库客户端
-func NewEntClient(conf *conf.Data, logger log.Logger) *ent.Client {
+func NewEntClient(cfg *conf.Bootstrap, logger log.Logger) *ent.Client {
 	l := log.NewHelper(log.With(logger, "module", "ent/data/content-service"))
 
 	client, err := ent.Open(
-		conf.Database.Driver,
-		conf.Database.Source,
+		cfg.Data.Database.Driver,
+		cfg.Data.Database.Source,
 	)
 	if err != nil {
 		l.Fatalf("failed opening connection to db: %v", err)
 	}
 
 	// 运行数据库迁移工具
-	if true {
+	if cfg.Data.Database.Migrate {
 		if err := client.Schema.Create(context.Background(), migrate.WithForeignKeys(false)); err != nil {
 			l.Fatalf("failed creating schema resources: %v", err)
 		}

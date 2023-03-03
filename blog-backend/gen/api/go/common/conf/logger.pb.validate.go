@@ -56,6 +56,8 @@ func (m *Logger) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for Type
+
 	if all {
 		switch v := interface{}(m.GetZap()).(type) {
 		case interface{ ValidateAll() error }:
@@ -278,46 +280,51 @@ var _ interface {
 	ErrorName() string
 } = LoggerValidationError{}
 
-// Validate checks the field values on Zap with the rules defined in the proto
-// definition for this message. If any rules are violated, the first error
-// encountered is returned, or nil if there are no violations.
-func (m *Zap) Validate() error {
+// Validate checks the field values on Logger_Zap with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Logger_Zap) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on Zap with the rules defined in the
-// proto definition for this message. If any rules are violated, the result is
-// a list of violation errors wrapped in ZapMultiError, or nil if none found.
-func (m *Zap) ValidateAll() error {
+// ValidateAll checks the field values on Logger_Zap with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in Logger_ZapMultiError, or
+// nil if none found.
+func (m *Logger_Zap) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *Zap) validate(all bool) error {
+func (m *Logger_Zap) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
 	var errors []error
 
-	// no validation rules for MessageKey
+	// no validation rules for Filename
 
-	// no validation rules for LevelKey
+	// no validation rules for Level
 
-	// no validation rules for NameKey
+	// no validation rules for MaxSize
+
+	// no validation rules for MaxAge
+
+	// no validation rules for MaxBackups
 
 	if len(errors) > 0 {
-		return ZapMultiError(errors)
+		return Logger_ZapMultiError(errors)
 	}
 
 	return nil
 }
 
-// ZapMultiError is an error wrapping multiple validation errors returned by
-// Zap.ValidateAll() if the designated constraints aren't met.
-type ZapMultiError []error
+// Logger_ZapMultiError is an error wrapping multiple validation errors
+// returned by Logger_Zap.ValidateAll() if the designated constraints aren't met.
+type Logger_ZapMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m ZapMultiError) Error() string {
+func (m Logger_ZapMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -326,11 +333,11 @@ func (m ZapMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m ZapMultiError) AllErrors() []error { return m }
+func (m Logger_ZapMultiError) AllErrors() []error { return m }
 
-// ZapValidationError is the validation error returned by Zap.Validate if the
-// designated constraints aren't met.
-type ZapValidationError struct {
+// Logger_ZapValidationError is the validation error returned by
+// Logger_Zap.Validate if the designated constraints aren't met.
+type Logger_ZapValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -338,22 +345,22 @@ type ZapValidationError struct {
 }
 
 // Field function returns field value.
-func (e ZapValidationError) Field() string { return e.field }
+func (e Logger_ZapValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ZapValidationError) Reason() string { return e.reason }
+func (e Logger_ZapValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ZapValidationError) Cause() error { return e.cause }
+func (e Logger_ZapValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ZapValidationError) Key() bool { return e.key }
+func (e Logger_ZapValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ZapValidationError) ErrorName() string { return "ZapValidationError" }
+func (e Logger_ZapValidationError) ErrorName() string { return "Logger_ZapValidationError" }
 
 // Error satisfies the builtin error interface
-func (e ZapValidationError) Error() string {
+func (e Logger_ZapValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -365,14 +372,14 @@ func (e ZapValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sZap.%s: %s%s",
+		"invalid %sLogger_Zap.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ZapValidationError{}
+var _ error = Logger_ZapValidationError{}
 
 var _ interface {
 	Field() string
@@ -380,23 +387,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ZapValidationError{}
+} = Logger_ZapValidationError{}
 
-// Validate checks the field values on Logrus with the rules defined in the
-// proto definition for this message. If any rules are violated, the first
+// Validate checks the field values on Logger_Logrus with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
-func (m *Logrus) Validate() error {
+func (m *Logger_Logrus) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on Logrus with the rules defined in the
-// proto definition for this message. If any rules are violated, the result is
-// a list of violation errors wrapped in LogrusMultiError, or nil if none found.
-func (m *Logrus) ValidateAll() error {
+// ValidateAll checks the field values on Logger_Logrus with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in Logger_LogrusMultiError, or
+// nil if none found.
+func (m *Logger_Logrus) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *Logrus) validate(all bool) error {
+func (m *Logger_Logrus) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -414,18 +422,19 @@ func (m *Logrus) validate(all bool) error {
 	// no validation rules for DisableTimestamp
 
 	if len(errors) > 0 {
-		return LogrusMultiError(errors)
+		return Logger_LogrusMultiError(errors)
 	}
 
 	return nil
 }
 
-// LogrusMultiError is an error wrapping multiple validation errors returned by
-// Logrus.ValidateAll() if the designated constraints aren't met.
-type LogrusMultiError []error
+// Logger_LogrusMultiError is an error wrapping multiple validation errors
+// returned by Logger_Logrus.ValidateAll() if the designated constraints
+// aren't met.
+type Logger_LogrusMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m LogrusMultiError) Error() string {
+func (m Logger_LogrusMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -434,11 +443,11 @@ func (m LogrusMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m LogrusMultiError) AllErrors() []error { return m }
+func (m Logger_LogrusMultiError) AllErrors() []error { return m }
 
-// LogrusValidationError is the validation error returned by Logrus.Validate if
-// the designated constraints aren't met.
-type LogrusValidationError struct {
+// Logger_LogrusValidationError is the validation error returned by
+// Logger_Logrus.Validate if the designated constraints aren't met.
+type Logger_LogrusValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -446,22 +455,22 @@ type LogrusValidationError struct {
 }
 
 // Field function returns field value.
-func (e LogrusValidationError) Field() string { return e.field }
+func (e Logger_LogrusValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e LogrusValidationError) Reason() string { return e.reason }
+func (e Logger_LogrusValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e LogrusValidationError) Cause() error { return e.cause }
+func (e Logger_LogrusValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e LogrusValidationError) Key() bool { return e.key }
+func (e Logger_LogrusValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e LogrusValidationError) ErrorName() string { return "LogrusValidationError" }
+func (e Logger_LogrusValidationError) ErrorName() string { return "Logger_LogrusValidationError" }
 
 // Error satisfies the builtin error interface
-func (e LogrusValidationError) Error() string {
+func (e Logger_LogrusValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -473,14 +482,14 @@ func (e LogrusValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sLogrus.%s: %s%s",
+		"invalid %sLogger_Logrus.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = LogrusValidationError{}
+var _ error = Logger_LogrusValidationError{}
 
 var _ interface {
 	Field() string
@@ -488,23 +497,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = LogrusValidationError{}
+} = Logger_LogrusValidationError{}
 
-// Validate checks the field values on Fluent with the rules defined in the
-// proto definition for this message. If any rules are violated, the first
+// Validate checks the field values on Logger_Fluent with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
-func (m *Fluent) Validate() error {
+func (m *Logger_Fluent) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on Fluent with the rules defined in the
-// proto definition for this message. If any rules are violated, the result is
-// a list of violation errors wrapped in FluentMultiError, or nil if none found.
-func (m *Fluent) ValidateAll() error {
+// ValidateAll checks the field values on Logger_Fluent with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in Logger_FluentMultiError, or
+// nil if none found.
+func (m *Logger_Fluent) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *Fluent) validate(all bool) error {
+func (m *Logger_Fluent) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -514,18 +524,19 @@ func (m *Fluent) validate(all bool) error {
 	// no validation rules for Endpoint
 
 	if len(errors) > 0 {
-		return FluentMultiError(errors)
+		return Logger_FluentMultiError(errors)
 	}
 
 	return nil
 }
 
-// FluentMultiError is an error wrapping multiple validation errors returned by
-// Fluent.ValidateAll() if the designated constraints aren't met.
-type FluentMultiError []error
+// Logger_FluentMultiError is an error wrapping multiple validation errors
+// returned by Logger_Fluent.ValidateAll() if the designated constraints
+// aren't met.
+type Logger_FluentMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m FluentMultiError) Error() string {
+func (m Logger_FluentMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -534,11 +545,11 @@ func (m FluentMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m FluentMultiError) AllErrors() []error { return m }
+func (m Logger_FluentMultiError) AllErrors() []error { return m }
 
-// FluentValidationError is the validation error returned by Fluent.Validate if
-// the designated constraints aren't met.
-type FluentValidationError struct {
+// Logger_FluentValidationError is the validation error returned by
+// Logger_Fluent.Validate if the designated constraints aren't met.
+type Logger_FluentValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -546,22 +557,22 @@ type FluentValidationError struct {
 }
 
 // Field function returns field value.
-func (e FluentValidationError) Field() string { return e.field }
+func (e Logger_FluentValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e FluentValidationError) Reason() string { return e.reason }
+func (e Logger_FluentValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e FluentValidationError) Cause() error { return e.cause }
+func (e Logger_FluentValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e FluentValidationError) Key() bool { return e.key }
+func (e Logger_FluentValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e FluentValidationError) ErrorName() string { return "FluentValidationError" }
+func (e Logger_FluentValidationError) ErrorName() string { return "Logger_FluentValidationError" }
 
 // Error satisfies the builtin error interface
-func (e FluentValidationError) Error() string {
+func (e Logger_FluentValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -573,14 +584,14 @@ func (e FluentValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sFluent.%s: %s%s",
+		"invalid %sLogger_Fluent.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = FluentValidationError{}
+var _ error = Logger_FluentValidationError{}
 
 var _ interface {
 	Field() string
@@ -588,23 +599,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = FluentValidationError{}
+} = Logger_FluentValidationError{}
 
-// Validate checks the field values on Aliyun with the rules defined in the
-// proto definition for this message. If any rules are violated, the first
+// Validate checks the field values on Logger_Aliyun with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
-func (m *Aliyun) Validate() error {
+func (m *Logger_Aliyun) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on Aliyun with the rules defined in the
-// proto definition for this message. If any rules are violated, the result is
-// a list of violation errors wrapped in AliyunMultiError, or nil if none found.
-func (m *Aliyun) ValidateAll() error {
+// ValidateAll checks the field values on Logger_Aliyun with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in Logger_AliyunMultiError, or
+// nil if none found.
+func (m *Logger_Aliyun) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *Aliyun) validate(all bool) error {
+func (m *Logger_Aliyun) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -620,18 +632,19 @@ func (m *Aliyun) validate(all bool) error {
 	// no validation rules for AccessSecret
 
 	if len(errors) > 0 {
-		return AliyunMultiError(errors)
+		return Logger_AliyunMultiError(errors)
 	}
 
 	return nil
 }
 
-// AliyunMultiError is an error wrapping multiple validation errors returned by
-// Aliyun.ValidateAll() if the designated constraints aren't met.
-type AliyunMultiError []error
+// Logger_AliyunMultiError is an error wrapping multiple validation errors
+// returned by Logger_Aliyun.ValidateAll() if the designated constraints
+// aren't met.
+type Logger_AliyunMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m AliyunMultiError) Error() string {
+func (m Logger_AliyunMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -640,11 +653,11 @@ func (m AliyunMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m AliyunMultiError) AllErrors() []error { return m }
+func (m Logger_AliyunMultiError) AllErrors() []error { return m }
 
-// AliyunValidationError is the validation error returned by Aliyun.Validate if
-// the designated constraints aren't met.
-type AliyunValidationError struct {
+// Logger_AliyunValidationError is the validation error returned by
+// Logger_Aliyun.Validate if the designated constraints aren't met.
+type Logger_AliyunValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -652,22 +665,22 @@ type AliyunValidationError struct {
 }
 
 // Field function returns field value.
-func (e AliyunValidationError) Field() string { return e.field }
+func (e Logger_AliyunValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e AliyunValidationError) Reason() string { return e.reason }
+func (e Logger_AliyunValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e AliyunValidationError) Cause() error { return e.cause }
+func (e Logger_AliyunValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e AliyunValidationError) Key() bool { return e.key }
+func (e Logger_AliyunValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e AliyunValidationError) ErrorName() string { return "AliyunValidationError" }
+func (e Logger_AliyunValidationError) ErrorName() string { return "Logger_AliyunValidationError" }
 
 // Error satisfies the builtin error interface
-func (e AliyunValidationError) Error() string {
+func (e Logger_AliyunValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -679,14 +692,14 @@ func (e AliyunValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sAliyun.%s: %s%s",
+		"invalid %sLogger_Aliyun.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = AliyunValidationError{}
+var _ error = Logger_AliyunValidationError{}
 
 var _ interface {
 	Field() string
@@ -694,23 +707,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = AliyunValidationError{}
+} = Logger_AliyunValidationError{}
 
-// Validate checks the field values on Tencent with the rules defined in the
-// proto definition for this message. If any rules are violated, the first
+// Validate checks the field values on Logger_Tencent with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
-func (m *Tencent) Validate() error {
+func (m *Logger_Tencent) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on Tencent with the rules defined in the
-// proto definition for this message. If any rules are violated, the result is
-// a list of violation errors wrapped in TencentMultiError, or nil if none found.
-func (m *Tencent) ValidateAll() error {
+// ValidateAll checks the field values on Logger_Tencent with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in Logger_TencentMultiError,
+// or nil if none found.
+func (m *Logger_Tencent) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *Tencent) validate(all bool) error {
+func (m *Logger_Tencent) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -726,18 +740,19 @@ func (m *Tencent) validate(all bool) error {
 	// no validation rules for AccessSecret
 
 	if len(errors) > 0 {
-		return TencentMultiError(errors)
+		return Logger_TencentMultiError(errors)
 	}
 
 	return nil
 }
 
-// TencentMultiError is an error wrapping multiple validation errors returned
-// by Tencent.ValidateAll() if the designated constraints aren't met.
-type TencentMultiError []error
+// Logger_TencentMultiError is an error wrapping multiple validation errors
+// returned by Logger_Tencent.ValidateAll() if the designated constraints
+// aren't met.
+type Logger_TencentMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m TencentMultiError) Error() string {
+func (m Logger_TencentMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -746,11 +761,11 @@ func (m TencentMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m TencentMultiError) AllErrors() []error { return m }
+func (m Logger_TencentMultiError) AllErrors() []error { return m }
 
-// TencentValidationError is the validation error returned by Tencent.Validate
-// if the designated constraints aren't met.
-type TencentValidationError struct {
+// Logger_TencentValidationError is the validation error returned by
+// Logger_Tencent.Validate if the designated constraints aren't met.
+type Logger_TencentValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -758,22 +773,22 @@ type TencentValidationError struct {
 }
 
 // Field function returns field value.
-func (e TencentValidationError) Field() string { return e.field }
+func (e Logger_TencentValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e TencentValidationError) Reason() string { return e.reason }
+func (e Logger_TencentValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e TencentValidationError) Cause() error { return e.cause }
+func (e Logger_TencentValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e TencentValidationError) Key() bool { return e.key }
+func (e Logger_TencentValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e TencentValidationError) ErrorName() string { return "TencentValidationError" }
+func (e Logger_TencentValidationError) ErrorName() string { return "Logger_TencentValidationError" }
 
 // Error satisfies the builtin error interface
-func (e TencentValidationError) Error() string {
+func (e Logger_TencentValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -785,14 +800,14 @@ func (e TencentValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sTencent.%s: %s%s",
+		"invalid %sLogger_Tencent.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = TencentValidationError{}
+var _ error = Logger_TencentValidationError{}
 
 var _ interface {
 	Field() string
@@ -800,4 +815,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = TencentValidationError{}
+} = Logger_TencentValidationError{}

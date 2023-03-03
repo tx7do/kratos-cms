@@ -11,7 +11,6 @@ import (
 	"go.opentelemetry.io/otel/sdk/resource"
 	traceSdk "go.opentelemetry.io/otel/sdk/trace"
 	semConv "go.opentelemetry.io/otel/semconv/v1.4.0"
-
 	"kratos-blog/gen/api/go/common/conf"
 )
 
@@ -42,7 +41,11 @@ func NewTracerExporter(exporterName, endpoint string) (traceSdk.SpanExporter, er
 }
 
 // NewTracerProvider 创建一个链路追踪器
-func NewTracerProvider(cfg *conf.Trace, serviceInfo *ServiceInfo) error {
+func NewTracerProvider(cfg *conf.Tracer, serviceInfo *ServiceInfo) error {
+	if cfg == nil {
+		return errors.New("tracer config is nil")
+	}
+
 	if cfg.Sampler == 0 {
 		cfg.Sampler = 1.0
 	}

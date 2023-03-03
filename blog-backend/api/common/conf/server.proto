@@ -8,41 +8,41 @@ import "google/protobuf/duration.proto";
 
 // 服务器
 message Server {
+  // REST
+  message REST {
+    string network = 1; // 网络
+    string addr = 2;  // 服务监听地址
+    google.protobuf.Duration timeout = 3; // 超时时间
+  }
+
+  // gPRC
+  message GRPC {
+    string network = 1; // 网络
+    string addr = 2;  // 服务监听地址
+    google.protobuf.Duration timeout = 3; // 超时时间
+  }
+
+  // Websocket
+  message Websocket {
+    string network = 1; // 网络样式：http、https
+    string addr = 2;  // 服务监听地址
+    string path = 3;  // 路径
+    google.protobuf.Duration timeout = 4; // 超时时间
+  }
+
+  // MQTT
+  message Mqtt {
+    string addr = 1;  // 对端网络地址
+  }
+
+  // Kafka
+  message Kafka {
+    repeated string addrs = 1;  // 对端网络地址
+  }
+
   REST rest = 1;  // REST服务
   GRPC grpc = 2;  // gRPC服务
   Websocket websocket = 3;  // Websocket服务
   Mqtt mqtt = 4;  // MQTT服务
   Kafka kafka = 5;  // Kafka服务
-}
-
-// REST服务
-message REST {
-  string network = 1; // 网络
-  string addr = 2;  // 服务监听地址
-  google.protobuf.Duration timeout = 3; // 超时时间
-}
-
-// gPRC服务器
-message GRPC {
-  string network = 1; // 网络
-  string addr = 2;  // 服务监听地址
-  google.protobuf.Duration timeout = 3; // 超时时间
-}
-
-// Websocket
-message Websocket {
-  string network = 1; // 网络样式：http、https
-  string addr = 2;  // 服务监听地址
-  string path = 3;  // 路径
-  google.protobuf.Duration timeout = 4; // 超时时间
-}
-
-// MQTT
-message Mqtt {
-  string addr = 1;  // 对端网络地址
-}
-
-// Kafka
-message Kafka {
-  repeated string addrs = 1;  // 对端网络地址
 }

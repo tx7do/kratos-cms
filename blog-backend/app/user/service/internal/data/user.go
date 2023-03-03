@@ -8,12 +8,11 @@ import (
 
 	v1 "kratos-blog/gen/api/go/user/service/v1"
 
-	"kratos-blog/pkg/util/crypto"
-	"kratos-blog/pkg/util/entgo"
-
 	"kratos-blog/app/user/service/internal/biz"
 	"kratos-blog/app/user/service/internal/data/ent"
 	"kratos-blog/app/user/service/internal/data/ent/user"
+	"kratos-blog/pkg/util/crypto"
+	util "kratos-blog/pkg/util/time"
 )
 
 var _ biz.UserRepo = (*UserRepo)(nil)
@@ -43,8 +42,8 @@ func (r *UserRepo) convertEntToProto(in *ent.User) *v1.User {
 		Avatar:      in.Avatar,
 		Description: in.Description,
 		Password:    in.Password,
-		CreateTime:  entgo.UnixMilliToStringPtr(in.CreateTime),
-		UpdateTime:  entgo.UnixMilliToStringPtr(in.UpdateTime),
+		CreateTime:  util.UnixMilliToStringPtr(in.CreateTime),
+		UpdateTime:  util.UnixMilliToStringPtr(in.UpdateTime),
 	}
 }
 

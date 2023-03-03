@@ -19,6 +19,7 @@ go_library(
         "//gen/api/go/common/pagination",
         "//pkg/util/entgo",
         "//pkg/util/pagination",
+        "//pkg/util/time",
         "@com_github_go_kratos_kratos_v2//log",
         "@com_github_go_redis_redis_extra_redisotel_v8//:redisotel",
         "@com_github_go_redis_redis_v8//:redis",

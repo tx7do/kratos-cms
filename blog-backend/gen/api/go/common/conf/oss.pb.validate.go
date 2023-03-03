@@ -162,21 +162,22 @@ var _ interface {
 	ErrorName() string
 } = OSSValidationError{}
 
-// Validate checks the field values on MinIO with the rules defined in the
+// Validate checks the field values on OSS_MinIO with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
-func (m *MinIO) Validate() error {
+func (m *OSS_MinIO) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on MinIO with the rules defined in the
-// proto definition for this message. If any rules are violated, the result is
-// a list of violation errors wrapped in MinIOMultiError, or nil if none found.
-func (m *MinIO) ValidateAll() error {
+// ValidateAll checks the field values on OSS_MinIO with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in OSS_MinIOMultiError, or nil
+// if none found.
+func (m *OSS_MinIO) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *MinIO) validate(all bool) error {
+func (m *OSS_MinIO) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -198,18 +199,18 @@ func (m *MinIO) validate(all bool) error {
 	// no validation rules for DownloadHost
 
 	if len(errors) > 0 {
-		return MinIOMultiError(errors)
+		return OSS_MinIOMultiError(errors)
 	}
 
 	return nil
 }
 
-// MinIOMultiError is an error wrapping multiple validation errors returned by
-// MinIO.ValidateAll() if the designated constraints aren't met.
-type MinIOMultiError []error
+// OSS_MinIOMultiError is an error wrapping multiple validation errors returned
+// by OSS_MinIO.ValidateAll() if the designated constraints aren't met.
+type OSS_MinIOMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m MinIOMultiError) Error() string {
+func (m OSS_MinIOMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -218,11 +219,11 @@ func (m MinIOMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m MinIOMultiError) AllErrors() []error { return m }
+func (m OSS_MinIOMultiError) AllErrors() []error { return m }
 
-// MinIOValidationError is the validation error returned by MinIO.Validate if
-// the designated constraints aren't met.
-type MinIOValidationError struct {
+// OSS_MinIOValidationError is the validation error returned by
+// OSS_MinIO.Validate if the designated constraints aren't met.
+type OSS_MinIOValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -230,22 +231,22 @@ type MinIOValidationError struct {
 }
 
 // Field function returns field value.
-func (e MinIOValidationError) Field() string { return e.field }
+func (e OSS_MinIOValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e MinIOValidationError) Reason() string { return e.reason }
+func (e OSS_MinIOValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e MinIOValidationError) Cause() error { return e.cause }
+func (e OSS_MinIOValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e MinIOValidationError) Key() bool { return e.key }
+func (e OSS_MinIOValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e MinIOValidationError) ErrorName() string { return "MinIOValidationError" }
+func (e OSS_MinIOValidationError) ErrorName() string { return "OSS_MinIOValidationError" }
 
 // Error satisfies the builtin error interface
-func (e MinIOValidationError) Error() string {
+func (e OSS_MinIOValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -257,14 +258,14 @@ func (e MinIOValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sMinIO.%s: %s%s",
+		"invalid %sOSS_MinIO.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = MinIOValidationError{}
+var _ error = OSS_MinIOValidationError{}
 
 var _ interface {
 	Field() string
@@ -272,4 +273,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = MinIOValidationError{}
+} = OSS_MinIOValidationError{}

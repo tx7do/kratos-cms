@@ -15,6 +15,7 @@ import (
 
 	"kratos-blog/pkg/util/entgo"
 	paging "kratos-blog/pkg/util/pagination"
+	util "kratos-blog/pkg/util/time"
 )
 
 var _ biz.TagRepo = (*TagRepo)(nil)
@@ -44,8 +45,8 @@ func (r *TagRepo) convertEntToProto(in *ent.Tag) *v1.Tag {
 		Thumbnail:  in.Thumbnail,
 		SlugName:   in.SlugName,
 		PostCount:  in.PostCount,
-		CreateTime: entgo.UnixMilliToStringPtr(in.CreateTime),
-		UpdateTime: entgo.UnixMilliToStringPtr(in.UpdateTime),
+		CreateTime: util.UnixMilliToStringPtr(in.CreateTime),
+		UpdateTime: util.UnixMilliToStringPtr(in.UpdateTime),
 	}
 }
 

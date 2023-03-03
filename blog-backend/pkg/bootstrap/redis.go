@@ -10,14 +10,14 @@ import (
 )
 
 // NewRedisClient 创建Redis客户端
-func NewRedisClient(conf *conf.Data) *redis.Client {
+func NewRedisClient(cfg *conf.Bootstrap) *redis.Client {
 	rdb := redis.NewClient(&redis.Options{
-		Addr:         conf.Redis.Addr,
-		Password:     conf.Redis.Password,
-		DB:           int(conf.Redis.Db),
-		DialTimeout:  conf.Redis.DialTimeout.AsDuration(),
-		WriteTimeout: conf.Redis.WriteTimeout.AsDuration(),
-		ReadTimeout:  conf.Redis.ReadTimeout.AsDuration(),
+		Addr:         cfg.Data.Redis.Addr,
+		Password:     cfg.Data.Redis.Password,
+		DB:           int(cfg.Data.Redis.Db),
+		DialTimeout:  cfg.Data.Redis.DialTimeout.AsDuration(),
+		WriteTimeout: cfg.Data.Redis.WriteTimeout.AsDuration(),
+		ReadTimeout:  cfg.Data.Redis.ReadTimeout.AsDuration(),
 	})
 	if rdb == nil {
 		log.Fatalf("failed opening connection to redis")

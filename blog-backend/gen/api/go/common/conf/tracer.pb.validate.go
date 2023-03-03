@@ -35,21 +35,21 @@ var (
 	_ = sort.Sort
 )
 
-// Validate checks the field values on Trace with the rules defined in the
+// Validate checks the field values on Tracer with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
-func (m *Trace) Validate() error {
+func (m *Tracer) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on Trace with the rules defined in the
+// ValidateAll checks the field values on Tracer with the rules defined in the
 // proto definition for this message. If any rules are violated, the result is
-// a list of violation errors wrapped in TraceMultiError, or nil if none found.
-func (m *Trace) ValidateAll() error {
+// a list of violation errors wrapped in TracerMultiError, or nil if none found.
+func (m *Tracer) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *Trace) validate(all bool) error {
+func (m *Tracer) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -65,18 +65,18 @@ func (m *Trace) validate(all bool) error {
 	// no validation rules for Env
 
 	if len(errors) > 0 {
-		return TraceMultiError(errors)
+		return TracerMultiError(errors)
 	}
 
 	return nil
 }
 
-// TraceMultiError is an error wrapping multiple validation errors returned by
-// Trace.ValidateAll() if the designated constraints aren't met.
-type TraceMultiError []error
+// TracerMultiError is an error wrapping multiple validation errors returned by
+// Tracer.ValidateAll() if the designated constraints aren't met.
+type TracerMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m TraceMultiError) Error() string {
+func (m TracerMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -85,11 +85,11 @@ func (m TraceMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m TraceMultiError) AllErrors() []error { return m }
+func (m TracerMultiError) AllErrors() []error { return m }
 
-// TraceValidationError is the validation error returned by Trace.Validate if
+// TracerValidationError is the validation error returned by Tracer.Validate if
 // the designated constraints aren't met.
-type TraceValidationError struct {
+type TracerValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -97,22 +97,22 @@ type TraceValidationError struct {
 }
 
 // Field function returns field value.
-func (e TraceValidationError) Field() string { return e.field }
+func (e TracerValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e TraceValidationError) Reason() string { return e.reason }
+func (e TracerValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e TraceValidationError) Cause() error { return e.cause }
+func (e TracerValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e TraceValidationError) Key() bool { return e.key }
+func (e TracerValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e TraceValidationError) ErrorName() string { return "TraceValidationError" }
+func (e TracerValidationError) ErrorName() string { return "TracerValidationError" }
 
 // Error satisfies the builtin error interface
-func (e TraceValidationError) Error() string {
+func (e TracerValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -124,14 +124,14 @@ func (e TraceValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sTrace.%s: %s%s",
+		"invalid %sTracer.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = TraceValidationError{}
+var _ error = TracerValidationError{}
 
 var _ interface {
 	Field() string
@@ -139,4 +139,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = TraceValidationError{}
+} = TracerValidationError{}

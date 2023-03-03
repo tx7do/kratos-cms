@@ -9,6 +9,7 @@ package main
 import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/go-kratos/kratos/v2/registry"
 	"kratos-blog/app/admin/service/internal/data"
 	"kratos-blog/app/admin/service/internal/server"
 	"kratos-blog/app/admin/service/internal/service"
@@ -18,25 +19,24 @@ import (
 // Injectors from wire.go:
 
 // initApp init kratos application.
-func initApp(confServer *conf.Server, registry *conf.Registry, confData *conf.Data, auth *conf.Auth, logger log.Logger) (*kratos.App, func(), error) {
-	discovery := data.NewDiscovery(registry)
-	userServiceClient := data.NewUserServiceClient(discovery, confServer)
+func initApp(logger log.Logger, registrar registry.Registrar, bootstrap *conf.Bootstrap) (*kratos.App, func(), error) {
+	discovery := data.NewDiscovery(bootstrap)
+	userServiceClient := data.NewUserServiceClient(discovery, bootstrap)
 	userService := service.NewUserService(logger, userServiceClient)
-	postServiceClient := data.NewPostServiceClient(discovery, confServer)
+	postServiceClient := data.NewPostServiceClient(discovery, bootstrap)
 	postService := service.NewPostService(logger, postServiceClient)
-	linkServiceClient := data.NewLinkServiceClient(discovery, confServer)
+	linkServiceClient := data.NewLinkServiceClient(discovery, bootstrap)
 	linkService := service.NewLinkService(logger, linkServiceClient)
-	categoryServiceClient := data.NewCategoryServiceClient(discovery, confServer)
+	categoryServiceClient := data.NewCategoryServiceClient(discovery, bootstrap)
 	categoryService := service.NewCategoryService(logger, categoryServiceClient)
-	commentServiceClient := data.NewCommentServiceClient(discovery, confServer)
+	commentServiceClient := data.NewCommentServiceClient(discovery, bootstrap)
 	commentService := service.NewCommentService(logger, commentServiceClient)
-	tagServiceClient := data.NewTagServiceClient(discovery, confServer)
+	tagServiceClient := data.NewTagServiceClient(discovery, bootstrap)
 	tagService := service.NewTagService(logger, tagServiceClient)
-	attachmentServiceClient := data.NewAttachmentServiceClient(discovery, confServer)
+	attachmentServiceClient := data.NewAttachmentServiceClient(discovery, bootstrap)
 	attachmentService := service.NewAttachmentService(logger, attachmentServiceClient)
-	httpServer := server.NewHTTPServer(confServer, auth, logger, userService, postService, linkService, categoryService, commentService, tagService, attachmentService)
-	registrar := server.NewRegistrar(registry)
-	app := newApp(logger, httpServer, registrar)
+	httpServer := server.NewHTTPServer(bootstrap, logger, userService, postService, linkService, categoryService, commentService, tagService, attachmentService)
+	app := newApp(logger, registrar, httpServer)
 	return app, func() {
 	}, nil
 }

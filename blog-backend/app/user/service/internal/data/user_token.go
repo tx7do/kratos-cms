@@ -42,12 +42,12 @@ type userTokenRepo struct {
 	key  []byte
 }
 
-func NewUserTokenRepo(data *Data, conf *conf.Auth, logger log.Logger) biz.UserTokenRepo {
+func NewUserTokenRepo(data *Data, cfg *conf.Bootstrap, logger log.Logger) biz.UserTokenRepo {
 	l := log.NewHelper(log.With(logger, "module", "user-token/repo/user-service"))
 	return &userTokenRepo{
 		data: data,
 		log:  l,
-		key:  []byte(conf.ApiKey),
+		key:  []byte(cfg.Auth.ApiKey),
 	}
 }
 

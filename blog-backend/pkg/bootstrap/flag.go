@@ -28,6 +28,8 @@ func (f *CommandFlags) Init() {
 	flag.BoolVar(&f.Daemon, "d", false, "run app as a daemon with -d=true.")
 
 	if f.Daemon {
-		BeDaemon()
+		BeDaemon("-d")
 	}
+
+	flag.Parse()
 }

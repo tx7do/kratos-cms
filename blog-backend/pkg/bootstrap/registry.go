@@ -1,10 +1,9 @@
 package bootstrap
 
 import (
-	"path/filepath"
-	"time"
-
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/go-kratos/kratos/v2/registry"
+	"path/filepath"
 
 	// etcd
 	etcdKratos "github.com/go-kratos/kratos/contrib/registry/etcd/v2"
@@ -45,6 +44,75 @@ import (
 
 	"kratos-blog/gen/api/go/common/conf"
 )
+
+type RegistryType string
+
+const (
+	RegistryTypeConsul    RegistryType = "consul"
+	LoggerTypeEtcd        RegistryType = "etcd"
+	LoggerTypeZooKeeper   RegistryType = "zookeeper"
+	LoggerTypeNacos       RegistryType = "nacos"
+	LoggerTypeKubernetes  RegistryType = "kubernetes"
+	LoggerTypeEureka      RegistryType = "eureka"
+	LoggerTypePolaris     RegistryType = "polaris"
+	LoggerTypeServicecomb RegistryType = "servicecomb"
+)
+
+// NewRegistry 创建一个注册客户端
+func NewRegistry(cfg *conf.Registry) registry.Registrar {
+	if cfg == nil {
+		return nil
+	}
+
+	switch RegistryType(cfg.Type) {
+	case RegistryTypeConsul:
+		return NewConsulRegistry(cfg)
+	case LoggerTypeEtcd:
+		return NewEtcdRegistry(cfg)
+	case LoggerTypeZooKeeper:
+		return NewZooKeeperRegistry(cfg)
+	case LoggerTypeNacos:
+		return NewNacosRegistry(cfg)
+	case LoggerTypeKubernetes:
+		return NewKubernetesRegistry(cfg)
+	case LoggerTypeEureka:
+		return NewEurekaRegistry(cfg)
+	case LoggerTypePolaris:
+		return NewPolarisRegistry(cfg)
+	case LoggerTypeServicecomb:
+		return NewServicecombRegistry(cfg)
+	}
+
+	return nil
+}
+
+// NewDiscovery 创建一个发现客户端
+func NewDiscovery(cfg *conf.Registry) registry.Discovery {
+	if cfg == nil {
+		return nil
+	}
+
+	switch RegistryType(cfg.Type) {
+	case RegistryTypeConsul:
+		return NewConsulRegistry(cfg)
+	case LoggerTypeEtcd:
+		return NewEtcdRegistry(cfg)
+	case LoggerTypeZooKeeper:
+		return NewZooKeeperRegistry(cfg)
+	case LoggerTypeNacos:
+		return NewNacosRegistry(cfg)
+	case LoggerTypeKubernetes:
+		return NewKubernetesRegistry(cfg)
+	case LoggerTypeEureka:
+		return NewEurekaRegistry(cfg)
+	case LoggerTypePolaris:
+		return NewPolarisRegistry(cfg)
+	case LoggerTypeServicecomb:
+		return NewServicecombRegistry(cfg)
+	}
+
+	return nil
+}
 
 // NewConsulRegistry 创建一个注册发现客户端 - Consul
 func NewConsulRegistry(c *conf.Registry) *consulKratos.Registry {
@@ -102,15 +170,15 @@ func NewNacosRegistry(c *conf.Registry) *nacosKratos.Registry {
 	}
 
 	cliConf := nacosConstant.ClientConfig{
-		NamespaceId:          "public",
-		TimeoutMs:            10 * 1000, // http请求超时时间，单位毫秒
-		BeatInterval:         5 * 1000,  // 心跳间隔时间，单位毫秒
-		UpdateThreadNum:      20,        // 更新服务的线程数
-		LogLevel:             "debug",
-		CacheDir:             "../../configs/cache", // 缓存目录
-		LogDir:               "../../configs/log",   // 日志目录
-		NotLoadCacheAtStart:  true,                  // 在启动时不读取本地缓存数据，true--不读取，false--读取
-		UpdateCacheWhenEmpty: true,                  // 当服务列表为空时是否更新本地缓存，true--更新,false--不更新
+		NamespaceId:          c.Nacos.NamespaceId,
+		TimeoutMs:            uint64(c.Nacos.Timeout.AsDuration().Milliseconds()), // http请求超时时间，单位毫秒
+		BeatInterval:         c.Nacos.BeatInterval.AsDuration().Milliseconds(),    // 心跳间隔时间，单位毫秒
+		UpdateThreadNum:      int(c.Nacos.UpdateThreadNum),                        // 更新服务的线程数
+		LogLevel:             c.Nacos.LogLevel,
+		CacheDir:             c.Nacos.CacheDir,             // 缓存目录
+		LogDir:               c.Nacos.LogDir,               // 日志目录
+		NotLoadCacheAtStart:  c.Nacos.NotLoadCacheAtStart,  // 在启动时不读取本地缓存数据，true--不读取，false--读取
+		UpdateCacheWhenEmpty: c.Nacos.UpdateCacheWhenEmpty, // 当服务列表为空时是否更新本地缓存，true--更新,false--不更新
 	}
 
 	cli, err := nacosClients.NewNamingClient(
@@ -155,9 +223,9 @@ func NewKubernetesRegistry(_ *conf.Registry) *k8sRegistry.Registry {
 // NewEurekaRegistry 创建一个注册发现客户端 - Eureka
 func NewEurekaRegistry(c *conf.Registry) *eurekaKratos.Registry {
 	var opts []eurekaKratos.Option
-	opts = append(opts, eurekaKratos.WithHeartbeat(time.Second))
-	opts = append(opts, eurekaKratos.WithRefresh(time.Second))
-	opts = append(opts, eurekaKratos.WithEurekaPath("eureka"))
+	opts = append(opts, eurekaKratos.WithHeartbeat(c.Eureka.HeartbeatInterval.AsDuration()))
+	opts = append(opts, eurekaKratos.WithRefresh(c.Eureka.RefreshInterval.AsDuration()))
+	opts = append(opts, eurekaKratos.WithEurekaPath(c.Eureka.Path))
 
 	var err error
 	var reg *eurekaKratos.Registry
@@ -170,15 +238,14 @@ func NewEurekaRegistry(c *conf.Registry) *eurekaKratos.Registry {
 
 // NewPolarisRegistry 创建一个注册发现客户端 - Polaris
 func NewPolarisRegistry(c *conf.Registry) *polarisKratos.Registry {
-	var provider polarisApi.ProviderAPI
-	var consumer polarisApi.ConsumerAPI
-
 	var err error
 
+	var consumer polarisApi.ConsumerAPI
 	if consumer, err = polarisApi.NewConsumerAPI(); err != nil {
 		log.Fatalf("fail to create consumerAPI, err is %v", err)
 	}
 
+	var provider polarisApi.ProviderAPI
 	provider = polarisApi.NewProviderAPIByContext(consumer.SDKContext())
 
 	log.Infof("start to register instances, count %d", c.Polaris.InstanceCount)

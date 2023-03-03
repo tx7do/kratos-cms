@@ -5,8 +5,10 @@ go_library(
     srcs = [
         "auth.pb.go",
         "auth.pb.validate.go",
-        "conf.pb.go",
-        "conf.pb.validate.go",
+        "bootstrap.pb.go",
+        "bootstrap.pb.validate.go",
+        "config.pb.go",
+        "config.pb.validate.go",
         "data.pb.go",
         "data.pb.validate.go",
         "logger.pb.go",

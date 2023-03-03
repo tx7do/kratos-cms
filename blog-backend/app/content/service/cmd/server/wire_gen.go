@@ -9,6 +9,7 @@ package main
 import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/go-kratos/kratos/v2/registry"
 	"kratos-blog/app/content/service/internal/biz"
 	"kratos-blog/app/content/service/internal/data"
 	"kratos-blog/app/content/service/internal/server"
@@ -19,9 +20,9 @@ import (
 // Injectors from wire.go:
 
 // initApp init kratos application.
-func initApp(confServer *conf.Server, registry *conf.Registry, confData *conf.Data, auth *conf.Auth, logger log.Logger) (*kratos.App, func(), error) {
-	client := data.NewEntClient(confData, logger)
-	redisClient := data.NewRedisClient(confData, logger)
+func initApp(logger log.Logger, registrar registry.Registrar, bootstrap *conf.Bootstrap) (*kratos.App, func(), error) {
+	client := data.NewEntClient(bootstrap, logger)
+	redisClient := data.NewRedisClient(bootstrap, logger)
 	dataData, cleanup, err := data.NewData(client, redisClient, logger)
 	if err != nil {
 		return nil, nil, err
@@ -38,9 +39,8 @@ func initApp(confServer *conf.Server, registry *conf.Registry, confData *conf.Da
 	tagRepo := data.NewTagRepo(dataData, logger)
 	tagUseCase := biz.NewTagUseCase(tagRepo, logger)
 	tagService := service.NewTagService(logger, tagUseCase)
-	grpcServer := server.NewGRPCServer(confServer, logger, postService, linkService, categoryService, tagService)
-	registrar := server.NewRegistrar(registry)
-	app := newApp(logger, grpcServer, registrar)
+	grpcServer := server.NewGRPCServer(bootstrap, logger, postService, linkService, categoryService, tagService)
+	app := newApp(logger, registrar, grpcServer)
 	return app, func() {
 		cleanup()
 	}, nil

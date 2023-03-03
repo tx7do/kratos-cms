@@ -191,22 +191,22 @@ var _ interface {
 	ErrorName() string
 } = DataValidationError{}
 
-// Validate checks the field values on Database with the rules defined in the
-// proto definition for this message. If any rules are violated, the first
+// Validate checks the field values on Data_Database with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
-func (m *Database) Validate() error {
+func (m *Data_Database) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on Database with the rules defined in
-// the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in DatabaseMultiError, or nil
-// if none found.
-func (m *Database) ValidateAll() error {
+// ValidateAll checks the field values on Data_Database with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in Data_DatabaseMultiError, or
+// nil if none found.
+func (m *Data_Database) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *Database) validate(all bool) error {
+func (m *Data_Database) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -220,18 +220,19 @@ func (m *Database) validate(all bool) error {
 	// no validation rules for Migrate
 
 	if len(errors) > 0 {
-		return DatabaseMultiError(errors)
+		return Data_DatabaseMultiError(errors)
 	}
 
 	return nil
 }
 
-// DatabaseMultiError is an error wrapping multiple validation errors returned
-// by Database.ValidateAll() if the designated constraints aren't met.
-type DatabaseMultiError []error
+// Data_DatabaseMultiError is an error wrapping multiple validation errors
+// returned by Data_Database.ValidateAll() if the designated constraints
+// aren't met.
+type Data_DatabaseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m DatabaseMultiError) Error() string {
+func (m Data_DatabaseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -240,11 +241,11 @@ func (m DatabaseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m DatabaseMultiError) AllErrors() []error { return m }
+func (m Data_DatabaseMultiError) AllErrors() []error { return m }
 
-// DatabaseValidationError is the validation error returned by
-// Database.Validate if the designated constraints aren't met.
-type DatabaseValidationError struct {
+// Data_DatabaseValidationError is the validation error returned by
+// Data_Database.Validate if the designated constraints aren't met.
+type Data_DatabaseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -252,22 +253,22 @@ type DatabaseValidationError struct {
 }
 
 // Field function returns field value.
-func (e DatabaseValidationError) Field() string { return e.field }
+func (e Data_DatabaseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e DatabaseValidationError) Reason() string { return e.reason }
+func (e Data_DatabaseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e DatabaseValidationError) Cause() error { return e.cause }
+func (e Data_DatabaseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e DatabaseValidationError) Key() bool { return e.key }
+func (e Data_DatabaseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e DatabaseValidationError) ErrorName() string { return "DatabaseValidationError" }
+func (e Data_DatabaseValidationError) ErrorName() string { return "Data_DatabaseValidationError" }
 
 // Error satisfies the builtin error interface
-func (e DatabaseValidationError) Error() string {
+func (e Data_DatabaseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -279,14 +280,14 @@ func (e DatabaseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sDatabase.%s: %s%s",
+		"invalid %sData_Database.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = DatabaseValidationError{}
+var _ error = Data_DatabaseValidationError{}
 
 var _ interface {
 	Field() string
@@ -294,23 +295,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = DatabaseValidationError{}
+} = Data_DatabaseValidationError{}
 
-// Validate checks the field values on Redis with the rules defined in the
+// Validate checks the field values on Data_Redis with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
-func (m *Redis) Validate() error {
+func (m *Data_Redis) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on Redis with the rules defined in the
-// proto definition for this message. If any rules are violated, the result is
-// a list of violation errors wrapped in RedisMultiError, or nil if none found.
-func (m *Redis) ValidateAll() error {
+// ValidateAll checks the field values on Data_Redis with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in Data_RedisMultiError, or
+// nil if none found.
+func (m *Data_Redis) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *Redis) validate(all bool) error {
+func (m *Data_Redis) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -329,7 +331,7 @@ func (m *Redis) validate(all bool) error {
 		switch v := interface{}(m.GetDialTimeout()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, RedisValidationError{
+				errors = append(errors, Data_RedisValidationError{
 					field:  "DialTimeout",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -337,7 +339,7 @@ func (m *Redis) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, RedisValidationError{
+				errors = append(errors, Data_RedisValidationError{
 					field:  "DialTimeout",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -346,7 +348,7 @@ func (m *Redis) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetDialTimeout()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return RedisValidationError{
+			return Data_RedisValidationError{
 				field:  "DialTimeout",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -358,7 +360,7 @@ func (m *Redis) validate(all bool) error {
 		switch v := interface{}(m.GetReadTimeout()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, RedisValidationError{
+				errors = append(errors, Data_RedisValidationError{
 					field:  "ReadTimeout",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -366,7 +368,7 @@ func (m *Redis) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, RedisValidationError{
+				errors = append(errors, Data_RedisValidationError{
 					field:  "ReadTimeout",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -375,7 +377,7 @@ func (m *Redis) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetReadTimeout()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return RedisValidationError{
+			return Data_RedisValidationError{
 				field:  "ReadTimeout",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -387,7 +389,7 @@ func (m *Redis) validate(all bool) error {
 		switch v := interface{}(m.GetWriteTimeout()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, RedisValidationError{
+				errors = append(errors, Data_RedisValidationError{
 					field:  "WriteTimeout",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -395,7 +397,7 @@ func (m *Redis) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, RedisValidationError{
+				errors = append(errors, Data_RedisValidationError{
 					field:  "WriteTimeout",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -404,7 +406,7 @@ func (m *Redis) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetWriteTimeout()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return RedisValidationError{
+			return Data_RedisValidationError{
 				field:  "WriteTimeout",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -413,18 +415,18 @@ func (m *Redis) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return RedisMultiError(errors)
+		return Data_RedisMultiError(errors)
 	}
 
 	return nil
 }
 
-// RedisMultiError is an error wrapping multiple validation errors returned by
-// Redis.ValidateAll() if the designated constraints aren't met.
-type RedisMultiError []error
+// Data_RedisMultiError is an error wrapping multiple validation errors
+// returned by Data_Redis.ValidateAll() if the designated constraints aren't met.
+type Data_RedisMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m RedisMultiError) Error() string {
+func (m Data_RedisMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -433,11 +435,11 @@ func (m RedisMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m RedisMultiError) AllErrors() []error { return m }
+func (m Data_RedisMultiError) AllErrors() []error { return m }
 
-// RedisValidationError is the validation error returned by Redis.Validate if
-// the designated constraints aren't met.
-type RedisValidationError struct {
+// Data_RedisValidationError is the validation error returned by
+// Data_Redis.Validate if the designated constraints aren't met.
+type Data_RedisValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -445,22 +447,22 @@ type RedisValidationError struct {
 }
 
 // Field function returns field value.
-func (e RedisValidationError) Field() string { return e.field }
+func (e Data_RedisValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e RedisValidationError) Reason() string { return e.reason }
+func (e Data_RedisValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e RedisValidationError) Cause() error { return e.cause }
+func (e Data_RedisValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e RedisValidationError) Key() bool { return e.key }
+func (e Data_RedisValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e RedisValidationError) ErrorName() string { return "RedisValidationError" }
+func (e Data_RedisValidationError) ErrorName() string { return "Data_RedisValidationError" }
 
 // Error satisfies the builtin error interface
-func (e RedisValidationError) Error() string {
+func (e Data_RedisValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -472,14 +474,14 @@ func (e RedisValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sRedis.%s: %s%s",
+		"invalid %sData_Redis.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = RedisValidationError{}
+var _ error = Data_RedisValidationError{}
 
 var _ interface {
 	Field() string
@@ -487,4 +489,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = RedisValidationError{}
+} = Data_RedisValidationError{}

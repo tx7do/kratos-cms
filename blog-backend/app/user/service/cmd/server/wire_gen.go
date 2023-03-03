@@ -9,6 +9,7 @@ package main
 import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/go-kratos/kratos/v2/registry"
 	"kratos-blog/app/user/service/internal/biz"
 	"kratos-blog/app/user/service/internal/data"
 	"kratos-blog/app/user/service/internal/server"
@@ -19,21 +20,20 @@ import (
 // Injectors from wire.go:
 
 // initApp init kratos application.
-func initApp(confServer *conf.Server, registry *conf.Registry, confData *conf.Data, auth *conf.Auth, logger log.Logger) (*kratos.App, func(), error) {
-	client := data.NewEntClient(confData, logger)
-	redisClient := data.NewRedisClient(confData, logger)
+func initApp(logger log.Logger, registrar registry.Registrar, bootstrap *conf.Bootstrap) (*kratos.App, func(), error) {
+	client := data.NewEntClient(bootstrap, logger)
+	redisClient := data.NewRedisClient(bootstrap, logger)
 	dataData, cleanup, err := data.NewData(client, redisClient, logger)
 	if err != nil {
 		return nil, nil, err
 	}
 	userRepo := data.NewUserRepo(dataData, logger)
 	userUseCase := biz.NewUserUseCase(userRepo, logger)
-	userTokenRepo := data.NewUserTokenRepo(dataData, auth, logger)
+	userTokenRepo := data.NewUserTokenRepo(dataData, bootstrap, logger)
 	userTokenUseCase := biz.NewUserAuthUseCase(userTokenRepo)
 	userService := service.NewUserService(logger, userUseCase, userTokenUseCase)
-	grpcServer := server.NewGRPCServer(confServer, logger, userService)
-	registrar := server.NewRegistrar(registry)
-	app := newApp(logger, grpcServer, registrar)
+	grpcServer := server.NewGRPCServer(bootstrap, logger, userService)
+	app := newApp(logger, registrar, grpcServer)
 	return app, func() {
 		cleanup()
 	}, nil

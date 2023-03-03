@@ -15,6 +15,7 @@ import (
 
 	"kratos-blog/pkg/util/entgo"
 	paging "kratos-blog/pkg/util/pagination"
+	util "kratos-blog/pkg/util/time"
 )
 
 var _ biz.PostRepo = (*PostRepo)(nil)
@@ -58,9 +59,9 @@ func (r *PostRepo) convertEntToProto(in *ent.Post) *v1.Post {
 		CommentCount:    in.CommentCount,
 		DisallowComment: in.DisallowComment,
 		InProgress:      in.InProgress,
-		CreateTime:      entgo.UnixMilliToStringPtr(in.CreateTime),
-		UpdateTime:      entgo.UnixMilliToStringPtr(in.UpdateTime),
-		EditTime:        entgo.UnixMilliToStringPtr(in.EditTime),
+		CreateTime:      util.UnixMilliToStringPtr(in.CreateTime),
+		UpdateTime:      util.UnixMilliToStringPtr(in.UpdateTime),
+		EditTime:        util.UnixMilliToStringPtr(in.EditTime),
 	}
 }
 

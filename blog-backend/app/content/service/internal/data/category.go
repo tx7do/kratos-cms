@@ -15,6 +15,7 @@ import (
 
 	"kratos-blog/pkg/util/entgo"
 	paging "kratos-blog/pkg/util/pagination"
+	util "kratos-blog/pkg/util/time"
 )
 
 var _ biz.CategoryRepo = (*CategoryRepo)(nil)
@@ -47,8 +48,8 @@ func (r *CategoryRepo) convertEntToProto(in *ent.Category) *v1.Category {
 		FullPath:    in.FullPath,
 		Priority:    in.Priority,
 		PostCount:   in.PostCount,
-		CreateTime:  entgo.UnixMilliToStringPtr(in.CreateTime),
-		UpdateTime:  entgo.UnixMilliToStringPtr(in.UpdateTime),
+		CreateTime:  util.UnixMilliToStringPtr(in.CreateTime),
+		UpdateTime:  util.UnixMilliToStringPtr(in.UpdateTime),
 	}
 }
 

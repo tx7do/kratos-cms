@@ -39,8 +39,8 @@ func NewWhiteListMatcher() selector.MatchFunc {
 }
 
 // NewMiddleware 创建中间件
-func NewMiddleware(ac *conf.Auth, logger log.Logger) http.ServerOption {
-	authenticator, _ := jwt.NewAuthenticator(ac.ApiKey, "HS256")
+func NewMiddleware(cfg *conf.Auth, logger log.Logger) http.ServerOption {
+	authenticator, _ := jwt.NewAuthenticator(cfg.ApiKey, "HS256")
 	authorizer := noop.State{}
 
 	return http.Middleware(
@@ -57,7 +57,7 @@ func NewMiddleware(ac *conf.Auth, logger log.Logger) http.ServerOption {
 
 // NewHTTPServer new an HTTP server.
 func NewHTTPServer(
-	c *conf.Server, ac *conf.Auth, logger log.Logger,
+	cfg *conf.Bootstrap, logger log.Logger,
 	userSvc *service.UserService,
 	postSvc *service.PostService,
 	linkSvc *service.LinkService,
@@ -67,21 +67,21 @@ func NewHTTPServer(
 	attachmentSvc *service.AttachmentService,
 ) *http.Server {
 	var opts = []http.ServerOption{
-		NewMiddleware(ac, logger),
+		NewMiddleware(cfg.Auth, logger),
 		http.Filter(handlers.CORS(
 			handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}),
 			handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"}),
 			handlers.AllowedOrigins([]string{"*"}),
 		)),
 	}
-	if c.Rest.Network != "" {
-		opts = append(opts, http.Network(c.Rest.Network))
+	if cfg.Server.Rest.Network != "" {
+		opts = append(opts, http.Network(cfg.Server.Rest.Network))
 	}
-	if c.Rest.Addr != "" {
-		opts = append(opts, http.Address(c.Rest.Addr))
+	if cfg.Server.Rest.Addr != "" {
+		opts = append(opts, http.Address(cfg.Server.Rest.Addr))
 	}
-	if c.Rest.Timeout != nil {
-		opts = append(opts, http.Timeout(c.Rest.Timeout.AsDuration()))
+	if cfg.Server.Rest.Timeout != nil {
+		opts = append(opts, http.Timeout(cfg.Server.Rest.Timeout.AsDuration()))
 	}
 	srv := http.NewServer(opts...)
 

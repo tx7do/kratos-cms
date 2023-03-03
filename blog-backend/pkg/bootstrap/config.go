@@ -1,11 +1,9 @@
 package bootstrap
 
 import (
-	"net/url"
+	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
-	"time"
 
 	"google.golang.org/grpc"
 
@@ -39,35 +37,160 @@ import (
 	// kubernetes
 	k8sKratos "github.com/go-kratos/kratos/contrib/config/kubernetes/v2"
 	k8sUtil "k8s.io/client-go/util/homedir"
+
+	"kratos-blog/gen/api/go/common/conf"
 )
 
+const remoteConfigSourceConfigFile = "remote.yaml"
+
 // NewConfigProvider 创建一个配置
-func NewConfigProvider(configType, configHost, configPath, configKey string) config.Config {
-	return config.New(
-		config.WithSource(
-			NewFileConfigSource(configPath),
-			NewRemoteConfigSource(configType, configHost, configKey),
-		),
-	)
+func NewConfigProvider(configPath string) config.Config {
+	err, rc := LoadRemoteConfigSourceConfigs(configPath)
+	if err != nil {
+		log.Error("LoadRemoteConfigSourceConfigs: ", err.Error())
+	}
+	if rc != nil {
+		return config.New(
+			config.WithSource(
+				NewFileConfigSource(configPath),
+				NewRemoteConfigSource(rc),
+			),
+		)
+	} else {
+		return config.New(
+			config.WithSource(
+				NewFileConfigSource(configPath),
+			),
+		)
+	}
 }
 
-// NewRemoteConfigSource 创建一个远程配置源
-func NewRemoteConfigSource(configType, configHost, configKey string) config.Source {
-	switch configType {
-	case "nacos":
-		uri, _ := url.Parse(configHost)
-		h := strings.Split(uri.Host, ":")
-		addr := h[0]
-		port, _ := strconv.Atoi(h[1])
-		return NewNacosConfigSource(addr, uint64(port), configKey)
-	case "consul":
-		return NewConsulConfigSource(configHost, configKey)
-	case "etcd":
-		return NewEtcdConfigSource(configHost, configKey)
-	case "apollo":
-		return NewApolloConfigSource(configHost, configKey)
+// LoadBootstrapConfig 加载程序引导配置
+func LoadBootstrapConfig(configPath string) *conf.Bootstrap {
+	cfg := NewConfigProvider(configPath)
+	if err := cfg.Load(); err != nil {
+		panic(err)
 	}
-	return nil
+
+	var bc conf.Bootstrap
+	if err := cfg.Scan(&bc); err != nil {
+		panic(err)
+	}
+
+	if bc.Server == nil {
+		bc.Server = &conf.Server{}
+		_ = cfg.Scan(&bc.Server)
+	}
+
+	if bc.Data == nil {
+		bc.Data = &conf.Data{}
+		_ = cfg.Scan(&bc.Data)
+	}
+
+	if bc.Auth == nil {
+		bc.Auth = &conf.Auth{}
+		_ = cfg.Scan(&bc.Auth)
+	}
+
+	if bc.Trace == nil {
+		bc.Trace = &conf.Tracer{}
+		_ = cfg.Scan(&bc.Trace)
+	}
+
+	if bc.Logger == nil {
+		bc.Logger = &conf.Logger{}
+		_ = cfg.Scan(&bc.Logger)
+	}
+
+	if bc.Registry == nil {
+		bc.Registry = &conf.Registry{}
+		_ = cfg.Scan(&bc.Registry)
+	}
+
+	if bc.Oss == nil {
+		bc.Oss = &conf.OSS{}
+		_ = cfg.Scan(&bc.Oss)
+	}
+
+	return &bc
+}
+
+func pathExists(path string) bool {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true
+	}
+	if os.IsNotExist(err) {
+		return false
+	}
+	return false
+}
+
+// LoadRemoteConfigSourceConfigs 加载远程配置源的本地配置
+func LoadRemoteConfigSourceConfigs(configPath string) (error, *conf.RemoteConfig) {
+	configPath = configPath + "/" + remoteConfigSourceConfigFile
+	if !pathExists(configPath) {
+		return nil, nil
+	}
+
+	cfg := config.New(
+		config.WithSource(
+			NewFileConfigSource(configPath),
+		),
+	)
+	defer func(cfg config.Config) {
+		err := cfg.Close()
+		if err != nil {
+			panic(err)
+		}
+	}(cfg)
+
+	var err error
+
+	if err = cfg.Load(); err != nil {
+		return err, nil
+	}
+
+	var rc conf.Bootstrap
+	if err = cfg.Scan(&rc); err != nil {
+		return err, nil
+	}
+
+	return nil, rc.Config
+}
+
+type ConfigType string
+
+const (
+	ConfigTypeLocalFile  ConfigType = "file"
+	ConfigTypeNacos      ConfigType = "nacos"
+	ConfigTypeConsul     ConfigType = "consul"
+	ConfigTypeEtcd       ConfigType = "etcd"
+	ConfigTypeApollo     ConfigType = "apollo"
+	ConfigTypeKubernetes ConfigType = "kubernetes"
+	ConfigTypePolaris    ConfigType = "polaris"
+)
+
+// NewRemoteConfigSource 创建一个远程配置源
+func NewRemoteConfigSource(c *conf.RemoteConfig) config.Source {
+	switch ConfigType(c.Type) {
+	default:
+		fallthrough
+	case ConfigTypeLocalFile:
+		return nil
+	case ConfigTypeNacos:
+		return NewNacosConfigSource(c)
+	case ConfigTypeConsul:
+		return NewConsulConfigSource(c)
+	case ConfigTypeEtcd:
+		return NewEtcdConfigSource(c)
+	case ConfigTypeApollo:
+		return NewApolloConfigSource(c)
+	case ConfigTypeKubernetes:
+		return NewKubernetesConfigSource(c)
+	case ConfigTypePolaris:
+		return NewPolarisConfigSource(c)
+	}
 }
 
 // getConfigKey 获取合法的配置名
@@ -85,9 +208,9 @@ func NewFileConfigSource(filePath string) config.Source {
 }
 
 // NewNacosConfigSource 创建一个远程配置源 - Nacos
-func NewNacosConfigSource(configAddr string, configPort uint64, configKey string) config.Source {
+func NewNacosConfigSource(c *conf.RemoteConfig) config.Source {
 	srvConf := []nacosConstant.ServerConfig{
-		*nacosConstant.NewServerConfig(configAddr, configPort),
+		*nacosConstant.NewServerConfig(c.Nacos.Address, c.Nacos.Port),
 	}
 
 	cliConf := nacosConstant.ClientConfig{
@@ -112,24 +235,25 @@ func NewNacosConfigSource(configAddr string, configPort uint64, configKey string
 	}
 
 	return nacosKratos.NewConfigSource(nacosClient,
-		nacosKratos.WithGroup(getConfigKey(configKey, false)),
+		nacosKratos.WithGroup(getConfigKey(c.Nacos.Key, false)),
 		nacosKratos.WithDataID("bootstrap.yaml"),
 	)
 }
 
 // NewEtcdConfigSource 创建一个远程配置源 - Etcd
-func NewEtcdConfigSource(configHost, configKey string) config.Source {
-	conf := etcdClient.Config{
-		Endpoints:   []string{configHost},
-		DialTimeout: time.Second, DialOptions: []grpc.DialOption{grpc.WithBlock()},
+func NewEtcdConfigSource(c *conf.RemoteConfig) config.Source {
+	cfg := etcdClient.Config{
+		Endpoints:   c.Etcd.Endpoints,
+		DialTimeout: c.Etcd.Timeout.AsDuration(),
+		DialOptions: []grpc.DialOption{grpc.WithBlock()},
 	}
 
-	cli, err := etcdClient.New(conf)
+	cli, err := etcdClient.New(cfg)
 	if err != nil {
 		panic(err)
 	}
 
-	source, err := etcdKratos.New(cli, etcdKratos.WithPath(getConfigKey(configKey, true)))
+	source, err := etcdKratos.New(cli, etcdKratos.WithPath(getConfigKey(c.Etcd.Key, true)))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -138,18 +262,18 @@ func NewEtcdConfigSource(configHost, configKey string) config.Source {
 }
 
 // NewConsulConfigSource 创建一个远程配置源 - Consul
-func NewConsulConfigSource(configHost, configKey string) config.Source {
-	conf := &consulApi.Config{
-		Address: configHost,
-	}
+func NewConsulConfigSource(c *conf.RemoteConfig) config.Source {
+	cfg := consulApi.DefaultConfig()
+	cfg.Address = c.Consul.Address
+	cfg.Scheme = c.Consul.Scheme
 
-	cli, err := consulApi.NewClient(conf)
+	cli, err := consulApi.NewClient(cfg)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	source, err := consulKratos.New(cli,
-		consulKratos.WithPath(getConfigKey(configKey, true)),
+		consulKratos.WithPath(getConfigKey(c.Consul.Key, true)),
 	)
 	if err != nil {
 		log.Fatal(err)
@@ -159,22 +283,22 @@ func NewConsulConfigSource(configHost, configKey string) config.Source {
 }
 
 // NewApolloConfigSource 创建一个远程配置源 - Apollo
-func NewApolloConfigSource(_, _ string) config.Source {
+func NewApolloConfigSource(c *conf.RemoteConfig) config.Source {
 	source := apolloKratos.NewSource(
-		apolloKratos.WithAppID("kratos"),
-		apolloKratos.WithCluster("dev"),
-		apolloKratos.WithEndpoint("http://localhost:8080"),
-		apolloKratos.WithNamespace("application,event.yaml,demo.json"),
+		apolloKratos.WithAppID(c.Apollo.AppId),
+		apolloKratos.WithCluster(c.Apollo.Cluster),
+		apolloKratos.WithEndpoint(c.Apollo.Endpoint),
+		apolloKratos.WithNamespace(c.Apollo.Namespace),
+		apolloKratos.WithSecret(c.Apollo.Secret),
 		apolloKratos.WithEnableBackup(),
-		apolloKratos.WithSecret("ad75b33c77ae4b9c9626d969c44f41ee"),
 	)
 	return source
 }
 
 // NewKubernetesConfigSource 创建一个远程配置源 - Kubernetes
-func NewKubernetesConfigSource(_, _ string) config.Source {
+func NewKubernetesConfigSource(c *conf.RemoteConfig) config.Source {
 	source := k8sKratos.NewSource(
-		k8sKratos.Namespace("mesh"),
+		k8sKratos.Namespace(c.Kubernetes.Namespace),
 		k8sKratos.LabelSelector(""),
 		k8sKratos.KubeConfig(filepath.Join(k8sUtil.HomeDir(), ".kube", "config")),
 	)
@@ -182,7 +306,7 @@ func NewKubernetesConfigSource(_, _ string) config.Source {
 }
 
 // NewPolarisConfigSource 创建一个远程配置源 - Polaris
-func NewPolarisConfigSource(_, _ string) config.Source {
+func NewPolarisConfigSource(_ *conf.RemoteConfig) config.Source {
 	configApi, err := polarisApi.NewConfigAPI()
 	if err != nil {
 		log.Fatal(err)

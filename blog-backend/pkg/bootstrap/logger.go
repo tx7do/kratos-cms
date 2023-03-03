@@ -7,6 +7,7 @@ import (
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+	"gopkg.in/natefinch/lumberjack.v2"
 
 	aliyunLogger "github.com/go-kratos/kratos/contrib/log/aliyun/v2"
 	fluentLogger "github.com/go-kratos/kratos/contrib/log/fluent/v2"
@@ -31,8 +32,9 @@ const (
 	LoggerTypeTencent LoggerType = "tencent"
 )
 
-func NewLoggerProvider(loggerType LoggerType, cfg *conf.Logger, serviceInfo *ServiceInfo) log.Logger {
-	l := createLogger(loggerType, cfg)
+// NewLoggerProvider 创建一个新的日志记录器提供者
+func NewLoggerProvider(cfg *conf.Logger, serviceInfo *ServiceInfo) log.Logger {
+	l := NewLogger(cfg)
 
 	return log.With(
 		l,
@@ -46,61 +48,69 @@ func NewLoggerProvider(loggerType LoggerType, cfg *conf.Logger, serviceInfo *Ser
 	)
 }
 
-func createLogger(loggerType LoggerType, cfg *conf.Logger) log.Logger {
-	switch loggerType {
+// NewLogger 创建一个新的日志记录器
+func NewLogger(cfg *conf.Logger) log.Logger {
+	if cfg == nil {
+		return NewStdLogger()
+	}
+
+	switch LoggerType(cfg.Type) {
 	default:
 		fallthrough
 	case LoggerTypeStd:
-		return createStdLogger()
+		return NewStdLogger()
 	case LoggerTypeFluent:
-		return createFluentLogger(cfg)
+		return NewFluentLogger(cfg)
 	case LoggerTypeZap:
-		return createZapLogger(cfg)
+		return NewZapLogger(cfg)
 	case LoggerTypeLogrus:
-		return createLogrusLogger(cfg)
+		return NewLogrusLogger(cfg)
 	case LoggerTypeAliyun:
-		return createAliyunLogger(cfg)
+		return NewAliyunLogger(cfg)
 	case LoggerTypeTencent:
-		return createTencentLogger(cfg)
+		return NewTencentLogger(cfg)
 	}
 }
 
-func createStdLogger() log.Logger {
+// NewStdLogger 创建一个新的日志记录器 - Kratos内置，控制台输出
+func NewStdLogger() log.Logger {
 	l := log.NewStdLogger(os.Stdout)
 	return l
 }
 
-type zapWriteSyncer struct {
-	output []string
-}
+// NewZapLogger 创建一个新的日志记录器 - Zap
+func NewZapLogger(cfg *conf.Logger) log.Logger {
+	encoderConfig := zap.NewProductionEncoderConfig()
+	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
+	encoderConfig.TimeKey = "time"
+	encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
+	encoderConfig.EncodeDuration = zapcore.SecondsDurationEncoder
+	encoderConfig.EncodeCaller = zapcore.ShortCallerEncoder
+	jsonEncoder := zapcore.NewJSONEncoder(encoderConfig)
 
-func (x *zapWriteSyncer) Write(p []byte) (n int, err error) {
-	x.output = append(x.output, string(p))
-	return len(p), nil
-}
-
-func (x *zapWriteSyncer) Sync() error {
-	return nil
-}
-
-func createZapLogger(cfg *conf.Logger) log.Logger {
-	syncer := &zapWriteSyncer{}
-	encoderCfg := zapcore.EncoderConfig{
-		MessageKey:     cfg.Zap.MessageKey,
-		LevelKey:       cfg.Zap.LevelKey,
-		NameKey:        cfg.Zap.NameKey,
-		EncodeLevel:    zapcore.LowercaseLevelEncoder,
-		EncodeTime:     zapcore.ISO8601TimeEncoder,
-		EncodeDuration: zapcore.StringDurationEncoder,
+	lumberJackLogger := &lumberjack.Logger{
+		Filename:   cfg.Zap.Filename,
+		MaxSize:    int(cfg.Zap.MaxSize),
+		MaxBackups: int(cfg.Zap.MaxBackups),
+		MaxAge:     int(cfg.Zap.MaxAge),
 	}
-	core := zapcore.NewCore(zapcore.NewJSONEncoder(encoderCfg), syncer, zap.DebugLevel)
-	options := zap.New(core).WithOptions()
-	logger := zapLogger.NewLogger(options)
+	writeSyncer := zapcore.AddSync(lumberJackLogger)
 
-	return logger
+	var lvl = new(zapcore.Level)
+	if err := lvl.UnmarshalText([]byte(cfg.Zap.Level)); err != nil {
+		return nil
+	}
+
+	core := zapcore.NewCore(jsonEncoder, writeSyncer, lvl)
+	logger := zap.New(core).WithOptions()
+
+	wrapped := zapLogger.NewLogger(logger)
+
+	return wrapped
 }
 
-func createLogrusLogger(cfg *conf.Logger) log.Logger {
+// NewLogrusLogger 创建一个新的日志记录器 - Logrus
+func NewLogrusLogger(cfg *conf.Logger) log.Logger {
 	loggerLevel, err := logrus.ParseLevel(cfg.Logrus.Level)
 	if err != nil {
 		loggerLevel = logrus.InfoLevel
@@ -133,27 +143,30 @@ func createLogrusLogger(cfg *conf.Logger) log.Logger {
 	return wrapped
 }
 
-func createFluentLogger(cfg *conf.Logger) log.Logger {
-	logger, err := fluentLogger.NewLogger(cfg.Fluent.Endpoint)
+// NewFluentLogger 创建一个新的日志记录器 - Fluent
+func NewFluentLogger(cfg *conf.Logger) log.Logger {
+	wrapped, err := fluentLogger.NewLogger(cfg.Fluent.Endpoint)
 	if err != nil {
 		panic("create fluent logger failed")
 		return nil
 	}
-	return logger
+	return wrapped
 }
 
-func createAliyunLogger(cfg *conf.Logger) log.Logger {
-	logger := aliyunLogger.NewAliyunLog(
+// NewAliyunLogger 创建一个新的日志记录器 - Aliyun
+func NewAliyunLogger(cfg *conf.Logger) log.Logger {
+	wrapped := aliyunLogger.NewAliyunLog(
 		aliyunLogger.WithProject(cfg.Aliyun.Project),
 		aliyunLogger.WithEndpoint(cfg.Aliyun.Endpoint),
 		aliyunLogger.WithAccessKey(cfg.Aliyun.AccessKey),
 		aliyunLogger.WithAccessSecret(cfg.Aliyun.AccessSecret),
 	)
-	return logger
+	return wrapped
 }
 
-func createTencentLogger(cfg *conf.Logger) log.Logger {
-	logger, err := tencentLogger.NewLogger(
+// NewTencentLogger 创建一个新的日志记录器 - Tencent
+func NewTencentLogger(cfg *conf.Logger) log.Logger {
+	wrapped, err := tencentLogger.NewLogger(
 		tencentLogger.WithTopicID(cfg.Tencent.TopicId),
 		tencentLogger.WithEndpoint(cfg.Tencent.Endpoint),
 		tencentLogger.WithAccessKey(cfg.Tencent.AccessKey),
@@ -163,5 +176,5 @@ func createTencentLogger(cfg *conf.Logger) log.Logger {
 		panic(err)
 		return nil
 	}
-	return logger
+	return wrapped
 }

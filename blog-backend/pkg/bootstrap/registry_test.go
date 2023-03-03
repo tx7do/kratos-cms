@@ -1,11 +1,9 @@
 package bootstrap
 
 import (
-	"testing"
-
 	"github.com/stretchr/testify/assert"
-
 	"kratos-blog/gen/api/go/common/conf"
+	"testing"
 )
 
 func TestNewConsulRegistry(t *testing.T) {

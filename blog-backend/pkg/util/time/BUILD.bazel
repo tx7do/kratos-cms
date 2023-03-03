@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "time",
+    srcs = ["util.go"],
+    importpath = "kratos-blog/pkg/util/time",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "time_test",
+    srcs = ["util_test.go"],
+    embed = [":time"],
+    deps = ["//pkg/util/trans"],
+)
