@@ -20,6 +20,8 @@ import (
 
 // initApp init kratos application.
 func initApp(logger log.Logger, registrar registry.Registrar, bootstrap *conf.Bootstrap) (*kratos.App, func(), error) {
+	authenticator := data.NewAuthenticator(bootstrap)
+	engine := data.NewAuthorizer()
 	discovery := data.NewDiscovery(bootstrap)
 	userServiceClient := data.NewUserServiceClient(discovery, bootstrap)
 	userService := service.NewUserService(logger, userServiceClient)
@@ -35,7 +37,7 @@ func initApp(logger log.Logger, registrar registry.Registrar, bootstrap *conf.Bo
 	tagService := service.NewTagService(logger, tagServiceClient)
 	attachmentServiceClient := data.NewAttachmentServiceClient(discovery, bootstrap)
 	attachmentService := service.NewAttachmentService(logger, attachmentServiceClient)
-	httpServer := server.NewHTTPServer(bootstrap, logger, userService, postService, linkService, categoryService, commentService, tagService, attachmentService)
+	httpServer := server.NewHTTPServer(bootstrap, logger, authenticator, engine, userService, postService, linkService, categoryService, commentService, tagService, attachmentService)
 	app := newApp(logger, registrar, httpServer)
 	return app, func() {
 	}, nil

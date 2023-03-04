@@ -2,13 +2,18 @@ package data
 
 import (
 	"context"
-	"time"
-
 	"github.com/go-redis/redis/extra/redisotel/v8"
 	"github.com/go-redis/redis/v8"
 
+	authnEngine "github.com/tx7do/kratos-authn/engine"
+	"github.com/tx7do/kratos-authn/engine/jwt"
+
+	authzEngine "github.com/tx7do/kratos-authz/engine"
+	"github.com/tx7do/kratos-authz/engine/noop"
+
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/registry"
+
 	commentV1 "kratos-blog/gen/api/go/comment/service/v1"
 	contentV1 "kratos-blog/gen/api/go/content/service/v1"
 	fileV1 "kratos-blog/gen/api/go/file/service/v1"
@@ -19,12 +24,13 @@ import (
 	"kratos-blog/pkg/service"
 )
 
-const defaultTimeout = 5 * time.Second
-
 // Data .
 type Data struct {
 	log *log.Helper
 	rdb *redis.Client
+
+	authenticator authnEngine.Authenticator
+	authorizer    authzEngine.Engine
 
 	userClient       userV1.UserServiceClient
 	attachmentClient fileV1.AttachmentServiceClient
@@ -37,6 +43,8 @@ type Data struct {
 
 // NewData .
 func NewData(redisClient *redis.Client,
+	authenticator authnEngine.Authenticator,
+	authorizer authzEngine.Engine,
 	userClient userV1.UserServiceClient,
 	attachmentClient fileV1.AttachmentServiceClient,
 	commentClient commentV1.CommentServiceClient,
@@ -50,6 +58,8 @@ func NewData(redisClient *redis.Client,
 	d := &Data{
 		rdb:              redisClient,
 		log:              l,
+		authenticator:    authenticator,
+		authorizer:       authorizer,
 		userClient:       userClient,
 		attachmentClient: attachmentClient,
 		commentClient:    commentClient,
@@ -90,6 +100,20 @@ func NewRedisClient(cfg *conf.Bootstrap, logger log.Logger) *redis.Client {
 // NewDiscovery 创建服务发现客户端
 func NewDiscovery(cfg *conf.Bootstrap) registry.Discovery {
 	return bootstrap.NewConsulRegistry(cfg.Registry)
+}
+
+// NewAuthenticator 创建认证器
+func NewAuthenticator(cfg *conf.Bootstrap) authnEngine.Authenticator {
+	authenticator, _ := jwt.NewAuthenticator(
+		jwt.WithKey([]byte(cfg.Auth.ApiKey)),
+		jwt.WithSigningMethod("HS256"),
+	)
+	return authenticator
+}
+
+// NewAuthorizer 创建权鉴器
+func NewAuthorizer() authzEngine.Engine {
+	return noop.State{}
 }
 
 func NewUserServiceClient(r registry.Discovery, c *conf.Bootstrap) userV1.UserServiceClient {

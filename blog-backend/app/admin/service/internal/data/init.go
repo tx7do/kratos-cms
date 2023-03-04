@@ -9,6 +9,9 @@ var ProviderSet = wire.NewSet(
 	NewRedisClient,
 	NewDiscovery,
 
+	NewAuthenticator,
+	NewAuthorizer,
+
 	NewUserServiceClient,
 	NewAttachmentServiceClient,
 	NewCommentServiceClient,

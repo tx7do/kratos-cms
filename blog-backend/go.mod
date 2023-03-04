@@ -30,7 +30,7 @@ require (
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-sql-driver/mysql v1.7.0
 	github.com/go-zookeeper/zk v1.0.3
-	github.com/golang-jwt/jwt/v4 v4.4.3
+	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/google/gnostic v0.6.9
 	github.com/google/subcommands v1.2.0
 	github.com/google/uuid v1.3.0
@@ -46,9 +46,10 @@ require (
 	github.com/polarismesh/polaris-go v1.3.0
 	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/cobra v1.6.1
-	github.com/stretchr/testify v1.8.1
-	github.com/tx7do/kratos-authn/engine/jwt v0.0.0-20230202084308-934d4876fd06
-	github.com/tx7do/kratos-authn/middleware v0.0.0-20230202084308-934d4876fd06
+	github.com/stretchr/testify v1.8.2
+	github.com/tx7do/kratos-authn v0.0.8
+	github.com/tx7do/kratos-authn/engine/jwt v0.0.0-20230304055640-bfb6ad985de8
+	github.com/tx7do/kratos-authn/middleware v0.0.0-20230304060223-c4ad57a481a3
 	github.com/tx7do/kratos-authz v0.0.4
 	github.com/tx7do/kratos-authz/middleware v0.0.0-20230202084608-78b0a0276e24
 	go.etcd.io/etcd/client/v3 v3.5.7
@@ -59,7 +60,7 @@ require (
 	go.uber.org/zap v1.24.0
 	golang.org/x/crypto v0.6.0
 	golang.org/x/tools v0.6.0
-	google.golang.org/genproto v0.0.0-20230209215440-0dfe4f8abfcc
+	google.golang.org/genproto v0.0.0-20230303212802-e74f57abe488
 	google.golang.org/grpc v1.53.0
 	google.golang.org/protobuf v1.28.1
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
@@ -200,7 +201,6 @@ require (
 	github.com/subosito/gotenv v1.2.0 // indirect
 	github.com/tencentcloud/tencentcloud-cls-sdk-go v1.0.2 // indirect
 	github.com/tinylib/msgp v1.1.6 // indirect
-	github.com/tx7do/kratos-authn v0.0.6 // indirect
 	github.com/zclconf/go-cty v1.8.0 // indirect
 	go.etcd.io/etcd/api/v3 v3.5.7 // indirect
 	go.etcd.io/etcd/client/pkg/v3 v3.5.7 // indirect

@@ -201,6 +201,35 @@ func (m *Server) validate(all bool) error {
 		}
 	}
 
+	if all {
+		switch v := interface{}(m.GetRabbitmq()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ServerValidationError{
+					field:  "Rabbitmq",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ServerValidationError{
+					field:  "Rabbitmq",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetRabbitmq()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ServerValidationError{
+				field:  "Rabbitmq",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
 	if len(errors) > 0 {
 		return ServerMultiError(errors)
 	}
@@ -876,3 +905,103 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = Server_KafkaValidationError{}
+
+// Validate checks the field values on Server_RabbitMQ with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *Server_RabbitMQ) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on Server_RabbitMQ with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// Server_RabbitMQMultiError, or nil if none found.
+func (m *Server_RabbitMQ) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *Server_RabbitMQ) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return Server_RabbitMQMultiError(errors)
+	}
+
+	return nil
+}
+
+// Server_RabbitMQMultiError is an error wrapping multiple validation errors
+// returned by Server_RabbitMQ.ValidateAll() if the designated constraints
+// aren't met.
+type Server_RabbitMQMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m Server_RabbitMQMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m Server_RabbitMQMultiError) AllErrors() []error { return m }
+
+// Server_RabbitMQValidationError is the validation error returned by
+// Server_RabbitMQ.Validate if the designated constraints aren't met.
+type Server_RabbitMQValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e Server_RabbitMQValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e Server_RabbitMQValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e Server_RabbitMQValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e Server_RabbitMQValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e Server_RabbitMQValidationError) ErrorName() string { return "Server_RabbitMQValidationError" }
+
+// Error satisfies the builtin error interface
+func (e Server_RabbitMQValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sServer_RabbitMQ.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = Server_RabbitMQValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = Server_RabbitMQValidationError{}

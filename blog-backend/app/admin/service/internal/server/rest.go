@@ -4,29 +4,26 @@ import (
 	"context"
 
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/go-kratos/kratos/v2/middleware"
 	"github.com/go-kratos/kratos/v2/middleware/logging"
-	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/middleware/selector"
-	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/http"
-	"github.com/gorilla/handlers"
 
-	"github.com/tx7do/kratos-authn/engine/jwt"
+	authnEngine "github.com/tx7do/kratos-authn/engine"
 	authn "github.com/tx7do/kratos-authn/middleware"
 
-	"github.com/tx7do/kratos-authz/engine/noop"
+	authzEngine "github.com/tx7do/kratos-authz/engine"
 	authz "github.com/tx7do/kratos-authz/middleware"
 
-	"kratos-blog/pkg/middleware/auth"
-
-	v1 "kratos-blog/gen/api/go/admin/service/v1"
-
 	"kratos-blog/app/admin/service/internal/service"
+	v1 "kratos-blog/gen/api/go/admin/service/v1"
 	"kratos-blog/gen/api/go/common/conf"
+	"kratos-blog/pkg/bootstrap"
+	"kratos-blog/pkg/middleware/auth"
 )
 
 // NewWhiteListMatcher 创建jwt白名单
-func NewWhiteListMatcher() selector.MatchFunc {
+func newRestWhiteListMatcher() selector.MatchFunc {
 	whiteList := make(map[string]bool)
 	whiteList[v1.OperationUserServiceRegister] = true
 	whiteList[v1.OperationUserServiceLogin] = true
@@ -39,25 +36,21 @@ func NewWhiteListMatcher() selector.MatchFunc {
 }
 
 // NewMiddleware 创建中间件
-func NewMiddleware(cfg *conf.Auth, logger log.Logger) http.ServerOption {
-	authenticator, _ := jwt.NewAuthenticator(cfg.ApiKey, "HS256")
-	authorizer := noop.State{}
-
-	return http.Middleware(
-		recovery.Recovery(),
-		tracing.Server(),
-		logging.Server(logger),
-		selector.Server(
-			authn.Server(authenticator),
-			auth.Server(),
-			authz.Server(authorizer),
-		).Match(NewWhiteListMatcher()).Build(),
-	)
+func newRestMiddleware(authenticator authnEngine.Authenticator, authorizer authzEngine.Engine, logger log.Logger) []middleware.Middleware {
+	var ms []middleware.Middleware
+	ms = append(ms, logging.Server(logger))
+	ms = append(ms, selector.Server(
+		authn.Server(authenticator),
+		auth.Server(),
+		authz.Server(authorizer),
+	).Match(newRestWhiteListMatcher()).Build())
+	return ms
 }
 
 // NewHTTPServer new an HTTP server.
 func NewHTTPServer(
 	cfg *conf.Bootstrap, logger log.Logger,
+	authenticator authnEngine.Authenticator, authorizer authzEngine.Engine,
 	userSvc *service.UserService,
 	postSvc *service.PostService,
 	linkSvc *service.LinkService,
@@ -66,24 +59,7 @@ func NewHTTPServer(
 	tagSvc *service.TagService,
 	attachmentSvc *service.AttachmentService,
 ) *http.Server {
-	var opts = []http.ServerOption{
-		NewMiddleware(cfg.Auth, logger),
-		http.Filter(handlers.CORS(
-			handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}),
-			handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"}),
-			handlers.AllowedOrigins([]string{"*"}),
-		)),
-	}
-	if cfg.Server.Rest.Network != "" {
-		opts = append(opts, http.Network(cfg.Server.Rest.Network))
-	}
-	if cfg.Server.Rest.Addr != "" {
-		opts = append(opts, http.Address(cfg.Server.Rest.Addr))
-	}
-	if cfg.Server.Rest.Timeout != nil {
-		opts = append(opts, http.Timeout(cfg.Server.Rest.Timeout.AsDuration()))
-	}
-	srv := http.NewServer(opts...)
+	srv := bootstrap.CreateRestServer(cfg, newRestMiddleware(authenticator, authorizer, logger)...)
 
 	v1.RegisterPostServiceHTTPServer(srv, postSvc)
 	v1.RegisterCategoryServiceHTTPServer(srv, cateSvc)

@@ -13,6 +13,9 @@ message Server {
     string network = 1; // 网络
     string addr = 2;  // 服务监听地址
     google.protobuf.Duration timeout = 3; // 超时时间
+    repeated string headers = 4;  //
+    repeated string methods = 5;  //
+    repeated string origins = 6;  //
   }
 
   // gPRC
@@ -40,9 +43,15 @@ message Server {
     repeated string addrs = 1;  // 对端网络地址
   }
 
+  // RabbitMQ
+  message RabbitMQ {
+    repeated string addrs = 1;  // 对端网络地址
+  }
+
   REST rest = 1;  // REST服务
   GRPC grpc = 2;  // gRPC服务
   Websocket websocket = 3;  // Websocket服务
   Mqtt mqtt = 4;  // MQTT服务
   Kafka kafka = 5;  // Kafka服务
+  RabbitMQ rabbitmq = 6;  // RabbitMQ服务
 }

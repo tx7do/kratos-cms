@@ -2,6 +2,7 @@ package server
 
 import (
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/go-kratos/kratos/v2/middleware/logging"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 
 	"kratos-blog/app/user/service/internal/service"
@@ -14,7 +15,7 @@ import (
 func NewGRPCServer(cfg *conf.Bootstrap, logger log.Logger,
 	userSvc *service.UserService,
 ) *grpc.Server {
-	srv := bootstrap.CreateGrpcServer(cfg, logger)
+	srv := bootstrap.CreateGrpcServer(cfg, logging.Server(logger))
 
 	v1.RegisterUserServiceServer(srv, userSvc)
 
