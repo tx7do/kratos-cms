@@ -21,5 +21,9 @@ go_library(
         "@com_github_go_redis_redis_extra_redisotel_v8//:redisotel",
         "@com_github_go_redis_redis_v8//:redis",
         "@com_github_google_wire//:wire",
+        "@com_github_tx7do_kratos_authn//engine",
+        "@com_github_tx7do_kratos_authn_engine_jwt//:jwt",
+        "@com_github_tx7do_kratos_authz//engine",
+        "@com_github_tx7do_kratos_authz//engine/noop",
     ],
 )
