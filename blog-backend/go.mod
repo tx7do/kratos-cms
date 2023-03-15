@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	entgo.io/contrib v0.3.5
-	entgo.io/ent v0.11.9
+	entgo.io/ent v0.11.10
 	github.com/go-chassis/sc-client v0.7.0
 	github.com/go-kratos/kratos/contrib/config/apollo/v2 v2.0.0-20230213033822-0a076443cba1
 	github.com/go-kratos/kratos/contrib/config/consul/v2 v2.0.0-20230201021226-239121155d0f
@@ -62,7 +62,7 @@ require (
 	golang.org/x/tools v0.6.1-0.20230222164832-25d2519c8696
 	google.golang.org/genproto v0.0.0-20230306155012-7f2fa6fef1f4
 	google.golang.org/grpc v1.53.0
-	google.golang.org/protobuf v1.29.0
+	google.golang.org/protobuf v1.29.1
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	gorm.io/driver/clickhouse v0.5.0
 	gorm.io/driver/mysql v1.4.4
@@ -74,7 +74,7 @@ require (
 )
 
 require (
-	ariga.io/atlas v0.9.1 // indirect
+	ariga.io/atlas v0.9.2-0.20230303073438-03a4779a6338 // indirect
 	github.com/ClickHouse/ch-go v0.53.0 // indirect
 	github.com/ClickHouse/clickhouse-go/v2 v2.6.3 // indirect
 	github.com/agext/levenshtein v1.2.1 // indirect
@@ -92,7 +92,7 @@ require (
 	github.com/coreos/go-semver v0.3.1 // indirect
 	github.com/coreos/go-systemd/v22 v22.5.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/deckarep/golang-set v1.7.1 // indirect
+	github.com/deckarep/golang-set v1.8.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/dlclark/regexp2 v1.8.0 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
@@ -101,13 +101,14 @@ require (
 	github.com/felixge/httpsnoop v1.0.1 // indirect
 	github.com/fluent/fluent-logger-golang v1.9.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
-	github.com/go-chassis/cari v0.6.0 // indirect
+	github.com/go-chassis/cari v0.9.0 // indirect
 	github.com/go-chassis/foundation v0.4.0 // indirect
 	github.com/go-chassis/openlog v1.1.3 // indirect
 	github.com/go-errors/errors v1.4.2 // indirect
 	github.com/go-faster/city v1.0.1 // indirect
 	github.com/go-faster/errors v0.6.1 // indirect
 	github.com/go-kit/kit v0.10.0 // indirect
+	github.com/go-kratos/aegis v0.1.4 // indirect
 	github.com/go-logfmt/logfmt v0.5.1 // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
