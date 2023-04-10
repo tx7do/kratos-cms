@@ -1,8 +1,0 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
-
-go_library(
-    name = "runtime",
-    srcs = ["runtime.go"],
-    importpath = "kratos-blog/app/comment/service/internal/data/ent/runtime",
-    visibility = ["//app/comment/service:__subpackages__"],
-)

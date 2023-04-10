@@ -1,9 +1,0 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
-
-go_library(
-    name = "hook",
-    srcs = ["hook.go"],
-    importpath = "kratos-blog/app/comment/service/internal/data/ent/hook",
-    visibility = ["//app/comment/service:__subpackages__"],
-    deps = ["//app/comment/service/internal/data/ent"],
-)

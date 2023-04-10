@@ -99,16 +99,16 @@ func (m *Attachment) validate(all bool) error {
 		// no validation rules for Type
 	}
 
-	if m.CreatedAt != nil {
-		// no validation rules for CreatedAt
+	if m.CreateTime != nil {
+		// no validation rules for CreateTime
 	}
 
-	if m.UpdatedAt != nil {
-		// no validation rules for UpdatedAt
+	if m.UpdateTime != nil {
+		// no validation rules for UpdateTime
 	}
 
-	if m.DeletedAt != nil {
-		// no validation rules for DeletedAt
+	if m.DeleteTime != nil {
+		// no validation rules for DeleteTime
 	}
 
 	if len(errors) > 0 {

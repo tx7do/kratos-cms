@@ -117,29 +117,29 @@ func NewAuthorizer() authzEngine.Engine {
 }
 
 func NewUserServiceClient(r registry.Discovery, c *conf.Bootstrap) userV1.UserServiceClient {
-	return userV1.NewUserServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.UserService, c.Server.Grpc.GetTimeout()))
+	return userV1.NewUserServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.CoreService, c.Server.Grpc.GetTimeout()))
 }
 
 func NewAttachmentServiceClient(r registry.Discovery, c *conf.Bootstrap) fileV1.AttachmentServiceClient {
-	return fileV1.NewAttachmentServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.FileService, c.Server.Grpc.GetTimeout()))
+	return fileV1.NewAttachmentServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.CoreService, c.Server.Grpc.GetTimeout()))
 }
 
 func NewCommentServiceClient(r registry.Discovery, c *conf.Bootstrap) commentV1.CommentServiceClient {
-	return commentV1.NewCommentServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.CommentService, c.Server.Grpc.GetTimeout()))
+	return commentV1.NewCommentServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.CoreService, c.Server.Grpc.GetTimeout()))
 }
 
 func NewCategoryServiceClient(r registry.Discovery, c *conf.Bootstrap) contentV1.CategoryServiceClient {
-	return contentV1.NewCategoryServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.ContentService, c.Server.Grpc.GetTimeout()))
+	return contentV1.NewCategoryServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.CoreService, c.Server.Grpc.GetTimeout()))
 }
 
 func NewLinkServiceClient(r registry.Discovery, c *conf.Bootstrap) contentV1.LinkServiceClient {
-	return contentV1.NewLinkServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.ContentService, c.Server.Grpc.GetTimeout()))
+	return contentV1.NewLinkServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.CoreService, c.Server.Grpc.GetTimeout()))
 }
 
 func NewPostServiceClient(r registry.Discovery, c *conf.Bootstrap) contentV1.PostServiceClient {
-	return contentV1.NewPostServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.ContentService, c.Server.Grpc.GetTimeout()))
+	return contentV1.NewPostServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.CoreService, c.Server.Grpc.GetTimeout()))
 }
 
 func NewTagServiceClient(r registry.Discovery, c *conf.Bootstrap) contentV1.TagServiceClient {
-	return contentV1.NewTagServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.ContentService, c.Server.Grpc.GetTimeout()))
+	return contentV1.NewTagServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.CoreService, c.Server.Grpc.GetTimeout()))
 }

@@ -38,11 +38,11 @@ message Attachment {
   optional string suffix = 7;
   optional int32 width = 8;
   optional int32 height = 9;
-  optional int64 size = 10;
+  optional uint64 size = 10;
   optional int32 type = 11;
-  optional string createdAt = 12;
-  optional string updatedAt = 13;
-  optional string deletedAt = 14;
+  optional string createTime = 12;
+  optional string updateTime = 13;
+  optional string deleteTime = 14;
 }
 
 // 附件列表 - 回应
