@@ -2,16 +2,38 @@
 
 一个Golang的博客系统/CMS。
 
-- 后端基于 golang微服务框架 [go-kratos](https://go-kratos.dev/)
+- 后端基于 [golang](https://go.dev/) + [go-kratos](https://go-kratos.dev/)
 - 前端基于 [VUE3](https://vuejs.org/) + [TypeScript](https://www.typescriptlang.org/)
 
 ## 项目结构
 
-| 子项目名 | 项目路径                                                                                     |
-|------|------------------------------------------------------------------------------------------|
-| 后端   | [/blog-backend](https://github.com/tx7do/kratos-blog/tree/main/blog-backend)             |
+| 子项目名 | 项目路径                                                                                   |
+|------|----------------------------------------------------------------------------------------|
+| 后端   | [/blog-backend](https://github.com/tx7do/kratos-blog/tree/main/blog-backend)           |
 | 管理前端 | [/blog-admin](https://github.com/tx7do/kratos-blog/tree/main/blog-frontend/blog-admin) |
-| 展现前端 | [/blog-view](https://github.com/tx7do/kratos-blog/tree/main/blog-frontend/blog-view)  |
+| 展现前端 | [/blog-view](https://github.com/tx7do/kratos-blog/tree/main/blog-frontend/blog-view)   |
+
+## 管理后台截图
+
+- 登陆界面
+
+![登陆界面](./blog-frontend/blog-admin/docs/kratos-blog-login.png)
+
+- 分析页面
+
+![分析页面](./blog-frontend/blog-admin/docs/kratos-blog-analysis.png)
+
+- 博文列表
+
+![博文列表](./blog-frontend/blog-admin/docs/kratos-blog-posts.png)
+
+- 写文章
+
+![写文章](./blog-frontend/blog-admin/docs/kratos-blog-write-post.png)
+
+- 评论列表
+
+![评论列表](./blog-frontend/blog-admin/docs/kratos-blog-comments.png)
 
 ## 博客基本功能设计要点
 
@@ -21,9 +43,15 @@
 
 文章需要具备：标题、Slug、创建时间、发布时间、修改时间、摘要和内容等要素，也会包含所属分类、标签、阅读量和点赞量等次要信息。
 
-Slug是博客的特色，它指的是一篇文章的URL。例如：文章：《Try the New Azure .NET SDK》，它的URL为 <https://edi.wang/post/2019/12/5/try-the-new-azure-net-sdk>，其中**try-the-new-azure-net-sdk**即为该文章的Slug。Slug讲究的是 **“人类可读”**，一般情况下均为博客标题对应的英文表达，用中划线分割英文单词，Slug也对博客的SEO起到了关键作用。如果你的博客文章用的是数据库ID、文章标题的HTML Encoding等做URL，请更换为Slug。特别是遇到中文文章，如果标题被URL Encoding了，那么对于SEO和链接分享，都是灾难。一个Slug一旦定下，尽量不要改动，虽然大部分博客系统都支持修改Slug，但是对于被搜索引擎收入的文章，改了Slug就会导致404。比较完备的博客系统（如WordPress）支持采用301重定向方式告诉搜索引擎原文地址已变化。
+Slug是博客的特色，它指的是一篇文章的URL。例如：文章：《Try the New Azure .NET
+SDK》，它的URL为 <https://edi.wang/post/2019/12/5/try-the-new-azure-net-sdk>，其中**try-the-new-azure-net-sdk**
+即为该文章的Slug。Slug讲究的是 **“人类可读”**
+，一般情况下均为博客标题对应的英文表达，用中划线分割英文单词，Slug也对博客的SEO起到了关键作用。如果你的博客文章用的是数据库ID、文章标题的HTML
+Encoding等做URL，请更换为Slug。特别是遇到中文文章，如果标题被URL
+Encoding了，那么对于SEO和链接分享，都是灾难。一个Slug一旦定下，尽量不要改动，虽然大部分博客系统都支持修改Slug，但是对于被搜索引擎收入的文章，改了Slug就会导致404。比较完备的博客系统（如WordPress）支持采用301重定向方式告诉搜索引擎原文地址已变化。
 
-摘要有两个作用，一是用于在列表视图中显示文章信息预览，二是用于SEO，放在description这个meta标签中，可以帮助搜索引擎精准定收入的内容。对于中文内容，需要注意是否输出的HTML源代码被Encoding过，ASP.NET Core默认的Encoding会对SEO造成灾难（我的博客系统因为面向英语用户，不考虑中文支持，所以并不解决这个问题）。摘要可以自动抓取文章前几百字，也可以像微信公众号那样要求用户手工填写。我的博客采用的是自动取文章前400字。结合SEO的关系，我的文章通常开头段落就是概要，这样可以让用户在搜索引擎预览页面就能看到准确内容，而不是页面上无关紧要的UI元素。
+摘要有两个作用，一是用于在列表视图中显示文章信息预览，二是用于SEO，放在description这个meta标签中，可以帮助搜索引擎精准定收入的内容。对于中文内容，需要注意是否输出的HTML源代码被Encoding过，ASP.NET
+Core默认的Encoding会对SEO造成灾难（我的博客系统因为面向英语用户，不考虑中文支持，所以并不解决这个问题）。摘要可以自动抓取文章前几百字，也可以像微信公众号那样要求用户手工填写。我的博客采用的是自动取文章前400字。结合SEO的关系，我的文章通常开头段落就是概要，这样可以让用户在搜索引擎预览页面就能看到准确内容，而不是页面上无关紧要的UI元素。
 
 文章的状态通常包括：草稿、发布、回收。用户仅能看到已发布的文章，管理员可在后台更改文章状态。
 
@@ -33,7 +61,8 @@ Slug是博客的特色，它指的是一篇文章的URL。例如：文章：《T
 
 ### 分类（Category）
 
-像建文件夹一样将文章根据内容进行区分，即为分类。文章分类后，可以帮助读者快速检索同种类的文章。分类的另一个功能就是产生 OPML 及 RSS/Atom 订阅源。
+像建文件夹一样将文章根据内容进行区分，即为分类。文章分类后，可以帮助读者快速检索同种类的文章。分类的另一个功能就是产生 OPML
+及 RSS/Atom 订阅源。
 
 分类需要一个标题、一个简介，以及一个路由名称。
 
@@ -61,7 +90,8 @@ Slug是博客的特色，它指的是一篇文章的URL。例如：文章：《T
 
 ### 版本控制（Version Control）
 
-更接近CMS的博客系统通常提供版本控制功能，允许用户回滚文章或页面的历史版本。设计版本控制的时候，不能只考虑往前回滚，得还能再滚得回来。通常，用户每次编辑一篇已经写好的文章，就会产生一个新版本，类似于git对于一个文件的commit。博客的版本控制也类似于代码版本控制，你可以选择保存一篇文章的完整内容作为历史版本，也可以选择每次只保存变化量信息（delta）。保存完整内容不容易后续花费大量时间精力 ，但是会占用较多存储空间。保存内容变化量节省数据库空间，但实现代码容易占用大量精力。
+更接近CMS的博客系统通常提供版本控制功能，允许用户回滚文章或页面的历史版本。设计版本控制的时候，不能只考虑往前回滚，得还能再滚得回来。通常，用户每次编辑一篇已经写好的文章，就会产生一个新版本，类似于git对于一个文件的commit。博客的版本控制也类似于代码版本控制，你可以选择保存一篇文章的完整内容作为历史版本，也可以选择每次只保存变化量信息（delta）。保存完整内容不容易后续花费大量时间精力
+，但是会占用较多存储空间。保存内容变化量节省数据库空间，但实现代码容易占用大量精力。
 
 ### 主题及个性化（Theme）
 
