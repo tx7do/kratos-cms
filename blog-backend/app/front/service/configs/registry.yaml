@@ -1,0 +1,7 @@
+registry:
+  type: "consul"
+
+  consul:
+    address: "localhost:8500"
+    scheme: "http"
+    health_check: false

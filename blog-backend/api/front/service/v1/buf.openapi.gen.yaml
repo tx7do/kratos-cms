@@ -1,0 +1,17 @@
+# 配置protoc生成规则
+version: v1
+managed:
+  enabled: false
+plugins:
+  # generate openapi v2 json doc
+#  - name: openapiv2
+#    out: ../docs
+#    opt:
+#      - json_names_for_fields=true
+#      - logtostderr=true
+  # generate openapi v2 yaml doc
+  - name: openapi
+    out: ../docs/front
+    opt:
+      - naming=json
+      - paths=source_relative

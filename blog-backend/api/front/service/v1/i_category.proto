@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package front.service.v1;
+option go_package = "kratos-blog/gen/api/go/front/service/v1;v1";
+
+import "gnostic/openapi/v3/annotations.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+import "common/pagination/pagination.proto";
+import "content/service/v1/category.proto";
+
+option (gnostic.openapi.v3.document) = {
+  info: {
+    title: "类别管理接口";
+    description: "类别管理";
+    version: "1.0";
+  }
+};
+
+// 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
+
+// 类别服务
+service CategoryService {
+  // 获取类别列表
+  rpc ListCategory (pagination.PagingRequest) returns (content.service.v1.ListCategoryResponse) {
+    option (google.api.http) = {
+      get: "/blog/v1/categories"
+    };
+  }
+
+  // 获取类别数据
+  rpc GetCategory (content.service.v1.GetCategoryRequest) returns (content.service.v1.Category) {
+    option (google.api.http) = {
+      get: "/blog/v1/categories/{id}"
+    };
+  }
+
+  // 创建类别
+  rpc CreateCategory (content.service.v1.CreateCategoryRequest) returns (content.service.v1.Category) {
+    option (google.api.http) = {
+      post: "/blog/v1/categories"
+      body: "*"
+    };
+  }
+
+  // 更新类别
+  rpc UpdateCategory (content.service.v1.UpdateCategoryRequest) returns (content.service.v1.Category) {
+    option (google.api.http) = {
+      put: "/blog/v1/categories/{id}"
+      body: "category"
+    };
+  }
+
+  // 删除类别
+  rpc DeleteCategory (content.service.v1.DeleteCategoryRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/blog/v1/categories/{id}"
+    };
+  }
+}
