@@ -45,20 +45,20 @@ pnpm build
 
 - 登陆界面
 
-![登陆界面](.\docs\kratos-blog-login.png)
+![登陆界面](./docs/kratos-blog-login.png)
 
 - 分析页面
 
-![分析页面](.\docs\kratos-blog-analysis.png)
+![分析页面](./docs/kratos-blog-analysis.png)
 
 - 博文列表
 
-![博文列表](.\docs\kratos-blog-posts.png)
+![博文列表](./docs/kratos-blog-posts.png)
 
 - 写文章
 
-![写文章](.\docs\kratos-blog-write-post.png)
+![写文章](./docs/kratos-blog-write-post.png)
 
 - 评论列表
 
-![评论列表](.\docs\kratos-blog-comments.png)
+![评论列表](./docs/kratos-blog-comments.png)
