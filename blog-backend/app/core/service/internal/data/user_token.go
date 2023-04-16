@@ -109,7 +109,7 @@ func (r *userTokenRepo) parseAccessJwtToken(claims jwtV4.Claims) (string, uint32
 	var userId uint32
 	strUserId, ok := mc[ClaimUserId]
 	if ok {
-		userId_, err := strconv.Atoi(strUserId.(string))
+		userId_, err := strconv.ParseUint(strUserId.(string), 10, 32)
 		if err != nil {
 			return "", 0, err
 		}
