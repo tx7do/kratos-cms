@@ -284,3 +284,17 @@ func IsUserNotExist(err error) bool {
 func ErrorUserNotExist(format string, args ...interface{}) *errors.Error {
 	return errors.New(106, AdminErrorReason_USER_NOT_EXIST.String(), fmt.Sprintf(format, args...))
 }
+
+// 400
+func IsBadRequest(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == AdminErrorReason_BAD_REQUEST.String() && e.Code == 400
+}
+
+// 400
+func ErrorBadRequest(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, AdminErrorReason_BAD_REQUEST.String(), fmt.Sprintf(format, args...))
+}

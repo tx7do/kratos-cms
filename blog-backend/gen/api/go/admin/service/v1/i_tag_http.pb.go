@@ -38,11 +38,11 @@ type TagServiceHTTPServer interface {
 
 func RegisterTagServiceHTTPServer(s *http.Server, srv TagServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/blog/v1/tags", _TagService_ListTag0_HTTP_Handler(srv))
-	r.GET("/blog/v1/tags/{id}", _TagService_GetTag0_HTTP_Handler(srv))
-	r.POST("/blog/v1/tags", _TagService_CreateTag0_HTTP_Handler(srv))
-	r.PUT("/blog/v1/tags/{id}", _TagService_UpdateTag0_HTTP_Handler(srv))
-	r.DELETE("/blog/v1/tags/{id}", _TagService_DeleteTag0_HTTP_Handler(srv))
+	r.GET("/admin/v1/tags", _TagService_ListTag0_HTTP_Handler(srv))
+	r.GET("/admin/v1/tags/{id}", _TagService_GetTag0_HTTP_Handler(srv))
+	r.POST("/admin/v1/tags", _TagService_CreateTag0_HTTP_Handler(srv))
+	r.PUT("/admin/v1/tags/{id}", _TagService_UpdateTag0_HTTP_Handler(srv))
+	r.DELETE("/admin/v1/tags/{id}", _TagService_DeleteTag0_HTTP_Handler(srv))
 }
 
 func _TagService_ListTag0_HTTP_Handler(srv TagServiceHTTPServer) func(ctx http.Context) error {
@@ -170,7 +170,7 @@ func NewTagServiceHTTPClient(client *http.Client) TagServiceHTTPClient {
 
 func (c *TagServiceHTTPClientImpl) CreateTag(ctx context.Context, in *v1.CreateTagRequest, opts ...http.CallOption) (*v1.Tag, error) {
 	var out v1.Tag
-	pattern := "/blog/v1/tags"
+	pattern := "/admin/v1/tags"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationTagServiceCreateTag))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -183,7 +183,7 @@ func (c *TagServiceHTTPClientImpl) CreateTag(ctx context.Context, in *v1.CreateT
 
 func (c *TagServiceHTTPClientImpl) DeleteTag(ctx context.Context, in *v1.DeleteTagRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
 	var out emptypb.Empty
-	pattern := "/blog/v1/tags/{id}"
+	pattern := "/admin/v1/tags/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationTagServiceDeleteTag))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -196,7 +196,7 @@ func (c *TagServiceHTTPClientImpl) DeleteTag(ctx context.Context, in *v1.DeleteT
 
 func (c *TagServiceHTTPClientImpl) GetTag(ctx context.Context, in *v1.GetTagRequest, opts ...http.CallOption) (*v1.Tag, error) {
 	var out v1.Tag
-	pattern := "/blog/v1/tags/{id}"
+	pattern := "/admin/v1/tags/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationTagServiceGetTag))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -209,7 +209,7 @@ func (c *TagServiceHTTPClientImpl) GetTag(ctx context.Context, in *v1.GetTagRequ
 
 func (c *TagServiceHTTPClientImpl) ListTag(ctx context.Context, in *pagination.PagingRequest, opts ...http.CallOption) (*v1.ListTagResponse, error) {
 	var out v1.ListTagResponse
-	pattern := "/blog/v1/tags"
+	pattern := "/admin/v1/tags"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationTagServiceListTag))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -222,7 +222,7 @@ func (c *TagServiceHTTPClientImpl) ListTag(ctx context.Context, in *pagination.P
 
 func (c *TagServiceHTTPClientImpl) UpdateTag(ctx context.Context, in *v1.UpdateTagRequest, opts ...http.CallOption) (*v1.Tag, error) {
 	var out v1.Tag
-	pattern := "/blog/v1/tags/{id}"
+	pattern := "/admin/v1/tags/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationTagServiceUpdateTag))
 	opts = append(opts, http.PathTemplate(pattern))

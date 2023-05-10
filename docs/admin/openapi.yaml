@@ -7,7 +7,7 @@ info:
     description: 用户管理
     version: "1.0"
 paths:
-    /blog/v1/attachments:
+    /admin/v1/attachments:
         get:
             tags:
                 - AttachmentService
@@ -68,7 +68,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /blog/v1/attachments/{id}:
+    /admin/v1/attachments/{id}:
         get:
             tags:
                 - AttachmentService
@@ -157,7 +157,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /blog/v1/categories:
+    /admin/v1/categories:
         get:
             tags:
                 - CategoryService
@@ -218,7 +218,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /blog/v1/categories/{id}:
+    /admin/v1/categories/{id}:
         get:
             tags:
                 - CategoryService
@@ -312,7 +312,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /blog/v1/comments:
+    /admin/v1/comments:
         get:
             tags:
                 - CommentService
@@ -373,7 +373,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /blog/v1/comments/{id}:
+    /admin/v1/comments/{id}:
         get:
             tags:
                 - CommentService
@@ -462,7 +462,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /blog/v1/links:
+    /admin/v1/links:
         get:
             tags:
                 - LinkService
@@ -523,7 +523,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /blog/v1/links/{id}:
+    /admin/v1/links/{id}:
         get:
             tags:
                 - LinkService
@@ -612,12 +612,12 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /blog/v1/login:
+    /admin/v1/login:
         post:
             tags:
-                - UserService
-            description: 登陆
-            operationId: UserService_Login
+                - AuthenticationService
+            description: 后台登陆
+            operationId: AuthenticationService_Login
             requestBody:
                 content:
                     application/json:
@@ -637,12 +637,12 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /blog/v1/logout:
+    /admin/v1/logout:
         post:
             tags:
-                - UserService
-            description: 登出
-            operationId: UserService_Logout
+                - AuthenticationService
+            description: 后台登出
+            operationId: AuthenticationService_Logout
             requestBody:
                 content:
                     application/json:
@@ -659,12 +659,12 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /blog/v1/me:
+    /admin/v1/me:
         get:
             tags:
-                - UserService
-            description: 获取已经登陆的用户的数据
-            operationId: UserService_GetMe
+                - AuthenticationService
+            description: 后台获取已经登陆的用户的数据
+            operationId: AuthenticationService_GetMe
             parameters:
                 - name: id
                   in: query
@@ -684,7 +684,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /blog/v1/menus:
+    /admin/v1/menus:
         get:
             tags:
                 - MenuService
@@ -745,7 +745,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /blog/v1/menus/{id}:
+    /admin/v1/menus/{id}:
         get:
             tags:
                 - MenuService
@@ -834,7 +834,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /blog/v1/photos:
+    /admin/v1/photos:
         get:
             tags:
                 - PhotoService
@@ -895,7 +895,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /blog/v1/photos/{id}:
+    /admin/v1/photos/{id}:
         get:
             tags:
                 - PhotoService
@@ -984,7 +984,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /blog/v1/posts:
+    /admin/v1/posts:
         get:
             tags:
                 - PostService
@@ -1045,7 +1045,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /blog/v1/posts/{id}:
+    /admin/v1/posts/{id}:
         get:
             tags:
                 - PostService
@@ -1134,32 +1134,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /blog/v1/register:
-        post:
-            tags:
-                - UserService
-            description: 注册
-            operationId: UserService_Register
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/RegisterRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/RegisterResponse'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-    /blog/v1/system:
+    /admin/v1/system:
         get:
             tags:
                 - SystemService
@@ -1220,7 +1195,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /blog/v1/system/{id}:
+    /admin/v1/system/{id}:
         get:
             tags:
                 - SystemService
@@ -1309,7 +1284,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /blog/v1/tags:
+    /admin/v1/tags:
         get:
             tags:
                 - TagService
@@ -1370,7 +1345,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /blog/v1/tags/{id}:
+    /admin/v1/tags/{id}:
         get:
             tags:
                 - TagService
@@ -1459,6 +1434,162 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /admin/v1/users:
+        get:
+            tags:
+                - UserService
+            description: 获取用户列表
+            operationId: UserService_ListUser
+            parameters:
+                - name: page
+                  in: query
+                  description: 当前页
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  description: 每一页的行数
+                  schema:
+                    type: integer
+                    format: int32
+                - name: nopaging
+                  in: query
+                  description: 是否不分页
+                  schema:
+                    type: boolean
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListUserResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        post:
+            tags:
+                - UserService
+            description: 创建用户
+            operationId: UserService_CreateUser
+            parameters:
+                - name: operatorId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/User'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /admin/v1/users/{id}:
+        get:
+            tags:
+                - UserService
+            description: 获取用户数据
+            operationId: UserService_GetUser
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        put:
+            tags:
+                - UserService
+            description: 更新用户
+            operationId: UserService_UpdateUser
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: operatorId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/User'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        delete:
+            tags:
+                - UserService
+            description: 删除用户
+            operationId: UserService_DeleteUser
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: uint32
+                - name: operatorId
+                  in: query
+                  schema:
+                    type: integer
+                    format: uint32
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
 components:
     schemas:
         Any:
@@ -1501,15 +1632,15 @@ components:
                     format: int32
                 size:
                     type: integer
-                    format: int64
+                    format: uint64
                 type:
                     type: integer
                     format: int32
-                createdAt:
+                createTime:
                     type: string
-                updatedAt:
+                updateTime:
                     type: string
-                deletedAt:
+                deleteTime:
                     type: string
             description: 附件
         Category:
@@ -1808,6 +1939,17 @@ components:
                     type: integer
                     format: int32
             description: 回应 - 标签列表
+        ListUserResponse:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/User'
+                total:
+                    type: integer
+                    format: int32
+            description: 获取用户列表 - 答复
         LoginRequest:
             type: object
             properties:
@@ -1815,7 +1957,7 @@ components:
                     type: string
                 password:
                     type: string
-            description: 请求 - 登录
+            description: 用户后台登陆 - 请求
         LoginResponse:
             type: object
             properties:
@@ -1828,14 +1970,14 @@ components:
                     type: string
                 refreshToken:
                     type: string
-            description: 回应 - 登录
+            description: 用户后台登陆 - 回应
         LogoutRequest:
             type: object
             properties:
                 id:
                     type: integer
                     format: uint32
-            description: 请求 - 登出
+            description: 用户后台登出 - 请求
         Menu:
             type: object
             properties:
@@ -1967,23 +2109,6 @@ components:
                 editTime:
                     type: string
             description: 帖子
-        RegisterRequest:
-            type: object
-            properties:
-                user:
-                    $ref: '#/components/schemas/User'
-            description: 请求 - 注册
-        RegisterResponse:
-            type: object
-            properties:
-                id:
-                    type: integer
-                    format: uint32
-                userName:
-                    type: string
-                token:
-                    type: string
-            description: 回应 - 注册
         Server:
             type: object
             properties:
@@ -2097,10 +2222,28 @@ components:
                     type: string
                     default: ON
                     description: 用户状态
+                roleId:
+                    type: integer
+                    description: 角色ID
+                    format: uint32
+                creatorId:
+                    type: integer
+                    description: 创建者ID
+                    format: uint32
+                authority:
+                    enum:
+                        - SYS_ADMIN
+                        - CUSTOMER_USER
+                        - GUEST_USER
+                    type: string
+                    default: CUSTOMER_USER
+                    description: 权限
             description: 用户
 tags:
     - name: AttachmentService
       description: 附件服务
+    - name: AuthenticationService
+      description: 用户后台登陆认证服务
     - name: CategoryService
       description: 类别服务
     - name: CommentService
@@ -2118,4 +2261,4 @@ tags:
     - name: TagService
       description: 标签服务
     - name: UserService
-      description: 用户服务
+      description: 用户管理服务

@@ -38,11 +38,11 @@ type MenuServiceHTTPServer interface {
 
 func RegisterMenuServiceHTTPServer(s *http.Server, srv MenuServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/blog/v1/menus", _MenuService_ListMenu0_HTTP_Handler(srv))
-	r.GET("/blog/v1/menus/{id}", _MenuService_GetMenu0_HTTP_Handler(srv))
-	r.POST("/blog/v1/menus", _MenuService_CreateMenu0_HTTP_Handler(srv))
-	r.PUT("/blog/v1/menus/{id}", _MenuService_UpdateMenu0_HTTP_Handler(srv))
-	r.DELETE("/blog/v1/menus/{id}", _MenuService_DeleteMenu0_HTTP_Handler(srv))
+	r.GET("/admin/v1/menus", _MenuService_ListMenu0_HTTP_Handler(srv))
+	r.GET("/admin/v1/menus/{id}", _MenuService_GetMenu0_HTTP_Handler(srv))
+	r.POST("/admin/v1/menus", _MenuService_CreateMenu0_HTTP_Handler(srv))
+	r.PUT("/admin/v1/menus/{id}", _MenuService_UpdateMenu0_HTTP_Handler(srv))
+	r.DELETE("/admin/v1/menus/{id}", _MenuService_DeleteMenu0_HTTP_Handler(srv))
 }
 
 func _MenuService_ListMenu0_HTTP_Handler(srv MenuServiceHTTPServer) func(ctx http.Context) error {
@@ -170,7 +170,7 @@ func NewMenuServiceHTTPClient(client *http.Client) MenuServiceHTTPClient {
 
 func (c *MenuServiceHTTPClientImpl) CreateMenu(ctx context.Context, in *v1.CreateMenuRequest, opts ...http.CallOption) (*v1.Menu, error) {
 	var out v1.Menu
-	pattern := "/blog/v1/menus"
+	pattern := "/admin/v1/menus"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationMenuServiceCreateMenu))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -183,7 +183,7 @@ func (c *MenuServiceHTTPClientImpl) CreateMenu(ctx context.Context, in *v1.Creat
 
 func (c *MenuServiceHTTPClientImpl) DeleteMenu(ctx context.Context, in *v1.DeleteMenuRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
 	var out emptypb.Empty
-	pattern := "/blog/v1/menus/{id}"
+	pattern := "/admin/v1/menus/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationMenuServiceDeleteMenu))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -196,7 +196,7 @@ func (c *MenuServiceHTTPClientImpl) DeleteMenu(ctx context.Context, in *v1.Delet
 
 func (c *MenuServiceHTTPClientImpl) GetMenu(ctx context.Context, in *v1.GetMenuRequest, opts ...http.CallOption) (*v1.Menu, error) {
 	var out v1.Menu
-	pattern := "/blog/v1/menus/{id}"
+	pattern := "/admin/v1/menus/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationMenuServiceGetMenu))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -209,7 +209,7 @@ func (c *MenuServiceHTTPClientImpl) GetMenu(ctx context.Context, in *v1.GetMenuR
 
 func (c *MenuServiceHTTPClientImpl) ListMenu(ctx context.Context, in *pagination.PagingRequest, opts ...http.CallOption) (*v1.ListMenuResponse, error) {
 	var out v1.ListMenuResponse
-	pattern := "/blog/v1/menus"
+	pattern := "/admin/v1/menus"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationMenuServiceListMenu))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -222,7 +222,7 @@ func (c *MenuServiceHTTPClientImpl) ListMenu(ctx context.Context, in *pagination
 
 func (c *MenuServiceHTTPClientImpl) UpdateMenu(ctx context.Context, in *v1.UpdateMenuRequest, opts ...http.CallOption) (*v1.Menu, error) {
 	var out v1.Menu
-	pattern := "/blog/v1/menus/{id}"
+	pattern := "/admin/v1/menus/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationMenuServiceUpdateMenu))
 	opts = append(opts, http.PathTemplate(pattern))

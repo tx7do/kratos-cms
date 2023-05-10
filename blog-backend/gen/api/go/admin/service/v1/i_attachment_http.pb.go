@@ -38,11 +38,11 @@ type AttachmentServiceHTTPServer interface {
 
 func RegisterAttachmentServiceHTTPServer(s *http.Server, srv AttachmentServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/blog/v1/attachments", _AttachmentService_ListAttachment0_HTTP_Handler(srv))
-	r.GET("/blog/v1/attachments/{id}", _AttachmentService_GetAttachment0_HTTP_Handler(srv))
-	r.POST("/blog/v1/attachments", _AttachmentService_CreateAttachment0_HTTP_Handler(srv))
-	r.PUT("/blog/v1/attachments/{id}", _AttachmentService_UpdateAttachment0_HTTP_Handler(srv))
-	r.DELETE("/blog/v1/attachments/{id}", _AttachmentService_DeleteAttachment0_HTTP_Handler(srv))
+	r.GET("/admin/v1/attachments", _AttachmentService_ListAttachment0_HTTP_Handler(srv))
+	r.GET("/admin/v1/attachments/{id}", _AttachmentService_GetAttachment0_HTTP_Handler(srv))
+	r.POST("/admin/v1/attachments", _AttachmentService_CreateAttachment0_HTTP_Handler(srv))
+	r.PUT("/admin/v1/attachments/{id}", _AttachmentService_UpdateAttachment0_HTTP_Handler(srv))
+	r.DELETE("/admin/v1/attachments/{id}", _AttachmentService_DeleteAttachment0_HTTP_Handler(srv))
 }
 
 func _AttachmentService_ListAttachment0_HTTP_Handler(srv AttachmentServiceHTTPServer) func(ctx http.Context) error {
@@ -170,7 +170,7 @@ func NewAttachmentServiceHTTPClient(client *http.Client) AttachmentServiceHTTPCl
 
 func (c *AttachmentServiceHTTPClientImpl) CreateAttachment(ctx context.Context, in *v1.CreateAttachmentRequest, opts ...http.CallOption) (*v1.Attachment, error) {
 	var out v1.Attachment
-	pattern := "/blog/v1/attachments"
+	pattern := "/admin/v1/attachments"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationAttachmentServiceCreateAttachment))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -183,7 +183,7 @@ func (c *AttachmentServiceHTTPClientImpl) CreateAttachment(ctx context.Context, 
 
 func (c *AttachmentServiceHTTPClientImpl) DeleteAttachment(ctx context.Context, in *v1.DeleteAttachmentRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
 	var out emptypb.Empty
-	pattern := "/blog/v1/attachments/{id}"
+	pattern := "/admin/v1/attachments/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationAttachmentServiceDeleteAttachment))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -196,7 +196,7 @@ func (c *AttachmentServiceHTTPClientImpl) DeleteAttachment(ctx context.Context, 
 
 func (c *AttachmentServiceHTTPClientImpl) GetAttachment(ctx context.Context, in *v1.GetAttachmentRequest, opts ...http.CallOption) (*v1.Attachment, error) {
 	var out v1.Attachment
-	pattern := "/blog/v1/attachments/{id}"
+	pattern := "/admin/v1/attachments/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationAttachmentServiceGetAttachment))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -209,7 +209,7 @@ func (c *AttachmentServiceHTTPClientImpl) GetAttachment(ctx context.Context, in 
 
 func (c *AttachmentServiceHTTPClientImpl) ListAttachment(ctx context.Context, in *pagination.PagingRequest, opts ...http.CallOption) (*v1.ListAttachmentResponse, error) {
 	var out v1.ListAttachmentResponse
-	pattern := "/blog/v1/attachments"
+	pattern := "/admin/v1/attachments"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationAttachmentServiceListAttachment))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -222,7 +222,7 @@ func (c *AttachmentServiceHTTPClientImpl) ListAttachment(ctx context.Context, in
 
 func (c *AttachmentServiceHTTPClientImpl) UpdateAttachment(ctx context.Context, in *v1.UpdateAttachmentRequest, opts ...http.CallOption) (*v1.Attachment, error) {
 	var out v1.Attachment
-	pattern := "/blog/v1/attachments/{id}"
+	pattern := "/admin/v1/attachments/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationAttachmentServiceUpdateAttachment))
 	opts = append(opts, http.PathTemplate(pattern))

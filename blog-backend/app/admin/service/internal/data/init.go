@@ -12,6 +12,8 @@ var ProviderSet = wire.NewSet(
 	NewAuthenticator,
 	NewAuthorizer,
 
+	NewUserTokenRepo,
+
 	NewUserServiceClient,
 	NewAttachmentServiceClient,
 	NewCommentServiceClient,

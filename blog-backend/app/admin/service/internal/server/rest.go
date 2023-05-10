@@ -25,8 +25,7 @@ import (
 // NewWhiteListMatcher 创建jwt白名单
 func newRestWhiteListMatcher() selector.MatchFunc {
 	whiteList := make(map[string]bool)
-	whiteList[v1.OperationUserServiceRegister] = true
-	whiteList[v1.OperationUserServiceLogin] = true
+	whiteList[v1.OperationAuthenticationServiceLogin] = true
 	return func(ctx context.Context, operation string) bool {
 		if _, ok := whiteList[operation]; ok {
 			return false
@@ -51,6 +50,7 @@ func newRestMiddleware(authenticator authnEngine.Authenticator, authorizer authz
 func NewHTTPServer(
 	cfg *conf.Bootstrap, logger log.Logger,
 	authenticator authnEngine.Authenticator, authorizer authzEngine.Engine,
+	authnSvc *service.AuthenticationService,
 	userSvc *service.UserService,
 	postSvc *service.PostService,
 	linkSvc *service.LinkService,
@@ -61,6 +61,7 @@ func NewHTTPServer(
 ) *http.Server {
 	srv := bootstrap.CreateRestServer(cfg, newRestMiddleware(authenticator, authorizer, logger)...)
 
+	v1.RegisterAuthenticationServiceHTTPServer(srv, authnSvc)
 	v1.RegisterPostServiceHTTPServer(srv, postSvc)
 	v1.RegisterCategoryServiceHTTPServer(srv, cateSvc)
 	v1.RegisterTagServiceHTTPServer(srv, tagSvc)

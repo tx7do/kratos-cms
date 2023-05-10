@@ -41,6 +41,7 @@
 
     ```bash
     buf generate --path api/admin/service/v1 --template api/admin/service/v1/buf.openapi.gen.yaml
+    buf generate --path api/front/service/v1 --template api/front/service/v1/buf.openapi.gen.yaml
     ```
 
 ## Make构建

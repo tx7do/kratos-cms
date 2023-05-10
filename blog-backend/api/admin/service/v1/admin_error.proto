@@ -30,4 +30,6 @@ enum AdminErrorReason {
     INVALID_TOKEN = 17 [(errors.code) = 104];// token无效
     TOKEN_NOT_EXIST = 18 [(errors.code) = 105];// token不存在
     USER_NOT_EXIST = 19 [(errors.code) = 106];// 用户不存在
+
+    BAD_REQUEST = 20 [(errors.code) = 400];// 400
 }

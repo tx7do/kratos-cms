@@ -12,13 +12,15 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/registry"
 
+	"kratos-blog/app/admin/service/internal/biz"
 	"kratos-blog/app/admin/service/internal/data"
 	"kratos-blog/app/admin/service/internal/server"
 	"kratos-blog/app/admin/service/internal/service"
+
 	"kratos-blog/gen/api/go/common/conf"
 )
 
 // initApp init kratos application.
 func initApp(log.Logger, registry.Registrar, *conf.Bootstrap) (*kratos.App, func(), error) {
-	panic(wire.Build(server.ProviderSet, data.ProviderSet, service.ProviderSet, newApp))
+	panic(wire.Build(server.ProviderSet, service.ProviderSet, data.ProviderSet, biz.ProviderSet, newApp))
 }

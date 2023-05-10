@@ -38,11 +38,11 @@ type CategoryServiceHTTPServer interface {
 
 func RegisterCategoryServiceHTTPServer(s *http.Server, srv CategoryServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/blog/v1/categories", _CategoryService_ListCategory0_HTTP_Handler(srv))
-	r.GET("/blog/v1/categories/{id}", _CategoryService_GetCategory0_HTTP_Handler(srv))
-	r.POST("/blog/v1/categories", _CategoryService_CreateCategory0_HTTP_Handler(srv))
-	r.PUT("/blog/v1/categories/{id}", _CategoryService_UpdateCategory0_HTTP_Handler(srv))
-	r.DELETE("/blog/v1/categories/{id}", _CategoryService_DeleteCategory0_HTTP_Handler(srv))
+	r.GET("/admin/v1/categories", _CategoryService_ListCategory0_HTTP_Handler(srv))
+	r.GET("/admin/v1/categories/{id}", _CategoryService_GetCategory0_HTTP_Handler(srv))
+	r.POST("/admin/v1/categories", _CategoryService_CreateCategory0_HTTP_Handler(srv))
+	r.PUT("/admin/v1/categories/{id}", _CategoryService_UpdateCategory0_HTTP_Handler(srv))
+	r.DELETE("/admin/v1/categories/{id}", _CategoryService_DeleteCategory0_HTTP_Handler(srv))
 }
 
 func _CategoryService_ListCategory0_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
@@ -170,7 +170,7 @@ func NewCategoryServiceHTTPClient(client *http.Client) CategoryServiceHTTPClient
 
 func (c *CategoryServiceHTTPClientImpl) CreateCategory(ctx context.Context, in *v1.CreateCategoryRequest, opts ...http.CallOption) (*v1.Category, error) {
 	var out v1.Category
-	pattern := "/blog/v1/categories"
+	pattern := "/admin/v1/categories"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationCategoryServiceCreateCategory))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -183,7 +183,7 @@ func (c *CategoryServiceHTTPClientImpl) CreateCategory(ctx context.Context, in *
 
 func (c *CategoryServiceHTTPClientImpl) DeleteCategory(ctx context.Context, in *v1.DeleteCategoryRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
 	var out emptypb.Empty
-	pattern := "/blog/v1/categories/{id}"
+	pattern := "/admin/v1/categories/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationCategoryServiceDeleteCategory))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -196,7 +196,7 @@ func (c *CategoryServiceHTTPClientImpl) DeleteCategory(ctx context.Context, in *
 
 func (c *CategoryServiceHTTPClientImpl) GetCategory(ctx context.Context, in *v1.GetCategoryRequest, opts ...http.CallOption) (*v1.Category, error) {
 	var out v1.Category
-	pattern := "/blog/v1/categories/{id}"
+	pattern := "/admin/v1/categories/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationCategoryServiceGetCategory))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -209,7 +209,7 @@ func (c *CategoryServiceHTTPClientImpl) GetCategory(ctx context.Context, in *v1.
 
 func (c *CategoryServiceHTTPClientImpl) ListCategory(ctx context.Context, in *pagination.PagingRequest, opts ...http.CallOption) (*v1.ListCategoryResponse, error) {
 	var out v1.ListCategoryResponse
-	pattern := "/blog/v1/categories"
+	pattern := "/admin/v1/categories"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationCategoryServiceListCategory))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -222,7 +222,7 @@ func (c *CategoryServiceHTTPClientImpl) ListCategory(ctx context.Context, in *pa
 
 func (c *CategoryServiceHTTPClientImpl) UpdateCategory(ctx context.Context, in *v1.UpdateCategoryRequest, opts ...http.CallOption) (*v1.Category, error) {
 	var out v1.Category
-	pattern := "/blog/v1/categories/{id}"
+	pattern := "/admin/v1/categories/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationCategoryServiceUpdateCategory))
 	opts = append(opts, http.PathTemplate(pattern))

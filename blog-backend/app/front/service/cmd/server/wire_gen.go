@@ -10,6 +10,7 @@ import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/registry"
+	"kratos-blog/app/front/service/internal/biz"
 	"kratos-blog/app/front/service/internal/data"
 	"kratos-blog/app/front/service/internal/server"
 	"kratos-blog/app/front/service/internal/service"
@@ -23,20 +24,30 @@ func initApp(logger log.Logger, registrar registry.Registrar, bootstrap *conf.Bo
 	authenticator := data.NewAuthenticator(bootstrap)
 	engine := data.NewAuthorizer()
 	discovery := data.NewDiscovery(bootstrap)
-	postServiceClient := data.NewPostServiceClient(discovery, bootstrap)
-	postService := service.NewPostService(logger, postServiceClient)
-	linkServiceClient := data.NewLinkServiceClient(discovery, bootstrap)
-	linkService := service.NewLinkService(logger, linkServiceClient)
-	categoryServiceClient := data.NewCategoryServiceClient(discovery, bootstrap)
-	categoryService := service.NewCategoryService(logger, categoryServiceClient)
-	commentServiceClient := data.NewCommentServiceClient(discovery, bootstrap)
-	commentService := service.NewCommentService(logger, commentServiceClient)
-	tagServiceClient := data.NewTagServiceClient(discovery, bootstrap)
-	tagService := service.NewTagService(logger, tagServiceClient)
+	userServiceClient := data.NewUserServiceClient(discovery, bootstrap)
+	client := data.NewRedisClient(bootstrap, logger)
 	attachmentServiceClient := data.NewAttachmentServiceClient(discovery, bootstrap)
+	commentServiceClient := data.NewCommentServiceClient(discovery, bootstrap)
+	categoryServiceClient := data.NewCategoryServiceClient(discovery, bootstrap)
+	linkServiceClient := data.NewLinkServiceClient(discovery, bootstrap)
+	postServiceClient := data.NewPostServiceClient(discovery, bootstrap)
+	tagServiceClient := data.NewTagServiceClient(discovery, bootstrap)
+	dataData, cleanup, err := data.NewData(client, authenticator, engine, userServiceClient, attachmentServiceClient, commentServiceClient, categoryServiceClient, linkServiceClient, postServiceClient, tagServiceClient, logger)
+	if err != nil {
+		return nil, nil, err
+	}
+	userTokenRepo := data.NewUserTokenRepo(dataData, authenticator, logger)
+	userTokenUseCase := biz.NewUserAuthUseCase(userTokenRepo)
+	authenticationService := service.NewAuthenticationService(logger, userServiceClient, userTokenUseCase)
+	postService := service.NewPostService(logger, postServiceClient)
+	linkService := service.NewLinkService(logger, linkServiceClient)
+	categoryService := service.NewCategoryService(logger, categoryServiceClient)
+	commentService := service.NewCommentService(logger, commentServiceClient)
+	tagService := service.NewTagService(logger, tagServiceClient)
 	attachmentService := service.NewAttachmentService(logger, attachmentServiceClient)
-	httpServer := server.NewHTTPServer(bootstrap, logger, authenticator, engine, postService, linkService, categoryService, commentService, tagService, attachmentService)
+	httpServer := server.NewHTTPServer(bootstrap, logger, authenticator, engine, authenticationService, postService, linkService, categoryService, commentService, tagService, attachmentService)
 	app := newApp(logger, registrar, httpServer)
 	return app, func() {
+		cleanup()
 	}, nil
 }

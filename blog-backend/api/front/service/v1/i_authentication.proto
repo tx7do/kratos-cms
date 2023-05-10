@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package front.service.v1;
+option go_package = "kratos-blog/gen/api/go/front/service/v1;v1";
+
+import "gnostic/openapi/v3/annotations.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+import "user/service/v1/user.proto";
+
+option (gnostic.openapi.v3.document) = {
+  info: {
+    title: "用户APP登陆认证接口";
+    description: "用户APP登陆认证";
+    version: "1.0";
+  }
+};
+
+// 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
+
+// 用户APP登陆认证服务
+service AuthenticationService {
+  // APP登陆
+  rpc Login (LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/blog/v1/login"
+      body: "*"
+    };
+  }
+
+  // APP登出
+  rpc Logout (LogoutRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/blog/v1/logout"
+      body: "*"
+    };
+  }
+
+  // APP获取已经登陆的用户的数据
+  rpc GetMe (GetMeRequest) returns (user.service.v1.User) {
+    option (google.api.http) = {
+      get: "/blog/v1/me"
+    };
+  }
+}
+
+// 用户APP登陆 - 请求
+message LoginRequest {
+  optional string userName = 1;
+  optional string password = 2;
+}
+// 用户APP登陆 - 回应
+message LoginResponse {
+  uint32 id = 1;
+  string userName = 2;
+  string token = 3;
+  string refreshToken = 4;
+}
+
+// 用户APP登出 - 请求
+message LogoutRequest {
+  uint32 id = 1;
+}
+
+// 获取当前用户信息 - 请求
+message GetMeRequest {
+  uint32 id = 1;
+}

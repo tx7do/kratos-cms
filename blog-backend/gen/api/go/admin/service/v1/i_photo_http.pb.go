@@ -38,11 +38,11 @@ type PhotoServiceHTTPServer interface {
 
 func RegisterPhotoServiceHTTPServer(s *http.Server, srv PhotoServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/blog/v1/photos", _PhotoService_ListPhoto0_HTTP_Handler(srv))
-	r.GET("/blog/v1/photos/{id}", _PhotoService_GetPhoto0_HTTP_Handler(srv))
-	r.POST("/blog/v1/photos", _PhotoService_CreatePhoto0_HTTP_Handler(srv))
-	r.PUT("/blog/v1/photos/{id}", _PhotoService_UpdatePhoto0_HTTP_Handler(srv))
-	r.DELETE("/blog/v1/photos/{id}", _PhotoService_DeletePhoto0_HTTP_Handler(srv))
+	r.GET("/admin/v1/photos", _PhotoService_ListPhoto0_HTTP_Handler(srv))
+	r.GET("/admin/v1/photos/{id}", _PhotoService_GetPhoto0_HTTP_Handler(srv))
+	r.POST("/admin/v1/photos", _PhotoService_CreatePhoto0_HTTP_Handler(srv))
+	r.PUT("/admin/v1/photos/{id}", _PhotoService_UpdatePhoto0_HTTP_Handler(srv))
+	r.DELETE("/admin/v1/photos/{id}", _PhotoService_DeletePhoto0_HTTP_Handler(srv))
 }
 
 func _PhotoService_ListPhoto0_HTTP_Handler(srv PhotoServiceHTTPServer) func(ctx http.Context) error {
@@ -170,7 +170,7 @@ func NewPhotoServiceHTTPClient(client *http.Client) PhotoServiceHTTPClient {
 
 func (c *PhotoServiceHTTPClientImpl) CreatePhoto(ctx context.Context, in *v1.CreatePhotoRequest, opts ...http.CallOption) (*v1.Photo, error) {
 	var out v1.Photo
-	pattern := "/blog/v1/photos"
+	pattern := "/admin/v1/photos"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationPhotoServiceCreatePhoto))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -183,7 +183,7 @@ func (c *PhotoServiceHTTPClientImpl) CreatePhoto(ctx context.Context, in *v1.Cre
 
 func (c *PhotoServiceHTTPClientImpl) DeletePhoto(ctx context.Context, in *v1.DeletePhotoRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
 	var out emptypb.Empty
-	pattern := "/blog/v1/photos/{id}"
+	pattern := "/admin/v1/photos/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationPhotoServiceDeletePhoto))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -196,7 +196,7 @@ func (c *PhotoServiceHTTPClientImpl) DeletePhoto(ctx context.Context, in *v1.Del
 
 func (c *PhotoServiceHTTPClientImpl) GetPhoto(ctx context.Context, in *v1.GetPhotoRequest, opts ...http.CallOption) (*v1.Photo, error) {
 	var out v1.Photo
-	pattern := "/blog/v1/photos/{id}"
+	pattern := "/admin/v1/photos/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationPhotoServiceGetPhoto))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -209,7 +209,7 @@ func (c *PhotoServiceHTTPClientImpl) GetPhoto(ctx context.Context, in *v1.GetPho
 
 func (c *PhotoServiceHTTPClientImpl) ListPhoto(ctx context.Context, in *pagination.PagingRequest, opts ...http.CallOption) (*v1.ListPhotoResponse, error) {
 	var out v1.ListPhotoResponse
-	pattern := "/blog/v1/photos"
+	pattern := "/admin/v1/photos"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationPhotoServiceListPhoto))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -222,7 +222,7 @@ func (c *PhotoServiceHTTPClientImpl) ListPhoto(ctx context.Context, in *paginati
 
 func (c *PhotoServiceHTTPClientImpl) UpdatePhoto(ctx context.Context, in *v1.UpdatePhotoRequest, opts ...http.CallOption) (*v1.Photo, error) {
 	var out v1.Photo
-	pattern := "/blog/v1/photos/{id}"
+	pattern := "/admin/v1/photos/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationPhotoServiceUpdatePhoto))
 	opts = append(opts, http.PathTemplate(pattern))

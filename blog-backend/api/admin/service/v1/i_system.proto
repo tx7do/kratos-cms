@@ -24,21 +24,21 @@ service SystemService {
   // 获取系统设置列表
   rpc ListSystem (pagination.PagingRequest) returns (ListSystemResponse) {
     option (google.api.http) = {
-      get: "/blog/v1/system"
+      get: "/admin/v1/system"
     };
   }
 
   // 获取系统设置数据
   rpc GetSystem (GetSystemRequest) returns (System) {
     option (google.api.http) = {
-      get: "/blog/v1/system/{id}"
+      get: "/admin/v1/system/{id}"
     };
   }
 
   // 创建系统设置
   rpc CreateSystem (CreateSystemRequest) returns (System) {
     option (google.api.http) = {
-      post: "/blog/v1/system"
+      post: "/admin/v1/system"
       body: "*"
     };
   }
@@ -46,7 +46,7 @@ service SystemService {
   // 更新系统设置
   rpc UpdateSystem (UpdateSystemRequest) returns (System) {
     option (google.api.http) = {
-      put: "/blog/v1/system/{id}"
+      put: "/admin/v1/system/{id}"
       body: "system"
     };
   }
@@ -54,7 +54,7 @@ service SystemService {
   // 删除系统设置
   rpc DeleteSystem (DeleteSystemRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/blog/v1/system/{id}"
+      delete: "/admin/v1/system/{id}"
     };
   }
 }

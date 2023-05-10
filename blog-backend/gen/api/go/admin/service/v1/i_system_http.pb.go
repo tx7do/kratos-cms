@@ -37,11 +37,11 @@ type SystemServiceHTTPServer interface {
 
 func RegisterSystemServiceHTTPServer(s *http.Server, srv SystemServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/blog/v1/system", _SystemService_ListSystem0_HTTP_Handler(srv))
-	r.GET("/blog/v1/system/{id}", _SystemService_GetSystem0_HTTP_Handler(srv))
-	r.POST("/blog/v1/system", _SystemService_CreateSystem0_HTTP_Handler(srv))
-	r.PUT("/blog/v1/system/{id}", _SystemService_UpdateSystem0_HTTP_Handler(srv))
-	r.DELETE("/blog/v1/system/{id}", _SystemService_DeleteSystem0_HTTP_Handler(srv))
+	r.GET("/admin/v1/system", _SystemService_ListSystem0_HTTP_Handler(srv))
+	r.GET("/admin/v1/system/{id}", _SystemService_GetSystem0_HTTP_Handler(srv))
+	r.POST("/admin/v1/system", _SystemService_CreateSystem0_HTTP_Handler(srv))
+	r.PUT("/admin/v1/system/{id}", _SystemService_UpdateSystem0_HTTP_Handler(srv))
+	r.DELETE("/admin/v1/system/{id}", _SystemService_DeleteSystem0_HTTP_Handler(srv))
 }
 
 func _SystemService_ListSystem0_HTTP_Handler(srv SystemServiceHTTPServer) func(ctx http.Context) error {
@@ -169,7 +169,7 @@ func NewSystemServiceHTTPClient(client *http.Client) SystemServiceHTTPClient {
 
 func (c *SystemServiceHTTPClientImpl) CreateSystem(ctx context.Context, in *CreateSystemRequest, opts ...http.CallOption) (*System, error) {
 	var out System
-	pattern := "/blog/v1/system"
+	pattern := "/admin/v1/system"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationSystemServiceCreateSystem))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -182,7 +182,7 @@ func (c *SystemServiceHTTPClientImpl) CreateSystem(ctx context.Context, in *Crea
 
 func (c *SystemServiceHTTPClientImpl) DeleteSystem(ctx context.Context, in *DeleteSystemRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
 	var out emptypb.Empty
-	pattern := "/blog/v1/system/{id}"
+	pattern := "/admin/v1/system/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationSystemServiceDeleteSystem))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -195,7 +195,7 @@ func (c *SystemServiceHTTPClientImpl) DeleteSystem(ctx context.Context, in *Dele
 
 func (c *SystemServiceHTTPClientImpl) GetSystem(ctx context.Context, in *GetSystemRequest, opts ...http.CallOption) (*System, error) {
 	var out System
-	pattern := "/blog/v1/system/{id}"
+	pattern := "/admin/v1/system/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationSystemServiceGetSystem))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -208,7 +208,7 @@ func (c *SystemServiceHTTPClientImpl) GetSystem(ctx context.Context, in *GetSyst
 
 func (c *SystemServiceHTTPClientImpl) ListSystem(ctx context.Context, in *pagination.PagingRequest, opts ...http.CallOption) (*ListSystemResponse, error) {
 	var out ListSystemResponse
-	pattern := "/blog/v1/system"
+	pattern := "/admin/v1/system"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationSystemServiceListSystem))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -221,7 +221,7 @@ func (c *SystemServiceHTTPClientImpl) ListSystem(ctx context.Context, in *pagina
 
 func (c *SystemServiceHTTPClientImpl) UpdateSystem(ctx context.Context, in *UpdateSystemRequest, opts ...http.CallOption) (*System, error) {
 	var out System
-	pattern := "/blog/v1/system/{id}"
+	pattern := "/admin/v1/system/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationSystemServiceUpdateSystem))
 	opts = append(opts, http.PathTemplate(pattern))

@@ -49,6 +49,7 @@ func newRestMiddleware(authenticator authnEngine.Authenticator, authorizer authz
 func NewHTTPServer(
 	cfg *conf.Bootstrap, logger log.Logger,
 	authenticator authnEngine.Authenticator, authorizer authzEngine.Engine,
+	authnSvc *service.AuthenticationService,
 	postSvc *service.PostService,
 	linkSvc *service.LinkService,
 	cateSvc *service.CategoryService,
@@ -58,6 +59,7 @@ func NewHTTPServer(
 ) *http.Server {
 	srv := bootstrap.CreateRestServer(cfg, newRestMiddleware(authenticator, authorizer, logger)...)
 
+	v1.RegisterAuthenticationServiceHTTPServer(srv, authnSvc)
 	v1.RegisterPostServiceHTTPServer(srv, postSvc)
 	v1.RegisterCategoryServiceHTTPServer(srv, cateSvc)
 	v1.RegisterTagServiceHTTPServer(srv, tagSvc)

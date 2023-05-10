@@ -25,21 +25,21 @@ service TagService {
   // 获取标签列表
   rpc ListTag (pagination.PagingRequest) returns (content.service.v1.ListTagResponse) {
     option (google.api.http) = {
-      get: "/blog/v1/tags"
+      get: "/admin/v1/tags"
     };
   }
 
   // 获取标签数据
   rpc GetTag (content.service.v1.GetTagRequest) returns (content.service.v1.Tag) {
     option (google.api.http) = {
-      get: "/blog/v1/tags/{id}"
+      get: "/admin/v1/tags/{id}"
     };
   }
 
   // 创建标签
   rpc CreateTag (content.service.v1.CreateTagRequest) returns (content.service.v1.Tag) {
     option (google.api.http) = {
-      post: "/blog/v1/tags"
+      post: "/admin/v1/tags"
       body: "*"
     };
   }
@@ -47,7 +47,7 @@ service TagService {
   // 更新标签
   rpc UpdateTag (content.service.v1.UpdateTagRequest) returns (content.service.v1.Tag) {
     option (google.api.http) = {
-      put: "/blog/v1/tags/{id}"
+      put: "/admin/v1/tags/{id}"
       body: "tag"
     };
   }
@@ -55,7 +55,7 @@ service TagService {
   // 删除标签
   rpc DeleteTag (content.service.v1.DeleteTagRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/blog/v1/tags/{id}"
+      delete: "/admin/v1/tags/{id}"
     };
   }
 }

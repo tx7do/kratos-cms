@@ -12,6 +12,7 @@ import (
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	pagination "kratos-blog/gen/api/go/common/pagination"
 	v1 "kratos-blog/gen/api/go/user/service/v1"
 )
 
@@ -24,14 +25,16 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserServiceClient interface {
-	// 登陆
-	Login(ctx context.Context, in *v1.LoginRequest, opts ...grpc.CallOption) (*v1.LoginResponse, error)
-	// 登出
-	Logout(ctx context.Context, in *v1.LogoutRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// 注册
-	Register(ctx context.Context, in *v1.RegisterRequest, opts ...grpc.CallOption) (*v1.RegisterResponse, error)
-	// 获取已经登陆的用户的数据
-	GetMe(ctx context.Context, in *v1.GetMeRequest, opts ...grpc.CallOption) (*v1.User, error)
+	// 获取用户列表
+	ListUser(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*v1.ListUserResponse, error)
+	// 获取用户数据
+	GetUser(ctx context.Context, in *v1.GetUserRequest, opts ...grpc.CallOption) (*v1.User, error)
+	// 创建用户
+	CreateUser(ctx context.Context, in *v1.CreateUserRequest, opts ...grpc.CallOption) (*v1.User, error)
+	// 更新用户
+	UpdateUser(ctx context.Context, in *v1.UpdateUserRequest, opts ...grpc.CallOption) (*v1.User, error)
+	// 删除用户
+	DeleteUser(ctx context.Context, in *v1.DeleteUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type userServiceClient struct {
@@ -42,36 +45,45 @@ func NewUserServiceClient(cc grpc.ClientConnInterface) UserServiceClient {
 	return &userServiceClient{cc}
 }
 
-func (c *userServiceClient) Login(ctx context.Context, in *v1.LoginRequest, opts ...grpc.CallOption) (*v1.LoginResponse, error) {
-	out := new(v1.LoginResponse)
-	err := c.cc.Invoke(ctx, "/admin.service.v1.UserService/Login", in, out, opts...)
+func (c *userServiceClient) ListUser(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*v1.ListUserResponse, error) {
+	out := new(v1.ListUserResponse)
+	err := c.cc.Invoke(ctx, "/admin.service.v1.UserService/ListUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userServiceClient) Logout(ctx context.Context, in *v1.LogoutRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/admin.service.v1.UserService/Logout", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *userServiceClient) Register(ctx context.Context, in *v1.RegisterRequest, opts ...grpc.CallOption) (*v1.RegisterResponse, error) {
-	out := new(v1.RegisterResponse)
-	err := c.cc.Invoke(ctx, "/admin.service.v1.UserService/Register", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *userServiceClient) GetMe(ctx context.Context, in *v1.GetMeRequest, opts ...grpc.CallOption) (*v1.User, error) {
+func (c *userServiceClient) GetUser(ctx context.Context, in *v1.GetUserRequest, opts ...grpc.CallOption) (*v1.User, error) {
 	out := new(v1.User)
-	err := c.cc.Invoke(ctx, "/admin.service.v1.UserService/GetMe", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/admin.service.v1.UserService/GetUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) CreateUser(ctx context.Context, in *v1.CreateUserRequest, opts ...grpc.CallOption) (*v1.User, error) {
+	out := new(v1.User)
+	err := c.cc.Invoke(ctx, "/admin.service.v1.UserService/CreateUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) UpdateUser(ctx context.Context, in *v1.UpdateUserRequest, opts ...grpc.CallOption) (*v1.User, error) {
+	out := new(v1.User)
+	err := c.cc.Invoke(ctx, "/admin.service.v1.UserService/UpdateUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) DeleteUser(ctx context.Context, in *v1.DeleteUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/admin.service.v1.UserService/DeleteUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -82,14 +94,16 @@ func (c *userServiceClient) GetMe(ctx context.Context, in *v1.GetMeRequest, opts
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
 type UserServiceServer interface {
-	// 登陆
-	Login(context.Context, *v1.LoginRequest) (*v1.LoginResponse, error)
-	// 登出
-	Logout(context.Context, *v1.LogoutRequest) (*emptypb.Empty, error)
-	// 注册
-	Register(context.Context, *v1.RegisterRequest) (*v1.RegisterResponse, error)
-	// 获取已经登陆的用户的数据
-	GetMe(context.Context, *v1.GetMeRequest) (*v1.User, error)
+	// 获取用户列表
+	ListUser(context.Context, *pagination.PagingRequest) (*v1.ListUserResponse, error)
+	// 获取用户数据
+	GetUser(context.Context, *v1.GetUserRequest) (*v1.User, error)
+	// 创建用户
+	CreateUser(context.Context, *v1.CreateUserRequest) (*v1.User, error)
+	// 更新用户
+	UpdateUser(context.Context, *v1.UpdateUserRequest) (*v1.User, error)
+	// 删除用户
+	DeleteUser(context.Context, *v1.DeleteUserRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -97,17 +111,20 @@ type UserServiceServer interface {
 type UnimplementedUserServiceServer struct {
 }
 
-func (UnimplementedUserServiceServer) Login(context.Context, *v1.LoginRequest) (*v1.LoginResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
+func (UnimplementedUserServiceServer) ListUser(context.Context, *pagination.PagingRequest) (*v1.ListUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListUser not implemented")
 }
-func (UnimplementedUserServiceServer) Logout(context.Context, *v1.LogoutRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Logout not implemented")
+func (UnimplementedUserServiceServer) GetUser(context.Context, *v1.GetUserRequest) (*v1.User, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
 }
-func (UnimplementedUserServiceServer) Register(context.Context, *v1.RegisterRequest) (*v1.RegisterResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
+func (UnimplementedUserServiceServer) CreateUser(context.Context, *v1.CreateUserRequest) (*v1.User, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
 }
-func (UnimplementedUserServiceServer) GetMe(context.Context, *v1.GetMeRequest) (*v1.User, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetMe not implemented")
+func (UnimplementedUserServiceServer) UpdateUser(context.Context, *v1.UpdateUserRequest) (*v1.User, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
+}
+func (UnimplementedUserServiceServer) DeleteUser(context.Context, *v1.DeleteUserRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteUser not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -122,74 +139,92 @@ func RegisterUserServiceServer(s grpc.ServiceRegistrar, srv UserServiceServer) {
 	s.RegisterService(&UserService_ServiceDesc, srv)
 }
 
-func _UserService_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.LoginRequest)
+func _UserService_ListUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(pagination.PagingRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServiceServer).Login(ctx, in)
+		return srv.(UserServiceServer).ListUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/admin.service.v1.UserService/Login",
+		FullMethod: "/admin.service.v1.UserService/ListUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).Login(ctx, req.(*v1.LoginRequest))
+		return srv.(UserServiceServer).ListUser(ctx, req.(*pagination.PagingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserService_Logout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.LogoutRequest)
+func _UserService_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.GetUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServiceServer).Logout(ctx, in)
+		return srv.(UserServiceServer).GetUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/admin.service.v1.UserService/Logout",
+		FullMethod: "/admin.service.v1.UserService/GetUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).Logout(ctx, req.(*v1.LogoutRequest))
+		return srv.(UserServiceServer).GetUser(ctx, req.(*v1.GetUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserService_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.RegisterRequest)
+func _UserService_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.CreateUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServiceServer).Register(ctx, in)
+		return srv.(UserServiceServer).CreateUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/admin.service.v1.UserService/Register",
+		FullMethod: "/admin.service.v1.UserService/CreateUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).Register(ctx, req.(*v1.RegisterRequest))
+		return srv.(UserServiceServer).CreateUser(ctx, req.(*v1.CreateUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserService_GetMe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.GetMeRequest)
+func _UserService_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.UpdateUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServiceServer).GetMe(ctx, in)
+		return srv.(UserServiceServer).UpdateUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/admin.service.v1.UserService/GetMe",
+		FullMethod: "/admin.service.v1.UserService/UpdateUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).GetMe(ctx, req.(*v1.GetMeRequest))
+		return srv.(UserServiceServer).UpdateUser(ctx, req.(*v1.UpdateUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_DeleteUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.DeleteUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).DeleteUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/admin.service.v1.UserService/DeleteUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).DeleteUser(ctx, req.(*v1.DeleteUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -202,20 +237,24 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*UserServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Login",
-			Handler:    _UserService_Login_Handler,
+			MethodName: "ListUser",
+			Handler:    _UserService_ListUser_Handler,
 		},
 		{
-			MethodName: "Logout",
-			Handler:    _UserService_Logout_Handler,
+			MethodName: "GetUser",
+			Handler:    _UserService_GetUser_Handler,
 		},
 		{
-			MethodName: "Register",
-			Handler:    _UserService_Register_Handler,
+			MethodName: "CreateUser",
+			Handler:    _UserService_CreateUser_Handler,
 		},
 		{
-			MethodName: "GetMe",
-			Handler:    _UserService_GetMe_Handler,
+			MethodName: "UpdateUser",
+			Handler:    _UserService_UpdateUser_Handler,
+		},
+		{
+			MethodName: "DeleteUser",
+			Handler:    _UserService_DeleteUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

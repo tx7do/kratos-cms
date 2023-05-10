@@ -8,6 +8,7 @@ import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 
 import "user/service/v1/user.proto";
+import "common/pagination/pagination.proto";
 
 option (gnostic.openapi.v3.document) = {
   info: {
@@ -19,36 +20,42 @@ option (gnostic.openapi.v3.document) = {
 
 // 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
 
-// 用户服务
+// 用户管理服务
 service UserService {
-  // 登陆
-  rpc Login (user.service.v1.LoginRequest) returns (user.service.v1.LoginResponse) {
+  // 获取用户列表
+  rpc ListUser (pagination.PagingRequest) returns (user.service.v1.ListUserResponse) {
     option (google.api.http) = {
-      post: "/blog/v1/login"
-      body: "*"
+      get: "/admin/v1/users"
     };
   }
 
-  // 登出
-  rpc Logout (user.service.v1.LogoutRequest) returns (google.protobuf.Empty) {
+  // 获取用户数据
+  rpc GetUser (user.service.v1.GetUserRequest) returns (user.service.v1.User) {
     option (google.api.http) = {
-      post: "/blog/v1/logout"
-      body: "*"
+      get: "/admin/v1/users/{id}"
     };
   }
 
-  // 注册
-  rpc Register (user.service.v1.RegisterRequest) returns (user.service.v1.RegisterResponse) {
+  // 创建用户
+  rpc CreateUser (user.service.v1.CreateUserRequest) returns (user.service.v1.User) {
     option (google.api.http) = {
-      post: "/blog/v1/register"
-      body: "*"
+      post: "/admin/v1/users"
+      body: "user"
     };
   }
 
-  // 获取已经登陆的用户的数据
-  rpc GetMe (user.service.v1.GetMeRequest) returns (user.service.v1.User) {
+  // 更新用户
+  rpc UpdateUser (user.service.v1.UpdateUserRequest) returns (user.service.v1.User) {
     option (google.api.http) = {
-      get: "/blog/v1/me"
+      put: "/admin/v1/users/{id}"
+      body: "user"
+    };
+  }
+
+  // 删除用户
+  rpc DeleteUser (user.service.v1.DeleteUserRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/admin/v1/users/{id}"
     };
   }
 }

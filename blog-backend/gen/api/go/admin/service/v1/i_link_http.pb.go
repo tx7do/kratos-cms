@@ -38,11 +38,11 @@ type LinkServiceHTTPServer interface {
 
 func RegisterLinkServiceHTTPServer(s *http.Server, srv LinkServiceHTTPServer) {
 	r := s.Route("/")
-	r.GET("/blog/v1/links", _LinkService_ListLink0_HTTP_Handler(srv))
-	r.GET("/blog/v1/links/{id}", _LinkService_GetLink0_HTTP_Handler(srv))
-	r.POST("/blog/v1/links", _LinkService_CreateLink0_HTTP_Handler(srv))
-	r.PUT("/blog/v1/links/{id}", _LinkService_UpdateLink0_HTTP_Handler(srv))
-	r.DELETE("/blog/v1/links/{id}", _LinkService_DeleteLink0_HTTP_Handler(srv))
+	r.GET("/admin/v1/links", _LinkService_ListLink0_HTTP_Handler(srv))
+	r.GET("/admin/v1/links/{id}", _LinkService_GetLink0_HTTP_Handler(srv))
+	r.POST("/admin/v1/links", _LinkService_CreateLink0_HTTP_Handler(srv))
+	r.PUT("/admin/v1/links/{id}", _LinkService_UpdateLink0_HTTP_Handler(srv))
+	r.DELETE("/admin/v1/links/{id}", _LinkService_DeleteLink0_HTTP_Handler(srv))
 }
 
 func _LinkService_ListLink0_HTTP_Handler(srv LinkServiceHTTPServer) func(ctx http.Context) error {
@@ -170,7 +170,7 @@ func NewLinkServiceHTTPClient(client *http.Client) LinkServiceHTTPClient {
 
 func (c *LinkServiceHTTPClientImpl) CreateLink(ctx context.Context, in *v1.CreateLinkRequest, opts ...http.CallOption) (*v1.Link, error) {
 	var out v1.Link
-	pattern := "/blog/v1/links"
+	pattern := "/admin/v1/links"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationLinkServiceCreateLink))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -183,7 +183,7 @@ func (c *LinkServiceHTTPClientImpl) CreateLink(ctx context.Context, in *v1.Creat
 
 func (c *LinkServiceHTTPClientImpl) DeleteLink(ctx context.Context, in *v1.DeleteLinkRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
 	var out emptypb.Empty
-	pattern := "/blog/v1/links/{id}"
+	pattern := "/admin/v1/links/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationLinkServiceDeleteLink))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -196,7 +196,7 @@ func (c *LinkServiceHTTPClientImpl) DeleteLink(ctx context.Context, in *v1.Delet
 
 func (c *LinkServiceHTTPClientImpl) GetLink(ctx context.Context, in *v1.GetLinkRequest, opts ...http.CallOption) (*v1.Link, error) {
 	var out v1.Link
-	pattern := "/blog/v1/links/{id}"
+	pattern := "/admin/v1/links/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationLinkServiceGetLink))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -209,7 +209,7 @@ func (c *LinkServiceHTTPClientImpl) GetLink(ctx context.Context, in *v1.GetLinkR
 
 func (c *LinkServiceHTTPClientImpl) ListLink(ctx context.Context, in *pagination.PagingRequest, opts ...http.CallOption) (*v1.ListLinkResponse, error) {
 	var out v1.ListLinkResponse
-	pattern := "/blog/v1/links"
+	pattern := "/admin/v1/links"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationLinkServiceListLink))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -222,7 +222,7 @@ func (c *LinkServiceHTTPClientImpl) ListLink(ctx context.Context, in *pagination
 
 func (c *LinkServiceHTTPClientImpl) UpdateLink(ctx context.Context, in *v1.UpdateLinkRequest, opts ...http.CallOption) (*v1.Link, error) {
 	var out v1.Link
-	pattern := "/blog/v1/links/{id}"
+	pattern := "/admin/v1/links/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationLinkServiceUpdateLink))
 	opts = append(opts, http.PathTemplate(pattern))
