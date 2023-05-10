@@ -9,14 +9,14 @@ import (
 )
 
 type UserRepo interface {
-	Create(ctx context.Context, req *v1.RegisterRequest) (*v1.User, error)
+	Create(ctx context.Context, req *v1.CreateUserRequest) (*v1.User, error)
 	Update(ctx context.Context, req *v1.UpdateUserRequest) (*v1.User, error)
 	Delete(ctx context.Context, req *v1.DeleteUserRequest) (bool, error)
 
 	Get(ctx context.Context, req uint32) (*v1.User, error)
 	GetUserByUserName(ctx context.Context, userName string) (*v1.User, error)
 
-	VerifyPassword(ctx context.Context, req *v1.LoginRequest) (bool, error)
+	VerifyPassword(ctx context.Context, req *v1.VerifyPasswordRequest) (bool, error)
 }
 
 type UserUseCase struct {
@@ -34,7 +34,9 @@ func NewUserUseCase(repo UserRepo, logger log.Logger) *UserUseCase {
 
 func (uc *UserUseCase) Get(ctx context.Context, req uint32) (*v1.User, error) {
 	user, err := uc.repo.Get(ctx, req)
-	user.Password = nil
+	if user != nil {
+		user.Password = nil
+	}
 	return user, err
 }
 
@@ -42,7 +44,7 @@ func (uc *UserUseCase) GetUserByUserName(ctx context.Context, userName string) (
 	return uc.repo.GetUserByUserName(ctx, userName)
 }
 
-func (uc *UserUseCase) Create(ctx context.Context, req *v1.RegisterRequest) (*v1.User, error) {
+func (uc *UserUseCase) Create(ctx context.Context, req *v1.CreateUserRequest) (*v1.User, error) {
 	return uc.repo.Create(ctx, req)
 }
 
@@ -54,6 +56,6 @@ func (uc *UserUseCase) Delete(ctx context.Context, req *v1.DeleteUserRequest) (b
 	return uc.repo.Delete(ctx, req)
 }
 
-func (uc *UserUseCase) VerifyPassword(ctx context.Context, req *v1.LoginRequest) (bool, error) {
+func (uc *UserUseCase) VerifyPassword(ctx context.Context, req *v1.VerifyPasswordRequest) (bool, error) {
 	return uc.repo.VerifyPassword(ctx, req)
 }

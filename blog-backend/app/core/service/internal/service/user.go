@@ -62,7 +62,7 @@ func (s *UserService) Logout(ctx context.Context, req *v1.LogoutRequest) (*empty
 }
 
 // Register 注册
-func (s *UserService) Register(ctx context.Context, req *v1.RegisterRequest) (*v1.RegisterResponse, error) {
+func (s *UserService) Register(ctx context.Context, req *v1.CreateUserRequest) (*v1.RegisterResponse, error) {
 	user, err := s.uc.Create(ctx, req)
 	if err != nil {
 		return nil, err

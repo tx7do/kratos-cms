@@ -252,7 +252,7 @@ func NewPolarisRegistry(c *conf.Registry) *polarisKratos.Registry {
 
 	var resp *polarisModel.InstanceRegisterResponse
 	for i := 0; i < (int)(c.Polaris.InstanceCount); i++ {
-		registerRequest := &polarisApi.InstanceRegisterRequest{}
+		registerRequest := &polarisApi.InstanceCreateUserRequest{}
 		registerRequest.Service = c.Polaris.Service
 		registerRequest.Namespace = c.Polaris.Namespace
 		registerRequest.Host = c.Polaris.Address

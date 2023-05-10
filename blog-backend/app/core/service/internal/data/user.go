@@ -48,7 +48,7 @@ func (r *UserRepo) convertEntToProto(in *ent.User) *v1.User {
 	}
 }
 
-func (r *UserRepo) Create(ctx context.Context, req *v1.RegisterRequest) (*v1.User, error) {
+func (r *UserRepo) Create(ctx context.Context, req *v1.CreateUserRequest) (*v1.User, error) {
 	ph, err := crypto.HashPassword(req.User.GetPassword())
 	if err != nil {
 		return nil, err
@@ -95,7 +95,7 @@ func (r *UserRepo) Delete(ctx context.Context, req *v1.DeleteUserRequest) (bool,
 	return err != nil, err
 }
 
-func (r *UserRepo) VerifyPassword(ctx context.Context, req *v1.LoginRequest) (bool, error) {
+func (r *UserRepo) VerifyPassword(ctx context.Context, req *v1.VerifyPasswordRequest) (bool, error) {
 	ret, err := r.data.db.User.
 		Query().
 		Select(user.FieldID, user.FieldPassword).
