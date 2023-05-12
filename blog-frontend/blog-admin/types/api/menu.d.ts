@@ -1,31 +1,24 @@
-import * as pagination from './pagination';
-
-export const route = {
-  Menus: '/menus',
-  MenuWithId: (id) => `/menus/${id}`,
-};
-
-export interface ListMenu {
-  (params: pagination.PagingRequest): Promise<ListMenuResponse>;
+interface ListMenu {
+  (params: PagingRequest): Promise<ListMenuResponse>;
 }
 
-export interface GetMenu {
+interface GetMenu {
   (params: GetMenuRequest): Promise<Menu>;
 }
 
-export interface CreateMenu {
+interface CreateMenu {
   (params: CreateMenuRequest): Promise<Menu>;
 }
 
-export interface UpdateMenu {
+interface UpdateMenu {
   (params: UpdateMenuRequest): Promise<Menu>;
 }
 
-export interface DeleteMenu {
+interface DeleteMenu {
   (params: DeleteMenuRequest): Promise<{}>;
 }
 
-export interface Menu {
+interface Menu {
   id?: number;
   name?: string;
   url?: string;
@@ -38,27 +31,27 @@ export interface Menu {
   updateTime?: string;
 }
 
-export interface ListMenuResponse {
+interface ListMenuResponse {
   items?: Menu[];
   total?: number;
 }
 
-export interface GetMenuRequest {
+interface GetMenuRequest {
   id?: number;
 }
 
-export interface CreateMenuRequest {
+interface CreateMenuRequest {
   menu?: Menu;
   operatorId?: number;
 }
 
-export interface UpdateMenuRequest {
+interface UpdateMenuRequest {
   id?: number;
   menu?: Menu;
   operatorId?: number;
 }
 
-export interface DeleteMenuRequest {
+interface DeleteMenuRequest {
   id?: number;
   operatorId?: number;
 }

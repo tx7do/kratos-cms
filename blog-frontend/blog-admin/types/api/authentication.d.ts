@@ -1,27 +1,20 @@
-export const route = {
-  Login: '/login',
-  Logout: '/logout',
-  Register: '/register',
-  GetMe: '/me',
-};
-
-export interface Login {
+interface Login {
   (params: LoginRequest): Promise<LoginResponse>;
 }
 
-export interface Logout {
+interface Logout {
   (params: LogoutRequest): Promise<{}>;
 }
 
-export interface Register {
+interface Register {
   (params: RegisterRequest): Promise<RegisterResponse>;
 }
 
-export interface GetMe {
+interface GetMe {
   (): Promise<User>;
 }
 
-export interface User {
+interface User {
   id?: number;
   userName?: string;
   nickName?: string;
@@ -33,27 +26,27 @@ export interface User {
   updateTime?: string;
 }
 
-export interface LoginRequest {
+interface LoginRequest {
   userName?: string;
   password?: string;
 }
 
-export interface LoginResponse {
+interface LoginResponse {
   id?: number;
   userName?: string;
   token?: string;
   refreshToken?: string;
 }
 
-export interface LogoutRequest {
+interface LogoutRequest {
   id?: number;
 }
 
-export interface RegisterRequest {
+interface RegisterRequest {
   user?: User;
 }
 
-export interface RegisterResponse {
+interface RegisterResponse {
   id?: number;
   userName?: string;
   token?: string;

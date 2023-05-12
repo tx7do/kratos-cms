@@ -1,10 +1,19 @@
 import { defHttp } from '/@/utils/http/axios';
-import * as protocol from '/&/authentication';
+
+const route = {
+  Login: '/login',
+  Logout: '/logout',
+  Register: '/register',
+  GetMe: '/me',
+};
 
 // 用户登陆
-export const Logon: protocol.Login = (params) => {
-  return defHttp.post<protocol.LoginResponse>(
-    { url: protocol.route.Login, params },
+export const Logon: Login = (params) => {
+  return defHttp.post<LoginResponse>(
+    {
+      url: route.Login,
+      params
+    },
     {
       errorMessageMode: 'modal',
     },
@@ -12,9 +21,12 @@ export const Logon: protocol.Login = (params) => {
 };
 
 // 用户登出
-export const Logout: protocol.Logout = (params) => {
+export const Logout: Logout = (params) => {
   return defHttp.post<{}>(
-    { url: protocol.route.Logout, params },
+    {
+      url: route.Logout,
+      params,
+    },
     {
       errorMessageMode: 'none',
     },
@@ -22,9 +34,11 @@ export const Logout: protocol.Logout = (params) => {
 };
 
 // 获取用户信息
-export const GetMe: protocol.GetMe = () => {
-  return defHttp.get<protocol.User>(
-    { url: protocol.route.GetMe },
+export const GetMe: GetMe = () => {
+  return defHttp.get<User>(
+    {
+      url: route.GetMe,
+    },
     {
       errorMessageMode: 'none',
     },

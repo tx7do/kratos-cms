@@ -1,25 +1,29 @@
 import { defHttp } from '/@/utils/http/axios';
-import * as protocol from '/&/tag';
+
+const route = {
+  Tags: '/tags',
+  TagWithId: (id) => `/tags/${id}`,
+};
 
 // 获取列表
-export const ListTag: protocol.ListTag = (params) => {
-  return defHttp.get<protocol.ListTagResponse>({
-    url: protocol.route.Tags,
+export const ListTag: ListTag = (params) => {
+  return defHttp.get<ListTagResponse>({
+    url: route.Tags,
     params,
   });
 };
 
 // 获取
-export const GetTag: protocol.GetTag = (params) => {
-  return defHttp.get<protocol.Tag>({
-    url: protocol.route.TagWithId(params.id),
+export const GetTag: GetTag = (params) => {
+  return defHttp.get<Tag>({
+    url: route.TagWithId(params.id),
   });
 };
 
 // 创建
-export const CreateTag: protocol.CreateTag = (params) => {
-  return defHttp.post<protocol.Tag>(
-    { url: protocol.route.Tags, params },
+export const CreateTag: CreateTag = (params) => {
+  return defHttp.post<Tag>(
+    { url: route.Tags, params },
     {
       errorMessageMode: 'none',
     },
@@ -27,16 +31,16 @@ export const CreateTag: protocol.CreateTag = (params) => {
 };
 
 // 更新
-export const UpdateTag: protocol.UpdateTag = (params) => {
-  return defHttp.put<protocol.Tag>({
-    url: protocol.route.TagWithId(params.id),
+export const UpdateTag: UpdateTag = (params) => {
+  return defHttp.put<Tag>({
+    url: route.TagWithId(params.id),
     data: params.tag,
   });
 };
 
 // 删除
-export const DeleteTag: protocol.DeleteTag = (params) => {
+export const DeleteTag: DeleteTag = (params) => {
   return defHttp.delete({
-    url: protocol.route.TagWithId(params.id),
+    url: route.TagWithId(params.id),
   });
 };

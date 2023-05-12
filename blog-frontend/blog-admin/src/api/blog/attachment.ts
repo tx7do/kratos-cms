@@ -1,25 +1,29 @@
 import { defHttp } from '/@/utils/http/axios';
-import * as protocol from '/&/attachment';
+
+const route = {
+  Attachments: '/attachments',
+  AttachmentWithId: (id) => `/attachments/${id}`,
+};
 
 // 获取列表
-export const ListAttachment: protocol.ListAttachment = (params) => {
-  return defHttp.get<protocol.ListAttachmentResponse>({
-    url: protocol.route.Attachments,
+export const ListAttachment: ListAttachment = (params) => {
+  return defHttp.get<ListAttachmentResponse>({
+    url: route.Attachments,
     params,
   });
 };
 
 // 获取
-export const GetAttachment: protocol.GetAttachment = (params) => {
-  return defHttp.get<protocol.Attachment>({
-    url: protocol.route.AttachmentWithId(params.id),
+export const GetAttachment: GetAttachment = (params) => {
+  return defHttp.get<Attachment>({
+    url: route.AttachmentWithId(params.id),
   });
 };
 
 // 创建
-export const CreateAttachment: protocol.CreateAttachment = (params) => {
-  return defHttp.post<protocol.Attachment>(
-    { url: protocol.route.Attachments, params },
+export const CreateAttachment: CreateAttachment = (params) => {
+  return defHttp.post<Attachment>(
+    {url: route.Attachments, params},
     {
       errorMessageMode: 'none',
     },
@@ -27,16 +31,16 @@ export const CreateAttachment: protocol.CreateAttachment = (params) => {
 };
 
 // 更新
-export const UpdateAttachment: protocol.UpdateAttachment = (params) => {
-  return defHttp.put<protocol.Attachment>({
-    url: protocol.route.AttachmentWithId(params.id),
+export const UpdateAttachment: UpdateAttachment = (params) => {
+  return defHttp.put<Attachment>({
+    url: route.AttachmentWithId(params.id),
     data: params.attachment,
   });
 };
 
 // 删除
-export const DeleteAttachment: protocol.DeleteAttachment = (params) => {
+export const DeleteAttachment: DeleteAttachment = (params) => {
   return defHttp.delete({
-    url: protocol.route.AttachmentWithId(params.id),
+    url: route.AttachmentWithId(params.id),
   });
 };

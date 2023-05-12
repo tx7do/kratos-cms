@@ -1,25 +1,29 @@
 import { defHttp } from '/@/utils/http/axios';
-import * as protocol from '/&/category';
+
+const route = {
+  Categories: '/categories',
+  CategoryWithId: (id) => `/categories/${id}`,
+};
 
 // 获取列表
-export const ListCategory: protocol.ListCategory = (params) => {
-  return defHttp.get<protocol.ListCategoryResponse>({
-    url: protocol.route.Categories,
+export const ListCategory: ListCategory = (params) => {
+  return defHttp.get<ListCategoryResponse>({
+    url: route.Categories,
     params,
   });
 };
 
 // 获取
-export const GetCategory: protocol.GetCategory = (params) => {
-  return defHttp.get<protocol.Category>({
-    url: protocol.route.CategoryWithId(params.id),
+export const GetCategory: GetCategory = (params) => {
+  return defHttp.get<Category>({
+    url: route.CategoryWithId(params.id),
   });
 };
 
 // 创建
-export const CreateCategory: protocol.CreateCategory = (params) => {
-  return defHttp.post<protocol.Category>(
-    { url: protocol.route.Categories, params },
+export const CreateCategory: CreateCategory = (params) => {
+  return defHttp.post<Category>(
+    { url: route.Categories, params },
     {
       errorMessageMode: 'none',
     },
@@ -27,16 +31,16 @@ export const CreateCategory: protocol.CreateCategory = (params) => {
 };
 
 // 更新
-export const UpdateCategory: protocol.UpdateCategory = (params) => {
-  return defHttp.put<protocol.Category>({
-    url: protocol.route.CategoryWithId(params.id),
+export const UpdateCategory: UpdateCategory = (params) => {
+  return defHttp.put<Category>({
+    url: route.CategoryWithId(params.id),
     data: params.category,
   });
 };
 
 // 删除
-export const DeleteCategory: protocol.DeleteCategory = (params) => {
+export const DeleteCategory: DeleteCategory = (params) => {
   return defHttp.delete({
-    url: protocol.route.CategoryWithId(params.id),
+    url: route.CategoryWithId(params.id),
   });
 };

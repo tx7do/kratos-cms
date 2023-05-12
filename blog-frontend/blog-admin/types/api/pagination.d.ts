@@ -1,9 +1,9 @@
-export enum SortOrder {
-  ASCENDING = 'ascend',
-  DESCENDING = 'descend',
-}
+// enum SortOrder {
+//   ASCENDING = 'ascend',
+//   DESCENDING = 'descend',
+// }
 
-export interface PagingRequest {
+interface PagingRequest {
   page?: number; // 页码
   pageSize?: number; // 每页数量
   query?: { [key: string]: string }; // 查询条件

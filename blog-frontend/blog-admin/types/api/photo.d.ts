@@ -1,31 +1,24 @@
-import * as pagination from './pagination';
-
-export const route = {
-  Photos: '/photos',
-  PhotoWithId: (id) => `/photos/${id}`,
-};
-
-export interface ListPhoto {
-  (params: pagination.PagingRequest): Promise<ListPhotoResponse>;
+interface ListPhoto {
+  (params: PagingRequest): Promise<ListPhotoResponse>;
 }
 
-export interface GetPhoto {
+interface GetPhoto {
   (params: GetPhotoRequest): Promise<Photo>;
 }
 
-export interface CreatePhoto {
+interface CreatePhoto {
   (params: CreatePhotoRequest): Promise<Photo>;
 }
 
-export interface UpdatePhoto {
+interface UpdatePhoto {
   (params: UpdatePhotoRequest): Promise<Photo>;
 }
 
-export interface DeletePhoto {
+interface DeletePhoto {
   (params: DeletePhotoRequest): Promise<{}>;
 }
 
-export interface Photo {
+interface Photo {
   id?: number;
   name?: string;
   thumbnail?: string;
@@ -38,27 +31,27 @@ export interface Photo {
   createTime?: string;
 }
 
-export interface ListPhotoResponse {
+interface ListPhotoResponse {
   items?: Photo[];
   total?: number;
 }
 
-export interface GetPhotoRequest {
+interface GetPhotoRequest {
   id?: number;
 }
 
-export interface CreatePhotoRequest {
+interface CreatePhotoRequest {
   photo?: Photo;
   operatorId?: number;
 }
 
-export interface UpdatePhotoRequest {
+interface UpdatePhotoRequest {
   id?: number;
   photo?: Photo;
   operatorId?: number;
 }
 
-export interface DeletePhotoRequest {
+interface DeletePhotoRequest {
   id?: number;
   operatorId?: number;
 }

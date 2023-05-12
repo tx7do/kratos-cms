@@ -1,31 +1,24 @@
-import * as pagination from './pagination';
-
-export const route = {
-  Comments: '/comments',
-  CommentWithId: (id) => `/comments/${id}`,
-};
-
-export interface ListComment {
-  (params: pagination.PagingRequest): Promise<ListCommentResponse>;
+interface ListComment {
+  (params: PagingRequest): Promise<ListCommentResponse>;
 }
 
-export interface GetComment {
+interface GetComment {
   (params: GetCommentRequest): Promise<Comment>;
 }
 
-export interface CreateComment {
+interface CreateComment {
   (params: CreateCommentRequest): Promise<Comment>;
 }
 
-export interface UpdateComment {
+interface UpdateComment {
   (params: UpdateCommentRequest): Promise<Comment>;
 }
 
-export interface DeleteComment {
+interface DeleteComment {
   (params: DeleteCommentRequest): Promise<{}>;
 }
 
-export interface Comment {
+interface Comment {
   id?: number;
   author?: string;
   email?: string;
@@ -43,27 +36,27 @@ export interface Comment {
   updateTime?: string;
 }
 
-export interface ListCommentResponse {
+interface ListCommentResponse {
   items?: Comment[];
   total?: number;
 }
 
-export interface GetCommentRequest {
+interface GetCommentRequest {
   id?: number;
 }
 
-export interface CreateCommentRequest {
+interface CreateCommentRequest {
   comment?: Comment;
   operatorId?: number;
 }
 
-export interface UpdateCommentRequest {
+interface UpdateCommentRequest {
   id?: number;
   comment?: Comment;
   operatorId?: number;
 }
 
-export interface DeleteCommentRequest {
+interface DeleteCommentRequest {
   id?: number;
   operatorId?: number;
 }

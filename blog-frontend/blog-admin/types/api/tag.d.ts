@@ -1,31 +1,24 @@
-import * as pagination from './pagination';
-
-export const route = {
-  Tags: '/tags',
-  TagWithId: (id) => `/tags/${id}`,
-};
-
-export interface ListTag {
-  (params: pagination.PagingRequest): Promise<ListTagResponse>;
+interface ListTag {
+  (params: PagingRequest): Promise<ListTagResponse>;
 }
 
-export interface GetTag {
+interface GetTag {
   (params: GetTagRequest): Promise<Tag>;
 }
 
-export interface CreateTag {
+interface CreateTag {
   (params: CreateTagRequest): Promise<Tag>;
 }
 
-export interface UpdateTag {
+interface UpdateTag {
   (params: UpdateTagRequest): Promise<Tag>;
 }
 
-export interface DeleteTag {
+interface DeleteTag {
   (params: DeleteTagRequest): Promise<{}>;
 }
 
-export interface Tag {
+interface Tag {
   id?: number;
   name?: string;
   slug?: string;
@@ -38,27 +31,27 @@ export interface Tag {
   fullPath?: string;
 }
 
-export interface ListTagResponse {
+interface ListTagResponse {
   items?: Tag[];
   total?: number;
 }
 
-export interface GetTagRequest {
+interface GetTagRequest {
   id?: number;
 }
 
-export interface CreateTagRequest {
+interface CreateTagRequest {
   tag?: Tag;
   operatorId?: number;
 }
 
-export interface UpdateTagRequest {
+interface UpdateTagRequest {
   id?: number;
   tag?: Tag;
   operatorId?: number;
 }
 
-export interface DeleteTagRequest {
+interface DeleteTagRequest {
   id?: number;
   operatorId?: number;
 }

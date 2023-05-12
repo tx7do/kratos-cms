@@ -1,6 +1,4 @@
-export const route = {};
-
-export interface User {
+interface User {
   id?: number;
   userName?: string;
   nickName?: string;
@@ -12,18 +10,18 @@ export interface User {
   updateTime?: string;
 }
 
-export interface CreateUserRequest {
+interface CreateUserRequest {
   user?: User;
   operatorId?: number;
 }
 
-export interface UpdateUserRequest {
+interface UpdateUserRequest {
   id?: number;
   user?: User;
   operatorId?: number;
 }
 
-export interface DeleteUserRequest {
+interface DeleteUserRequest {
   id?: number;
   operatorId?: number;
 }

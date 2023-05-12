@@ -1,31 +1,24 @@
-import * as pagination from './pagination';
-
-export const route = {
-  Categories: '/categories',
-  CategoryWithId: (id) => `/categories/${id}`,
-};
-
-export interface ListCategory {
-  (params: pagination.PagingRequest): Promise<ListCategoryResponse>;
+interface ListCategory {
+  (params: PagingRequest): Promise<ListCategoryResponse>;
 }
 
-export interface GetCategory {
+interface GetCategory {
   (params: GetCategoryRequest): Promise<Category>;
 }
 
-export interface CreateCategory {
+interface CreateCategory {
   (params: CreateCategoryRequest): Promise<Category>;
 }
 
-export interface UpdateCategory {
+interface UpdateCategory {
   (params: UpdateCategoryRequest): Promise<Category>;
 }
 
-export interface DeleteCategory {
+interface DeleteCategory {
   (params: DeleteCategoryRequest): Promise<{}>;
 }
 
-export interface Category {
+interface Category {
   id?: number;
   parentId?: number;
   name?: string;
@@ -41,27 +34,27 @@ export interface Category {
   children?: Category[];
 }
 
-export interface ListCategoryResponse {
+interface ListCategoryResponse {
   items?: Category[];
   total?: number;
 }
 
-export interface GetCategoryRequest {
+interface GetCategoryRequest {
   id?: number;
 }
 
-export interface CreateCategoryRequest {
+interface CreateCategoryRequest {
   category?: Category;
   operatorId?: number;
 }
 
-export interface UpdateCategoryRequest {
+interface UpdateCategoryRequest {
   id?: number;
   category?: Category;
   operatorId?: number;
 }
 
-export interface DeleteCategoryRequest {
+interface DeleteCategoryRequest {
   id?: number;
   operatorId?: number;
 }

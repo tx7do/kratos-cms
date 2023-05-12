@@ -1,31 +1,24 @@
-import * as pagination from './pagination';
-
-export const route = {
-  Attachments: '/attachments',
-  AttachmentWithId: (id) => `/attachments/${id}`,
-};
-
-export interface ListAttachment {
-  (params: pagination.PagingRequest): Promise<ListAttachmentResponse>;
+interface ListAttachment {
+  (params: PagingRequest): Promise<ListAttachmentResponse>;
 }
 
-export interface GetAttachment {
+interface GetAttachment {
   (params: GetAttachmentRequest): Promise<Attachment>;
 }
 
-export interface CreateAttachment {
+interface CreateAttachment {
   (params: CreateAttachmentRequest): Promise<Attachment>;
 }
 
-export interface UpdateAttachment {
+interface UpdateAttachment {
   (params: UpdateAttachmentRequest): Promise<Attachment>;
 }
 
-export interface DeleteAttachment {
+interface DeleteAttachment {
   (params: DeleteAttachmentRequest): Promise<{}>;
 }
 
-export interface Attachment {
+interface Attachment {
   id?: number;
   name?: string;
   path?: string;
@@ -40,27 +33,27 @@ export interface Attachment {
   createTime?: string;
 }
 
-export interface ListAttachmentResponse {
+interface ListAttachmentResponse {
   items?: Attachment[];
   total?: number;
 }
 
-export interface GetAttachmentRequest {
+interface GetAttachmentRequest {
   id?: number;
 }
 
-export interface CreateAttachmentRequest {
+interface CreateAttachmentRequest {
   attachment?: Attachment;
   operatorId?: number;
 }
 
-export interface UpdateAttachmentRequest {
+interface UpdateAttachmentRequest {
   id?: number;
   attachment?: Attachment;
   operatorId?: number;
 }
 
-export interface DeleteAttachmentRequest {
+interface DeleteAttachmentRequest {
   id?: number;
   operatorId?: number;
 }

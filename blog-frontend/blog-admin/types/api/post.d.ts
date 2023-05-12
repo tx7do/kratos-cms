@@ -1,33 +1,24 @@
-import * as pagination from './pagination';
-import { Tag } from '/&/tag';
-import { Category } from '/&/category';
-
-export const route = {
-  Posts: '/posts',
-  PostWithId: (id) => `/posts/${id}`,
-};
-
-export interface ListPost {
-  (params: pagination.PagingRequest): Promise<ListPostResponse>;
+interface ListPost {
+  (params: PagingRequest): Promise<ListPostResponse>;
 }
 
-export interface GetPost {
+interface GetPost {
   (params: GetPostRequest): Promise<Post>;
 }
 
-export interface CreatePost {
+interface CreatePost {
   (params: CreatePostRequest): Promise<Post>;
 }
 
-export interface UpdatePost {
+interface UpdatePost {
   (params: UpdatePostRequest): Promise<Post>;
 }
 
-export interface DeletePost {
+interface DeletePost {
   (params: DeletePostRequest): Promise<{}>;
 }
 
-export interface Post {
+interface Post {
   id?: number;
   title?: string;
   status?: string;
@@ -56,27 +47,27 @@ export interface Post {
   categories?: Category[];
 }
 
-export interface ListPostResponse {
+interface ListPostResponse {
   items?: Post[];
   total?: number;
 }
 
-export interface GetPostRequest {
+interface GetPostRequest {
   id?: number;
 }
 
-export interface CreatePostRequest {
+interface CreatePostRequest {
   post?: Post;
   operatorId?: number;
 }
 
-export interface UpdatePostRequest {
+interface UpdatePostRequest {
   id?: number;
   post?: Post;
   operatorId?: number;
 }
 
-export interface DeletePostRequest {
+interface DeletePostRequest {
   id?: number;
   operatorId?: number;
 }

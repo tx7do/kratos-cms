@@ -1,25 +1,29 @@
 import { defHttp } from '/@/utils/http/axios';
-import * as protocol from '/&/link';
+
+const route = {
+  Links: '/links',
+  LinkWithId: (id) => `/links/${id}`,
+};
 
 // 获取列表
-export const ListLink: protocol.ListLink = (params) => {
-  return defHttp.get<protocol.ListLinkResponse>({
-    url: protocol.route.Links,
+export const ListLink: ListLink = (params) => {
+  return defHttp.get<ListLinkResponse>({
+    url: route.Links,
     params,
   });
 };
 
 // 获取
-export const GetLink: protocol.GetLink = (params) => {
-  return defHttp.get<protocol.Link>({
-    url: protocol.route.LinkWithId(params.id),
+export const GetLink: GetLink = (params) => {
+  return defHttp.get<Link>({
+    url: route.LinkWithId(params.id),
   });
 };
 
 // 创建
-export const CreateLink: protocol.CreateLink = (params) => {
-  return defHttp.post<protocol.Link>(
-    { url: protocol.route.Links, params },
+export const CreateLink: CreateLink = (params) => {
+  return defHttp.post<Link>(
+    { url: route.Links, params },
     {
       errorMessageMode: 'none',
     },
@@ -27,16 +31,16 @@ export const CreateLink: protocol.CreateLink = (params) => {
 };
 
 // 更新
-export const UpdateLink: protocol.UpdateLink = (params) => {
-  return defHttp.put<protocol.Link>({
-    url: protocol.route.LinkWithId(params.id),
+export const UpdateLink: UpdateLink = (params) => {
+  return defHttp.put<Link>({
+    url: route.LinkWithId(params.id),
     data: params.link,
   });
 };
 
 // 删除
-export const DeleteLink: protocol.DeleteLink = (params) => {
+export const DeleteLink: DeleteLink = (params) => {
   return defHttp.delete({
-    url: protocol.route.LinkWithId(params.id),
+    url: route.LinkWithId(params.id),
   });
 };

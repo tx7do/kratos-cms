@@ -1,25 +1,29 @@
 import { defHttp } from '/@/utils/http/axios';
-import * as protocol from '/&/post';
+
+const route = {
+  Posts: '/posts',
+  PostWithId: (id) => `/posts/${id}`,
+};
 
 // 获取列表
-export const ListPost: protocol.ListPost = (params) => {
-  return defHttp.get<protocol.ListPostResponse>({
-    url: protocol.route.Posts,
+export const ListPost: ListPost = (params) => {
+  return defHttp.get<ListPostResponse>({
+    url: route.Posts,
     params,
   });
 };
 
 // 获取
-export const GetPost: protocol.GetPost = (params) => {
-  return defHttp.get<protocol.Post>({
-    url: protocol.route.PostWithId(params.id),
+export const GetPost: GetPost = (params) => {
+  return defHttp.get<Post>({
+    url: route.PostWithId(params.id),
   });
 };
 
 // 创建
-export const CreatePost: protocol.CreatePost = (params) => {
-  return defHttp.post<protocol.Post>(
-    { url: protocol.route.Posts, params },
+export const CreatePost: CreatePost = (params) => {
+  return defHttp.post<Post>(
+    { url: route.Posts, params },
     {
       errorMessageMode: 'none',
     },
@@ -27,16 +31,16 @@ export const CreatePost: protocol.CreatePost = (params) => {
 };
 
 // 更新
-export const UpdatePost: protocol.UpdatePost = (params) => {
-  return defHttp.put<protocol.Post>({
-    url: protocol.route.PostWithId(params.id),
+export const UpdatePost: UpdatePost = (params) => {
+  return defHttp.put<Post>({
+    url: route.PostWithId(params.id),
     data: params.post,
   });
 };
 
 // 删除
-export const DeletePost: protocol.DeletePost = (params) => {
+export const DeletePost: DeletePost = (params) => {
   return defHttp.delete({
-    url: protocol.route.PostWithId(params.id),
+    url: route.PostWithId(params.id),
   });
 };

@@ -1,25 +1,29 @@
 import { defHttp } from '/@/utils/http/axios';
-import * as protocol from '/&/comment';
+
+const route = {
+  Comments: '/comments',
+  CommentWithId: (id) => `/comments/${id}`,
+};
 
 // 获取列表
-export const ListComment: protocol.ListComment = (params) => {
-  return defHttp.get<protocol.ListCommentResponse>({
-    url: protocol.route.Comments,
+export const ListComment: ListComment = (params) => {
+  return defHttp.get<ListCommentResponse>({
+    url: route.Comments,
     params,
   });
 };
 
 // 获取
-export const GetComment: protocol.GetComment = (params) => {
-  return defHttp.get<protocol.Comment>({
-    url: protocol.route.CommentWithId(params.id),
+export const GetComment: GetComment = (params) => {
+  return defHttp.get<Comment>({
+    url: route.CommentWithId(params.id),
   });
 };
 
 // 创建
-export const CreateComment: protocol.CreateComment = (params) => {
-  return defHttp.post<protocol.Comment>(
-    { url: protocol.route.Comments, params },
+export const CreateComment: CreateComment = (params) => {
+  return defHttp.post<Comment>(
+    { url: route.Comments, params },
     {
       errorMessageMode: 'none',
     },
@@ -27,16 +31,16 @@ export const CreateComment: protocol.CreateComment = (params) => {
 };
 
 // 更新
-export const UpdateComment: protocol.UpdateComment = (params) => {
-  return defHttp.put<protocol.Comment>({
-    url: protocol.route.CommentWithId(params.id),
+export const UpdateComment: UpdateComment = (params) => {
+  return defHttp.put<Comment>({
+    url: route.CommentWithId(params.id),
     data: params.comment,
   });
 };
 
 // 删除
-export const DeleteComment: protocol.DeleteComment = (params) => {
+export const DeleteComment: DeleteComment = (params) => {
   return defHttp.delete({
-    url: protocol.route.CommentWithId(params.id),
+    url: route.CommentWithId(params.id),
   });
 };

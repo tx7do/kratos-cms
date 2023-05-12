@@ -1,31 +1,24 @@
-import * as pagination from './pagination';
-
-export const route = {
-  Links: '/links',
-  LinkWithId: (id) => `/links/${id}`,
-};
-
-export interface ListLink {
-  (params: pagination.PagingRequest): Promise<ListLinkResponse>;
+interface ListLink {
+  (params: PagingRequest): Promise<ListLinkResponse>;
 }
 
-export interface GetLink {
+interface GetLink {
   (params: GetLinkRequest): Promise<Link>;
 }
 
-export interface CreateLink {
+interface CreateLink {
   (params: CreateLinkRequest): Promise<Link>;
 }
 
-export interface UpdateLink {
+interface UpdateLink {
   (params: UpdateLinkRequest): Promise<Link>;
 }
 
-export interface DeleteLink {
+interface DeleteLink {
   (params: DeleteLinkRequest): Promise<{}>;
 }
 
-export interface Link {
+interface Link {
   id?: number;
   name?: string;
   url?: string;
@@ -37,27 +30,27 @@ export interface Link {
   updateTime?: string;
 }
 
-export interface ListLinkResponse {
+interface ListLinkResponse {
   items?: Link[];
   total?: number;
 }
 
-export interface GetLinkRequest {
+interface GetLinkRequest {
   id?: number;
 }
 
-export interface CreateLinkRequest {
+interface CreateLinkRequest {
   link?: Link;
   operatorId?: number;
 }
 
-export interface UpdateLinkRequest {
+interface UpdateLinkRequest {
   id?: number;
   link?: Link;
   operatorId?: number;
 }
 
-export interface DeleteLinkRequest {
+interface DeleteLinkRequest {
   id?: number;
   operatorId?: number;
 }

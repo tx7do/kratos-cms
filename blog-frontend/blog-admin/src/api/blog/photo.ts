@@ -1,25 +1,29 @@
 import { defHttp } from '/@/utils/http/axios';
-import * as protocol from '/&/photo';
+
+const route = {
+  Photos: '/photos',
+  PhotoWithId: (id) => `/photos/${id}`,
+};
 
 // 获取列表
-export const ListPhoto: protocol.ListPhoto = (params) => {
-  return defHttp.get<protocol.ListPhotoResponse>({
-    url: protocol.route.Photos,
+export const ListPhoto: ListPhoto = (params) => {
+  return defHttp.get<ListPhotoResponse>({
+    url: route.Photos,
     params,
   });
 };
 
 // 获取
-export const GetPhoto: protocol.GetPhoto = (params) => {
-  return defHttp.get<protocol.Photo>({
-    url: protocol.route.PhotoWithId(params.id),
+export const GetPhoto: GetPhoto = (params) => {
+  return defHttp.get<Photo>({
+    url: route.PhotoWithId(params.id),
   });
 };
 
 // 创建
-export const CreatePhoto: protocol.CreatePhoto = (params) => {
-  return defHttp.post<protocol.Photo>(
-    { url: protocol.route.Photos, params },
+export const CreatePhoto: CreatePhoto = (params) => {
+  return defHttp.post<Photo>(
+    { url: route.Photos, params },
     {
       errorMessageMode: 'none',
     },
@@ -27,16 +31,16 @@ export const CreatePhoto: protocol.CreatePhoto = (params) => {
 };
 
 // 更新
-export const UpdatePhoto: protocol.UpdatePhoto = (params) => {
-  return defHttp.put<protocol.Photo>({
-    url: protocol.route.PhotoWithId(params.id),
+export const UpdatePhoto: UpdatePhoto = (params) => {
+  return defHttp.put<Photo>({
+    url: route.PhotoWithId(params.id),
     data: params.photo,
   });
 };
 
 // 删除
-export const DeletePhoto: protocol.DeletePhoto = (params) => {
+export const DeletePhoto: DeletePhoto = (params) => {
   return defHttp.delete({
-    url: protocol.route.PhotoWithId(params.id),
+    url: route.PhotoWithId(params.id),
   });
 };
