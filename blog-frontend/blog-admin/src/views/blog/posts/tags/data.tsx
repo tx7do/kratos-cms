@@ -1,7 +1,6 @@
 import { BasicColumn } from '/@/components/Table';
 import { h } from 'vue';
 import { Badge, Tag, Avatar } from 'ant-design-vue';
-import { Tag as TAG } from '/&/tag';
 
 export const columns: BasicColumn[] = [
   {
@@ -10,7 +9,7 @@ export const columns: BasicColumn[] = [
     sorter: false,
     width: 80,
     customRender: ({ record }) => {
-      const tag = record as TAG;
+      const tag = record as Tag;
       return h(Avatar, { src: tag.thumbnail });
     },
   },
@@ -21,7 +20,7 @@ export const columns: BasicColumn[] = [
     sorter: false,
     width: 150,
     customRender: ({ record }) => {
-      const tag = record as TAG;
+      const tag = record as Tag;
       return h(Tag, { color: tag.color }, () => tag.name);
     },
   },
@@ -42,7 +41,7 @@ export const columns: BasicColumn[] = [
     sorter: false,
     width: 120,
     customRender: ({ record }) => {
-      const tag = record as TAG;
+      const tag = record as Tag;
       return h(Badge, {
         count: tag.postCount,
         numberStyle: { backgroundColor: 'volcano' },

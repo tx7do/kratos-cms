@@ -12,7 +12,7 @@ export const Logon: Login = (params) => {
   return defHttp.post<LoginResponse>(
     {
       url: route.Login,
-      params
+      params,
     },
     {
       errorMessageMode: 'modal',

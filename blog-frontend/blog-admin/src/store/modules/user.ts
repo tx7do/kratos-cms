@@ -13,8 +13,6 @@ import { usePermissionStore } from '/@/store/modules/permission';
 import { RouteRecordRaw } from 'vue-router';
 import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 import { h } from 'vue';
-import { User } from '/&/user';
-import { LoginRequest } from '/&/authentication';
 
 interface UserState {
   userInfo: Nullable<User>;

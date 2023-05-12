@@ -2,7 +2,6 @@ import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { h } from 'vue';
 import { Avatar, Badge } from 'ant-design-vue';
-import { Category } from '/&/category';
 
 export const columns: BasicColumn[] = [
   {

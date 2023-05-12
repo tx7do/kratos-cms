@@ -50,11 +50,6 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
           find: /\/#\//,
           replacement: pathResolve('types') + '/',
         },
-        // /&/xxxx => api/xxxx
-        {
-          find: /\/&\//,
-          replacement: pathResolve('api') + '/',
-        },
       ],
     },
     server: {
