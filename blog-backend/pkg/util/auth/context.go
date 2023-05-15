@@ -14,13 +14,12 @@ func ParseFromContext(ctx context.Context) (uint32, string, error) {
 		return 0, "", errors.New("no jwt token in context")
 	}
 
-	var strUserName string
-
-	strUserId, err := strconv.Atoi(claims.Subject)
+	userId, err := strconv.ParseUint(claims.Subject, 10, 32)
 	if err != nil {
 		return 0, "", errors.New("extract subject failed")
 	}
-	userId := uint32(strUserId)
 
-	return userId, strUserName, nil
+	var strUserName string
+
+	return uint32(userId), strUserName, nil
 }
