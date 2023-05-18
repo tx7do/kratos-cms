@@ -244,11 +244,11 @@ var schemaGraph = func() *sqlgraph.Schema {
 			user.FieldUpdateTime:  {Type: field.TypeInt64, Column: user.FieldUpdateTime},
 			user.FieldDeleteTime:  {Type: field.TypeInt64, Column: user.FieldDeleteTime},
 			user.FieldUsername:    {Type: field.TypeString, Column: user.FieldUsername},
+			user.FieldPassword:    {Type: field.TypeString, Column: user.FieldPassword},
 			user.FieldNickname:    {Type: field.TypeString, Column: user.FieldNickname},
 			user.FieldEmail:       {Type: field.TypeString, Column: user.FieldEmail},
 			user.FieldAvatar:      {Type: field.TypeString, Column: user.FieldAvatar},
 			user.FieldDescription: {Type: field.TypeString, Column: user.FieldDescription},
-			user.FieldPassword:    {Type: field.TypeString, Column: user.FieldPassword},
 		},
 	}
 	return graph
@@ -1155,6 +1155,11 @@ func (f *UserFilter) WhereUsername(p entql.StringP) {
 	f.Where(p.Field(user.FieldUsername))
 }
 
+// WherePassword applies the entql string predicate on the password field.
+func (f *UserFilter) WherePassword(p entql.StringP) {
+	f.Where(p.Field(user.FieldPassword))
+}
+
 // WhereNickname applies the entql string predicate on the nickname field.
 func (f *UserFilter) WhereNickname(p entql.StringP) {
 	f.Where(p.Field(user.FieldNickname))
@@ -1173,9 +1178,4 @@ func (f *UserFilter) WhereAvatar(p entql.StringP) {
 // WhereDescription applies the entql string predicate on the description field.
 func (f *UserFilter) WhereDescription(p entql.StringP) {
 	f.Where(p.Field(user.FieldDescription))
-}
-
-// WherePassword applies the entql string predicate on the password field.
-func (f *UserFilter) WherePassword(p entql.StringP) {
-	f.Where(p.Field(user.FieldPassword))
 }

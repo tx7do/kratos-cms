@@ -39,6 +39,13 @@ func (User) Fields() []ent.Field {
 			Nillable().
 			Match(regexp.MustCompile("^[a-zA-Z0-9]{4,16}$")),
 
+		field.String("password").
+			Comment("登陆密码").
+			MaxLen(255).
+			Optional().
+			Nillable().
+			NotEmpty(),
+
 		field.String("nickname").
 			Comment("昵称").
 			MaxLen(128).
@@ -62,13 +69,6 @@ func (User) Fields() []ent.Field {
 			MaxLen(1023).
 			Optional().
 			Nillable(),
-
-		field.String("password").
-			Comment("登陆密码").
-			MaxLen(255).Unique().
-			Optional().
-			Nillable().
-			NotEmpty(),
 	}
 }
 

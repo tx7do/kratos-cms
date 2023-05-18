@@ -10,7 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// Tag is the model entity for the Tag schema.
+// 标签
 type Tag struct {
 	config `json:"-"`
 	// ID of the ent.
@@ -22,7 +22,7 @@ type Tag struct {
 	UpdateTime *int64 `json:"update_time,omitempty"`
 	// 删除时间
 	DeleteTime *int64 `json:"delete_time,omitempty"`
-	// 表情名
+	// 标签名
 	Name *string `json:"name,omitempty"`
 	// 颜色
 	Color *string `json:"color,omitempty"`

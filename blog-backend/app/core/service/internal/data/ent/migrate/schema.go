@@ -228,7 +228,7 @@ var (
 		{Name: "create_time", Type: field.TypeInt64, Nullable: true, Comment: "创建时间"},
 		{Name: "update_time", Type: field.TypeInt64, Nullable: true, Comment: "更新时间"},
 		{Name: "delete_time", Type: field.TypeInt64, Nullable: true, Comment: "删除时间"},
-		{Name: "name", Type: field.TypeString, Unique: true, Nullable: true, Comment: "表情名"},
+		{Name: "name", Type: field.TypeString, Unique: true, Nullable: true, Comment: "标签名"},
 		{Name: "color", Type: field.TypeString, Nullable: true, Comment: "颜色"},
 		{Name: "thumbnail", Type: field.TypeString, Nullable: true, Comment: "缩略图"},
 		{Name: "slug", Type: field.TypeString, Nullable: true, Comment: "链接别名"},
@@ -238,6 +238,7 @@ var (
 	// TagTable holds the schema information for the "tag" table.
 	TagTable = &schema.Table{
 		Name:       "tag",
+		Comment:    "标签",
 		Columns:    TagColumns,
 		PrimaryKey: []*schema.Column{TagColumns[0]},
 		Indexes: []*schema.Index{
@@ -255,11 +256,11 @@ var (
 		{Name: "update_time", Type: field.TypeInt64, Nullable: true, Comment: "更新时间"},
 		{Name: "delete_time", Type: field.TypeInt64, Nullable: true, Comment: "删除时间"},
 		{Name: "username", Type: field.TypeString, Unique: true, Nullable: true, Size: 50, Comment: "用户名"},
+		{Name: "password", Type: field.TypeString, Nullable: true, Size: 255, Comment: "登陆密码"},
 		{Name: "nickname", Type: field.TypeString, Nullable: true, Size: 128, Comment: "昵称"},
 		{Name: "email", Type: field.TypeString, Nullable: true, Size: 127, Comment: "电子邮箱"},
 		{Name: "avatar", Type: field.TypeString, Nullable: true, Size: 1023, Comment: "头像"},
 		{Name: "description", Type: field.TypeString, Nullable: true, Size: 1023, Comment: "个人说明"},
-		{Name: "password", Type: field.TypeString, Unique: true, Nullable: true, Size: 255, Comment: "登陆密码"},
 	}
 	// UserTable holds the schema information for the "user" table.
 	UserTable = &schema.Table{

@@ -257,24 +257,8 @@ func init() {
 			return nil
 		}
 	}()
-	// userDescNickname is the schema descriptor for nickname field.
-	userDescNickname := userFields[1].Descriptor()
-	// user.NicknameValidator is a validator for the "nickname" field. It is called by the builders before save.
-	user.NicknameValidator = userDescNickname.Validators[0].(func(string) error)
-	// userDescEmail is the schema descriptor for email field.
-	userDescEmail := userFields[2].Descriptor()
-	// user.EmailValidator is a validator for the "email" field. It is called by the builders before save.
-	user.EmailValidator = userDescEmail.Validators[0].(func(string) error)
-	// userDescAvatar is the schema descriptor for avatar field.
-	userDescAvatar := userFields[3].Descriptor()
-	// user.AvatarValidator is a validator for the "avatar" field. It is called by the builders before save.
-	user.AvatarValidator = userDescAvatar.Validators[0].(func(string) error)
-	// userDescDescription is the schema descriptor for description field.
-	userDescDescription := userFields[4].Descriptor()
-	// user.DescriptionValidator is a validator for the "description" field. It is called by the builders before save.
-	user.DescriptionValidator = userDescDescription.Validators[0].(func(string) error)
 	// userDescPassword is the schema descriptor for password field.
-	userDescPassword := userFields[5].Descriptor()
+	userDescPassword := userFields[1].Descriptor()
 	// user.PasswordValidator is a validator for the "password" field. It is called by the builders before save.
 	user.PasswordValidator = func() func(string) error {
 		validators := userDescPassword.Validators
@@ -291,6 +275,22 @@ func init() {
 			return nil
 		}
 	}()
+	// userDescNickname is the schema descriptor for nickname field.
+	userDescNickname := userFields[2].Descriptor()
+	// user.NicknameValidator is a validator for the "nickname" field. It is called by the builders before save.
+	user.NicknameValidator = userDescNickname.Validators[0].(func(string) error)
+	// userDescEmail is the schema descriptor for email field.
+	userDescEmail := userFields[3].Descriptor()
+	// user.EmailValidator is a validator for the "email" field. It is called by the builders before save.
+	user.EmailValidator = userDescEmail.Validators[0].(func(string) error)
+	// userDescAvatar is the schema descriptor for avatar field.
+	userDescAvatar := userFields[4].Descriptor()
+	// user.AvatarValidator is a validator for the "avatar" field. It is called by the builders before save.
+	user.AvatarValidator = userDescAvatar.Validators[0].(func(string) error)
+	// userDescDescription is the schema descriptor for description field.
+	userDescDescription := userFields[5].Descriptor()
+	// user.DescriptionValidator is a validator for the "description" field. It is called by the builders before save.
+	user.DescriptionValidator = userDescDescription.Validators[0].(func(string) error)
 	// userDescID is the schema descriptor for id field.
 	userDescID := userMixinFields0[0].Descriptor()
 	// user.IDValidator is a validator for the "id" field. It is called by the builders before save.

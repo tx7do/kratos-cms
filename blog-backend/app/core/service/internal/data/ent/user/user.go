@@ -15,6 +15,8 @@ const (
 	FieldDeleteTime = "delete_time"
 	// FieldUsername holds the string denoting the username field in the database.
 	FieldUsername = "username"
+	// FieldPassword holds the string denoting the password field in the database.
+	FieldPassword = "password"
 	// FieldNickname holds the string denoting the nickname field in the database.
 	FieldNickname = "nickname"
 	// FieldEmail holds the string denoting the email field in the database.
@@ -23,8 +25,6 @@ const (
 	FieldAvatar = "avatar"
 	// FieldDescription holds the string denoting the description field in the database.
 	FieldDescription = "description"
-	// FieldPassword holds the string denoting the password field in the database.
-	FieldPassword = "password"
 	// Table holds the table name of the user in the database.
 	Table = "user"
 )
@@ -36,11 +36,11 @@ var Columns = []string{
 	FieldUpdateTime,
 	FieldDeleteTime,
 	FieldUsername,
+	FieldPassword,
 	FieldNickname,
 	FieldEmail,
 	FieldAvatar,
 	FieldDescription,
-	FieldPassword,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -60,6 +60,8 @@ var (
 	UpdateDefaultUpdateTime func() int64
 	// UsernameValidator is a validator for the "username" field. It is called by the builders before save.
 	UsernameValidator func(string) error
+	// PasswordValidator is a validator for the "password" field. It is called by the builders before save.
+	PasswordValidator func(string) error
 	// NicknameValidator is a validator for the "nickname" field. It is called by the builders before save.
 	NicknameValidator func(string) error
 	// EmailValidator is a validator for the "email" field. It is called by the builders before save.
@@ -68,8 +70,6 @@ var (
 	AvatarValidator func(string) error
 	// DescriptionValidator is a validator for the "description" field. It is called by the builders before save.
 	DescriptionValidator func(string) error
-	// PasswordValidator is a validator for the "password" field. It is called by the builders before save.
-	PasswordValidator func(string) error
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )

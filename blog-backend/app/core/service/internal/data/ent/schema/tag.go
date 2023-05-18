@@ -21,6 +21,7 @@ func (Tag) Annotations() []schema.Annotation {
 			Collation: "utf8mb4_bin",
 		},
 		entsql.WithComments(true),
+		schema.Comment("标签"),
 	}
 }
 
@@ -28,7 +29,7 @@ func (Tag) Annotations() []schema.Annotation {
 func (Tag) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("name").
-			Comment("表情名").
+			Comment("标签名").
 			Unique().
 			NotEmpty().
 			Optional().

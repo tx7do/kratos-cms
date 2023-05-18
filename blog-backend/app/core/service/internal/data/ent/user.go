@@ -24,6 +24,8 @@ type User struct {
 	DeleteTime *int64 `json:"delete_time,omitempty"`
 	// 用户名
 	Username *string `json:"username,omitempty"`
+	// 登陆密码
+	Password *string `json:"password,omitempty"`
 	// 昵称
 	Nickname *string `json:"nickname,omitempty"`
 	// 电子邮箱
@@ -32,8 +34,6 @@ type User struct {
 	Avatar *string `json:"avatar,omitempty"`
 	// 个人说明
 	Description *string `json:"description,omitempty"`
-	// 登陆密码
-	Password *string `json:"password,omitempty"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -43,7 +43,7 @@ func (*User) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case user.FieldID, user.FieldCreateTime, user.FieldUpdateTime, user.FieldDeleteTime:
 			values[i] = new(sql.NullInt64)
-		case user.FieldUsername, user.FieldNickname, user.FieldEmail, user.FieldAvatar, user.FieldDescription, user.FieldPassword:
+		case user.FieldUsername, user.FieldPassword, user.FieldNickname, user.FieldEmail, user.FieldAvatar, user.FieldDescription:
 			values[i] = new(sql.NullString)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type User", columns[i])
@@ -94,6 +94,13 @@ func (u *User) assignValues(columns []string, values []any) error {
 				u.Username = new(string)
 				*u.Username = value.String
 			}
+		case user.FieldPassword:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field password", values[i])
+			} else if value.Valid {
+				u.Password = new(string)
+				*u.Password = value.String
+			}
 		case user.FieldNickname:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field nickname", values[i])
@@ -121,13 +128,6 @@ func (u *User) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				u.Description = new(string)
 				*u.Description = value.String
-			}
-		case user.FieldPassword:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field password", values[i])
-			} else if value.Valid {
-				u.Password = new(string)
-				*u.Password = value.String
 			}
 		}
 	}
@@ -177,6 +177,11 @@ func (u *User) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
+	if v := u.Password; v != nil {
+		builder.WriteString("password=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
 	if v := u.Nickname; v != nil {
 		builder.WriteString("nickname=")
 		builder.WriteString(*v)
@@ -194,11 +199,6 @@ func (u *User) String() string {
 	builder.WriteString(", ")
 	if v := u.Description; v != nil {
 		builder.WriteString("description=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := u.Password; v != nil {
-		builder.WriteString("password=")
 		builder.WriteString(*v)
 	}
 	builder.WriteByte(')')
