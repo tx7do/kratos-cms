@@ -1,21 +1,49 @@
-trace:
-  endpoint: http://host.docker.internal:14268/api/traces
 server:
   rest:
-    addr: 0.0.0.0:8800
-    timeout: 1s
+    addr: "0.0.0.0:8800"
+    timeout: 10s
+    cors:
+      headers:
+        - "X-Requested-With"
+        - "Content-Type"
+        - "Authorization"
+      methods:
+        - "GET"
+        - "POST"
+        - "PUT"
+        - "DELETE"
+        - "HEAD"
+        - "OPTIONS"
+      origins:
+        - "*"
+    middleware:
+      auth:
+        method: "HS256"
+        key: "some_api_key"
   grpc:
-    addr: 0.0.0.0:0
-    timeout: 1s
+    addr: "0.0.0.0:0"
+    timeout: 10s
+    middleware:
+client:
+  grpc:
+    timeout: 10s
+    middleware:
+      enable_logging: true
+      enable_recovery: true
+      enable_tracing: true
+      enable_validate: true
+      enable_circuit_breaker: true
+      auth:
+        method: ""
+        key: "some_api_key"
 data:
-  database:
-    driver: postgres
-    source: host=localhost port=5432 user=postgres password=123456 dbname=blog sslmode=disable
   redis:
-    addr: host.docker.internal:6379
-    dial_timeout: 1s
+    addr: "localhost:6379"
+    dial_timeout: 10s
     read_timeout: 0.4s
     write_timeout: 0.6s
-auth:
-  service_key: some_jwt_sign_key
-  api_key: some_api_key
+trace:
+  endpoint: "http://localhost:14268/api/traces"
+  batcher: "jaeger"
+  sampler: 1.0
+  env: "dev"
