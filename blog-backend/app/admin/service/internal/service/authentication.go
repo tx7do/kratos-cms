@@ -6,11 +6,12 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"kratos-blog/app/admin/service/internal/biz"
+	"kratos-cms/app/admin/service/internal/biz"
 
-	v1 "kratos-blog/gen/api/go/admin/service/v1"
-	userV1 "kratos-blog/gen/api/go/user/service/v1"
-	"kratos-blog/pkg/util/auth"
+	v1 "kratos-cms/gen/api/go/admin/service/v1"
+	userV1 "kratos-cms/gen/api/go/user/service/v1"
+
+	"kratos-cms/pkg/util/authn"
 )
 
 type AuthenticationService struct {
@@ -67,7 +68,7 @@ func (s *AuthenticationService) Logout(ctx context.Context, req *v1.LogoutReques
 }
 
 func (s *AuthenticationService) GetMe(ctx context.Context, req *v1.GetMeRequest) (*userV1.User, error) {
-	userId, _, err := auth.ParseFromContext(ctx)
+	userId, _, err := authn.ParseFromContext(ctx)
 	if err != nil {
 		return nil, v1.ErrorRequestNotSupport("%d 权限信息不存在", userId)
 	}

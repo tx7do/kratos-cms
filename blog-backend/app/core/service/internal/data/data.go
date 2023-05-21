@@ -11,9 +11,9 @@ import (
 	_ "github.com/jackc/pgx/v4/stdlib"
 	_ "github.com/lib/pq"
 
-	"kratos-blog/app/core/service/internal/data/ent"
-	"kratos-blog/app/core/service/internal/data/ent/migrate"
-	"kratos-blog/gen/api/go/common/conf"
+	"kratos-cms/app/core/service/internal/data/ent"
+	"kratos-cms/app/core/service/internal/data/ent/migrate"
+	"kratos-cms/gen/api/go/common/conf"
 )
 
 // Data .

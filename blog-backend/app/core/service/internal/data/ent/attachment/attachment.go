@@ -2,6 +2,10 @@
 
 package attachment
 
+import (
+	"entgo.io/ent/dialect/sql"
+)
+
 const (
 	// Label holds the string label denoting the attachment type in the database.
 	Label = "attachment"
@@ -79,3 +83,76 @@ var (
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )
+
+// OrderOption defines the ordering options for the Attachment queries.
+type OrderOption func(*sql.Selector)
+
+// ByID orders the results by the id field.
+func ByID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldID, opts...).ToFunc()
+}
+
+// ByCreateTime orders the results by the create_time field.
+func ByCreateTime(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldCreateTime, opts...).ToFunc()
+}
+
+// ByUpdateTime orders the results by the update_time field.
+func ByUpdateTime(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldUpdateTime, opts...).ToFunc()
+}
+
+// ByDeleteTime orders the results by the delete_time field.
+func ByDeleteTime(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDeleteTime, opts...).ToFunc()
+}
+
+// ByName orders the results by the name field.
+func ByName(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldName, opts...).ToFunc()
+}
+
+// ByPath orders the results by the path field.
+func ByPath(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldPath, opts...).ToFunc()
+}
+
+// ByFileKey orders the results by the file_key field.
+func ByFileKey(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldFileKey, opts...).ToFunc()
+}
+
+// ByThumbnail orders the results by the thumbnail field.
+func ByThumbnail(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldThumbnail, opts...).ToFunc()
+}
+
+// ByMediaType orders the results by the media_type field.
+func ByMediaType(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldMediaType, opts...).ToFunc()
+}
+
+// BySuffix orders the results by the suffix field.
+func BySuffix(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSuffix, opts...).ToFunc()
+}
+
+// ByWidth orders the results by the width field.
+func ByWidth(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldWidth, opts...).ToFunc()
+}
+
+// ByHeight orders the results by the height field.
+func ByHeight(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldHeight, opts...).ToFunc()
+}
+
+// BySize orders the results by the Size field.
+func BySize(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSize, opts...).ToFunc()
+}
+
+// ByType orders the results by the type field.
+func ByType(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldType, opts...).ToFunc()
+}

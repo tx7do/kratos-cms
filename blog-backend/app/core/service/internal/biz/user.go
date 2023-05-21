@@ -5,15 +5,17 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 
-	v1 "kratos-blog/gen/api/go/user/service/v1"
+	"kratos-cms/gen/api/go/common/pagination"
+	v1 "kratos-cms/gen/api/go/user/service/v1"
 )
 
 type UserRepo interface {
 	Create(ctx context.Context, req *v1.CreateUserRequest) (*v1.User, error)
 	Update(ctx context.Context, req *v1.UpdateUserRequest) (*v1.User, error)
 	Delete(ctx context.Context, req *v1.DeleteUserRequest) (bool, error)
+	List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListUserResponse, error)
+	Get(ctx context.Context, req *v1.GetUserRequest) (*v1.User, error)
 
-	Get(ctx context.Context, req uint32) (*v1.User, error)
 	GetUserByUserName(ctx context.Context, userName string) (*v1.User, error)
 
 	VerifyPassword(ctx context.Context, req *v1.VerifyPasswordRequest) (bool, error)
@@ -32,7 +34,7 @@ func NewUserUseCase(repo UserRepo, logger log.Logger) *UserUseCase {
 	}
 }
 
-func (uc *UserUseCase) Get(ctx context.Context, req uint32) (*v1.User, error) {
+func (uc *UserUseCase) Get(ctx context.Context, req *v1.GetUserRequest) (*v1.User, error) {
 	user, err := uc.repo.Get(ctx, req)
 	if user != nil {
 		user.Password = nil
@@ -40,8 +42,8 @@ func (uc *UserUseCase) Get(ctx context.Context, req uint32) (*v1.User, error) {
 	return user, err
 }
 
-func (uc *UserUseCase) GetUserByUserName(ctx context.Context, userName string) (*v1.User, error) {
-	return uc.repo.GetUserByUserName(ctx, userName)
+func (uc *UserUseCase) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListUserResponse, error) {
+	return uc.repo.List(ctx, req)
 }
 
 func (uc *UserUseCase) Create(ctx context.Context, req *v1.CreateUserRequest) (*v1.User, error) {
@@ -54,6 +56,10 @@ func (uc *UserUseCase) Update(ctx context.Context, req *v1.UpdateUserRequest) (*
 
 func (uc *UserUseCase) Delete(ctx context.Context, req *v1.DeleteUserRequest) (bool, error) {
 	return uc.repo.Delete(ctx, req)
+}
+
+func (uc *UserUseCase) GetUserByUserName(ctx context.Context, userName string) (*v1.User, error) {
+	return uc.repo.GetUserByUserName(ctx, userName)
 }
 
 func (uc *UserUseCase) VerifyPassword(ctx context.Context, req *v1.VerifyPasswordRequest) (bool, error) {

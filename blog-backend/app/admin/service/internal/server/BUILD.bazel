@@ -6,7 +6,7 @@ go_library(
         "init.go",
         "rest.go",
     ],
-    importpath = "kratos-blog/app/admin/service/internal/server",
+    importpath = "kratos-cms/app/admin/service/internal/server",
     visibility = ["//app/admin/service:__subpackages__"],
     deps = [
         "//app/admin/service/internal/service",

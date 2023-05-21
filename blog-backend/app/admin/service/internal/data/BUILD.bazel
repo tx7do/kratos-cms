@@ -6,7 +6,7 @@ go_library(
         "data.go",
         "init.go",
     ],
-    importpath = "kratos-blog/app/admin/service/internal/data",
+    importpath = "kratos-cms/app/admin/service/internal/data",
     visibility = ["//app/admin/service:__subpackages__"],
     deps = [
         "//gen/api/go/comment/service/v1:service",

@@ -2,6 +2,10 @@
 
 package comment
 
+import (
+	"entgo.io/ent/dialect/sql"
+)
+
 const (
 	// Label holds the string label denoting the comment type in the database.
 	Label = "comment"
@@ -81,3 +85,86 @@ var (
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )
+
+// OrderOption defines the ordering options for the Comment queries.
+type OrderOption func(*sql.Selector)
+
+// ByID orders the results by the id field.
+func ByID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldID, opts...).ToFunc()
+}
+
+// ByCreateTime orders the results by the create_time field.
+func ByCreateTime(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldCreateTime, opts...).ToFunc()
+}
+
+// ByUpdateTime orders the results by the update_time field.
+func ByUpdateTime(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldUpdateTime, opts...).ToFunc()
+}
+
+// ByDeleteTime orders the results by the delete_time field.
+func ByDeleteTime(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDeleteTime, opts...).ToFunc()
+}
+
+// ByAuthor orders the results by the author field.
+func ByAuthor(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldAuthor, opts...).ToFunc()
+}
+
+// ByEmail orders the results by the email field.
+func ByEmail(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldEmail, opts...).ToFunc()
+}
+
+// ByIPAddress orders the results by the ip_address field.
+func ByIPAddress(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldIPAddress, opts...).ToFunc()
+}
+
+// ByAuthorURL orders the results by the author_url field.
+func ByAuthorURL(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldAuthorURL, opts...).ToFunc()
+}
+
+// ByGravatarMd5 orders the results by the gravatar_md5 field.
+func ByGravatarMd5(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldGravatarMd5, opts...).ToFunc()
+}
+
+// ByContent orders the results by the content field.
+func ByContent(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldContent, opts...).ToFunc()
+}
+
+// ByUserAgent orders the results by the user_agent field.
+func ByUserAgent(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldUserAgent, opts...).ToFunc()
+}
+
+// ByAvatar orders the results by the avatar field.
+func ByAvatar(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldAvatar, opts...).ToFunc()
+}
+
+// ByParentID orders the results by the parent_id field.
+func ByParentID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldParentID, opts...).ToFunc()
+}
+
+// ByStatus orders the results by the status field.
+func ByStatus(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldStatus, opts...).ToFunc()
+}
+
+// ByIsAdmin orders the results by the is_admin field.
+func ByIsAdmin(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldIsAdmin, opts...).ToFunc()
+}
+
+// ByAllowNotification orders the results by the allow_notification field.
+func ByAllowNotification(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldAllowNotification, opts...).ToFunc()
+}

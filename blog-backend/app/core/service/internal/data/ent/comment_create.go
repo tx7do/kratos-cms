@@ -6,7 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent/comment"
+	"kratos-cms/app/core/service/internal/data/ent/comment"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -245,7 +245,7 @@ func (cc *CommentCreate) Mutation() *CommentMutation {
 // Save creates the Comment in the database.
 func (cc *CommentCreate) Save(ctx context.Context) (*Comment, error) {
 	cc.defaults()
-	return withHooks[*Comment, CommentMutation](ctx, cc.sqlSave, cc.mutation, cc.hooks)
+	return withHooks(ctx, cc.sqlSave, cc.mutation, cc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -1142,8 +1142,8 @@ func (ccb *CommentCreateBulk) Save(ctx context.Context) ([]*Comment, error) {
 					return nil, err
 				}
 				builder.mutation = mutation
-				nodes[i], specs[i] = builder.createSpec()
 				var err error
+				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
 					_, err = mutators[i+1].Mutate(root, ccb.builders[i+1].mutation)
 				} else {

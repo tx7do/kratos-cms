@@ -2,18 +2,18 @@ package data
 
 import (
 	"context"
-	"kratos-blog/app/core/service/internal/data/ent"
-	"kratos-blog/app/core/service/internal/data/ent/comment"
-	"kratos-blog/pkg/util/entgo"
-	util "kratos-blog/pkg/util/time"
+	"github.com/tx7do/kratos-utils/entgo"
+	util "github.com/tx7do/kratos-utils/time"
+	"kratos-cms/app/core/service/internal/data/ent"
+	"kratos-cms/app/core/service/internal/data/ent/comment"
 	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
-	"kratos-blog/app/core/service/internal/biz"
-	"kratos-blog/gen/api/go/common/pagination"
-	v1 "kratos-blog/gen/api/go/file/service/v1"
+	"kratos-cms/app/core/service/internal/biz"
+	"kratos-cms/gen/api/go/common/pagination"
+	v1 "kratos-cms/gen/api/go/file/service/v1"
 
-	paging "kratos-blog/pkg/util/pagination"
+	paging "github.com/tx7do/kratos-utils/pagination"
 )
 
 var _ biz.AttachmentRepo = (*AttachmentRepo)(nil)

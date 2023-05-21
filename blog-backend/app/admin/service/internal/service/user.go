@@ -2,13 +2,14 @@ package service
 
 import (
 	"context"
+	"kratos-cms/pkg/util/authn"
+
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
-	"kratos-blog/gen/api/go/common/pagination"
-	"kratos-blog/pkg/util/auth"
+	"kratos-cms/gen/api/go/common/pagination"
 
-	v1 "kratos-blog/gen/api/go/admin/service/v1"
-	userV1 "kratos-blog/gen/api/go/user/service/v1"
+	v1 "kratos-cms/gen/api/go/admin/service/v1"
+	userV1 "kratos-cms/gen/api/go/user/service/v1"
 )
 
 type UserService struct {
@@ -39,7 +40,7 @@ func (s *UserService) GetUserByUserName(ctx context.Context, req *userV1.GetUser
 }
 
 func (s *UserService) CreateUser(ctx context.Context, req *userV1.CreateUserRequest) (*userV1.User, error) {
-	userId, _, err := auth.ParseFromContext(ctx)
+	userId, _, err := authn.ParseFromContext(ctx)
 	if err != nil {
 		return nil, v1.ErrorRequestNotSupport("%d 权限信息不存在", userId)
 	}
@@ -60,7 +61,7 @@ func (s *UserService) CreateUser(ctx context.Context, req *userV1.CreateUserRequ
 }
 
 func (s *UserService) UpdateUser(ctx context.Context, req *userV1.UpdateUserRequest) (*userV1.User, error) {
-	userId, _, err := auth.ParseFromContext(ctx)
+	userId, _, err := authn.ParseFromContext(ctx)
 	if err != nil {
 		return nil, v1.ErrorRequestNotSupport("%d 权限信息不存在", userId)
 	}
@@ -75,7 +76,7 @@ func (s *UserService) UpdateUser(ctx context.Context, req *userV1.UpdateUserRequ
 }
 
 func (s *UserService) DeleteUser(ctx context.Context, req *userV1.DeleteUserRequest) (*emptypb.Empty, error) {
-	userId, _, err := auth.ParseFromContext(ctx)
+	userId, _, err := authn.ParseFromContext(ctx)
 	if err != nil {
 		return nil, v1.ErrorRequestNotSupport("%d 权限信息不存在", userId)
 	}

@@ -3,7 +3,7 @@
 package post
 
 import (
-	"kratos-blog/app/core/service/internal/data/ent/predicate"
+	"kratos-cms/app/core/service/internal/data/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 )

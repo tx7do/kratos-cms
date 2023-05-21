@@ -6,7 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent/photo"
+	"kratos-cms/app/core/service/internal/data/ent/photo"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -189,7 +189,7 @@ func (pc *PhotoCreate) Mutation() *PhotoMutation {
 // Save creates the Photo in the database.
 func (pc *PhotoCreate) Save(ctx context.Context) (*Photo, error) {
 	pc.defaults()
-	return withHooks[*Photo, PhotoMutation](ctx, pc.sqlSave, pc.mutation, pc.hooks)
+	return withHooks(ctx, pc.sqlSave, pc.mutation, pc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -909,8 +909,8 @@ func (pcb *PhotoCreateBulk) Save(ctx context.Context) ([]*Photo, error) {
 					return nil, err
 				}
 				builder.mutation = mutation
-				nodes[i], specs[i] = builder.createSpec()
 				var err error
+				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
 					_, err = mutators[i+1].Mutate(root, pcb.builders[i+1].mutation)
 				} else {

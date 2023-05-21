@@ -4,9 +4,10 @@ package ent
 
 import (
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent/comment"
+	"kratos-cms/app/core/service/internal/data/ent/comment"
 	"strings"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 )
 
@@ -46,6 +47,7 @@ type Comment struct {
 	IsAdmin *bool `json:"is_admin,omitempty"`
 	// 允许通知
 	AllowNotification *bool `json:"allow_notification,omitempty"`
+	selectValues      sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -60,7 +62,7 @@ func (*Comment) scanValues(columns []string) ([]any, error) {
 		case comment.FieldAuthor, comment.FieldEmail, comment.FieldIPAddress, comment.FieldAuthorURL, comment.FieldGravatarMd5, comment.FieldContent, comment.FieldUserAgent, comment.FieldAvatar:
 			values[i] = new(sql.NullString)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type Comment", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -185,9 +187,17 @@ func (c *Comment) assignValues(columns []string, values []any) error {
 				c.AllowNotification = new(bool)
 				*c.AllowNotification = value.Bool
 			}
+		default:
+			c.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the Comment.
+// This includes values selected through modifiers, order, etc.
+func (c *Comment) Value(name string) (ent.Value, error) {
+	return c.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this Comment.

@@ -3,15 +3,15 @@
 package ent
 
 import (
-	"kratos-blog/app/core/service/internal/data/ent/attachment"
-	"kratos-blog/app/core/service/internal/data/ent/category"
-	"kratos-blog/app/core/service/internal/data/ent/comment"
-	"kratos-blog/app/core/service/internal/data/ent/link"
-	"kratos-blog/app/core/service/internal/data/ent/menu"
-	"kratos-blog/app/core/service/internal/data/ent/photo"
-	"kratos-blog/app/core/service/internal/data/ent/post"
-	"kratos-blog/app/core/service/internal/data/ent/tag"
-	"kratos-blog/app/core/service/internal/data/ent/user"
+	"kratos-cms/app/core/service/internal/data/ent/attachment"
+	"kratos-cms/app/core/service/internal/data/ent/category"
+	"kratos-cms/app/core/service/internal/data/ent/comment"
+	"kratos-cms/app/core/service/internal/data/ent/link"
+	"kratos-cms/app/core/service/internal/data/ent/menu"
+	"kratos-cms/app/core/service/internal/data/ent/photo"
+	"kratos-cms/app/core/service/internal/data/ent/post"
+	"kratos-cms/app/core/service/internal/data/ent/tag"
+	"kratos-cms/app/core/service/internal/data/ent/user"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"

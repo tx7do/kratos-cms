@@ -6,9 +6,9 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"kratos-blog/gen/api/go/common/pagination"
-	contentV1 "kratos-blog/gen/api/go/content/service/v1"
-	v1 "kratos-blog/gen/api/go/front/service/v1"
+	"kratos-cms/gen/api/go/common/pagination"
+	contentV1 "kratos-cms/gen/api/go/content/service/v1"
+	v1 "kratos-cms/gen/api/go/front/service/v1"
 )
 
 type PostService struct {

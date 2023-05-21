@@ -5,8 +5,8 @@ package ent
 import (
 	"context"
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent/link"
-	"kratos-blog/app/core/service/internal/data/ent/predicate"
+	"kratos-cms/app/core/service/internal/data/ent/link"
+	"kratos-cms/app/core/service/internal/data/ent/predicate"
 	"math"
 
 	"entgo.io/ent/dialect/sql"
@@ -18,7 +18,7 @@ import (
 type LinkQuery struct {
 	config
 	ctx        *QueryContext
-	order      []OrderFunc
+	order      []link.OrderOption
 	inters     []Interceptor
 	predicates []predicate.Link
 	modifiers  []func(*sql.Selector)
@@ -53,7 +53,7 @@ func (lq *LinkQuery) Unique(unique bool) *LinkQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (lq *LinkQuery) Order(o ...OrderFunc) *LinkQuery {
+func (lq *LinkQuery) Order(o ...link.OrderOption) *LinkQuery {
 	lq.order = append(lq.order, o...)
 	return lq
 }
@@ -247,7 +247,7 @@ func (lq *LinkQuery) Clone() *LinkQuery {
 	return &LinkQuery{
 		config:     lq.config,
 		ctx:        lq.ctx.Clone(),
-		order:      append([]OrderFunc{}, lq.order...),
+		order:      append([]link.OrderOption{}, lq.order...),
 		inters:     append([]Interceptor{}, lq.inters...),
 		predicates: append([]predicate.Link{}, lq.predicates...),
 		// clone intermediate query.

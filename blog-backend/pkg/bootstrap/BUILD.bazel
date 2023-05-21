@@ -17,7 +17,7 @@ go_library(
         "service_info.go",
         "tracer.go",
     ],
-    importpath = "kratos-blog/pkg/bootstrap",
+    importpath = "kratos-cms/pkg/bootstrap",
     visibility = ["//visibility:public"],
     deps = [
         "//gen/api/go/common/conf",

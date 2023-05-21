@@ -6,7 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent/tag"
+	"kratos-cms/app/core/service/internal/data/ent/tag"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -161,7 +161,7 @@ func (tc *TagCreate) Mutation() *TagMutation {
 // Save creates the Tag in the database.
 func (tc *TagCreate) Save(ctx context.Context) (*Tag, error) {
 	tc.defaults()
-	return withHooks[*Tag, TagMutation](ctx, tc.sqlSave, tc.mutation, tc.hooks)
+	return withHooks(ctx, tc.sqlSave, tc.mutation, tc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -787,8 +787,8 @@ func (tcb *TagCreateBulk) Save(ctx context.Context) ([]*Tag, error) {
 					return nil, err
 				}
 				builder.mutation = mutation
-				nodes[i], specs[i] = builder.createSpec()
 				var err error
+				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
 					_, err = mutators[i+1].Mutate(root, tcb.builders[i+1].mutation)
 				} else {

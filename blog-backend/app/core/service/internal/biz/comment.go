@@ -5,8 +5,8 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 
-	v1 "kratos-blog/gen/api/go/comment/service/v1"
-	"kratos-blog/gen/api/go/common/pagination"
+	v1 "kratos-cms/gen/api/go/comment/service/v1"
+	"kratos-cms/gen/api/go/common/pagination"
 )
 
 type CommentRepo interface {

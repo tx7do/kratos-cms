@@ -4,15 +4,15 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/logging"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
-	"kratos-blog/app/core/service/internal/service"
+	"kratos-cms/app/core/service/internal/service"
 
-	commentV1 "kratos-blog/gen/api/go/comment/service/v1"
-	contentV1 "kratos-blog/gen/api/go/content/service/v1"
-	fileV1 "kratos-blog/gen/api/go/file/service/v1"
-	userV1 "kratos-blog/gen/api/go/user/service/v1"
+	commentV1 "kratos-cms/gen/api/go/comment/service/v1"
+	contentV1 "kratos-cms/gen/api/go/content/service/v1"
+	fileV1 "kratos-cms/gen/api/go/file/service/v1"
+	userV1 "kratos-cms/gen/api/go/user/service/v1"
 
-	"kratos-blog/gen/api/go/common/conf"
-	"kratos-blog/pkg/bootstrap"
+	"kratos-cms/gen/api/go/common/conf"
+	"kratos-cms/pkg/bootstrap"
 )
 
 // NewGRPCServer new a gRPC server.

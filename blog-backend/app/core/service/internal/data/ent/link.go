@@ -4,9 +4,10 @@ package ent
 
 import (
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent/link"
+	"kratos-cms/app/core/service/internal/data/ent/link"
 	"strings"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 )
 
@@ -33,7 +34,8 @@ type Link struct {
 	// 分组
 	Team *string `json:"team,omitempty"`
 	// 优先级
-	Priority *int32 `json:"priority,omitempty"`
+	Priority     *int32 `json:"priority,omitempty"`
+	selectValues sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -46,7 +48,7 @@ func (*Link) scanValues(columns []string) ([]any, error) {
 		case link.FieldName, link.FieldURL, link.FieldLogo, link.FieldDescription, link.FieldTeam:
 			values[i] = new(sql.NullString)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type Link", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -129,9 +131,17 @@ func (l *Link) assignValues(columns []string, values []any) error {
 				l.Priority = new(int32)
 				*l.Priority = int32(value.Int64)
 			}
+		default:
+			l.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the Link.
+// This includes values selected through modifiers, order, etc.
+func (l *Link) Value(name string) (ent.Value, error) {
+	return l.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this Link.

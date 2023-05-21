@@ -6,7 +6,7 @@ import (
 	"github.com/go-redis/redis/extra/redisotel/v8"
 	"github.com/go-redis/redis/v8"
 
-	"kratos-blog/gen/api/go/common/conf"
+	"kratos-cms/gen/api/go/common/conf"
 )
 
 // NewRedisClient 创建Redis客户端

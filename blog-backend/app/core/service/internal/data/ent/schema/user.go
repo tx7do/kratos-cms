@@ -6,7 +6,7 @@ import (
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
-	"kratos-blog/pkg/util/entgo/mixin"
+	"github.com/tx7do/kratos-utils/entgo/mixin"
 	"regexp"
 )
 

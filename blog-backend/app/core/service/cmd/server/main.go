@@ -6,8 +6,8 @@ import (
 	"github.com/go-kratos/kratos/v2/registry"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 
-	"kratos-blog/pkg/bootstrap"
-	"kratos-blog/pkg/service"
+	"kratos-cms/pkg/bootstrap"
+	"kratos-cms/pkg/service"
 )
 
 // go build -ldflags "-X main.Service.Version=x.y.z"

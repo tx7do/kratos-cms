@@ -5,8 +5,8 @@ package ent
 import (
 	"context"
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent/post"
-	"kratos-blog/app/core/service/internal/data/ent/predicate"
+	"kratos-cms/app/core/service/internal/data/ent/post"
+	"kratos-cms/app/core/service/internal/data/ent/predicate"
 	"math"
 
 	"entgo.io/ent/dialect/sql"
@@ -18,7 +18,7 @@ import (
 type PostQuery struct {
 	config
 	ctx        *QueryContext
-	order      []OrderFunc
+	order      []post.OrderOption
 	inters     []Interceptor
 	predicates []predicate.Post
 	modifiers  []func(*sql.Selector)
@@ -53,7 +53,7 @@ func (pq *PostQuery) Unique(unique bool) *PostQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (pq *PostQuery) Order(o ...OrderFunc) *PostQuery {
+func (pq *PostQuery) Order(o ...post.OrderOption) *PostQuery {
 	pq.order = append(pq.order, o...)
 	return pq
 }
@@ -247,7 +247,7 @@ func (pq *PostQuery) Clone() *PostQuery {
 	return &PostQuery{
 		config:     pq.config,
 		ctx:        pq.ctx.Clone(),
-		order:      append([]OrderFunc{}, pq.order...),
+		order:      append([]post.OrderOption{}, pq.order...),
 		inters:     append([]Interceptor{}, pq.inters...),
 		predicates: append([]predicate.Post{}, pq.predicates...),
 		// clone intermediate query.

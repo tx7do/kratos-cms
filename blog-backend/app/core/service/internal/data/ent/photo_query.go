@@ -5,8 +5,8 @@ package ent
 import (
 	"context"
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent/photo"
-	"kratos-blog/app/core/service/internal/data/ent/predicate"
+	"kratos-cms/app/core/service/internal/data/ent/photo"
+	"kratos-cms/app/core/service/internal/data/ent/predicate"
 	"math"
 
 	"entgo.io/ent/dialect/sql"
@@ -18,7 +18,7 @@ import (
 type PhotoQuery struct {
 	config
 	ctx        *QueryContext
-	order      []OrderFunc
+	order      []photo.OrderOption
 	inters     []Interceptor
 	predicates []predicate.Photo
 	modifiers  []func(*sql.Selector)
@@ -53,7 +53,7 @@ func (pq *PhotoQuery) Unique(unique bool) *PhotoQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (pq *PhotoQuery) Order(o ...OrderFunc) *PhotoQuery {
+func (pq *PhotoQuery) Order(o ...photo.OrderOption) *PhotoQuery {
 	pq.order = append(pq.order, o...)
 	return pq
 }
@@ -247,7 +247,7 @@ func (pq *PhotoQuery) Clone() *PhotoQuery {
 	return &PhotoQuery{
 		config:     pq.config,
 		ctx:        pq.ctx.Clone(),
-		order:      append([]OrderFunc{}, pq.order...),
+		order:      append([]photo.OrderOption{}, pq.order...),
 		inters:     append([]Interceptor{}, pq.inters...),
 		predicates: append([]predicate.Photo{}, pq.predicates...),
 		// clone intermediate query.

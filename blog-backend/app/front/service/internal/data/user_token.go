@@ -11,8 +11,8 @@ import (
 	authn "github.com/tx7do/kratos-authn/engine"
 	authnEngine "github.com/tx7do/kratos-authn/engine"
 
-	"kratos-blog/app/front/service/internal/biz"
-	v1 "kratos-blog/gen/api/go/user/service/v1"
+	"kratos-cms/app/front/service/internal/biz"
+	v1 "kratos-cms/gen/api/go/user/service/v1"
 )
 
 type userTokenRepo struct {

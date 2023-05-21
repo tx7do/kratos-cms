@@ -19,7 +19,7 @@ endif
 APP_VERSION=$(shell git describe --tags --always)
 APP_RELATIVE_PATH=$(shell a=`basename $$PWD` && cd .. && b=`basename $$PWD` && echo $$b/$$a)
 APP_NAME=$(shell echo $(APP_RELATIVE_PATH) | sed -En "s/\//-/p")
-APP_DOCKER_IMAGE=$(shell echo $(APP_NAME) |awk -F '@' '{print "kratos-blog/" $$0 ":0.1.0"}')
+APP_DOCKER_IMAGE=$(shell echo $(APP_NAME) |awk -F '@' '{print "kratos-cms/" $$0 ":0.1.0"}')
 
 
 .PHONY: init dep vendor build clean docker conf ent wire api openapi run test cover vet lint app

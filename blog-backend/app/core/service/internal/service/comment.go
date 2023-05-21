@@ -6,10 +6,10 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"kratos-blog/app/core/service/internal/biz"
+	"kratos-cms/app/core/service/internal/biz"
 
-	v1 "kratos-blog/gen/api/go/comment/service/v1"
-	"kratos-blog/gen/api/go/common/pagination"
+	v1 "kratos-cms/gen/api/go/comment/service/v1"
+	"kratos-cms/gen/api/go/common/pagination"
 )
 
 type CommentService struct {

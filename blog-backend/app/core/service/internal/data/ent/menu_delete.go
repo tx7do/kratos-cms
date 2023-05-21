@@ -4,8 +4,8 @@ package ent
 
 import (
 	"context"
-	"kratos-blog/app/core/service/internal/data/ent/menu"
-	"kratos-blog/app/core/service/internal/data/ent/predicate"
+	"kratos-cms/app/core/service/internal/data/ent/menu"
+	"kratos-cms/app/core/service/internal/data/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -27,7 +27,7 @@ func (md *MenuDelete) Where(ps ...predicate.Menu) *MenuDelete {
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (md *MenuDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks[int, MenuMutation](ctx, md.sqlExec, md.mutation, md.hooks)
+	return withHooks(ctx, md.sqlExec, md.mutation, md.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.

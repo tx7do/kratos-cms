@@ -3,6 +3,6 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "service",
     srcs = ["name.go"],
-    importpath = "kratos-blog/pkg/service",
+    importpath = "kratos-cms/pkg/service",
     visibility = ["//visibility:public"],
 )

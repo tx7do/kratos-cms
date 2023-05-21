@@ -2,20 +2,26 @@ syntax = "proto3";
 
 package common.conf;
 
-option go_package = "kratos-blog/gen/api/go/common/conf;conf";
+option go_package = "kratos-cms/gen/api/go/common/conf;conf";
 
 import "google/protobuf/duration.proto";
+import "common/conf/middleware.proto";
 
 // 服务器
 message Server {
   // REST
   message REST {
+    message CORS {
+      repeated string headers = 1;  //
+      repeated string methods = 2;  //
+      repeated string origins = 3;  //
+    }
+
     string network = 1; // 网络
     string addr = 2;  // 服务监听地址
     google.protobuf.Duration timeout = 3; // 超时时间
-    repeated string headers = 4;  //
-    repeated string methods = 5;  //
-    repeated string origins = 6;  //
+    CORS cors = 4;  // 服务监听地址
+    Middleware middleware = 5;  // 中间件
   }
 
   // gPRC
@@ -23,6 +29,7 @@ message Server {
     string network = 1; // 网络
     string addr = 2;  // 服务监听地址
     google.protobuf.Duration timeout = 3; // 超时时间
+    Middleware middleware = 4;
   }
 
   // Websocket

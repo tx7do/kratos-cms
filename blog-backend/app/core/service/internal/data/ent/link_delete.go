@@ -4,8 +4,8 @@ package ent
 
 import (
 	"context"
-	"kratos-blog/app/core/service/internal/data/ent/link"
-	"kratos-blog/app/core/service/internal/data/ent/predicate"
+	"kratos-cms/app/core/service/internal/data/ent/link"
+	"kratos-cms/app/core/service/internal/data/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -27,7 +27,7 @@ func (ld *LinkDelete) Where(ps ...predicate.Link) *LinkDelete {
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (ld *LinkDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks[int, LinkMutation](ctx, ld.sqlExec, ld.mutation, ld.hooks)
+	return withHooks(ctx, ld.sqlExec, ld.mutation, ld.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.

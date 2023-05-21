@@ -16,5 +16,4 @@ var ProviderSet = wire.NewSet(
 	NewPostRepo,
 	NewTagRepo,
 	NewUserRepo,
-	NewUserTokenRepo,
 )

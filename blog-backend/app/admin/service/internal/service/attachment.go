@@ -6,9 +6,9 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	v1 "kratos-blog/gen/api/go/admin/service/v1"
-	"kratos-blog/gen/api/go/common/pagination"
-	fileV1 "kratos-blog/gen/api/go/file/service/v1"
+	v1 "kratos-cms/gen/api/go/admin/service/v1"
+	"kratos-cms/gen/api/go/common/pagination"
+	fileV1 "kratos-cms/gen/api/go/file/service/v1"
 )
 
 type AttachmentService struct {

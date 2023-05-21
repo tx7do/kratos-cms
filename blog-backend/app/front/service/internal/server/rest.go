@@ -15,11 +15,11 @@ import (
 	authzEngine "github.com/tx7do/kratos-authz/engine"
 	authz "github.com/tx7do/kratos-authz/middleware"
 
-	"kratos-blog/app/front/service/internal/service"
-	"kratos-blog/gen/api/go/common/conf"
-	v1 "kratos-blog/gen/api/go/front/service/v1"
-	"kratos-blog/pkg/bootstrap"
-	"kratos-blog/pkg/middleware/auth"
+	"kratos-cms/app/front/service/internal/service"
+	"kratos-cms/gen/api/go/common/conf"
+	v1 "kratos-cms/gen/api/go/front/service/v1"
+	"kratos-cms/pkg/bootstrap"
+	"kratos-cms/pkg/middleware/auth"
 )
 
 // NewWhiteListMatcher 创建jwt白名单

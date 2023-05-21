@@ -4,8 +4,8 @@ package ent
 
 import (
 	"context"
-	"kratos-blog/app/core/service/internal/data/ent/comment"
-	"kratos-blog/app/core/service/internal/data/ent/predicate"
+	"kratos-cms/app/core/service/internal/data/ent/comment"
+	"kratos-cms/app/core/service/internal/data/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -27,7 +27,7 @@ func (cd *CommentDelete) Where(ps ...predicate.Comment) *CommentDelete {
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (cd *CommentDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks[int, CommentMutation](ctx, cd.sqlExec, cd.mutation, cd.hooks)
+	return withHooks(ctx, cd.sqlExec, cd.mutation, cd.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.

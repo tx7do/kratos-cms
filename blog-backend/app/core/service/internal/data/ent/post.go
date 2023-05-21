@@ -4,9 +4,10 @@ package ent
 
 import (
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent/post"
+	"kratos-cms/app/core/service/internal/data/ent/post"
 	"strings"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 )
 
@@ -63,7 +64,8 @@ type Post struct {
 	// 不允许评论
 	DisallowComment *bool `json:"disallow_comment,omitempty"`
 	// 审核中
-	InProgress *bool `json:"in_progress,omitempty"`
+	InProgress   *bool `json:"in_progress,omitempty"`
+	selectValues sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -78,7 +80,7 @@ func (*Post) scanValues(columns []string) ([]any, error) {
 		case post.FieldTitle, post.FieldSlug, post.FieldMetaKeywords, post.FieldMetaDescription, post.FieldFullPath, post.FieldOriginalContent, post.FieldContent, post.FieldSummary, post.FieldThumbnail, post.FieldPassword, post.FieldTemplate:
 			values[i] = new(sql.NullString)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type Post", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -266,9 +268,17 @@ func (po *Post) assignValues(columns []string, values []any) error {
 				po.InProgress = new(bool)
 				*po.InProgress = value.Bool
 			}
+		default:
+			po.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the Post.
+// This includes values selected through modifiers, order, etc.
+func (po *Post) Value(name string) (ent.Value, error) {
+	return po.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this Post.

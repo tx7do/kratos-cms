@@ -74,12 +74,12 @@ services:
     ports:
       - "6379:6379"
   user-service:
-    image: kratos-blog/user-service:0.1.0
+    image: kratos-cms/user-service:0.1.0
   file-service:
-    image: kratos-blog/file-service:0.1.0
+    image: kratos-cms/file-service:0.1.0
   content-service:
-    image: kratos-blog/content-service:0.1.0
+    image: kratos-cms/content-service:0.1.0
   comment-service:
-    image: kratos-blog/comment-service:0.1.0
+    image: kratos-cms/comment-service:0.1.0
   admin-service:
-    image: kratos-blog/admin-service:0.1.0
+    image: kratos-cms/admin-service:0.1.0

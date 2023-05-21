@@ -6,8 +6,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent/photo"
-	"kratos-blog/app/core/service/internal/data/ent/predicate"
+	"kratos-cms/app/core/service/internal/data/ent/photo"
+	"kratos-cms/app/core/service/internal/data/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -256,7 +256,7 @@ func (pu *PhotoUpdate) Mutation() *PhotoMutation {
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (pu *PhotoUpdate) Save(ctx context.Context) (int, error) {
 	pu.defaults()
-	return withHooks[int, PhotoMutation](ctx, pu.sqlSave, pu.mutation, pu.hooks)
+	return withHooks(ctx, pu.sqlSave, pu.mutation, pu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -642,7 +642,7 @@ func (puo *PhotoUpdateOne) Select(field string, fields ...string) *PhotoUpdateOn
 // Save executes the query and returns the updated Photo entity.
 func (puo *PhotoUpdateOne) Save(ctx context.Context) (*Photo, error) {
 	puo.defaults()
-	return withHooks[*Photo, PhotoMutation](ctx, puo.sqlSave, puo.mutation, puo.hooks)
+	return withHooks(ctx, puo.sqlSave, puo.mutation, puo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.

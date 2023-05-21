@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package comment.service.v1;
-option go_package = "kratos-blog/gen/api/go/comment/service/v1;v1";
+option go_package = "kratos-cms/gen/api/go/comment/service/v1;v1";
 
 import "google/protobuf/empty.proto";
 import "common/pagination/pagination.proto";

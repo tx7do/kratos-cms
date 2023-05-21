@@ -18,7 +18,7 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 
-	"kratos-blog/gen/api/go/common/conf"
+	"kratos-cms/gen/api/go/common/conf"
 )
 
 type LoggerType string

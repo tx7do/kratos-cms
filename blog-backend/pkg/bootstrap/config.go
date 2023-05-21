@@ -27,10 +27,6 @@ import (
 	nacosConstant "github.com/nacos-group/nacos-sdk-go/common/constant"
 	nacosVo "github.com/nacos-group/nacos-sdk-go/vo"
 
-	// polaris
-	polarisKratos "github.com/go-kratos/kratos/contrib/config/polaris/v2"
-	polarisApi "github.com/polarismesh/polaris-go"
-
 	// apollo
 	apolloKratos "github.com/go-kratos/kratos/contrib/config/apollo/v2"
 
@@ -38,7 +34,7 @@ import (
 	k8sKratos "github.com/go-kratos/kratos/contrib/config/kubernetes/v2"
 	k8sUtil "k8s.io/client-go/util/homedir"
 
-	"kratos-blog/gen/api/go/common/conf"
+	"kratos-cms/gen/api/go/common/conf"
 )
 
 const remoteConfigSourceConfigFile = "remote.yaml"
@@ -82,14 +78,14 @@ func LoadBootstrapConfig(configPath string) *conf.Bootstrap {
 		_ = cfg.Scan(&bc.Server)
 	}
 
+	if bc.Client == nil {
+		bc.Client = &conf.Client{}
+		_ = cfg.Scan(&bc.Client)
+	}
+
 	if bc.Data == nil {
 		bc.Data = &conf.Data{}
 		_ = cfg.Scan(&bc.Data)
-	}
-
-	if bc.Auth == nil {
-		bc.Auth = &conf.Auth{}
-		_ = cfg.Scan(&bc.Auth)
 	}
 
 	if bc.Trace == nil {
@@ -307,20 +303,21 @@ func NewKubernetesConfigSource(c *conf.RemoteConfig) config.Source {
 
 // NewPolarisConfigSource 创建一个远程配置源 - Polaris
 func NewPolarisConfigSource(_ *conf.RemoteConfig) config.Source {
-	configApi, err := polarisApi.NewConfigAPI()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var opts []polarisKratos.Option
-	opts = append(opts, polarisKratos.WithNamespace("default"))
-	opts = append(opts, polarisKratos.WithFileGroup("default"))
-	opts = append(opts, polarisKratos.WithFileName("default.yaml"))
-
-	source, err := polarisKratos.New(configApi, opts...)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return source
+	//configApi, err := polarisApi.NewConfigAPI()
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+	//
+	//var opts []polarisKratos.Option
+	//opts = append(opts, polarisKratos.WithNamespace("default"))
+	//opts = append(opts, polarisKratos.WithFileGroup("default"))
+	//opts = append(opts, polarisKratos.WithFileName("default.yaml"))
+	//
+	//source, err := polarisKratos.New(configApi, opts...)
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+	//
+	//return source
+	return nil
 }

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package common.conf;
 
-option go_package = "kratos-blog/gen/api/go/common/conf;conf";
+option go_package = "kratos-cms/gen/api/go/common/conf;conf";
 
 // 链路追踪
 message Tracer {

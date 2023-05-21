@@ -5,7 +5,7 @@ package hook
 import (
 	"context"
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent"
+	"kratos-cms/app/core/service/internal/data/ent"
 )
 
 // The AttachmentFunc type is an adapter to allow the use of ordinary

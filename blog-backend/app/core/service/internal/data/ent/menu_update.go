@@ -6,8 +6,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent/menu"
-	"kratos-blog/app/core/service/internal/data/ent/predicate"
+	"kratos-cms/app/core/service/internal/data/ent/menu"
+	"kratos-cms/app/core/service/internal/data/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -236,7 +236,7 @@ func (mu *MenuUpdate) Mutation() *MenuMutation {
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (mu *MenuUpdate) Save(ctx context.Context) (int, error) {
 	mu.defaults()
-	return withHooks[int, MenuMutation](ctx, mu.sqlSave, mu.mutation, mu.hooks)
+	return withHooks(ctx, mu.sqlSave, mu.mutation, mu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -609,7 +609,7 @@ func (muo *MenuUpdateOne) Select(field string, fields ...string) *MenuUpdateOne 
 // Save executes the query and returns the updated Menu entity.
 func (muo *MenuUpdateOne) Save(ctx context.Context) (*Menu, error) {
 	muo.defaults()
-	return withHooks[*Menu, MenuMutation](ctx, muo.sqlSave, muo.mutation, muo.hooks)
+	return withHooks(ctx, muo.sqlSave, muo.mutation, muo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.

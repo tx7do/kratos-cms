@@ -4,8 +4,8 @@ package ent
 
 import (
 	"context"
-	"kratos-blog/app/core/service/internal/data/ent/attachment"
-	"kratos-blog/app/core/service/internal/data/ent/predicate"
+	"kratos-cms/app/core/service/internal/data/ent/attachment"
+	"kratos-cms/app/core/service/internal/data/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -27,7 +27,7 @@ func (ad *AttachmentDelete) Where(ps ...predicate.Attachment) *AttachmentDelete 
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (ad *AttachmentDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks[int, AttachmentMutation](ctx, ad.sqlExec, ad.mutation, ad.hooks)
+	return withHooks(ctx, ad.sqlExec, ad.mutation, ad.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.

@@ -4,9 +4,10 @@ package ent
 
 import (
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent/photo"
+	"kratos-cms/app/core/service/internal/data/ent/photo"
 	"strings"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 )
 
@@ -37,7 +38,8 @@ type Photo struct {
 	// 描述
 	Description *string `json:"description,omitempty"`
 	// 点赞数
-	Likes *int32 `json:"likes,omitempty"`
+	Likes        *int32 `json:"likes,omitempty"`
+	selectValues sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -50,7 +52,7 @@ func (*Photo) scanValues(columns []string) ([]any, error) {
 		case photo.FieldName, photo.FieldThumbnail, photo.FieldURL, photo.FieldTeam, photo.FieldLocation, photo.FieldDescription:
 			values[i] = new(sql.NullString)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type Photo", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -147,9 +149,17 @@ func (ph *Photo) assignValues(columns []string, values []any) error {
 				ph.Likes = new(int32)
 				*ph.Likes = int32(value.Int64)
 			}
+		default:
+			ph.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the Photo.
+// This includes values selected through modifiers, order, etc.
+func (ph *Photo) Value(name string) (ent.Value, error) {
+	return ph.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this Photo.

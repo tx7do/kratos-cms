@@ -5,8 +5,8 @@ package ent
 import (
 	"context"
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent/menu"
-	"kratos-blog/app/core/service/internal/data/ent/predicate"
+	"kratos-cms/app/core/service/internal/data/ent/menu"
+	"kratos-cms/app/core/service/internal/data/ent/predicate"
 	"math"
 
 	"entgo.io/ent/dialect/sql"
@@ -18,7 +18,7 @@ import (
 type MenuQuery struct {
 	config
 	ctx        *QueryContext
-	order      []OrderFunc
+	order      []menu.OrderOption
 	inters     []Interceptor
 	predicates []predicate.Menu
 	modifiers  []func(*sql.Selector)
@@ -53,7 +53,7 @@ func (mq *MenuQuery) Unique(unique bool) *MenuQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (mq *MenuQuery) Order(o ...OrderFunc) *MenuQuery {
+func (mq *MenuQuery) Order(o ...menu.OrderOption) *MenuQuery {
 	mq.order = append(mq.order, o...)
 	return mq
 }
@@ -247,7 +247,7 @@ func (mq *MenuQuery) Clone() *MenuQuery {
 	return &MenuQuery{
 		config:     mq.config,
 		ctx:        mq.ctx.Clone(),
-		order:      append([]OrderFunc{}, mq.order...),
+		order:      append([]menu.OrderOption{}, mq.order...),
 		inters:     append([]Interceptor{}, mq.inters...),
 		predicates: append([]predicate.Menu{}, mq.predicates...),
 		// clone intermediate query.

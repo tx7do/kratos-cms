@@ -6,8 +6,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent/predicate"
-	"kratos-blog/app/core/service/internal/data/ent/tag"
+	"kratos-cms/app/core/service/internal/data/ent/predicate"
+	"kratos-cms/app/core/service/internal/data/ent/tag"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -209,7 +209,7 @@ func (tu *TagUpdate) Mutation() *TagMutation {
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (tu *TagUpdate) Save(ctx context.Context) (int, error) {
 	tu.defaults()
-	return withHooks[int, TagMutation](ctx, tu.sqlSave, tu.mutation, tu.hooks)
+	return withHooks(ctx, tu.sqlSave, tu.mutation, tu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -546,7 +546,7 @@ func (tuo *TagUpdateOne) Select(field string, fields ...string) *TagUpdateOne {
 // Save executes the query and returns the updated Tag entity.
 func (tuo *TagUpdateOne) Save(ctx context.Context) (*Tag, error) {
 	tuo.defaults()
-	return withHooks[*Tag, TagMutation](ctx, tuo.sqlSave, tuo.mutation, tuo.hooks)
+	return withHooks(ctx, tuo.sqlSave, tuo.mutation, tuo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.

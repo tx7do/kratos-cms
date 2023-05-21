@@ -4,9 +4,10 @@ package ent
 
 import (
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent/menu"
+	"kratos-cms/app/core/service/internal/data/ent/menu"
 	"strings"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 )
 
@@ -35,7 +36,8 @@ type Menu struct {
 	// 父目录ID
 	ParentID *uint32 `json:"parent_id,omitempty"`
 	// 分组
-	Team *string `json:"team,omitempty"`
+	Team         *string `json:"team,omitempty"`
+	selectValues sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -48,7 +50,7 @@ func (*Menu) scanValues(columns []string) ([]any, error) {
 		case menu.FieldName, menu.FieldURL, menu.FieldTarget, menu.FieldIcon, menu.FieldTeam:
 			values[i] = new(sql.NullString)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type Menu", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -138,9 +140,17 @@ func (m *Menu) assignValues(columns []string, values []any) error {
 				m.Team = new(string)
 				*m.Team = value.String
 			}
+		default:
+			m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the Menu.
+// This includes values selected through modifiers, order, etc.
+func (m *Menu) Value(name string) (ent.Value, error) {
+	return m.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this Menu.

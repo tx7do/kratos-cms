@@ -4,9 +4,10 @@ package ent
 
 import (
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent/attachment"
+	"kratos-cms/app/core/service/internal/data/ent/attachment"
 	"strings"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 )
 
@@ -41,7 +42,8 @@ type Attachment struct {
 	// 文件大小
 	Size *uint64 `json:"Size,omitempty"`
 	// 类型
-	Type *int32 `json:"type,omitempty"`
+	Type         *int32 `json:"type,omitempty"`
+	selectValues sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -54,7 +56,7 @@ func (*Attachment) scanValues(columns []string) ([]any, error) {
 		case attachment.FieldName, attachment.FieldPath, attachment.FieldFileKey, attachment.FieldThumbnail, attachment.FieldMediaType, attachment.FieldSuffix:
 			values[i] = new(sql.NullString)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type Attachment", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -165,9 +167,17 @@ func (a *Attachment) assignValues(columns []string, values []any) error {
 				a.Type = new(int32)
 				*a.Type = int32(value.Int64)
 			}
+		default:
+			a.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the Attachment.
+// This includes values selected through modifiers, order, etc.
+func (a *Attachment) Value(name string) (ent.Value, error) {
+	return a.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this Attachment.

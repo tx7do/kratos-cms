@@ -6,7 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent/post"
+	"kratos-cms/app/core/service/internal/data/ent/post"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -371,7 +371,7 @@ func (pc *PostCreate) Mutation() *PostMutation {
 // Save creates the Post in the database.
 func (pc *PostCreate) Save(ctx context.Context) (*Post, error) {
 	pc.defaults()
-	return withHooks[*Post, PostMutation](ctx, pc.sqlSave, pc.mutation, pc.hooks)
+	return withHooks(ctx, pc.sqlSave, pc.mutation, pc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -1733,8 +1733,8 @@ func (pcb *PostCreateBulk) Save(ctx context.Context) ([]*Post, error) {
 					return nil, err
 				}
 				builder.mutation = mutation
-				nodes[i], specs[i] = builder.createSpec()
 				var err error
+				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
 					_, err = mutators[i+1].Mutate(root, pcb.builders[i+1].mutation)
 				} else {

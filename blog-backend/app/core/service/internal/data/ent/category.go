@@ -4,9 +4,10 @@ package ent
 
 import (
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent/category"
+	"kratos-cms/app/core/service/internal/data/ent/category"
 	"strings"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 )
 
@@ -39,7 +40,8 @@ type Category struct {
 	// 优先级
 	Priority *int32 `json:"priority,omitempty"`
 	// 博文计数
-	PostCount *uint32 `json:"post_count,omitempty"`
+	PostCount    *uint32 `json:"post_count,omitempty"`
+	selectValues sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -52,7 +54,7 @@ func (*Category) scanValues(columns []string) ([]any, error) {
 		case category.FieldName, category.FieldSlug, category.FieldDescription, category.FieldThumbnail, category.FieldPassword, category.FieldFullPath:
 			values[i] = new(sql.NullString)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type Category", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -156,9 +158,17 @@ func (c *Category) assignValues(columns []string, values []any) error {
 				c.PostCount = new(uint32)
 				*c.PostCount = uint32(value.Int64)
 			}
+		default:
+			c.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the Category.
+// This includes values selected through modifiers, order, etc.
+func (c *Category) Value(name string) (ent.Value, error) {
+	return c.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this Category.

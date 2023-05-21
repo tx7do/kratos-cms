@@ -5,7 +5,7 @@ import (
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/field"
-	"kratos-blog/pkg/util/entgo/mixin"
+	"github.com/tx7do/kratos-utils/entgo/mixin"
 )
 
 // Menu holds the schema definition for the Menu entity.

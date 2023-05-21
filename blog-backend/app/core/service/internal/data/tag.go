@@ -5,17 +5,16 @@ import (
 	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/tx7do/kratos-utils/entgo"
+	paging "github.com/tx7do/kratos-utils/pagination"
+	util "github.com/tx7do/kratos-utils/time"
 
-	"kratos-blog/gen/api/go/common/pagination"
-	"kratos-blog/gen/api/go/content/service/v1"
+	"kratos-cms/app/core/service/internal/biz"
+	"kratos-cms/app/core/service/internal/data/ent"
+	"kratos-cms/app/core/service/internal/data/ent/tag"
 
-	"kratos-blog/app/core/service/internal/biz"
-	"kratos-blog/app/core/service/internal/data/ent"
-	"kratos-blog/app/core/service/internal/data/ent/tag"
-
-	"kratos-blog/pkg/util/entgo"
-	paging "kratos-blog/pkg/util/pagination"
-	util "kratos-blog/pkg/util/time"
+	"kratos-cms/gen/api/go/common/pagination"
+	"kratos-cms/gen/api/go/content/service/v1"
 )
 
 var _ biz.TagRepo = (*TagRepo)(nil)

@@ -4,8 +4,8 @@ package ent
 
 import (
 	"context"
-	"kratos-blog/app/core/service/internal/data/ent/photo"
-	"kratos-blog/app/core/service/internal/data/ent/predicate"
+	"kratos-cms/app/core/service/internal/data/ent/photo"
+	"kratos-cms/app/core/service/internal/data/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -27,7 +27,7 @@ func (pd *PhotoDelete) Where(ps ...predicate.Photo) *PhotoDelete {
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (pd *PhotoDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks[int, PhotoMutation](ctx, pd.sqlExec, pd.mutation, pd.hooks)
+	return withHooks(ctx, pd.sqlExec, pd.mutation, pd.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.

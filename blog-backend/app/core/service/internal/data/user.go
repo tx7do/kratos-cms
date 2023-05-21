@@ -5,15 +5,17 @@ import (
 	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/tx7do/kratos-utils/crypto"
+	"github.com/tx7do/kratos-utils/entgo"
+	util "github.com/tx7do/kratos-utils/time"
 
-	v1 "kratos-blog/gen/api/go/user/service/v1"
+	"kratos-cms/app/core/service/internal/biz"
+	"kratos-cms/app/core/service/internal/data/ent"
+	"kratos-cms/app/core/service/internal/data/ent/user"
 
-	"kratos-blog/app/core/service/internal/biz"
-	"kratos-blog/app/core/service/internal/data/ent"
-	"kratos-blog/app/core/service/internal/data/ent/user"
-
-	"kratos-blog/pkg/util/crypto"
-	util "kratos-blog/pkg/util/time"
+	paging "github.com/tx7do/kratos-utils/pagination"
+	"kratos-cms/gen/api/go/common/pagination"
+	v1 "kratos-cms/gen/api/go/user/service/v1"
 )
 
 var _ biz.UserRepo = (*UserRepo)(nil)
@@ -46,6 +48,67 @@ func (r *UserRepo) convertEntToProto(in *ent.User) *v1.User {
 		CreateTime:  util.UnixMilliToStringPtr(in.CreateTime),
 		UpdateTime:  util.UnixMilliToStringPtr(in.UpdateTime),
 	}
+}
+
+func (r *UserRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListUserResponse, error) {
+	whereCond, orderCond := entgo.QueryCommandToSelector(req.GetQuery(), req.GetOrderBy())
+
+	builder1 := r.data.db.User.Query()
+
+	if len(whereCond) != 0 {
+		for _, cond := range whereCond {
+			builder1 = builder1.Where(cond)
+		}
+	}
+	if len(orderCond) != 0 {
+		for _, cond := range orderCond {
+			builder1 = builder1.Order(cond)
+		}
+	} else {
+		builder1.Order(ent.Desc(user.FieldCreateTime))
+	}
+	if req.GetPage() > 0 && req.GetPageSize() > 0 && !req.GetNopaging() {
+		builder1.
+			Offset(paging.GetPageOffset(req.GetPage(), req.GetPageSize())).
+			Limit(int(req.GetPageSize()))
+	}
+	users, err := builder1.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	builder2 := r.data.db.User.Query()
+	if len(whereCond) != 0 {
+		for _, cond := range whereCond {
+			builder2 = builder2.Where(cond)
+		}
+	}
+	count, err := builder2.
+		Select(user.FieldID).
+		Count(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	items := make([]*v1.User, 0, len(users))
+	for _, u := range users {
+		item := r.convertEntToProto(u)
+		items = append(items, item)
+	}
+
+	return &v1.ListUserResponse{
+		Total: int32(count),
+		Items: items,
+	}, nil
+}
+
+func (r *UserRepo) Get(ctx context.Context, req *v1.GetUserRequest) (*v1.User, error) {
+	po, err := r.data.db.User.Get(ctx, req.GetId())
+	if err != nil && !ent.IsNotFound(err) {
+		return nil, err
+	}
+
+	return r.convertEntToProto(po), err
 }
 
 func (r *UserRepo) Create(ctx context.Context, req *v1.CreateUserRequest) (*v1.User, error) {
@@ -95,6 +158,17 @@ func (r *UserRepo) Delete(ctx context.Context, req *v1.DeleteUserRequest) (bool,
 	return err != nil, err
 }
 
+func (r *UserRepo) GetUserByUserName(ctx context.Context, userName string) (*v1.User, error) {
+	u, err := r.data.db.User.Query().
+		Where(user.UsernameEQ(userName)).
+		Only(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return r.convertEntToProto(u), nil
+}
+
 func (r *UserRepo) VerifyPassword(ctx context.Context, req *v1.VerifyPasswordRequest) (bool, error) {
 	ret, err := r.data.db.User.
 		Query().
@@ -112,24 +186,4 @@ func (r *UserRepo) VerifyPassword(ctx context.Context, req *v1.VerifyPasswordReq
 	}
 
 	return true, nil
-}
-
-func (r *UserRepo) Get(ctx context.Context, req uint32) (*v1.User, error) {
-	po, err := r.data.db.User.Get(ctx, req)
-	if err != nil && !ent.IsNotFound(err) {
-		return nil, err
-	}
-
-	return r.convertEntToProto(po), err
-}
-
-func (r *UserRepo) GetUserByUserName(ctx context.Context, userName string) (*v1.User, error) {
-	u, err := r.data.db.User.Query().
-		Where(user.UsernameEQ(userName)).
-		Only(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	return r.convertEntToProto(u), nil
 }

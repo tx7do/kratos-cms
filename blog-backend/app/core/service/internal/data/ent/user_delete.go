@@ -4,8 +4,8 @@ package ent
 
 import (
 	"context"
-	"kratos-blog/app/core/service/internal/data/ent/predicate"
-	"kratos-blog/app/core/service/internal/data/ent/user"
+	"kratos-cms/app/core/service/internal/data/ent/predicate"
+	"kratos-cms/app/core/service/internal/data/ent/user"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -27,7 +27,7 @@ func (ud *UserDelete) Where(ps ...predicate.User) *UserDelete {
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (ud *UserDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks[int, UserMutation](ctx, ud.sqlExec, ud.mutation, ud.hooks)
+	return withHooks(ctx, ud.sqlExec, ud.mutation, ud.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.

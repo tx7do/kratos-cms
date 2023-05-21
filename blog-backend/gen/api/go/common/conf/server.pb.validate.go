@@ -362,6 +362,64 @@ func (m *Server_REST) validate(all bool) error {
 		}
 	}
 
+	if all {
+		switch v := interface{}(m.GetCors()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, Server_RESTValidationError{
+					field:  "Cors",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, Server_RESTValidationError{
+					field:  "Cors",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetCors()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return Server_RESTValidationError{
+				field:  "Cors",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if all {
+		switch v := interface{}(m.GetMiddleware()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, Server_RESTValidationError{
+					field:  "Middleware",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, Server_RESTValidationError{
+					field:  "Middleware",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetMiddleware()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return Server_RESTValidationError{
+				field:  "Middleware",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
 	if len(errors) > 0 {
 		return Server_RESTMultiError(errors)
 	}
@@ -488,6 +546,35 @@ func (m *Server_GRPC) validate(all bool) error {
 		if err := v.Validate(); err != nil {
 			return Server_GRPCValidationError{
 				field:  "Timeout",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if all {
+		switch v := interface{}(m.GetMiddleware()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, Server_GRPCValidationError{
+					field:  "Middleware",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, Server_GRPCValidationError{
+					field:  "Middleware",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetMiddleware()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return Server_GRPCValidationError{
+				field:  "Middleware",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -1005,3 +1092,103 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = Server_RabbitMQValidationError{}
+
+// Validate checks the field values on Server_REST_CORS with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *Server_REST_CORS) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on Server_REST_CORS with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// Server_REST_CORSMultiError, or nil if none found.
+func (m *Server_REST_CORS) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *Server_REST_CORS) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return Server_REST_CORSMultiError(errors)
+	}
+
+	return nil
+}
+
+// Server_REST_CORSMultiError is an error wrapping multiple validation errors
+// returned by Server_REST_CORS.ValidateAll() if the designated constraints
+// aren't met.
+type Server_REST_CORSMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m Server_REST_CORSMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m Server_REST_CORSMultiError) AllErrors() []error { return m }
+
+// Server_REST_CORSValidationError is the validation error returned by
+// Server_REST_CORS.Validate if the designated constraints aren't met.
+type Server_REST_CORSValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e Server_REST_CORSValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e Server_REST_CORSValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e Server_REST_CORSValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e Server_REST_CORSValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e Server_REST_CORSValidationError) ErrorName() string { return "Server_REST_CORSValidationError" }
+
+// Error satisfies the builtin error interface
+func (e Server_REST_CORSValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sServer_REST_CORS.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = Server_REST_CORSValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = Server_REST_CORSValidationError{}

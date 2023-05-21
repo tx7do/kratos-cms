@@ -2,6 +2,10 @@
 
 package post
 
+import (
+	"entgo.io/ent/dialect/sql"
+)
+
 const (
 	// Label holds the string label denoting the post type in the database.
 	Label = "post"
@@ -108,3 +112,131 @@ var (
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )
+
+// OrderOption defines the ordering options for the Post queries.
+type OrderOption func(*sql.Selector)
+
+// ByID orders the results by the id field.
+func ByID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldID, opts...).ToFunc()
+}
+
+// ByCreateTime orders the results by the create_time field.
+func ByCreateTime(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldCreateTime, opts...).ToFunc()
+}
+
+// ByUpdateTime orders the results by the update_time field.
+func ByUpdateTime(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldUpdateTime, opts...).ToFunc()
+}
+
+// ByDeleteTime orders the results by the delete_time field.
+func ByDeleteTime(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDeleteTime, opts...).ToFunc()
+}
+
+// ByTitle orders the results by the title field.
+func ByTitle(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTitle, opts...).ToFunc()
+}
+
+// BySlug orders the results by the slug field.
+func BySlug(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSlug, opts...).ToFunc()
+}
+
+// ByMetaKeywords orders the results by the meta_keywords field.
+func ByMetaKeywords(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldMetaKeywords, opts...).ToFunc()
+}
+
+// ByMetaDescription orders the results by the meta_description field.
+func ByMetaDescription(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldMetaDescription, opts...).ToFunc()
+}
+
+// ByFullPath orders the results by the full_path field.
+func ByFullPath(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldFullPath, opts...).ToFunc()
+}
+
+// ByOriginalContent orders the results by the original_content field.
+func ByOriginalContent(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldOriginalContent, opts...).ToFunc()
+}
+
+// ByContent orders the results by the content field.
+func ByContent(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldContent, opts...).ToFunc()
+}
+
+// BySummary orders the results by the summary field.
+func BySummary(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSummary, opts...).ToFunc()
+}
+
+// ByThumbnail orders the results by the thumbnail field.
+func ByThumbnail(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldThumbnail, opts...).ToFunc()
+}
+
+// ByPassword orders the results by the password field.
+func ByPassword(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldPassword, opts...).ToFunc()
+}
+
+// ByTemplate orders the results by the template field.
+func ByTemplate(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTemplate, opts...).ToFunc()
+}
+
+// ByCommentCount orders the results by the comment_count field.
+func ByCommentCount(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldCommentCount, opts...).ToFunc()
+}
+
+// ByVisits orders the results by the visits field.
+func ByVisits(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldVisits, opts...).ToFunc()
+}
+
+// ByLikes orders the results by the likes field.
+func ByLikes(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldLikes, opts...).ToFunc()
+}
+
+// ByWordCount orders the results by the word_count field.
+func ByWordCount(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldWordCount, opts...).ToFunc()
+}
+
+// ByTopPriority orders the results by the top_priority field.
+func ByTopPriority(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTopPriority, opts...).ToFunc()
+}
+
+// ByStatus orders the results by the status field.
+func ByStatus(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldStatus, opts...).ToFunc()
+}
+
+// ByEditorType orders the results by the editor_type field.
+func ByEditorType(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldEditorType, opts...).ToFunc()
+}
+
+// ByEditTime orders the results by the edit_time field.
+func ByEditTime(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldEditTime, opts...).ToFunc()
+}
+
+// ByDisallowComment orders the results by the disallow_comment field.
+func ByDisallowComment(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDisallowComment, opts...).ToFunc()
+}
+
+// ByInProgress orders the results by the in_progress field.
+func ByInProgress(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldInProgress, opts...).ToFunc()
+}

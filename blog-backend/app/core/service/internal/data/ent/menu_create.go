@@ -6,7 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent/menu"
+	"kratos-cms/app/core/service/internal/data/ent/menu"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -175,7 +175,7 @@ func (mc *MenuCreate) Mutation() *MenuMutation {
 // Save creates the Menu in the database.
 func (mc *MenuCreate) Save(ctx context.Context) (*Menu, error) {
 	mc.defaults()
-	return withHooks[*Menu, MenuMutation](ctx, mc.sqlSave, mc.mutation, mc.hooks)
+	return withHooks(ctx, mc.sqlSave, mc.mutation, mc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -857,8 +857,8 @@ func (mcb *MenuCreateBulk) Save(ctx context.Context) ([]*Menu, error) {
 					return nil, err
 				}
 				builder.mutation = mutation
-				nodes[i], specs[i] = builder.createSpec()
 				var err error
+				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
 					_, err = mutators[i+1].Mutate(root, mcb.builders[i+1].mutation)
 				} else {

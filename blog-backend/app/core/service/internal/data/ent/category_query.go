@@ -5,8 +5,8 @@ package ent
 import (
 	"context"
 	"fmt"
-	"kratos-blog/app/core/service/internal/data/ent/category"
-	"kratos-blog/app/core/service/internal/data/ent/predicate"
+	"kratos-cms/app/core/service/internal/data/ent/category"
+	"kratos-cms/app/core/service/internal/data/ent/predicate"
 	"math"
 
 	"entgo.io/ent/dialect/sql"
@@ -18,7 +18,7 @@ import (
 type CategoryQuery struct {
 	config
 	ctx        *QueryContext
-	order      []OrderFunc
+	order      []category.OrderOption
 	inters     []Interceptor
 	predicates []predicate.Category
 	modifiers  []func(*sql.Selector)
@@ -53,7 +53,7 @@ func (cq *CategoryQuery) Unique(unique bool) *CategoryQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (cq *CategoryQuery) Order(o ...OrderFunc) *CategoryQuery {
+func (cq *CategoryQuery) Order(o ...category.OrderOption) *CategoryQuery {
 	cq.order = append(cq.order, o...)
 	return cq
 }
@@ -247,7 +247,7 @@ func (cq *CategoryQuery) Clone() *CategoryQuery {
 	return &CategoryQuery{
 		config:     cq.config,
 		ctx:        cq.ctx.Clone(),
-		order:      append([]OrderFunc{}, cq.order...),
+		order:      append([]category.OrderOption{}, cq.order...),
 		inters:     append([]Interceptor{}, cq.inters...),
 		predicates: append([]predicate.Category{}, cq.predicates...),
 		// clone intermediate query.
