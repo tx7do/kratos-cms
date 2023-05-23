@@ -80,14 +80,14 @@ func (r *TagRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.
 			Offset(paging.GetPageOffset(req.GetPage(), req.GetPageSize())).
 			Limit(int(req.GetPageSize()))
 	}
-	tags, err := builder.All(ctx)
+	results, err := builder.All(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	items := make([]*v1.Tag, 0, len(tags))
-	for _, po := range tags {
-		item := r.convertEntToProto(po)
+	items := make([]*v1.Tag, 0, len(results))
+	for _, res := range results {
+		item := r.convertEntToProto(res)
 		items = append(items, item)
 	}
 
@@ -96,12 +96,10 @@ func (r *TagRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.
 		return nil, err
 	}
 
-	ret := v1.ListTagResponse{
+	return &v1.ListTagResponse{
 		Total: int32(count),
 		Items: items,
-	}
-
-	return &ret, err
+	}, nil
 }
 
 func (r *TagRepo) Get(ctx context.Context, req *v1.GetTagRequest) (*v1.Tag, error) {

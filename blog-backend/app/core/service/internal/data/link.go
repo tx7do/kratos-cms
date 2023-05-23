@@ -81,14 +81,14 @@ func (r *LinkRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 			Offset(paging.GetPageOffset(req.GetPage(), req.GetPageSize())).
 			Limit(int(req.GetPageSize()))
 	}
-	links, err := builder.All(ctx)
+	results, err := builder.All(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	items := make([]*v1.Link, 0, len(links))
-	for _, po := range links {
-		item := r.convertEntToProto(po)
+	items := make([]*v1.Link, 0, len(results))
+	for _, res := range results {
+		item := r.convertEntToProto(res)
 		items = append(items, item)
 	}
 
@@ -97,12 +97,10 @@ func (r *LinkRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 		return nil, err
 	}
 
-	ret := v1.ListLinkResponse{
+	return &v1.ListLinkResponse{
 		Total: int32(count),
 		Items: items,
-	}
-
-	return &ret, err
+	}, nil
 }
 
 func (r *LinkRepo) Get(ctx context.Context, req *v1.GetLinkRequest) (*v1.Link, error) {

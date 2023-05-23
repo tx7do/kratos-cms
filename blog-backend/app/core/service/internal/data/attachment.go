@@ -83,14 +83,14 @@ func (r *AttachmentRepo) List(ctx context.Context, req *pagination.PagingRequest
 			Offset(paging.GetPageOffset(req.GetPage(), req.GetPageSize())).
 			Limit(int(req.GetPageSize()))
 	}
-	comments, err := builder.All(ctx)
+	results, err := builder.All(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	items := make([]*v1.Attachment, 0, len(comments))
-	for _, po := range comments {
-		item := r.convertEntToProto(po)
+	items := make([]*v1.Attachment, 0, len(results))
+	for _, res := range results {
+		item := r.convertEntToProto(res)
 		items = append(items, item)
 	}
 
@@ -99,12 +99,10 @@ func (r *AttachmentRepo) List(ctx context.Context, req *pagination.PagingRequest
 		return nil, err
 	}
 
-	ret := v1.ListAttachmentResponse{
+	return &v1.ListAttachmentResponse{
 		Total: int32(count),
 		Items: items,
-	}
-
-	return &ret, err
+	}, nil
 }
 
 func (r *AttachmentRepo) Get(ctx context.Context, req *v1.GetAttachmentRequest) (*v1.Attachment, error) {

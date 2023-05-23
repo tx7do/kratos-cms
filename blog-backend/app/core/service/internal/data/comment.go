@@ -87,14 +87,14 @@ func (r *CommentRepo) List(ctx context.Context, req *pagination.PagingRequest) (
 			Offset(paging.GetPageOffset(req.GetPage(), req.GetPageSize())).
 			Limit(int(req.GetPageSize()))
 	}
-	comments, err := builder.All(ctx)
+	results, err := builder.All(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	items := make([]*v1.Comment, 0, len(comments))
-	for _, po := range comments {
-		item := r.convertEntToProto(po)
+	items := make([]*v1.Comment, 0, len(results))
+	for _, res := range results {
+		item := r.convertEntToProto(res)
 		items = append(items, item)
 	}
 
@@ -103,12 +103,10 @@ func (r *CommentRepo) List(ctx context.Context, req *pagination.PagingRequest) (
 		return nil, err
 	}
 
-	ret := v1.ListCommentResponse{
+	return &v1.ListCommentResponse{
 		Total: int32(count),
 		Items: items,
-	}
-
-	return &ret, err
+	}, nil
 }
 
 func (r *CommentRepo) Get(ctx context.Context, req *v1.GetCommentRequest) (*v1.Comment, error) {

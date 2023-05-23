@@ -84,14 +84,14 @@ func (r *CategoryRepo) List(ctx context.Context, req *pagination.PagingRequest) 
 			Offset(paging.GetPageOffset(req.GetPage(), req.GetPageSize())).
 			Limit(int(req.GetPageSize()))
 	}
-	categories, err := builder.All(ctx)
+	results, err := builder.All(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	items := make([]*v1.Category, 0, len(categories))
-	for _, po := range categories {
-		item := r.convertEntToProto(po)
+	items := make([]*v1.Category, 0, len(results))
+	for _, res := range results {
+		item := r.convertEntToProto(res)
 		items = append(items, item)
 	}
 
@@ -100,12 +100,10 @@ func (r *CategoryRepo) List(ctx context.Context, req *pagination.PagingRequest) 
 		return nil, err
 	}
 
-	ret := v1.ListCategoryResponse{
+	return &v1.ListCategoryResponse{
 		Total: int32(count),
 		Items: items,
-	}
-
-	return &ret, err
+	}, nil
 }
 
 func (r *CategoryRepo) Get(ctx context.Context, req *v1.GetCategoryRequest) (*v1.Category, error) {

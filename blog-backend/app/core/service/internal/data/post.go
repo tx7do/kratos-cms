@@ -95,14 +95,14 @@ func (r *PostRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 			Offset(paging.GetPageOffset(req.GetPage(), req.GetPageSize())).
 			Limit(int(req.GetPageSize()))
 	}
-	posts, err := builder.All(ctx)
+	results, err := builder.All(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	items := make([]*v1.Post, 0, len(posts))
-	for _, po := range posts {
-		item := r.convertEntToProto(po)
+	items := make([]*v1.Post, 0, len(results))
+	for _, res := range results {
+		item := r.convertEntToProto(res)
 		items = append(items, item)
 	}
 
@@ -111,12 +111,10 @@ func (r *PostRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 		return nil, err
 	}
 
-	ret := v1.ListPostResponse{
+	return &v1.ListPostResponse{
 		Total: int32(count),
 		Items: items,
-	}
-
-	return &ret, err
+	}, nil
 }
 
 func (r *PostRepo) Get(ctx context.Context, req *v1.GetPostRequest) (*v1.Post, error) {

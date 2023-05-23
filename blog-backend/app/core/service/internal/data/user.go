@@ -82,14 +82,14 @@ func (r *UserRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 			Offset(paging.GetPageOffset(req.GetPage(), req.GetPageSize())).
 			Limit(int(req.GetPageSize()))
 	}
-	users, err := builder.All(ctx)
+	results, err := builder.All(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	items := make([]*v1.User, 0, len(users))
-	for _, u := range users {
-		item := r.convertEntToProto(u)
+	items := make([]*v1.User, 0, len(results))
+	for _, res := range results {
+		item := r.convertEntToProto(res)
 		items = append(items, item)
 	}
 
