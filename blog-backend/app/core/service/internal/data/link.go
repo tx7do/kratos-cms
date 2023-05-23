@@ -50,41 +50,38 @@ func (r *LinkRepo) convertEntToProto(in *ent.Link) *v1.Link {
 	}
 }
 
+func (r *LinkRepo) Count(ctx context.Context, whereCond entgo.WhereConditions) (int, error) {
+	builder := r.data.db.Link.Query()
+	if len(whereCond) != 0 {
+		for _, cond := range whereCond {
+			builder = builder.Where(cond)
+		}
+	}
+	return builder.Count(ctx)
+}
+
 func (r *LinkRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListLinkResponse, error) {
 	whereCond, orderCond := entgo.QueryCommandToSelector(req.GetQuery(), req.GetOrderBy())
 
-	builder1 := r.data.db.Link.Query()
+	builder := r.data.db.Link.Query()
 	if len(whereCond) != 0 {
 		for _, v := range whereCond {
-			builder1.Where(v)
+			builder.Where(v)
 		}
 	}
 	if len(orderCond) != 0 {
 		for _, v := range orderCond {
-			builder1.Order(v)
+			builder.Order(v)
 		}
 	} else {
-		builder1.Order(ent.Desc(link.FieldCreateTime))
+		builder.Order(ent.Desc(link.FieldCreateTime))
 	}
 	if req.GetPage() > 0 && req.GetPageSize() > 0 && !req.GetNopaging() {
-		builder1.
+		builder.
 			Offset(paging.GetPageOffset(req.GetPage(), req.GetPageSize())).
 			Limit(int(req.GetPageSize()))
 	}
-	links, err := builder1.All(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	builder2 := r.data.db.Link.Query()
-	if len(whereCond) != 0 {
-		for _, v := range whereCond {
-			builder2.Where(v)
-		}
-	}
-	count, err := builder2.
-		Select(link.FieldID).
-		Count(ctx)
+	links, err := builder.All(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -93,6 +90,11 @@ func (r *LinkRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 	for _, po := range links {
 		item := r.convertEntToProto(po)
 		items = append(items, item)
+	}
+
+	count, err := r.Count(ctx, whereCond)
+	if err != nil {
+		return nil, err
 	}
 
 	ret := v1.ListLinkResponse{

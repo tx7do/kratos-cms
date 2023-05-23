@@ -49,41 +49,38 @@ func (r *TagRepo) convertEntToProto(in *ent.Tag) *v1.Tag {
 	}
 }
 
+func (r *TagRepo) Count(ctx context.Context, whereCond entgo.WhereConditions) (int, error) {
+	builder := r.data.db.Tag.Query()
+	if len(whereCond) != 0 {
+		for _, cond := range whereCond {
+			builder = builder.Where(cond)
+		}
+	}
+	return builder.Count(ctx)
+}
+
 func (r *TagRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListTagResponse, error) {
 	whereCond, orderCond := entgo.QueryCommandToSelector(req.GetQuery(), req.GetOrderBy())
 
-	builder1 := r.data.db.Tag.Query()
+	builder := r.data.db.Tag.Query()
 	if len(whereCond) != 0 {
 		for _, v := range whereCond {
-			builder1.Where(v)
+			builder.Where(v)
 		}
 	}
 	if len(orderCond) != 0 {
 		for _, v := range orderCond {
-			builder1.Order(v)
+			builder.Order(v)
 		}
 	} else {
-		builder1.Order(ent.Desc(tag.FieldCreateTime))
+		builder.Order(ent.Desc(tag.FieldCreateTime))
 	}
 	if req.GetPage() > 0 && req.GetPageSize() > 0 && !req.GetNopaging() {
-		builder1.
+		builder.
 			Offset(paging.GetPageOffset(req.GetPage(), req.GetPageSize())).
 			Limit(int(req.GetPageSize()))
 	}
-	tags, err := builder1.All(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	builder2 := r.data.db.Tag.Query()
-	if len(whereCond) != 0 {
-		for _, v := range whereCond {
-			builder2.Where(v)
-		}
-	}
-	count, err := builder2.
-		Select(tag.FieldID).
-		Count(ctx)
+	tags, err := builder.All(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -92,6 +89,11 @@ func (r *TagRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.
 	for _, po := range tags {
 		item := r.convertEntToProto(po)
 		items = append(items, item)
+	}
+
+	count, err := r.Count(ctx, whereCond)
+	if err != nil {
+		return nil, err
 	}
 
 	ret := v1.ListTagResponse{

@@ -50,42 +50,39 @@ func (r *UserRepo) convertEntToProto(in *ent.User) *v1.User {
 	}
 }
 
+func (r *UserRepo) Count(ctx context.Context, whereCond entgo.WhereConditions) (int, error) {
+	builder := r.data.db.User.Query()
+	if len(whereCond) != 0 {
+		for _, cond := range whereCond {
+			builder = builder.Where(cond)
+		}
+	}
+	return builder.Count(ctx)
+}
+
 func (r *UserRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListUserResponse, error) {
 	whereCond, orderCond := entgo.QueryCommandToSelector(req.GetQuery(), req.GetOrderBy())
 
-	builder1 := r.data.db.User.Query()
+	builder := r.data.db.User.Query()
 
 	if len(whereCond) != 0 {
 		for _, cond := range whereCond {
-			builder1 = builder1.Where(cond)
+			builder = builder.Where(cond)
 		}
 	}
 	if len(orderCond) != 0 {
 		for _, cond := range orderCond {
-			builder1 = builder1.Order(cond)
+			builder = builder.Order(cond)
 		}
 	} else {
-		builder1.Order(ent.Desc(user.FieldCreateTime))
+		builder.Order(ent.Desc(user.FieldCreateTime))
 	}
 	if req.GetPage() > 0 && req.GetPageSize() > 0 && !req.GetNopaging() {
-		builder1.
+		builder.
 			Offset(paging.GetPageOffset(req.GetPage(), req.GetPageSize())).
 			Limit(int(req.GetPageSize()))
 	}
-	users, err := builder1.All(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	builder2 := r.data.db.User.Query()
-	if len(whereCond) != 0 {
-		for _, cond := range whereCond {
-			builder2 = builder2.Where(cond)
-		}
-	}
-	count, err := builder2.
-		Select(user.FieldID).
-		Count(ctx)
+	users, err := builder.All(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -94,6 +91,11 @@ func (r *UserRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 	for _, u := range users {
 		item := r.convertEntToProto(u)
 		items = append(items, item)
+	}
+
+	count, err := r.Count(ctx, whereCond)
+	if err != nil {
+		return nil, err
 	}
 
 	return &v1.ListUserResponse{

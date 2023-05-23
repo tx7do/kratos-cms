@@ -56,41 +56,38 @@ func (r *CommentRepo) convertEntToProto(in *ent.Comment) *v1.Comment {
 	}
 }
 
+func (r *CommentRepo) Count(ctx context.Context, whereCond entgo.WhereConditions) (int, error) {
+	builder := r.data.db.Comment.Query()
+	if len(whereCond) != 0 {
+		for _, cond := range whereCond {
+			builder = builder.Where(cond)
+		}
+	}
+	return builder.Count(ctx)
+}
+
 func (r *CommentRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListCommentResponse, error) {
 	whereCond, orderCond := entgo.QueryCommandToSelector(req.GetQuery(), req.GetOrderBy())
 
-	builder1 := r.data.db.Comment.Query()
+	builder := r.data.db.Comment.Query()
 	if len(whereCond) != 0 {
 		for _, v := range whereCond {
-			builder1.Where(v)
+			builder.Where(v)
 		}
 	}
 	if len(orderCond) != 0 {
 		for _, v := range orderCond {
-			builder1.Order(v)
+			builder.Order(v)
 		}
 	} else {
-		builder1.Order(ent.Desc(comment.FieldCreateTime))
+		builder.Order(ent.Desc(comment.FieldCreateTime))
 	}
 	if req.GetPage() > 0 && req.GetPageSize() > 0 && !req.GetNopaging() {
-		builder1.
+		builder.
 			Offset(paging.GetPageOffset(req.GetPage(), req.GetPageSize())).
 			Limit(int(req.GetPageSize()))
 	}
-	comments, err := builder1.All(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	builder2 := r.data.db.Comment.Query()
-	if len(whereCond) != 0 {
-		for _, v := range whereCond {
-			builder2.Where(v)
-		}
-	}
-	count, err := builder2.
-		Select(comment.FieldID).
-		Count(ctx)
+	comments, err := builder.All(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -99,6 +96,11 @@ func (r *CommentRepo) List(ctx context.Context, req *pagination.PagingRequest) (
 	for _, po := range comments {
 		item := r.convertEntToProto(po)
 		items = append(items, item)
+	}
+
+	count, err := r.Count(ctx, whereCond)
+	if err != nil {
+		return nil, err
 	}
 
 	ret := v1.ListCommentResponse{
