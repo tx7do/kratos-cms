@@ -147,7 +147,7 @@ func (r *TagRepo) Update(ctx context.Context, req *v1.UpdateTagRequest) (*v1.Tag
 }
 
 func (r *TagRepo) Delete(ctx context.Context, req *v1.DeleteTagRequest) (bool, error) {
-	err := r.data.db.Link.
+	err := r.data.db.Tag.
 		DeleteOneID(req.GetId()).
 		Exec(ctx)
 	return err != nil, err
