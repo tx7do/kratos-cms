@@ -106,16 +106,16 @@ func (r *AttachmentRepo) List(ctx context.Context, req *pagination.PagingRequest
 }
 
 func (r *AttachmentRepo) Get(ctx context.Context, req *v1.GetAttachmentRequest) (*v1.Attachment, error) {
-	po, err := r.data.db.Attachment.Get(ctx, req.GetId())
+	res, err := r.data.db.Attachment.Get(ctx, req.GetId())
 	if err != nil && !ent.IsNotFound(err) {
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *AttachmentRepo) Create(ctx context.Context, req *v1.CreateAttachmentRequest) (*v1.Attachment, error) {
-	po, err := r.data.db.Attachment.Create().
+	res, err := r.data.db.Attachment.Create().
 		SetNillableName(req.Attachment.Name).
 		SetNillablePath(req.Attachment.Path).
 		SetNillableFileKey(req.Attachment.FileKey).
@@ -132,7 +132,7 @@ func (r *AttachmentRepo) Create(ctx context.Context, req *v1.CreateAttachmentReq
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *AttachmentRepo) Update(ctx context.Context, req *v1.UpdateAttachmentRequest) (*v1.Attachment, error) {
@@ -149,12 +149,12 @@ func (r *AttachmentRepo) Update(ctx context.Context, req *v1.UpdateAttachmentReq
 		SetNillableType(req.Attachment.Type).
 		SetUpdateTime(time.Now().UnixMilli())
 
-	po, err := builder.Save(ctx)
+	res, err := builder.Save(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *AttachmentRepo) Delete(ctx context.Context, req *v1.DeleteAttachmentRequest) (bool, error) {

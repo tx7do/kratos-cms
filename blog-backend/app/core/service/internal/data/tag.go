@@ -103,16 +103,16 @@ func (r *TagRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.
 }
 
 func (r *TagRepo) Get(ctx context.Context, req *v1.GetTagRequest) (*v1.Tag, error) {
-	po, err := r.data.db.Tag.Get(ctx, req.GetId())
+	res, err := r.data.db.Tag.Get(ctx, req.GetId())
 	if err != nil && !ent.IsNotFound(err) {
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *TagRepo) Create(ctx context.Context, req *v1.CreateTagRequest) (*v1.Tag, error) {
-	po, err := r.data.db.Tag.Create().
+	res, err := r.data.db.Tag.Create().
 		SetNillableName(req.Tag.Name).
 		SetNillableSlug(req.Tag.Slug).
 		SetNillableColor(req.Tag.Color).
@@ -125,7 +125,7 @@ func (r *TagRepo) Create(ctx context.Context, req *v1.CreateTagRequest) (*v1.Tag
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *TagRepo) Update(ctx context.Context, req *v1.UpdateTagRequest) (*v1.Tag, error) {
@@ -138,12 +138,12 @@ func (r *TagRepo) Update(ctx context.Context, req *v1.UpdateTagRequest) (*v1.Tag
 		SetNillablePostCount(req.Tag.PostCount).
 		SetUpdateTime(time.Now().UnixMilli())
 
-	po, err := builder.Save(ctx)
+	res, err := builder.Save(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *TagRepo) Delete(ctx context.Context, req *v1.DeleteTagRequest) (bool, error) {

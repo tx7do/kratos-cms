@@ -104,16 +104,16 @@ func (r *LinkRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 }
 
 func (r *LinkRepo) Get(ctx context.Context, req *v1.GetLinkRequest) (*v1.Link, error) {
-	po, err := r.data.db.Link.Get(ctx, req.GetId())
+	res, err := r.data.db.Link.Get(ctx, req.GetId())
 	if err != nil && !ent.IsNotFound(err) {
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *LinkRepo) Create(ctx context.Context, req *v1.CreateLinkRequest) (*v1.Link, error) {
-	po, err := r.data.db.Link.Create().
+	res, err := r.data.db.Link.Create().
 		SetNillableName(req.Link.Name).
 		SetNillableURL(req.Link.Url).
 		SetNillableLogo(req.Link.Logo).
@@ -126,7 +126,7 @@ func (r *LinkRepo) Create(ctx context.Context, req *v1.CreateLinkRequest) (*v1.L
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *LinkRepo) Update(ctx context.Context, req *v1.UpdateLinkRequest) (*v1.Link, error) {
@@ -139,12 +139,12 @@ func (r *LinkRepo) Update(ctx context.Context, req *v1.UpdateLinkRequest) (*v1.L
 		SetNillablePriority(req.Link.Priority).
 		SetUpdateTime(time.Now().UnixMilli())
 
-	po, err := builder.Save(ctx)
+	res, err := builder.Save(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *LinkRepo) Delete(ctx context.Context, req *v1.DeleteLinkRequest) (bool, error) {

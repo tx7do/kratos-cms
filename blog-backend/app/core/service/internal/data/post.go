@@ -118,16 +118,16 @@ func (r *PostRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 }
 
 func (r *PostRepo) Get(ctx context.Context, req *v1.GetPostRequest) (*v1.Post, error) {
-	po, err := r.data.db.Post.Get(ctx, req.GetId())
+	res, err := r.data.db.Post.Get(ctx, req.GetId())
 	if err != nil && !ent.IsNotFound(err) {
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *PostRepo) Create(ctx context.Context, req *v1.CreatePostRequest) (*v1.Post, error) {
-	po, err := r.data.db.Post.Create().
+	res, err := r.data.db.Post.Create().
 		SetNillableTitle(req.Post.Title).
 		SetNillableStatus(req.Post.Status).
 		SetNillableSlug(req.Post.Slug).
@@ -154,7 +154,7 @@ func (r *PostRepo) Create(ctx context.Context, req *v1.CreatePostRequest) (*v1.P
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *PostRepo) Update(ctx context.Context, req *v1.UpdatePostRequest) (*v1.Post, error) {
@@ -182,12 +182,12 @@ func (r *PostRepo) Update(ctx context.Context, req *v1.UpdatePostRequest) (*v1.P
 		SetEditTime(time.Now().UnixMilli()).
 		SetUpdateTime(time.Now().UnixMilli())
 
-	po, err := builder.Save(ctx)
+	res, err := builder.Save(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *PostRepo) Delete(ctx context.Context, req *v1.DeletePostRequest) (bool, error) {

@@ -110,16 +110,16 @@ func (r *CommentRepo) List(ctx context.Context, req *pagination.PagingRequest) (
 }
 
 func (r *CommentRepo) Get(ctx context.Context, req *v1.GetCommentRequest) (*v1.Comment, error) {
-	po, err := r.data.db.Comment.Get(ctx, req.GetId())
+	res, err := r.data.db.Comment.Get(ctx, req.GetId())
 	if err != nil && !ent.IsNotFound(err) {
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *CommentRepo) Create(ctx context.Context, req *v1.CreateCommentRequest) (*v1.Comment, error) {
-	po, err := r.data.db.Comment.Create().
+	res, err := r.data.db.Comment.Create().
 		SetNillableAuthor(req.Comment.Author).
 		SetNillableEmail(req.Comment.Email).
 		SetNillableIPAddress(req.Comment.IpAddress).
@@ -138,7 +138,7 @@ func (r *CommentRepo) Create(ctx context.Context, req *v1.CreateCommentRequest) 
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *CommentRepo) Update(ctx context.Context, req *v1.UpdateCommentRequest) (*v1.Comment, error) {
@@ -157,12 +157,12 @@ func (r *CommentRepo) Update(ctx context.Context, req *v1.UpdateCommentRequest) 
 		SetNillableAvatar(req.Comment.Avatar).
 		SetUpdateTime(time.Now().UnixMilli())
 
-	po, err := builder.Save(ctx)
+	res, err := builder.Save(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *CommentRepo) Delete(ctx context.Context, req *v1.DeleteCommentRequest) (bool, error) {

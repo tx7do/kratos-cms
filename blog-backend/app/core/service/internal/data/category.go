@@ -107,16 +107,16 @@ func (r *CategoryRepo) List(ctx context.Context, req *pagination.PagingRequest) 
 }
 
 func (r *CategoryRepo) Get(ctx context.Context, req *v1.GetCategoryRequest) (*v1.Category, error) {
-	po, err := r.data.db.Category.Get(ctx, req.GetId())
+	res, err := r.data.db.Category.Get(ctx, req.GetId())
 	if err != nil && !ent.IsNotFound(err) {
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *CategoryRepo) Create(ctx context.Context, req *v1.CreateCategoryRequest) (*v1.Category, error) {
-	po, err := r.data.db.Category.Create().
+	res, err := r.data.db.Category.Create().
 		SetNillableName(req.Category.Name).
 		SetNillableParentID(req.Category.ParentId).
 		SetNillableSlug(req.Category.Slug).
@@ -132,7 +132,7 @@ func (r *CategoryRepo) Create(ctx context.Context, req *v1.CreateCategoryRequest
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *CategoryRepo) Update(ctx context.Context, req *v1.UpdateCategoryRequest) (*v1.Category, error) {
@@ -148,12 +148,12 @@ func (r *CategoryRepo) Update(ctx context.Context, req *v1.UpdateCategoryRequest
 		SetNillablePostCount(req.Category.PostCount).
 		SetUpdateTime(time.Now().UnixMilli())
 
-	po, err := builder.Save(ctx)
+	res, err := builder.Save(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *CategoryRepo) Delete(ctx context.Context, req *v1.DeleteCategoryRequest) (bool, error) {

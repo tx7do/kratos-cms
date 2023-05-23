@@ -105,12 +105,12 @@ func (r *UserRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 }
 
 func (r *UserRepo) Get(ctx context.Context, req *v1.GetUserRequest) (*v1.User, error) {
-	po, err := r.data.db.User.Get(ctx, req.GetId())
+	res, err := r.data.db.User.Get(ctx, req.GetId())
 	if err != nil && !ent.IsNotFound(err) {
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *UserRepo) Create(ctx context.Context, req *v1.CreateUserRequest) (*v1.User, error) {
@@ -119,7 +119,7 @@ func (r *UserRepo) Create(ctx context.Context, req *v1.CreateUserRequest) (*v1.U
 		return nil, err
 	}
 
-	po, err := r.data.db.User.Create().
+	res, err := r.data.db.User.Create().
 		SetNillableUsername(req.User.UserName).
 		SetNillableNickname(req.User.NickName).
 		SetNillableEmail(req.User.Email).
@@ -130,11 +130,11 @@ func (r *UserRepo) Create(ctx context.Context, req *v1.CreateUserRequest) (*v1.U
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *UserRepo) Update(ctx context.Context, req *v1.UpdateUserRequest) (*v1.User, error) {
-	ph, err := crypto.HashPassword(req.User.GetPassword())
+	cryptoPassword, err := crypto.HashPassword(req.User.GetPassword())
 	if err != nil {
 		return nil, err
 	}
@@ -142,15 +142,15 @@ func (r *UserRepo) Update(ctx context.Context, req *v1.UpdateUserRequest) (*v1.U
 	builder := r.data.db.User.UpdateOneID(req.Id).
 		SetNillableNickname(req.User.NickName).
 		SetNillableEmail(req.User.Email).
-		SetPassword(ph).
+		SetPassword(cryptoPassword).
 		SetUpdateTime(time.Now().UnixMilli())
 
-	po, err := builder.Save(ctx)
+	res, err := builder.Save(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	return r.convertEntToProto(po), err
+	return r.convertEntToProto(res), err
 }
 
 func (r *UserRepo) Delete(ctx context.Context, req *v1.DeleteUserRequest) (bool, error) {
@@ -161,18 +161,18 @@ func (r *UserRepo) Delete(ctx context.Context, req *v1.DeleteUserRequest) (bool,
 }
 
 func (r *UserRepo) GetUserByUserName(ctx context.Context, userName string) (*v1.User, error) {
-	u, err := r.data.db.User.Query().
+	res, err := r.data.db.User.Query().
 		Where(user.UsernameEQ(userName)).
 		Only(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	return r.convertEntToProto(u), nil
+	return r.convertEntToProto(res), nil
 }
 
 func (r *UserRepo) VerifyPassword(ctx context.Context, req *v1.VerifyPasswordRequest) (bool, error) {
-	ret, err := r.data.db.User.
+	res, err := r.data.db.User.
 		Query().
 		Select(user.FieldID, user.FieldPassword).
 		Where(user.UsernameEQ(req.GetUserName())).
@@ -181,7 +181,7 @@ func (r *UserRepo) VerifyPassword(ctx context.Context, req *v1.VerifyPasswordReq
 		return false, v1.ErrorUserNotFound("用户未找到")
 	}
 
-	bMatched := crypto.CheckPasswordHash(req.GetPassword(), *ret.Password)
+	bMatched := crypto.CheckPasswordHash(req.GetPassword(), *res.Password)
 
 	if !bMatched {
 		return false, v1.ErrorUserNotFound("密码错误")
