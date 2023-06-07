@@ -20,56 +20,72 @@ export function checkStatus(
   const { t } = useI18n();
   const userStore = useUserStoreWithOut();
 
-  const reasonMessage = t('sys.api.' + reason);
-  let errMessage = reasonMessage == '' ? msg : reasonMessage;
+  let jumpToLogin = false;
+  let errMessage = reason == '' ? msg : reason;
+  if (errMessage === '') {
+    switch (status) {
+      case 400:
+        errMessage = `${msg}`;
+        break;
 
-  switch (status) {
-    case 400:
-      errMessage = `${msg}`;
-      break;
-    // 401: Not logged in
-    // 跳转到登陆页面
-    case 401:
-      errMessage = msg || t('sys.api.UNAUTHORIZED');
-      userStore.setToken(undefined);
-      if (stp === SessionTimeoutProcessingEnum.PAGE_COVERAGE) {
-        userStore.setSessionTimeout(true);
-      } else {
-        userStore.logout(true).then();
-      }
-      break;
-    case 403:
-      errMessage = t('sys.api.ACCESS_FORBIDDEN');
-      break;
-    // 404请求不存在
-    case 404:
-      errMessage = t('sys.api.RESOURCE_NOT_FOUND');
-      break;
-    case 405:
-      errMessage = t('sys.api.METHOD_NOT_ALLOWED');
-      break;
-    case 408:
-      errMessage = t('sys.api.REQUEST_TIMEOUT');
-      break;
-    case 500:
-      errMessage = t('sys.api.INTERNAL_SERVER_ERROR');
-      break;
-    case 501:
-      errMessage = t('sys.api.NOT_IMPLEMENTED');
-      break;
-    case 502:
-      errMessage = t('sys.api.NETWORK_ERROR');
-      break;
-    case 503:
-      errMessage = t('sys.api.SERVICE_UNAVAILABLE');
-      break;
-    case 504:
-      errMessage = t('sys.api.NETWORK_TIMEOUT');
-      break;
-    case 505:
-      errMessage = t('sys.api.REQUEST_NOT_SUPPORT');
-      break;
-    default:
+      case 401:
+        // 401: Not logged in
+        // 跳转到登陆页面
+        jumpToLogin = true;
+        errMessage = msg || t('sys.api.UNAUTHORIZED');
+        break;
+
+      case 403:
+        errMessage = t('sys.api.ACCESS_FORBIDDEN');
+        break;
+
+      // 请求不存在
+      case 404:
+        errMessage = t('sys.api.RESOURCE_NOT_FOUND');
+        break;
+
+      case 405:
+        errMessage = t('sys.api.METHOD_NOT_ALLOWED');
+        break;
+
+      case 408:
+        errMessage = t('sys.api.REQUEST_TIMEOUT');
+        break;
+
+      case 500:
+        errMessage = t('sys.api.INTERNAL_SERVER_ERROR');
+        break;
+
+      case 501:
+        errMessage = t('sys.api.NOT_IMPLEMENTED');
+        break;
+
+      case 502:
+        errMessage = t('sys.api.NETWORK_ERROR');
+        break;
+
+      case 503:
+        errMessage = t('sys.api.SERVICE_UNAVAILABLE');
+        break;
+
+      case 504:
+        errMessage = t('sys.api.NETWORK_TIMEOUT');
+        break;
+
+      case 505:
+        errMessage = t('sys.api.REQUEST_NOT_SUPPORT');
+        break;
+      default:
+    }
+  }
+
+  if (jumpToLogin) {
+    userStore.setToken(undefined);
+    if (stp === SessionTimeoutProcessingEnum.PAGE_COVERAGE) {
+      userStore.setSessionTimeout(true);
+    } else {
+      userStore.logout().then();
+    }
   }
 
   // console.log('checkStatus', status, errMessage, mode);
