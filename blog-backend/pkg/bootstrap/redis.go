@@ -10,7 +10,7 @@ import (
 )
 
 // NewRedisClient 创建Redis客户端
-func NewRedisClient(cfg *conf.Bootstrap) *redis.Client {
+func NewRedisClient(cfg *conf.Bootstrap, logger *log.Helper) *redis.Client {
 	rdb := redis.NewClient(&redis.Options{
 		Addr:         cfg.Data.Redis.Addr,
 		Password:     cfg.Data.Redis.Password,
@@ -20,7 +20,7 @@ func NewRedisClient(cfg *conf.Bootstrap) *redis.Client {
 		ReadTimeout:  cfg.Data.Redis.ReadTimeout.AsDuration(),
 	})
 	if rdb == nil {
-		log.Fatalf("failed opening connection to redis")
+		logger.Fatalf("failed opening connection to redis")
 		return nil
 	}
 	rdb.AddHook(redisotel.NewTracingHook())

@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/go-redis/redis/extra/redisotel/v8"
 	"github.com/go-redis/redis/v8"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -14,6 +13,8 @@ import (
 	"kratos-cms/app/core/service/internal/data/ent"
 	"kratos-cms/app/core/service/internal/data/ent/migrate"
 	"kratos-cms/gen/api/go/common/conf"
+
+	"kratos-cms/pkg/bootstrap"
 )
 
 // Data .
@@ -25,7 +26,7 @@ type Data struct {
 
 // NewData .
 func NewData(entClient *ent.Client, redisClient *redis.Client, logger log.Logger) (*Data, func(), error) {
-	l := log.NewHelper(log.With(logger, "module", "data/comment-service"))
+	l := log.NewHelper(log.With(logger, "module", "data/core-service"))
 
 	d := &Data{
 		db:  entClient,
@@ -46,27 +47,13 @@ func NewData(entClient *ent.Client, redisClient *redis.Client, logger log.Logger
 
 // NewRedisClient 创建Redis客户端
 func NewRedisClient(cfg *conf.Bootstrap, logger log.Logger) *redis.Client {
-	l := log.NewHelper(log.With(logger, "module", "redis/data/comment-service"))
-
-	rdb := redis.NewClient(&redis.Options{
-		Addr:         cfg.Data.Redis.Addr,
-		Password:     cfg.Data.Redis.Password,
-		DB:           int(cfg.Data.Redis.Db),
-		DialTimeout:  cfg.Data.Redis.DialTimeout.AsDuration(),
-		WriteTimeout: cfg.Data.Redis.WriteTimeout.AsDuration(),
-		ReadTimeout:  cfg.Data.Redis.ReadTimeout.AsDuration(),
-	})
-	if rdb == nil {
-		l.Fatalf("failed opening connection to redis")
-	}
-	rdb.AddHook(redisotel.NewTracingHook())
-
-	return rdb
+	l := log.NewHelper(log.With(logger, "module", "redis/data/core-service"))
+	return bootstrap.NewRedisClient(cfg, l)
 }
 
 // NewEntClient 创建数据库客户端
 func NewEntClient(cfg *conf.Bootstrap, logger log.Logger) *ent.Client {
-	l := log.NewHelper(log.With(logger, "module", "ent/data/comment-service"))
+	l := log.NewHelper(log.With(logger, "module", "ent/data/core-service"))
 
 	client, err := ent.Open(
 		cfg.Data.Database.Driver,

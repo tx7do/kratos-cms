@@ -2,7 +2,6 @@ package data
 
 import (
 	"context"
-	"github.com/go-redis/redis/extra/redisotel/v8"
 	"github.com/go-redis/redis/v8"
 
 	authnEngine "github.com/tx7do/kratos-authn/engine"
@@ -52,7 +51,8 @@ func NewData(redisClient *redis.Client,
 	linkClient contentV1.LinkServiceClient,
 	postClient contentV1.PostServiceClient,
 	tagClient contentV1.TagServiceClient,
-	logger log.Logger) (*Data, func(), error) {
+	logger log.Logger,
+) (*Data, func(), error) {
 	l := log.NewHelper(log.With(logger, "module", "data/admin-service"))
 
 	d := &Data{
@@ -80,21 +80,7 @@ func NewData(redisClient *redis.Client,
 // NewRedisClient 创建Redis客户端
 func NewRedisClient(cfg *conf.Bootstrap, logger log.Logger) *redis.Client {
 	l := log.NewHelper(log.With(logger, "module", "redis/data/admin-service"))
-
-	rdb := redis.NewClient(&redis.Options{
-		Addr:         cfg.Data.Redis.Addr,
-		Password:     cfg.Data.Redis.Password,
-		DB:           int(cfg.Data.Redis.Db),
-		DialTimeout:  cfg.Data.Redis.DialTimeout.AsDuration(),
-		WriteTimeout: cfg.Data.Redis.WriteTimeout.AsDuration(),
-		ReadTimeout:  cfg.Data.Redis.ReadTimeout.AsDuration(),
-	})
-	if rdb == nil {
-		l.Fatalf("failed opening connection to redis")
-	}
-	rdb.AddHook(redisotel.NewTracingHook())
-
-	return rdb
+	return bootstrap.NewRedisClient(cfg, l)
 }
 
 // NewDiscovery 创建服务发现客户端
