@@ -6,7 +6,7 @@
       </template>
       <template #bodyCell="{ column, record }">
         <TableAction
-          v-if="column.dataIndex === 'action'"
+          v-if="(column as BasicColumn).dataIndex === 'action'"
           :actions="[
             {
               icon: 'clarity:note-edit-line',
@@ -30,7 +30,7 @@
 
 <script lang="ts" setup>
   import { nextTick } from 'vue';
-  import { BasicTable, useTable, TableAction } from '/@/components/Table';
+  import { BasicTable, useTable, TableAction, BasicColumn } from '/@/components/Table';
   import { useDrawer } from '/@/components/Drawer';
 
   import { ListCategory } from '/@/api/blog/category';

@@ -7,7 +7,10 @@
         </a-button>
       </template>
       <template #bodyCell="{ column, record }">
-        <TableAction v-if="column.dataIndex === 'action'" :actions="createActions(record)" />
+        <TableAction
+          v-if="(column as BasicColumn).dataIndex === 'action'"
+          :actions="createActions(record)"
+        />
       </template>
     </BasicTable>
   </PageWrapper>
@@ -20,6 +23,7 @@
     TableAction,
     ActionItem,
     EditRecordRow,
+    BasicColumn,
   } from '/@/components/Table';
   import { PageWrapper } from '/@/components/Page';
   import { useGo } from '/@/hooks/web/usePage';
@@ -29,7 +33,7 @@
 
   const go = useGo();
 
-  const [registerTable, { reload }] = useTable({
+  const [registerTable] = useTable({
     title: '全部标签',
     api: ListTag,
     columns,
