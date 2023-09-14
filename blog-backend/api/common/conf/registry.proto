@@ -12,7 +12,11 @@ message Registry {
   message Consul {
     string scheme = 1;  // 网络样式
     string address = 2; // 服务端地址
-    bool health_check = 3;  // 健康检查
+    optional string data_center = 3; // 数据中心
+    optional google.protobuf.Duration timeout = 4; // 超时时间
+    optional bool heartbeat = 5;  // 心跳检查
+    optional bool health_check = 6;  // 健康检查
+    optional int32 health_check_interval = 7;  // 健康检查时间间隔
   }
 
   // Etcd

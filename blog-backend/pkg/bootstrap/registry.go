@@ -121,7 +121,25 @@ func NewConsulRegistry(c *conf.Registry) *consulKratos.Registry {
 		log.Fatal(err)
 	}
 
-	reg := consulKratos.New(cli, consulKratos.WithHealthCheck(c.Consul.HealthCheck))
+	var opts []consulKratos.Option
+
+	if c.Consul.DataCenter != nil {
+		opts = append(opts, consulKratos.WithDatacenter(consulKratos.Datacenter(c.Consul.GetDataCenter())))
+	}
+	if c.Consul.Timeout != nil {
+		opts = append(opts, consulKratos.WithTimeout(c.Consul.Timeout.AsDuration()))
+	}
+	if c.Consul.Heartbeat != nil {
+		opts = append(opts, consulKratos.WithHeartbeat(c.Consul.GetHeartbeat()))
+	}
+	if c.Consul.HealthCheck != nil {
+		opts = append(opts, consulKratos.WithHealthCheck(c.Consul.GetHealthCheck()))
+	}
+	if c.Consul.HealthCheckInterval != nil {
+		opts = append(opts, consulKratos.WithHealthCheckInterval(int(c.Consul.GetHealthCheckInterval())))
+	}
+
+	reg := consulKratos.New(cli, opts...)
 
 	return reg
 }
