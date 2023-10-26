@@ -17,7 +17,7 @@ import (
 	"kratos-cms/app/front/service/internal/server"
 	"kratos-cms/app/front/service/internal/service"
 
-	"kratos-cms/gen/api/go/common/conf"
+	conf "github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
 )
 
 // initApp init kratos application.

@@ -12,11 +12,12 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/registry"
 
+	conf "github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
+
 	"kratos-cms/app/core/service/internal/biz"
 	"kratos-cms/app/core/service/internal/data"
 	"kratos-cms/app/core/service/internal/server"
 	"kratos-cms/app/core/service/internal/service"
-	"kratos-cms/gen/api/go/common/conf"
 )
 
 // initApp init kratos application.

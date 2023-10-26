@@ -4,14 +4,15 @@ import (
 	"context"
 	"time"
 
+	"entgo.io/ent/dialect/sql"
+
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/tx7do/kratos-utils/entgo"
-	paging "github.com/tx7do/kratos-utils/pagination"
-	util "github.com/tx7do/kratos-utils/time"
+	entgo "github.com/tx7do/go-utils/entgo/query"
+	util "github.com/tx7do/go-utils/time"
 
 	"kratos-cms/app/core/service/internal/biz"
 	"kratos-cms/app/core/service/internal/data/ent"
-	"kratos-cms/app/core/service/internal/data/ent/comment"
+	"kratos-cms/app/core/service/internal/data/ent/attachment"
 
 	"kratos-cms/gen/api/go/common/pagination"
 	v1 "kratos-cms/gen/api/go/file/service/v1"
@@ -53,37 +54,30 @@ func (r *AttachmentRepo) convertEntToProto(in *ent.Attachment) *v1.Attachment {
 	}
 }
 
-func (r *AttachmentRepo) Count(ctx context.Context, whereCond entgo.WhereConditions) (int, error) {
-	builder := r.data.db.Attachment.Query()
+func (r *AttachmentRepo) Count(ctx context.Context, whereCond []func(s *sql.Selector)) (int, error) {
+	builder := r.data.db.Client().Attachment.Query()
 	if len(whereCond) != 0 {
-		for _, cond := range whereCond {
-			builder = builder.Where(cond)
-		}
+		builder.Modify(whereCond...)
 	}
 	return builder.Count(ctx)
 }
 
 func (r *AttachmentRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListAttachmentResponse, error) {
-	whereCond, orderCond := entgo.QueryCommandToSelector(req.GetQuery(), req.GetOrderBy())
+	builder := r.data.db.Client().Attachment.Query()
 
-	builder := r.data.db.Attachment.Query()
-	if len(whereCond) != 0 {
-		for _, v := range whereCond {
-			builder.Where(v)
-		}
+	err, whereSelectors, querySelectors := entgo.BuildQuerySelector(r.data.db.Driver().Dialect(),
+		req.GetQuery(), req.GetOrQuery(),
+		req.GetPage(), req.GetPageSize(), req.GetNoPaging(),
+		req.GetOrderBy(), attachment.FieldCreateTime)
+	if err != nil {
+		r.log.Errorf("解析条件发生错误[%s]", err.Error())
+		return nil, err
 	}
-	if len(orderCond) != 0 {
-		for _, v := range orderCond {
-			builder.Order(v)
-		}
-	} else {
-		builder.Order(ent.Desc(comment.FieldCreateTime))
+
+	if querySelectors != nil {
+		builder.Modify(querySelectors...)
 	}
-	if req.GetPage() > 0 && req.GetPageSize() > 0 && !req.GetNopaging() {
-		builder.
-			Offset(paging.GetPageOffset(req.GetPage(), req.GetPageSize())).
-			Limit(int(req.GetPageSize()))
-	}
+
 	results, err := builder.All(ctx)
 	if err != nil {
 		return nil, err
@@ -95,7 +89,7 @@ func (r *AttachmentRepo) List(ctx context.Context, req *pagination.PagingRequest
 		items = append(items, item)
 	}
 
-	count, err := r.Count(ctx, whereCond)
+	count, err := r.Count(ctx, whereSelectors)
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +101,7 @@ func (r *AttachmentRepo) List(ctx context.Context, req *pagination.PagingRequest
 }
 
 func (r *AttachmentRepo) Get(ctx context.Context, req *v1.GetAttachmentRequest) (*v1.Attachment, error) {
-	res, err := r.data.db.Attachment.Get(ctx, req.GetId())
+	res, err := r.data.db.Client().Attachment.Get(ctx, req.GetId())
 	if err != nil && !ent.IsNotFound(err) {
 		return nil, err
 	}
@@ -116,7 +110,7 @@ func (r *AttachmentRepo) Get(ctx context.Context, req *v1.GetAttachmentRequest) 
 }
 
 func (r *AttachmentRepo) Create(ctx context.Context, req *v1.CreateAttachmentRequest) (*v1.Attachment, error) {
-	res, err := r.data.db.Attachment.Create().
+	res, err := r.data.db.Client().Attachment.Create().
 		SetNillableName(req.Attachment.Name).
 		SetNillablePath(req.Attachment.Path).
 		SetNillableFileKey(req.Attachment.FileKey).
@@ -137,7 +131,7 @@ func (r *AttachmentRepo) Create(ctx context.Context, req *v1.CreateAttachmentReq
 }
 
 func (r *AttachmentRepo) Update(ctx context.Context, req *v1.UpdateAttachmentRequest) (*v1.Attachment, error) {
-	builder := r.data.db.Attachment.UpdateOneID(req.Id).
+	builder := r.data.db.Client().Attachment.UpdateOneID(req.Id).
 		SetNillableName(req.Attachment.Name).
 		SetNillablePath(req.Attachment.Path).
 		SetNillableFileKey(req.Attachment.FileKey).
@@ -159,7 +153,7 @@ func (r *AttachmentRepo) Update(ctx context.Context, req *v1.UpdateAttachmentReq
 }
 
 func (r *AttachmentRepo) Delete(ctx context.Context, req *v1.DeleteAttachmentRequest) (bool, error) {
-	err := r.data.db.Attachment.
+	err := r.data.db.Client().Attachment.
 		DeleteOneID(req.GetId()).
 		Exec(ctx)
 	return err != nil, err

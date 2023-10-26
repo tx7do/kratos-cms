@@ -4,7 +4,10 @@ import (
 	"context"
 	"time"
 
+	"entgo.io/ent/dialect/sql"
 	"github.com/go-kratos/kratos/v2/log"
+	entgo "github.com/tx7do/go-utils/entgo/query"
+	util "github.com/tx7do/go-utils/time"
 
 	"kratos-cms/gen/api/go/common/pagination"
 	"kratos-cms/gen/api/go/content/service/v1"
@@ -12,10 +15,6 @@ import (
 	"kratos-cms/app/core/service/internal/biz"
 	"kratos-cms/app/core/service/internal/data/ent"
 	"kratos-cms/app/core/service/internal/data/ent/link"
-
-	"github.com/tx7do/kratos-utils/entgo"
-	paging "github.com/tx7do/kratos-utils/pagination"
-	util "github.com/tx7do/kratos-utils/time"
 )
 
 var _ biz.LinkRepo = (*LinkRepo)(nil)
@@ -50,37 +49,30 @@ func (r *LinkRepo) convertEntToProto(in *ent.Link) *v1.Link {
 	}
 }
 
-func (r *LinkRepo) Count(ctx context.Context, whereCond entgo.WhereConditions) (int, error) {
-	builder := r.data.db.Link.Query()
+func (r *LinkRepo) Count(ctx context.Context, whereCond []func(s *sql.Selector)) (int, error) {
+	builder := r.data.db.Client().Link.Query()
 	if len(whereCond) != 0 {
-		for _, cond := range whereCond {
-			builder = builder.Where(cond)
-		}
+		builder.Modify(whereCond...)
 	}
 	return builder.Count(ctx)
 }
 
 func (r *LinkRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListLinkResponse, error) {
-	whereCond, orderCond := entgo.QueryCommandToSelector(req.GetQuery(), req.GetOrderBy())
+	builder := r.data.db.Client().Link.Query()
 
-	builder := r.data.db.Link.Query()
-	if len(whereCond) != 0 {
-		for _, v := range whereCond {
-			builder.Where(v)
-		}
+	err, whereSelectors, querySelectors := entgo.BuildQuerySelector(r.data.db.Driver().Dialect(),
+		req.GetQuery(), req.GetOrQuery(),
+		req.GetPage(), req.GetPageSize(), req.GetNoPaging(),
+		req.GetOrderBy(), link.FieldCreateTime)
+	if err != nil {
+		r.log.Errorf("解析条件发生错误[%s]", err.Error())
+		return nil, err
 	}
-	if len(orderCond) != 0 {
-		for _, v := range orderCond {
-			builder.Order(v)
-		}
-	} else {
-		builder.Order(ent.Desc(link.FieldCreateTime))
+
+	if querySelectors != nil {
+		builder.Modify(querySelectors...)
 	}
-	if req.GetPage() > 0 && req.GetPageSize() > 0 && !req.GetNopaging() {
-		builder.
-			Offset(paging.GetPageOffset(req.GetPage(), req.GetPageSize())).
-			Limit(int(req.GetPageSize()))
-	}
+
 	results, err := builder.All(ctx)
 	if err != nil {
 		return nil, err
@@ -92,7 +84,7 @@ func (r *LinkRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 		items = append(items, item)
 	}
 
-	count, err := r.Count(ctx, whereCond)
+	count, err := r.Count(ctx, whereSelectors)
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +96,7 @@ func (r *LinkRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 }
 
 func (r *LinkRepo) Get(ctx context.Context, req *v1.GetLinkRequest) (*v1.Link, error) {
-	res, err := r.data.db.Link.Get(ctx, req.GetId())
+	res, err := r.data.db.Client().Link.Get(ctx, req.GetId())
 	if err != nil && !ent.IsNotFound(err) {
 		return nil, err
 	}
@@ -113,7 +105,7 @@ func (r *LinkRepo) Get(ctx context.Context, req *v1.GetLinkRequest) (*v1.Link, e
 }
 
 func (r *LinkRepo) Create(ctx context.Context, req *v1.CreateLinkRequest) (*v1.Link, error) {
-	res, err := r.data.db.Link.Create().
+	res, err := r.data.db.Client().Link.Create().
 		SetNillableName(req.Link.Name).
 		SetNillableURL(req.Link.Url).
 		SetNillableLogo(req.Link.Logo).
@@ -130,7 +122,7 @@ func (r *LinkRepo) Create(ctx context.Context, req *v1.CreateLinkRequest) (*v1.L
 }
 
 func (r *LinkRepo) Update(ctx context.Context, req *v1.UpdateLinkRequest) (*v1.Link, error) {
-	builder := r.data.db.Link.UpdateOneID(req.Id).
+	builder := r.data.db.Client().Link.UpdateOneID(req.Id).
 		SetNillableName(req.Link.Name).
 		SetNillableURL(req.Link.Url).
 		SetNillableLogo(req.Link.Logo).
@@ -148,7 +140,7 @@ func (r *LinkRepo) Update(ctx context.Context, req *v1.UpdateLinkRequest) (*v1.L
 }
 
 func (r *LinkRepo) Delete(ctx context.Context, req *v1.DeleteLinkRequest) (bool, error) {
-	err := r.data.db.Link.
+	err := r.data.db.Client().Link.
 		DeleteOneID(req.GetId()).
 		Exec(ctx)
 	return err != nil, err

@@ -1042,12 +1042,16 @@ func (u *AttachmentUpsertOne) IDX(ctx context.Context) uint32 {
 // AttachmentCreateBulk is the builder for creating many Attachment entities in bulk.
 type AttachmentCreateBulk struct {
 	config
+	err      error
 	builders []*AttachmentCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the Attachment entities in the database.
 func (acb *AttachmentCreateBulk) Save(ctx context.Context) ([]*Attachment, error) {
+	if acb.err != nil {
+		return nil, acb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(acb.builders))
 	nodes := make([]*Attachment, len(acb.builders))
 	mutators := make([]Mutator, len(acb.builders))
@@ -1515,6 +1519,9 @@ func (u *AttachmentUpsertBulk) ClearType() *AttachmentUpsertBulk {
 
 // Exec executes the query.
 func (u *AttachmentUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the AttachmentCreateBulk instead", i)

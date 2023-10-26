@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "slug",
     srcs = ["slug.go"],
-    importpath = "github.com/tx7do/kratos-utils/slug",
+    importpath = "github.com/tx7do/go-utils/slug",
     visibility = ["//visibility:public"],
     deps = ["@com_github_gosimple_slug//:slug"],
 )

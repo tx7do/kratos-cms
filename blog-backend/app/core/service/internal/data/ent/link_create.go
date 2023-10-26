@@ -775,12 +775,16 @@ func (u *LinkUpsertOne) IDX(ctx context.Context) uint32 {
 // LinkCreateBulk is the builder for creating many Link entities in bulk.
 type LinkCreateBulk struct {
 	config
+	err      error
 	builders []*LinkCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the Link entities in the database.
 func (lcb *LinkCreateBulk) Save(ctx context.Context) ([]*Link, error) {
+	if lcb.err != nil {
+		return nil, lcb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(lcb.builders))
 	nodes := make([]*Link, len(lcb.builders))
 	mutators := make([]Mutator, len(lcb.builders))
@@ -1143,6 +1147,9 @@ func (u *LinkUpsertBulk) ClearPriority() *LinkUpsertBulk {
 
 // Exec executes the query.
 func (u *LinkUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the LinkCreateBulk instead", i)

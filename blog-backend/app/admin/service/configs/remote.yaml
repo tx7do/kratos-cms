@@ -1,5 +1,6 @@
 config:
   type: "consul"
+
   consul:
     scheme: "http"
     address: "localhost:8500"

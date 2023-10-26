@@ -5,7 +5,7 @@ import (
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/field"
-	"github.com/tx7do/kratos-utils/entgo/mixin"
+	"github.com/tx7do/go-utils/entgo/mixin"
 )
 
 // Comment holds the schema definition for the Comment entity.
@@ -94,7 +94,7 @@ func (Comment) Fields() []ent.Field {
 func (Comment) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.AutoIncrementId{},
-		mixin.Time{},
+		mixin.Timestamp{},
 	}
 }
 

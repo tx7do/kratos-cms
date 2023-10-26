@@ -5,7 +5,7 @@ import (
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/field"
-	"github.com/tx7do/kratos-utils/entgo/mixin"
+	"github.com/tx7do/go-utils/entgo/mixin"
 )
 
 // Menu holds the schema definition for the Menu entity.
@@ -70,7 +70,7 @@ func (Menu) Fields() []ent.Field {
 func (Menu) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.AutoIncrementId{},
-		mixin.Time{},
+		mixin.Timestamp{},
 	}
 }
 

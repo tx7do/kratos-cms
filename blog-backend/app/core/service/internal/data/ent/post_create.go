@@ -1711,12 +1711,16 @@ func (u *PostUpsertOne) IDX(ctx context.Context) uint32 {
 // PostCreateBulk is the builder for creating many Post entities in bulk.
 type PostCreateBulk struct {
 	config
+	err      error
 	builders []*PostCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the Post entities in the database.
 func (pcb *PostCreateBulk) Save(ctx context.Context) ([]*Post, error) {
+	if pcb.err != nil {
+		return nil, pcb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(pcb.builders))
 	nodes := make([]*Post, len(pcb.builders))
 	mutators := make([]Mutator, len(pcb.builders))
@@ -2443,6 +2447,9 @@ func (u *PostUpsertBulk) ClearInProgress() *PostUpsertBulk {
 
 // Exec executes the query.
 func (u *PostUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the PostCreateBulk instead", i)

@@ -4,7 +4,10 @@ import (
 	"context"
 	"time"
 
+	"entgo.io/ent/dialect/sql"
 	"github.com/go-kratos/kratos/v2/log"
+	entgo "github.com/tx7do/go-utils/entgo/query"
+	util "github.com/tx7do/go-utils/time"
 
 	"kratos-cms/app/core/service/internal/biz"
 	"kratos-cms/app/core/service/internal/data/ent"
@@ -12,10 +15,6 @@ import (
 
 	v1 "kratos-cms/gen/api/go/comment/service/v1"
 	"kratos-cms/gen/api/go/common/pagination"
-
-	"github.com/tx7do/kratos-utils/entgo"
-	paging "github.com/tx7do/kratos-utils/pagination"
-	util "github.com/tx7do/kratos-utils/time"
 )
 
 var _ biz.CommentRepo = (*CommentRepo)(nil)
@@ -56,37 +55,30 @@ func (r *CommentRepo) convertEntToProto(in *ent.Comment) *v1.Comment {
 	}
 }
 
-func (r *CommentRepo) Count(ctx context.Context, whereCond entgo.WhereConditions) (int, error) {
-	builder := r.data.db.Comment.Query()
+func (r *CommentRepo) Count(ctx context.Context, whereCond []func(s *sql.Selector)) (int, error) {
+	builder := r.data.db.Client().Comment.Query()
 	if len(whereCond) != 0 {
-		for _, cond := range whereCond {
-			builder = builder.Where(cond)
-		}
+		builder.Modify(whereCond...)
 	}
 	return builder.Count(ctx)
 }
 
 func (r *CommentRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListCommentResponse, error) {
-	whereCond, orderCond := entgo.QueryCommandToSelector(req.GetQuery(), req.GetOrderBy())
+	builder := r.data.db.Client().Comment.Query()
 
-	builder := r.data.db.Comment.Query()
-	if len(whereCond) != 0 {
-		for _, v := range whereCond {
-			builder.Where(v)
-		}
+	err, whereSelectors, querySelectors := entgo.BuildQuerySelector(r.data.db.Driver().Dialect(),
+		req.GetQuery(), req.GetOrQuery(),
+		req.GetPage(), req.GetPageSize(), req.GetNoPaging(),
+		req.GetOrderBy(), comment.FieldCreateTime)
+	if err != nil {
+		r.log.Errorf("解析条件发生错误[%s]", err.Error())
+		return nil, err
 	}
-	if len(orderCond) != 0 {
-		for _, v := range orderCond {
-			builder.Order(v)
-		}
-	} else {
-		builder.Order(ent.Desc(comment.FieldCreateTime))
+
+	if querySelectors != nil {
+		builder.Modify(querySelectors...)
 	}
-	if req.GetPage() > 0 && req.GetPageSize() > 0 && !req.GetNopaging() {
-		builder.
-			Offset(paging.GetPageOffset(req.GetPage(), req.GetPageSize())).
-			Limit(int(req.GetPageSize()))
-	}
+
 	results, err := builder.All(ctx)
 	if err != nil {
 		return nil, err
@@ -98,7 +90,7 @@ func (r *CommentRepo) List(ctx context.Context, req *pagination.PagingRequest) (
 		items = append(items, item)
 	}
 
-	count, err := r.Count(ctx, whereCond)
+	count, err := r.Count(ctx, whereSelectors)
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +102,7 @@ func (r *CommentRepo) List(ctx context.Context, req *pagination.PagingRequest) (
 }
 
 func (r *CommentRepo) Get(ctx context.Context, req *v1.GetCommentRequest) (*v1.Comment, error) {
-	res, err := r.data.db.Comment.Get(ctx, req.GetId())
+	res, err := r.data.db.Client().Comment.Get(ctx, req.GetId())
 	if err != nil && !ent.IsNotFound(err) {
 		return nil, err
 	}
@@ -119,7 +111,7 @@ func (r *CommentRepo) Get(ctx context.Context, req *v1.GetCommentRequest) (*v1.C
 }
 
 func (r *CommentRepo) Create(ctx context.Context, req *v1.CreateCommentRequest) (*v1.Comment, error) {
-	res, err := r.data.db.Comment.Create().
+	res, err := r.data.db.Client().Comment.Create().
 		SetNillableAuthor(req.Comment.Author).
 		SetNillableEmail(req.Comment.Email).
 		SetNillableIPAddress(req.Comment.IpAddress).
@@ -142,7 +134,7 @@ func (r *CommentRepo) Create(ctx context.Context, req *v1.CreateCommentRequest) 
 }
 
 func (r *CommentRepo) Update(ctx context.Context, req *v1.UpdateCommentRequest) (*v1.Comment, error) {
-	builder := r.data.db.Comment.UpdateOneID(req.Id).
+	builder := r.data.db.Client().Comment.UpdateOneID(req.Id).
 		SetNillableAuthor(req.Comment.Author).
 		SetNillableEmail(req.Comment.Email).
 		SetNillableIPAddress(req.Comment.IpAddress).
@@ -166,7 +158,7 @@ func (r *CommentRepo) Update(ctx context.Context, req *v1.UpdateCommentRequest) 
 }
 
 func (r *CommentRepo) Delete(ctx context.Context, req *v1.DeleteCommentRequest) (bool, error) {
-	err := r.data.db.Comment.
+	err := r.data.db.Client().Comment.
 		DeleteOneID(req.GetId()).
 		Exec(ctx)
 	return err != nil, err

@@ -835,12 +835,16 @@ func (u *MenuUpsertOne) IDX(ctx context.Context) uint32 {
 // MenuCreateBulk is the builder for creating many Menu entities in bulk.
 type MenuCreateBulk struct {
 	config
+	err      error
 	builders []*MenuCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the Menu entities in the database.
 func (mcb *MenuCreateBulk) Save(ctx context.Context) ([]*Menu, error) {
+	if mcb.err != nil {
+		return nil, mcb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(mcb.builders))
 	nodes := make([]*Menu, len(mcb.builders))
 	mutators := make([]Mutator, len(mcb.builders))
@@ -1231,6 +1235,9 @@ func (u *MenuUpsertBulk) ClearTeam() *MenuUpsertBulk {
 
 // Exec executes the query.
 func (u *MenuUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the MenuCreateBulk instead", i)

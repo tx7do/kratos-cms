@@ -15,10 +15,12 @@ import (
 	authzEngine "github.com/tx7do/kratos-authz/engine"
 	authz "github.com/tx7do/kratos-authz/middleware"
 
+	"github.com/tx7do/kratos-bootstrap"
+	"github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
+
 	"kratos-cms/app/front/service/internal/service"
-	"kratos-cms/gen/api/go/common/conf"
+
 	v1 "kratos-cms/gen/api/go/front/service/v1"
-	"kratos-cms/pkg/bootstrap"
 	"kratos-cms/pkg/middleware/auth"
 )
 

@@ -4,10 +4,10 @@ import (
 	"context"
 	"time"
 
+	"entgo.io/ent/dialect/sql"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/tx7do/kratos-utils/entgo"
-	paging "github.com/tx7do/kratos-utils/pagination"
-	util "github.com/tx7do/kratos-utils/time"
+	entgo "github.com/tx7do/go-utils/entgo/query"
+	util "github.com/tx7do/go-utils/time"
 
 	"kratos-cms/app/core/service/internal/biz"
 	"kratos-cms/app/core/service/internal/data/ent"
@@ -49,37 +49,30 @@ func (r *TagRepo) convertEntToProto(in *ent.Tag) *v1.Tag {
 	}
 }
 
-func (r *TagRepo) Count(ctx context.Context, whereCond entgo.WhereConditions) (int, error) {
-	builder := r.data.db.Tag.Query()
+func (r *TagRepo) Count(ctx context.Context, whereCond []func(s *sql.Selector)) (int, error) {
+	builder := r.data.db.Client().Tag.Query()
 	if len(whereCond) != 0 {
-		for _, cond := range whereCond {
-			builder = builder.Where(cond)
-		}
+		builder.Modify(whereCond...)
 	}
 	return builder.Count(ctx)
 }
 
 func (r *TagRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListTagResponse, error) {
-	whereCond, orderCond := entgo.QueryCommandToSelector(req.GetQuery(), req.GetOrderBy())
+	builder := r.data.db.Client().Tag.Query()
 
-	builder := r.data.db.Tag.Query()
-	if len(whereCond) != 0 {
-		for _, v := range whereCond {
-			builder.Where(v)
-		}
+	err, whereSelectors, querySelectors := entgo.BuildQuerySelector(r.data.db.Driver().Dialect(),
+		req.GetQuery(), req.GetOrQuery(),
+		req.GetPage(), req.GetPageSize(), req.GetNoPaging(),
+		req.GetOrderBy(), tag.FieldCreateTime)
+	if err != nil {
+		r.log.Errorf("解析条件发生错误[%s]", err.Error())
+		return nil, err
 	}
-	if len(orderCond) != 0 {
-		for _, v := range orderCond {
-			builder.Order(v)
-		}
-	} else {
-		builder.Order(ent.Desc(tag.FieldCreateTime))
+
+	if querySelectors != nil {
+		builder.Modify(querySelectors...)
 	}
-	if req.GetPage() > 0 && req.GetPageSize() > 0 && !req.GetNopaging() {
-		builder.
-			Offset(paging.GetPageOffset(req.GetPage(), req.GetPageSize())).
-			Limit(int(req.GetPageSize()))
-	}
+
 	results, err := builder.All(ctx)
 	if err != nil {
 		return nil, err
@@ -91,7 +84,7 @@ func (r *TagRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.
 		items = append(items, item)
 	}
 
-	count, err := r.Count(ctx, whereCond)
+	count, err := r.Count(ctx, whereSelectors)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +96,7 @@ func (r *TagRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.
 }
 
 func (r *TagRepo) Get(ctx context.Context, req *v1.GetTagRequest) (*v1.Tag, error) {
-	res, err := r.data.db.Tag.Get(ctx, req.GetId())
+	res, err := r.data.db.Client().Tag.Get(ctx, req.GetId())
 	if err != nil && !ent.IsNotFound(err) {
 		return nil, err
 	}
@@ -112,7 +105,7 @@ func (r *TagRepo) Get(ctx context.Context, req *v1.GetTagRequest) (*v1.Tag, erro
 }
 
 func (r *TagRepo) Create(ctx context.Context, req *v1.CreateTagRequest) (*v1.Tag, error) {
-	res, err := r.data.db.Tag.Create().
+	res, err := r.data.db.Client().Tag.Create().
 		SetNillableName(req.Tag.Name).
 		SetNillableSlug(req.Tag.Slug).
 		SetNillableColor(req.Tag.Color).
@@ -129,7 +122,7 @@ func (r *TagRepo) Create(ctx context.Context, req *v1.CreateTagRequest) (*v1.Tag
 }
 
 func (r *TagRepo) Update(ctx context.Context, req *v1.UpdateTagRequest) (*v1.Tag, error) {
-	builder := r.data.db.Tag.UpdateOneID(req.Id).
+	builder := r.data.db.Client().Tag.UpdateOneID(req.Id).
 		SetNillableName(req.Tag.Name).
 		SetNillableSlug(req.Tag.Slug).
 		SetNillableColor(req.Tag.Color).
@@ -147,7 +140,7 @@ func (r *TagRepo) Update(ctx context.Context, req *v1.UpdateTagRequest) (*v1.Tag
 }
 
 func (r *TagRepo) Delete(ctx context.Context, req *v1.DeleteTagRequest) (bool, error) {
-	err := r.data.db.Tag.
+	err := r.data.db.Client().Tag.
 		DeleteOneID(req.GetId()).
 		Exec(ctx)
 	return err != nil, err

@@ -20,10 +20,12 @@ server:
       auth:
         method: "HS256"
         key: "some_api_key"
+
   grpc:
     addr: "0.0.0.0:0"
     timeout: 10s
     middleware:
+
 client:
   grpc:
     timeout: 10s
@@ -36,12 +38,14 @@ client:
       auth:
         method: ""
         key: "some_api_key"
+
 data:
   redis:
     addr: "localhost:6379"
     dial_timeout: 10s
     read_timeout: 0.4s
     write_timeout: 0.6s
+
 trace:
   endpoint: "http://localhost:14268/api/traces"
   batcher: "jaeger"

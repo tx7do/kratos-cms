@@ -57,10 +57,6 @@ func (m *PagingRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Query
-
-	// no validation rules for OrderBy
-
 	if m.Page != nil {
 		// no validation rules for Page
 	}
@@ -69,8 +65,16 @@ func (m *PagingRequest) validate(all bool) error {
 		// no validation rules for PageSize
 	}
 
-	if m.Nopaging != nil {
-		// no validation rules for Nopaging
+	if m.Query != nil {
+		// no validation rules for Query
+	}
+
+	if m.OrQuery != nil {
+		// no validation rules for OrQuery
+	}
+
+	if m.NoPaging != nil {
+		// no validation rules for NoPaging
 	}
 
 	if len(errors) > 0 {

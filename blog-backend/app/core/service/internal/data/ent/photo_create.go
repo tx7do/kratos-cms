@@ -887,12 +887,16 @@ func (u *PhotoUpsertOne) IDX(ctx context.Context) uint32 {
 // PhotoCreateBulk is the builder for creating many Photo entities in bulk.
 type PhotoCreateBulk struct {
 	config
+	err      error
 	builders []*PhotoCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the Photo entities in the database.
 func (pcb *PhotoCreateBulk) Save(ctx context.Context) ([]*Photo, error) {
+	if pcb.err != nil {
+		return nil, pcb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(pcb.builders))
 	nodes := make([]*Photo, len(pcb.builders))
 	mutators := make([]Mutator, len(pcb.builders))
@@ -1304,6 +1308,9 @@ func (u *PhotoUpsertBulk) ClearLikes() *PhotoUpsertBulk {
 
 // Exec executes the query.
 func (u *PhotoUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the PhotoCreateBulk instead", i)

@@ -972,12 +972,16 @@ func (u *CategoryUpsertOne) IDX(ctx context.Context) uint32 {
 // CategoryCreateBulk is the builder for creating many Category entities in bulk.
 type CategoryCreateBulk struct {
 	config
+	err      error
 	builders []*CategoryCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the Category entities in the database.
 func (ccb *CategoryCreateBulk) Save(ctx context.Context) ([]*Category, error) {
+	if ccb.err != nil {
+		return nil, ccb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(ccb.builders))
 	nodes := make([]*Category, len(ccb.builders))
 	mutators := make([]Mutator, len(ccb.builders))
@@ -1417,6 +1421,9 @@ func (u *CategoryUpsertBulk) ClearPostCount() *CategoryUpsertBulk {
 
 // Exec executes the query.
 func (u *CategoryUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the CategoryCreateBulk instead", i)

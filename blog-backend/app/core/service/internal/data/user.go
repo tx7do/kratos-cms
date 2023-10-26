@@ -4,11 +4,11 @@ import (
 	"context"
 	"time"
 
+	"entgo.io/ent/dialect/sql"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/tx7do/kratos-utils/crypto"
-	"github.com/tx7do/kratos-utils/entgo"
-	paging "github.com/tx7do/kratos-utils/pagination"
-	util "github.com/tx7do/kratos-utils/time"
+	"github.com/tx7do/go-utils/crypto"
+	entgo "github.com/tx7do/go-utils/entgo/query"
+	util "github.com/tx7do/go-utils/time"
 
 	"kratos-cms/app/core/service/internal/biz"
 	"kratos-cms/app/core/service/internal/data/ent"
@@ -50,38 +50,30 @@ func (r *UserRepo) convertEntToProto(in *ent.User) *v1.User {
 	}
 }
 
-func (r *UserRepo) Count(ctx context.Context, whereCond entgo.WhereConditions) (int, error) {
-	builder := r.data.db.User.Query()
+func (r *UserRepo) Count(ctx context.Context, whereCond []func(s *sql.Selector)) (int, error) {
+	builder := r.data.db.Client().User.Query()
 	if len(whereCond) != 0 {
-		for _, cond := range whereCond {
-			builder = builder.Where(cond)
-		}
+		builder.Modify(whereCond...)
 	}
 	return builder.Count(ctx)
 }
 
 func (r *UserRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListUserResponse, error) {
-	whereCond, orderCond := entgo.QueryCommandToSelector(req.GetQuery(), req.GetOrderBy())
+	builder := r.data.db.Client().User.Query()
 
-	builder := r.data.db.User.Query()
+	err, whereSelectors, querySelectors := entgo.BuildQuerySelector(r.data.db.Driver().Dialect(),
+		req.GetQuery(), req.GetOrQuery(),
+		req.GetPage(), req.GetPageSize(), req.GetNoPaging(),
+		req.GetOrderBy(), user.FieldCreateTime)
+	if err != nil {
+		r.log.Errorf("解析条件发生错误[%s]", err.Error())
+		return nil, err
+	}
 
-	if len(whereCond) != 0 {
-		for _, cond := range whereCond {
-			builder = builder.Where(cond)
-		}
+	if querySelectors != nil {
+		builder.Modify(querySelectors...)
 	}
-	if len(orderCond) != 0 {
-		for _, cond := range orderCond {
-			builder = builder.Order(cond)
-		}
-	} else {
-		builder.Order(ent.Desc(user.FieldCreateTime))
-	}
-	if req.GetPage() > 0 && req.GetPageSize() > 0 && !req.GetNopaging() {
-		builder.
-			Offset(paging.GetPageOffset(req.GetPage(), req.GetPageSize())).
-			Limit(int(req.GetPageSize()))
-	}
+
 	results, err := builder.All(ctx)
 	if err != nil {
 		return nil, err
@@ -93,7 +85,7 @@ func (r *UserRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 		items = append(items, item)
 	}
 
-	count, err := r.Count(ctx, whereCond)
+	count, err := r.Count(ctx, whereSelectors)
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +97,7 @@ func (r *UserRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 }
 
 func (r *UserRepo) Get(ctx context.Context, req *v1.GetUserRequest) (*v1.User, error) {
-	res, err := r.data.db.User.Get(ctx, req.GetId())
+	res, err := r.data.db.Client().User.Get(ctx, req.GetId())
 	if err != nil && !ent.IsNotFound(err) {
 		return nil, err
 	}
@@ -119,7 +111,7 @@ func (r *UserRepo) Create(ctx context.Context, req *v1.CreateUserRequest) (*v1.U
 		return nil, err
 	}
 
-	res, err := r.data.db.User.Create().
+	res, err := r.data.db.Client().User.Create().
 		SetNillableUsername(req.User.UserName).
 		SetNillableNickname(req.User.NickName).
 		SetNillableEmail(req.User.Email).
@@ -139,7 +131,7 @@ func (r *UserRepo) Update(ctx context.Context, req *v1.UpdateUserRequest) (*v1.U
 		return nil, err
 	}
 
-	builder := r.data.db.User.UpdateOneID(req.Id).
+	builder := r.data.db.Client().User.UpdateOneID(req.Id).
 		SetNillableNickname(req.User.NickName).
 		SetNillableEmail(req.User.Email).
 		SetPassword(cryptoPassword).
@@ -154,14 +146,14 @@ func (r *UserRepo) Update(ctx context.Context, req *v1.UpdateUserRequest) (*v1.U
 }
 
 func (r *UserRepo) Delete(ctx context.Context, req *v1.DeleteUserRequest) (bool, error) {
-	err := r.data.db.User.
+	err := r.data.db.Client().User.
 		DeleteOneID(req.GetId()).
 		Exec(ctx)
 	return err != nil, err
 }
 
 func (r *UserRepo) GetUserByUserName(ctx context.Context, userName string) (*v1.User, error) {
-	res, err := r.data.db.User.Query().
+	res, err := r.data.db.Client().User.Query().
 		Where(user.UsernameEQ(userName)).
 		Only(ctx)
 	if err != nil {
@@ -172,7 +164,7 @@ func (r *UserRepo) GetUserByUserName(ctx context.Context, userName string) (*v1.
 }
 
 func (r *UserRepo) VerifyPassword(ctx context.Context, req *v1.VerifyPasswordRequest) (bool, error) {
-	res, err := r.data.db.User.
+	res, err := r.data.db.Client().User.
 		Query().
 		Select(user.FieldID, user.FieldPassword).
 		Where(user.UsernameEQ(req.GetUserName())).

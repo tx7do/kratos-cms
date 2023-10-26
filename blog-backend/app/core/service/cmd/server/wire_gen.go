@@ -10,20 +10,20 @@ import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/registry"
+	"github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
 	"kratos-cms/app/core/service/internal/biz"
 	"kratos-cms/app/core/service/internal/data"
 	"kratos-cms/app/core/service/internal/server"
 	"kratos-cms/app/core/service/internal/service"
-	"kratos-cms/gen/api/go/common/conf"
 )
 
 // Injectors from wire.go:
 
 // initApp init kratos application.
 func initApp(logger log.Logger, registrar registry.Registrar, bootstrap *conf.Bootstrap) (*kratos.App, func(), error) {
-	client := data.NewEntClient(bootstrap, logger)
-	redisClient := data.NewRedisClient(bootstrap, logger)
-	dataData, cleanup, err := data.NewData(client, redisClient, logger)
+	entClient := data.NewEntClient(bootstrap, logger)
+	client := data.NewRedisClient(bootstrap, logger)
+	dataData, cleanup, err := data.NewData(entClient, client, logger)
 	if err != nil {
 		return nil, nil, err
 	}

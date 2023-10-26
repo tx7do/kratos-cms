@@ -6,7 +6,7 @@ import (
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
-	"github.com/tx7do/kratos-utils/entgo/mixin"
+	"github.com/tx7do/go-utils/entgo/mixin"
 	"regexp"
 )
 
@@ -76,7 +76,7 @@ func (User) Fields() []ent.Field {
 func (User) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.AutoIncrementId{},
-		mixin.Time{},
+		mixin.Timestamp{},
 	}
 }
 
