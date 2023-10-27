@@ -3,15 +3,15 @@
 
 openapi: 3.0.3
 info:
-    title: 前台API
-    description: 前台API
+    title: Kratos-CMS 前台API
+    description: Kratos-CMS 前台API
     contact:
-        name: Contact Name
-        url: https://github.com/google/gnostic
-        email: gnostic@google.com
+        name: tx7do
+        url: https://github.com/tx7do/kratos-cms
+        email: yanglinbo@gmail.com
     license:
-        name: Apache License
-        url: https://github.com/google/gnostic/blob/master/LICENSE
+        name: MIT License
+        url: https://github.com/tx7do/kratos-cms/blob/master/LICENSE
     version: "1.0"
 paths:
     /blog/v1/attachments:

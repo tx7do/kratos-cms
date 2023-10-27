@@ -8,17 +8,17 @@ import "gnostic/openapi/v3/annotations.proto";
 
 option (gnostic.openapi.v3.document) = {
   info: {
-    title: "后台管理";
+    title: "Kratos-CMS 后台管理API";
     version: "1.0";
-    description: "后台管理API";
+    description: "Kratos-CMS 后台管理API";
     contact: {
-      name: "Contact Name";
-      url: "https://github.com/google/gnostic";
-      email: "gnostic@google.com";
+      name: "tx7do";
+      url: "https://github.com/tx7do/kratos-cms";
+      email: "yanglinbo@gmail.com";
     }
     license: {
-      name: "Apache License";
-      url: "https://github.com/google/gnostic/blob/master/LICENSE";
+      name: "MIT License";
+      url: "https://github.com/tx7do/kratos-cms/blob/master/LICENSE";
     }
   }
   components: {
