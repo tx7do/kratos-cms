@@ -88,10 +88,10 @@ export const useUserStore = defineStore({
       try {
         const { goHome = true, ...loginParams } = params;
         const data = await Logon(loginParams);
-        const { token } = data;
+        const { access_token } = data;
 
         // save token
-        this.setToken(token);
+        this.setToken(access_token);
         return this.afterLoginAction(goHome);
       } catch (error) {
         return Promise.reject(error);

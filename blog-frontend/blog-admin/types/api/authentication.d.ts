@@ -27,15 +27,16 @@ interface User {
 }
 
 interface LoginRequest {
-  userName?: string;
+  username?: string;
   password?: string;
 }
 
 interface LoginResponse {
-  id?: number;
-  userName?: string;
-  token?: string;
-  refreshToken?: string;
+  id?: number; //用户ID
+  username?: string; //用户名
+  token_type?: string; //令牌类型
+  access_token?: string; //访问令牌
+  refresh_token?: string; //刷新令牌
 }
 
 interface LogoutRequest {
