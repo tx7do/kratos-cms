@@ -16,12 +16,42 @@ service SystemService {
     option (google.api.http) = {
       get: "/admin/v1/system"
     };
+
+    option(gnostic.openapi.v3.operation) = {
+      security: [
+        {
+          additional_properties: [
+            {
+              name: "OAuth2PasswordBearer";
+              value: {
+                value: []
+              }
+            }
+          ]
+        }
+      ]
+    };
   }
 
   // 获取系统设置数据
   rpc GetSystem (GetSystemRequest) returns (System) {
     option (google.api.http) = {
       get: "/admin/v1/system/{id}"
+    };
+
+    option(gnostic.openapi.v3.operation) = {
+      security: [
+        {
+          additional_properties: [
+            {
+              name: "OAuth2PasswordBearer";
+              value: {
+                value: []
+              }
+            }
+          ]
+        }
+      ]
     };
   }
 
@@ -31,6 +61,21 @@ service SystemService {
       post: "/admin/v1/system"
       body: "*"
     };
+
+    option(gnostic.openapi.v3.operation) = {
+      security: [
+        {
+          additional_properties: [
+            {
+              name: "OAuth2PasswordBearer";
+              value: {
+                value: []
+              }
+            }
+          ]
+        }
+      ]
+    };
   }
 
   // 更新系统设置
@@ -39,12 +84,42 @@ service SystemService {
       put: "/admin/v1/system/{id}"
       body: "system"
     };
+
+    option(gnostic.openapi.v3.operation) = {
+      security: [
+        {
+          additional_properties: [
+            {
+              name: "OAuth2PasswordBearer";
+              value: {
+                value: []
+              }
+            }
+          ]
+        }
+      ]
+    };
   }
 
   // 删除系统设置
   rpc DeleteSystem (DeleteSystemRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/admin/v1/system/{id}"
+    };
+
+    option(gnostic.openapi.v3.operation) = {
+      security: [
+        {
+          additional_properties: [
+            {
+              name: "OAuth2PasswordBearer";
+              value: {
+                value: []
+              }
+            }
+          ]
+        }
+      ]
     };
   }
 }

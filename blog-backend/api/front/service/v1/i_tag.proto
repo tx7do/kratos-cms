@@ -17,12 +17,42 @@ service TagService {
     option (google.api.http) = {
       get: "/blog/v1/tags"
     };
+
+    option(gnostic.openapi.v3.operation) = {
+      security: [
+        {
+          additional_properties: [
+            {
+              name: "OAuth2PasswordBearer";
+              value: {
+                value: []
+              }
+            }
+          ]
+        }
+      ]
+    };
   }
 
   // 获取标签数据
   rpc GetTag (content.service.v1.GetTagRequest) returns (content.service.v1.Tag) {
     option (google.api.http) = {
       get: "/blog/v1/tags/{id}"
+    };
+
+    option(gnostic.openapi.v3.operation) = {
+      security: [
+        {
+          additional_properties: [
+            {
+              name: "OAuth2PasswordBearer";
+              value: {
+                value: []
+              }
+            }
+          ]
+        }
+      ]
     };
   }
 
@@ -32,6 +62,21 @@ service TagService {
       post: "/blog/v1/tags"
       body: "*"
     };
+
+    option(gnostic.openapi.v3.operation) = {
+      security: [
+        {
+          additional_properties: [
+            {
+              name: "OAuth2PasswordBearer";
+              value: {
+                value: []
+              }
+            }
+          ]
+        }
+      ]
+    };
   }
 
   // 更新标签
@@ -40,12 +85,42 @@ service TagService {
       put: "/blog/v1/tags/{id}"
       body: "tag"
     };
+
+    option(gnostic.openapi.v3.operation) = {
+      security: [
+        {
+          additional_properties: [
+            {
+              name: "OAuth2PasswordBearer";
+              value: {
+                value: []
+              }
+            }
+          ]
+        }
+      ]
+    };
   }
 
   // 删除标签
   rpc DeleteTag (content.service.v1.DeleteTagRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/blog/v1/tags/{id}"
+    };
+
+    option(gnostic.openapi.v3.operation) = {
+      security: [
+        {
+          additional_properties: [
+            {
+              name: "OAuth2PasswordBearer";
+              value: {
+                value: []
+              }
+            }
+          ]
+        }
+      ]
     };
   }
 }

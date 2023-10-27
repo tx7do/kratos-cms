@@ -17,12 +17,42 @@ service AttachmentService {
     option (google.api.http) = {
       get: "/admin/v1/attachments"
     };
+
+    option(gnostic.openapi.v3.operation) = {
+      security: [
+        {
+          additional_properties: [
+            {
+              name: "OAuth2PasswordBearer";
+              value: {
+                value: []
+              }
+            }
+          ]
+        }
+      ]
+    };
   }
 
   // 获取附件数据
   rpc GetAttachment (file.service.v1.GetAttachmentRequest) returns (file.service.v1.Attachment) {
     option (google.api.http) = {
       get: "/admin/v1/attachments/{id}"
+    };
+
+    option(gnostic.openapi.v3.operation) = {
+      security: [
+        {
+          additional_properties: [
+            {
+              name: "OAuth2PasswordBearer";
+              value: {
+                value: []
+              }
+            }
+          ]
+        }
+      ]
     };
   }
 
@@ -32,6 +62,21 @@ service AttachmentService {
       post: "/admin/v1/attachments"
       body: "*"
     };
+
+    option(gnostic.openapi.v3.operation) = {
+      security: [
+        {
+          additional_properties: [
+            {
+              name: "OAuth2PasswordBearer";
+              value: {
+                value: []
+              }
+            }
+          ]
+        }
+      ]
+    };
   }
 
   // 更新附件
@@ -40,12 +85,42 @@ service AttachmentService {
       put: "/admin/v1/attachments/{id}"
       body: "attachment"
     };
+
+    option(gnostic.openapi.v3.operation) = {
+      security: [
+        {
+          additional_properties: [
+            {
+              name: "OAuth2PasswordBearer";
+              value: {
+                value: []
+              }
+            }
+          ]
+        }
+      ]
+    };
   }
 
   // 删除附件
   rpc DeleteAttachment (file.service.v1.DeleteAttachmentRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/admin/v1/attachments/{id}"
+    };
+
+    option(gnostic.openapi.v3.operation) = {
+      security: [
+        {
+          additional_properties: [
+            {
+              name: "OAuth2PasswordBearer";
+              value: {
+                value: []
+              }
+            }
+          ]
+        }
+      ]
     };
   }
 }

@@ -68,6 +68,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         post:
             tags:
                 - AttachmentService
@@ -92,6 +94,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/attachments/{id}:
         get:
             tags:
@@ -118,6 +122,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         put:
             tags:
                 - AttachmentService
@@ -154,6 +160,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         delete:
             tags:
                 - AttachmentService
@@ -181,6 +189,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/categories:
         get:
             tags:
@@ -235,6 +245,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         post:
             tags:
                 - CategoryService
@@ -259,6 +271,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/categories/{id}:
         get:
             tags:
@@ -290,6 +304,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         put:
             tags:
                 - CategoryService
@@ -326,6 +342,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         delete:
             tags:
                 - CategoryService
@@ -353,6 +371,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/comments:
         get:
             tags:
@@ -407,6 +427,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         post:
             tags:
                 - CommentService
@@ -431,6 +453,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/comments/{id}:
         get:
             tags:
@@ -457,6 +481,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         put:
             tags:
                 - CommentService
@@ -493,6 +519,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         delete:
             tags:
                 - CommentService
@@ -520,6 +548,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/links:
         get:
             tags:
@@ -574,6 +604,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         post:
             tags:
                 - LinkService
@@ -598,6 +630,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/links/{id}:
         get:
             tags:
@@ -624,6 +658,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         put:
             tags:
                 - LinkService
@@ -660,6 +696,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         delete:
             tags:
                 - LinkService
@@ -687,6 +725,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/login:
         post:
             tags:
@@ -734,6 +774,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/me:
         get:
             tags:
@@ -759,6 +801,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/menus:
         get:
             tags:
@@ -813,6 +857,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         post:
             tags:
                 - MenuService
@@ -837,6 +883,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/menus/{id}:
         get:
             tags:
@@ -863,6 +911,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         put:
             tags:
                 - MenuService
@@ -899,6 +949,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         delete:
             tags:
                 - MenuService
@@ -926,6 +978,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/photos:
         get:
             tags:
@@ -980,6 +1034,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         post:
             tags:
                 - PhotoService
@@ -1004,6 +1060,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/photos/{id}:
         get:
             tags:
@@ -1030,6 +1088,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         put:
             tags:
                 - PhotoService
@@ -1066,6 +1126,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         delete:
             tags:
                 - PhotoService
@@ -1093,6 +1155,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/posts:
         get:
             tags:
@@ -1147,6 +1211,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         post:
             tags:
                 - PostService
@@ -1171,6 +1237,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/posts/{id}:
         get:
             tags:
@@ -1197,6 +1265,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         put:
             tags:
                 - PostService
@@ -1233,6 +1303,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         delete:
             tags:
                 - PostService
@@ -1260,6 +1332,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/system:
         get:
             tags:
@@ -1314,6 +1388,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         post:
             tags:
                 - SystemService
@@ -1338,6 +1414,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/system/{id}:
         get:
             tags:
@@ -1363,6 +1441,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         put:
             tags:
                 - SystemService
@@ -1397,6 +1477,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         delete:
             tags:
                 - SystemService
@@ -1422,6 +1504,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/tags:
         get:
             tags:
@@ -1476,6 +1560,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         post:
             tags:
                 - TagService
@@ -1500,6 +1586,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/tags/{id}:
         get:
             tags:
@@ -1526,6 +1614,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         put:
             tags:
                 - TagService
@@ -1562,6 +1652,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         delete:
             tags:
                 - TagService
@@ -1589,6 +1681,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/users:
         get:
             tags:
@@ -1643,6 +1737,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         post:
             tags:
                 - UserService
@@ -1673,6 +1769,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
     /admin/v1/users/{id}:
         get:
             tags:
@@ -1699,6 +1797,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         put:
             tags:
                 - UserService
@@ -1735,6 +1835,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
         delete:
             tags:
                 - UserService
@@ -1762,6 +1864,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+            security:
+                - OAuth2PasswordBearer: []
 components:
     schemas:
         Any:

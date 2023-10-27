@@ -25,12 +25,42 @@ service AuthenticationService {
       post: "/admin/v1/logout"
       body: "*"
     };
+
+    option(gnostic.openapi.v3.operation) = {
+      security: [
+        {
+          additional_properties: [
+            {
+              name: "OAuth2PasswordBearer";
+              value: {
+                value: []
+              }
+            }
+          ]
+        }
+      ]
+    };
   }
 
   // 后台获取已经登陆的用户的数据
   rpc GetMe (GetMeRequest) returns (user.service.v1.User) {
     option (google.api.http) = {
       get: "/admin/v1/me"
+    };
+
+    option(gnostic.openapi.v3.operation) = {
+      security: [
+        {
+          additional_properties: [
+            {
+              name: "OAuth2PasswordBearer";
+              value: {
+                value: []
+              }
+            }
+          ]
+        }
+      ]
     };
   }
 }
