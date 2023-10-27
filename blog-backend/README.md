@@ -17,6 +17,18 @@
 * [PostgreSQL](https://www.postgresql.org/) -- 关系型数据库
 * [MinIO](https://min.io/) -- 对象存储服务器
 
+## API文档
+
+### Swagger UI 
+
+- [Admin Swagger UI](http://localhost:8800/docs/)
+- [Front Swagger UI](http://localhost:9800/docs/)
+
+### openapi.yaml
+
+- [Admin openapi.yaml](http://localhost:8800/docs/openapi.yaml)
+- [Front openapi.yaml](http://localhost:9800/docs/openapi.yaml)
+
 ## 生成Protobuf API
 
 使用[buf.build](https://buf.build/)进行Protobuf API的构建。
