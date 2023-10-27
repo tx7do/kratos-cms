@@ -2,6 +2,7 @@ server:
   rest:
     addr: "0.0.0.0:8800"
     timeout: 10s
+    enable_swagger: true
     cors:
       headers:
         - "X-Requested-With"
