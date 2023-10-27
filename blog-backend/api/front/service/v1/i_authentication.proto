@@ -9,16 +9,6 @@ import "google/protobuf/empty.proto";
 
 import "user/service/v1/user.proto";
 
-option (gnostic.openapi.v3.document) = {
-  info: {
-    title: "用户APP登陆认证接口";
-    description: "用户APP登陆认证";
-    version: "1.0";
-  }
-};
-
-// 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
-
 // 用户APP登陆认证服务
 service AuthenticationService {
   // APP登陆
@@ -47,15 +37,17 @@ service AuthenticationService {
 
 // 用户APP登陆 - 请求
 message LoginRequest {
-  optional string userName = 1;
-  optional string password = 2;
+  string username = 1 [json_name = "username"]; // 用户名
+  string password = 2 [json_name = "password"]; // 密码
+  optional string grandType = 3 [json_name = "grand_type"]; // 授权类型，一直为：password
 }
 // 用户APP登陆 - 回应
 message LoginResponse {
-  uint32 id = 1;
-  string userName = 2;
-  string token = 3;
-  string refreshToken = 4;
+  uint32 id = 1; // 用户ID
+  string username = 2 [json_name = "username"];// 用户名
+  string tokenType = 3 [json_name = "token_type"]; // 令牌类型
+  string accessToken = 4 [json_name = "access_token"]; // 访问令牌
+  string refreshToken = 5 [json_name = "refresh_token"]; // 刷新令牌
 }
 
 // 用户APP登出 - 请求

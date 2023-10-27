@@ -9,16 +9,6 @@ import "google/protobuf/empty.proto";
 
 import "common/pagination/pagination.proto";
 
-option (gnostic.openapi.v3.document) = {
-  info: {
-    title: "系统配置管理接口";
-    description: "系统配置管理";
-    version: "1.0";
-  }
-};
-
-// 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
-
 // 系统配置服务
 service SystemService {
   // 获取系统设置列表

@@ -10,16 +10,6 @@ import "google/protobuf/empty.proto";
 import "common/pagination/pagination.proto";
 import "content/service/v1/link.proto";
 
-option (gnostic.openapi.v3.document) = {
-  info: {
-    title: "链接管理接口";
-    description: "链接管理";
-    version: "1.0";
-  }
-};
-
-// 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
-
 // 链接服务
 service LinkService {
   // 获取链接列表

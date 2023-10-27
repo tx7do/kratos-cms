@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package admin.service.v1;
+
+option go_package = "kratos-cms/gen/api/go/admin/service/v1;v1";
+
+import "gnostic/openapi/v3/annotations.proto";
+
+option (gnostic.openapi.v3.document) = {
+  info: {
+    title: "后台管理";
+    version: "1.0";
+    description: "后台管理API";
+    contact: {
+      name: "Contact Name";
+      url: "https://github.com/google/gnostic";
+      email: "gnostic@google.com";
+    }
+    license: {
+      name: "Apache License";
+      url: "https://github.com/google/gnostic/blob/master/LICENSE";
+    }
+  }
+  components: {
+    security_schemes: {
+      additional_properties: [
+        {
+          name: "OAuth2PasswordBearer";
+          value: {
+            security_scheme: {
+              type: "oauth2";
+              scheme: "bearer";
+              bearer_format: "JWT";
+              flows: {
+                password: {
+                  token_url: "/admin/v1/login";
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+};

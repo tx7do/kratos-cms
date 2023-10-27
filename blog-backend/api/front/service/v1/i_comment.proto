@@ -10,16 +10,6 @@ import "google/protobuf/empty.proto";
 import "common/pagination/pagination.proto";
 import "comment/service/v1/comment.proto";
 
-option (gnostic.openapi.v3.document) = {
-  info: {
-    title: "评论管理接口";
-    description: "评论管理";
-    version: "1.0";
-  }
-};
-
-// 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
-
 // 评论服务
 service CommentService {
   // 获取评论列表

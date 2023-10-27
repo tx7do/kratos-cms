@@ -13,14 +13,15 @@ require (
 	github.com/jackc/pgx/v4 v4.18.1
 	github.com/lib/pq v1.10.9
 	github.com/stretchr/testify v1.8.4
-	github.com/tx7do/go-utils v1.1.0
-	github.com/tx7do/go-utils/entgo v1.1.1
-	github.com/tx7do/kratos-authn v0.0.8
-	github.com/tx7do/kratos-authn/engine/jwt v0.0.0-20230926064000-2acb386165ca
-	github.com/tx7do/kratos-authn/middleware v0.0.0-20230926064000-2acb386165ca
+	github.com/tx7do/go-utils v1.1.2
+	github.com/tx7do/go-utils/entgo v1.1.2
+	github.com/tx7do/kratos-authn v1.0.0
+	github.com/tx7do/kratos-authn/engine/jwt v1.0.0
+	github.com/tx7do/kratos-authn/middleware v1.0.0
 	github.com/tx7do/kratos-authz v1.0.0
 	github.com/tx7do/kratos-authz/middleware v1.0.0
-	github.com/tx7do/kratos-bootstrap v0.2.6
+	github.com/tx7do/kratos-bootstrap v0.2.8
+	github.com/tx7do/kratos-swagger-ui v0.0.0-20231027101037-78256951ad49
 	google.golang.org/genproto/googleapis/api v0.0.0-20231016165738-49dd2c1f3d0b
 	google.golang.org/grpc v1.59.0
 	google.golang.org/protobuf v1.31.0
@@ -30,7 +31,7 @@ require (
 	ariga.io/atlas v0.15.0 // indirect
 	entgo.io/contrib v0.4.5 // indirect
 	github.com/agext/levenshtein v1.2.3 // indirect
-	github.com/aliyun/alibaba-cloud-sdk-go v1.62.589 // indirect
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.591 // indirect
 	github.com/aliyun/aliyun-log-go-sdk v0.1.64 // indirect
 	github.com/apolloconfig/agollo/v4 v4.3.1 // indirect
 	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
@@ -77,9 +78,9 @@ require (
 	github.com/go-kratos/kratos/contrib/registry/servicecomb/v2 v2.0.0-20231023125239-6cdd81811e10 // indirect
 	github.com/go-kratos/kratos/contrib/registry/zookeeper/v2 v2.0.0-20231023125239-6cdd81811e10 // indirect
 	github.com/go-logfmt/logfmt v0.6.0 // indirect
-	github.com/go-logr/logr v1.2.4 // indirect
+	github.com/go-logr/logr v1.3.0 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/go-ole/go-ole v1.2.6 // indirect
+	github.com/go-ole/go-ole v1.3.0 // indirect
 	github.com/go-openapi/inflect v0.19.0 // indirect
 	github.com/go-openapi/jsonpointer v0.20.0 // indirect
 	github.com/go-openapi/jsonreference v0.20.2 // indirect
@@ -96,7 +97,7 @@ require (
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/google/gofuzz v1.2.0 // indirect
 	github.com/google/subcommands v1.2.0 // indirect
-	github.com/google/uuid v1.3.1 // indirect
+	github.com/google/uuid v1.4.0 // indirect
 	github.com/gorilla/handlers v1.5.1 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
@@ -115,7 +116,7 @@ require (
 	github.com/imdario/mergo v0.3.16 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
-	github.com/jackc/pgconn v1.14.0 // indirect
+	github.com/jackc/pgconn v1.14.1 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgproto3/v2 v2.3.2 // indirect
@@ -128,7 +129,7 @@ require (
 	github.com/karlseguin/ccache/v2 v2.0.8 // indirect
 	github.com/klauspost/compress v1.17.2 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.5 // indirect
-	github.com/lufia/plan9stats v0.0.0-20230326075908-cb1d2100619a // indirect
+	github.com/lufia/plan9stats v0.0.0-20231016141302-07b5767bb0ed // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
@@ -158,7 +159,7 @@ require (
 	github.com/rs/xid v1.5.0 // indirect
 	github.com/sagikazarmark/locafero v0.3.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
-	github.com/shirou/gopsutil/v3 v3.23.6 // indirect
+	github.com/shirou/gopsutil/v3 v3.23.9 // indirect
 	github.com/shoenig/go-m1cpu v0.1.6 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
@@ -168,15 +169,17 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/spf13/viper v1.17.0 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
+	github.com/swaggest/swgui v1.7.4 // indirect
 	github.com/tencentcloud/tencentcloud-cls-sdk-go v1.0.6 // indirect
 	github.com/tinylib/msgp v1.1.8 // indirect
-	github.com/tklauser/go-sysconf v0.3.11 // indirect
+	github.com/tklauser/go-sysconf v0.3.12 // indirect
 	github.com/tklauser/numcpus v0.6.1 // indirect
+	github.com/vearutop/statigz v1.4.0 // indirect
 	github.com/yusufpapurcu/wmi v1.2.3 // indirect
 	github.com/zclconf/go-cty v1.14.1 // indirect
-	go.etcd.io/etcd/api/v3 v3.5.9 // indirect
-	go.etcd.io/etcd/client/pkg/v3 v3.5.9 // indirect
-	go.etcd.io/etcd/client/v3 v3.5.9 // indirect
+	go.etcd.io/etcd/api/v3 v3.5.10 // indirect
+	go.etcd.io/etcd/client/pkg/v3 v3.5.10 // indirect
+	go.etcd.io/etcd/client/v3 v3.5.10 // indirect
 	go.opentelemetry.io/otel v1.19.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.19.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.19.0 // indirect

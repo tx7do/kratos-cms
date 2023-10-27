@@ -15,9 +15,12 @@ import (
 	authzEngine "github.com/tx7do/kratos-authz/engine"
 	authz "github.com/tx7do/kratos-authz/middleware"
 
+	swaggerUI "github.com/tx7do/kratos-swagger-ui"
+
 	bootstrap "github.com/tx7do/kratos-bootstrap"
 	"github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
 
+	"kratos-cms/app/admin/service/cmd/server/assets"
 	"kratos-cms/app/admin/service/internal/service"
 
 	v1 "kratos-cms/gen/api/go/admin/service/v1"
@@ -71,6 +74,14 @@ func NewHTTPServer(
 	v1.RegisterUserServiceHTTPServer(srv, userSvc)
 	v1.RegisterAttachmentServiceHTTPServer(srv, attachmentSvc)
 	v1.RegisterCommentServiceHTTPServer(srv, commentSvc)
+
+	if cfg.GetServer().GetRest().GetEnableSwagger() {
+		swaggerUI.RegisterSwaggerUIServerWithOption(
+			srv,
+			swaggerUI.WithTitle("Front Service"),
+			swaggerUI.WithMemoryData(assets.OpenApiData, "yaml"),
+		)
+	}
 
 	return srv
 }

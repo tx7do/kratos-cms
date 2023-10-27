@@ -35,13 +35,13 @@ func NewAuthenticationService(logger log.Logger, sc userV1.UserServiceClient, ut
 // Login 登陆
 func (s *AuthenticationService) Login(ctx context.Context, req *v1.LoginRequest) (*v1.LoginResponse, error) {
 	if _, err := s.sc.VerifyPassword(ctx, &userV1.VerifyPasswordRequest{
-		UserName: req.GetUserName(),
+		UserName: req.GetUsername(),
 		Password: req.GetPassword(),
 	}); err != nil {
 		return &v1.LoginResponse{}, err
 	}
 
-	user, err := s.sc.GetUserByUserName(ctx, &userV1.GetUserByUserNameRequest{UserName: req.GetUserName()})
+	user, err := s.sc.GetUserByUserName(ctx, &userV1.GetUserByUserNameRequest{UserName: req.GetUsername()})
 	if err != nil {
 		return &v1.LoginResponse{}, err
 	}
@@ -52,9 +52,10 @@ func (s *AuthenticationService) Login(ctx context.Context, req *v1.LoginRequest)
 	}
 
 	return &v1.LoginResponse{
-		Token:    token,
-		Id:       user.GetId(),
-		UserName: user.GetUserName(),
+		TokenType:   "bearer",
+		AccessToken: token,
+		Id:          user.GetId(),
+		Username:    user.GetUserName(),
 	}, nil
 }
 

@@ -57,12 +57,12 @@ func (m *LoginRequest) validate(all bool) error {
 
 	var errors []error
 
-	if m.UserName != nil {
-		// no validation rules for UserName
-	}
+	// no validation rules for Username
 
-	if m.Password != nil {
-		// no validation rules for Password
+	// no validation rules for Password
+
+	if m.GrandType != nil {
+		// no validation rules for GrandType
 	}
 
 	if len(errors) > 0 {
@@ -166,9 +166,11 @@ func (m *LoginResponse) validate(all bool) error {
 
 	// no validation rules for Id
 
-	// no validation rules for UserName
+	// no validation rules for Username
 
-	// no validation rules for Token
+	// no validation rules for TokenType
+
+	// no validation rules for AccessToken
 
 	// no validation rules for RefreshToken
 

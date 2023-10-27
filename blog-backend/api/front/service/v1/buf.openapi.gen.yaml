@@ -11,7 +11,7 @@ plugins:
 #      - logtostderr=true
   # generate openapi v2 yaml doc
   - name: openapi
-    out: ../docs/front
+    out: ./app/front/service/cmd/server/assets
     opt:
       - naming=json
       - paths=source_relative
