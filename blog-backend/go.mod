@@ -13,14 +13,14 @@ require (
 	github.com/jackc/pgx/v4 v4.18.1
 	github.com/lib/pq v1.10.9
 	github.com/stretchr/testify v1.8.4
-	github.com/tx7do/go-utils v1.1.2
-	github.com/tx7do/go-utils/entgo v1.1.2
+	github.com/tx7do/go-utils v1.1.3
+	github.com/tx7do/go-utils/entgo v1.1.3
 	github.com/tx7do/kratos-authn v1.0.0
 	github.com/tx7do/kratos-authn/engine/jwt v1.0.0
 	github.com/tx7do/kratos-authn/middleware v1.0.0
 	github.com/tx7do/kratos-authz v1.0.0
 	github.com/tx7do/kratos-authz/middleware v1.0.0
-	github.com/tx7do/kratos-bootstrap v0.2.10
+	github.com/tx7do/kratos-bootstrap v0.2.12
 	github.com/tx7do/kratos-swagger-ui v0.0.0-20231027101037-78256951ad49
 	google.golang.org/genproto/googleapis/api v0.0.0-20231016165738-49dd2c1f3d0b
 	google.golang.org/grpc v1.59.0
@@ -171,7 +171,7 @@ require (
 	github.com/subosito/gotenv v1.6.0 // indirect
 	github.com/swaggest/swgui v1.7.4 // indirect
 	github.com/tencentcloud/tencentcloud-cls-sdk-go v1.0.6 // indirect
-	github.com/tinylib/msgp v1.1.8 // indirect
+	github.com/tinylib/msgp v1.1.9 // indirect
 	github.com/tklauser/go-sysconf v0.3.12 // indirect
 	github.com/tklauser/numcpus v0.6.1 // indirect
 	github.com/vearutop/statigz v1.4.0 // indirect
@@ -219,6 +219,6 @@ require (
 	k8s.io/kube-openapi v0.0.0-20231010175941-2dd684a91f00 // indirect
 	k8s.io/utils v0.0.0-20230726121419-3b25d923346b // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
-	sigs.k8s.io/structured-merge-diff/v4 v4.3.0 // indirect
+	sigs.k8s.io/structured-merge-diff/v4 v4.4.0 // indirect
 	sigs.k8s.io/yaml v1.4.0 // indirect
 )
