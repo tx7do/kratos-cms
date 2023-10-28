@@ -1,0 +1,6 @@
+trace:
+  endpoint: "localhost:4318"
+  batcher: "otlp-http"
+  sampler: 1.0
+  env: "dev"
+  insecure: true

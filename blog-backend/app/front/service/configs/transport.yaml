@@ -39,17 +39,3 @@ client:
       auth:
         method: ""
         key: "some_api_key"
-
-data:
-  redis:
-    addr: "localhost:6379"
-    dial_timeout: 10s
-    read_timeout: 0.4s
-    write_timeout: 0.6s
-
-trace:
-  endpoint: "localhost:4318"
-  batcher: "otlp-http"
-  sampler: 1.0
-  env: "dev"
-  insecure: true
