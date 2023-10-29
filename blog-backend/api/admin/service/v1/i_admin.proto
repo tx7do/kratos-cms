@@ -41,5 +41,110 @@ option (gnostic.openapi.v3.document) = {
         }
       ]
     }
+
+    schemas: {
+      additional_properties: [
+        {
+          name: "KratosStatus";
+          value: {
+            schema: {
+              type: "object"
+              description: "Kratos错误返回"
+              properties: {
+                additional_properties: [
+                  {
+                    name: "code"
+                    value: {
+                      schema: {
+                        type: "number"
+                        format: "int32"
+                        description: "错误码"
+                      }
+                    }
+                  },
+                  {
+                    name: "message"
+                    value: {
+                      schema: {
+                        type: "string"
+                        description: "错误消息"
+                      }
+                    }
+                  },
+                  {
+                    name: "reason"
+                    value: {
+                      schema: {
+                        type: "string"
+                        description: "错误原因"
+                      }
+                    }
+                  },
+                  {
+                    name: "metadata"
+                    value: {
+                      schema: {
+                        type: "object"
+                        description: "元数据"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+
+    responses: {
+      additional_properties: [
+        {
+          name: "default"
+          value: {
+            response: {
+              description: "default kratos response"
+              content: {
+                additional_properties: [
+                  {
+                    name: "application/json"
+                    value: {
+                      schema: {
+                        reference: {
+                          _ref: "#/components/schemas/KratosStatus"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+
+        //        {
+        //          name: "500"
+        //          value: {
+        //            response: {
+        //              description: "default kratos response"
+        //              content: {
+        //                additional_properties: [
+        //                  {
+        //                    name: "application/json"
+        //                    value: {
+        //                      schema: {
+        //                        reference: {
+        //                          _ref: "#/components/schemas/KratosStatus"
+        //                        }
+        //                      }
+        //                    }
+        //                  }
+        //                ]
+        //              }
+        //            }
+        //          }
+        //        }
+      ]
+    }
   }
 };
