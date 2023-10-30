@@ -11,7 +11,7 @@ import (
 	v1 "kratos-cms/gen/api/go/admin/service/v1"
 	userV1 "kratos-cms/gen/api/go/user/service/v1"
 
-	"kratos-cms/pkg/util/authn"
+	"kratos-cms/pkg/middleware/auth"
 )
 
 type AuthenticationService struct {
@@ -69,12 +69,13 @@ func (s *AuthenticationService) Logout(ctx context.Context, req *v1.LogoutReques
 }
 
 func (s *AuthenticationService) GetMe(ctx context.Context, req *v1.GetMeRequest) (*userV1.User, error) {
-	userId, _, err := authn.ParseFromContext(ctx)
+	authInfo, err := auth.FromContext(ctx)
 	if err != nil {
-		return nil, v1.ErrorRequestNotSupport("%d 权限信息不存在", userId)
+		s.log.Errorf("用户认证失败[%s]", err.Error())
+		return nil, v1.ErrorAccessForbidden("用户认证失败")
 	}
 
-	req.Id = userId
+	req.Id = authInfo.UserId
 
 	return s.uc.GetUser(ctx, &userV1.GetUserRequest{
 		Id: req.GetId(),

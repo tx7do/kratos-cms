@@ -11,6 +11,20 @@ import (
 // is compatible with the kratos package it is being compiled against.
 const _ = errors.SupportPackageIsVersion1
 
+// 400
+func IsBadRequest(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == AdminErrorReason_BAD_REQUEST.String() && e.Code == 400
+}
+
+// 400
+func ErrorBadRequest(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, AdminErrorReason_BAD_REQUEST.String(), fmt.Sprintf(format, args...))
+}
+
 // 401
 func IsNotLoggedIn(err error) bool {
 	if err == nil {
@@ -165,42 +179,6 @@ func ErrorRequestNotSupport(format string, args ...interface{}) *errors.Error {
 	return errors.New(505, AdminErrorReason_REQUEST_NOT_SUPPORT.String(), fmt.Sprintf(format, args...))
 }
 
-func IsUserNotFound(err error) bool {
-	if err == nil {
-		return false
-	}
-	e := errors.FromError(err)
-	return e.Reason == AdminErrorReason_USER_NOT_FOUND.String() && e.Code == 600
-}
-
-func ErrorUserNotFound(format string, args ...interface{}) *errors.Error {
-	return errors.New(600, AdminErrorReason_USER_NOT_FOUND.String(), fmt.Sprintf(format, args...))
-}
-
-func IsIncorrectPassword(err error) bool {
-	if err == nil {
-		return false
-	}
-	e := errors.FromError(err)
-	return e.Reason == AdminErrorReason_INCORRECT_PASSWORD.String() && e.Code == 599
-}
-
-func ErrorIncorrectPassword(format string, args ...interface{}) *errors.Error {
-	return errors.New(599, AdminErrorReason_INCORRECT_PASSWORD.String(), fmt.Sprintf(format, args...))
-}
-
-func IsUserFreeze(err error) bool {
-	if err == nil {
-		return false
-	}
-	e := errors.FromError(err)
-	return e.Reason == AdminErrorReason_USER_FREEZE.String() && e.Code == 598
-}
-
-func ErrorUserFreeze(format string, args ...interface{}) *errors.Error {
-	return errors.New(598, AdminErrorReason_USER_FREEZE.String(), fmt.Sprintf(format, args...))
-}
-
 // 用户ID无效
 func IsInvalidUserid(err error) bool {
 	if err == nil {
@@ -283,4 +261,18 @@ func IsUserNotExist(err error) bool {
 // 用户不存在
 func ErrorUserNotExist(format string, args ...interface{}) *errors.Error {
 	return errors.New(106, AdminErrorReason_USER_NOT_EXIST.String(), fmt.Sprintf(format, args...))
+}
+
+// 账号冻结
+func IsUserFreeze(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == AdminErrorReason_USER_FREEZE.String() && e.Code == 107
+}
+
+// 账号冻结
+func ErrorUserFreeze(format string, args ...interface{}) *errors.Error {
+	return errors.New(107, AdminErrorReason_USER_FREEZE.String(), fmt.Sprintf(format, args...))
 }

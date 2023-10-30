@@ -2,14 +2,16 @@ package service
 
 import (
 	"context"
-	"kratos-cms/pkg/util/authn"
 
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/tx7do/go-utils/trans"
 	"google.golang.org/protobuf/types/known/emptypb"
-	"kratos-cms/gen/api/go/common/pagination"
 
 	v1 "kratos-cms/gen/api/go/admin/service/v1"
+	"kratos-cms/gen/api/go/common/pagination"
 	userV1 "kratos-cms/gen/api/go/user/service/v1"
+
+	"kratos-cms/pkg/middleware/auth"
 )
 
 type UserService struct {
@@ -40,9 +42,10 @@ func (s *UserService) GetUserByUserName(ctx context.Context, req *userV1.GetUser
 }
 
 func (s *UserService) CreateUser(ctx context.Context, req *userV1.CreateUserRequest) (*userV1.User, error) {
-	userId, _, err := authn.ParseFromContext(ctx)
+	authInfo, err := auth.FromContext(ctx)
 	if err != nil {
-		return nil, v1.ErrorRequestNotSupport("%d 权限信息不存在", userId)
+		s.log.Errorf("用户认证失败[%s]", err.Error())
+		return nil, v1.ErrorAccessForbidden("用户认证失败")
 	}
 
 	if req.User == nil {
@@ -51,8 +54,8 @@ func (s *UserService) CreateUser(ctx context.Context, req *userV1.CreateUserRequ
 
 	authority := "CUSTOMER_USER"
 
-	req.OperatorId = userId
-	req.User.CreatorId = &userId
+	req.OperatorId = authInfo.UserId
+	req.User.CreatorId = trans.Uint32(authInfo.UserId)
 	if req.User.Authority == nil {
 		req.User.Authority = &authority
 	}
@@ -61,27 +64,29 @@ func (s *UserService) CreateUser(ctx context.Context, req *userV1.CreateUserRequ
 }
 
 func (s *UserService) UpdateUser(ctx context.Context, req *userV1.UpdateUserRequest) (*userV1.User, error) {
-	userId, _, err := authn.ParseFromContext(ctx)
+	authInfo, err := auth.FromContext(ctx)
 	if err != nil {
-		return nil, v1.ErrorRequestNotSupport("%d 权限信息不存在", userId)
+		s.log.Errorf("用户认证失败[%s]", err.Error())
+		return nil, v1.ErrorAccessForbidden("用户认证失败")
 	}
 
 	if req.User == nil {
 		return nil, v1.ErrorBadRequest("错误的参数")
 	}
 
-	req.OperatorId = userId
+	req.OperatorId = authInfo.UserId
 
 	return s.uc.UpdateUser(ctx, req)
 }
 
 func (s *UserService) DeleteUser(ctx context.Context, req *userV1.DeleteUserRequest) (*emptypb.Empty, error) {
-	userId, _, err := authn.ParseFromContext(ctx)
+	authInfo, err := auth.FromContext(ctx)
 	if err != nil {
-		return nil, v1.ErrorRequestNotSupport("%d 权限信息不存在", userId)
+		s.log.Errorf("用户认证失败[%s]", err.Error())
+		return nil, v1.ErrorAccessForbidden("用户认证失败")
 	}
 
-	req.OperatorId = userId
+	req.OperatorId = authInfo.UserId
 
 	return s.uc.DeleteUser(ctx, req)
 }
