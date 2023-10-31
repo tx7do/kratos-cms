@@ -9,6 +9,7 @@ import (
 	"github.com/tx7do/go-utils/crypto"
 	entgo "github.com/tx7do/go-utils/entgo/query"
 	util "github.com/tx7do/go-utils/time"
+	"github.com/tx7do/go-utils/trans"
 
 	"kratos-cms/app/core/service/internal/biz"
 	"kratos-cms/app/core/service/internal/data/ent"
@@ -37,6 +38,12 @@ func (r *UserRepo) convertEntToProto(in *ent.User) *v1.User {
 	if in == nil {
 		return nil
 	}
+
+	var authority *v1.UserAuthority
+	if in.Authority != nil {
+		authority = (*v1.UserAuthority)(trans.Int32(v1.UserAuthority_value[string(*in.Authority)]))
+	}
+
 	return &v1.User{
 		Id:          in.ID,
 		UserName:    in.Username,
@@ -45,6 +52,7 @@ func (r *UserRepo) convertEntToProto(in *ent.User) *v1.User {
 		Avatar:      in.Avatar,
 		Description: in.Description,
 		Password:    in.Password,
+		Authority:   authority,
 		CreateTime:  util.UnixMilliToStringPtr(in.CreateTime),
 		UpdateTime:  util.UnixMilliToStringPtr(in.UpdateTime),
 	}
@@ -119,19 +127,24 @@ func (r *UserRepo) Create(ctx context.Context, req *v1.CreateUserRequest) (*v1.U
 		return nil, err
 	}
 
-	res, err := r.data.db.Client().User.Create().
+	builder := r.data.db.Client().User.Create().
 		SetNillableUsername(req.User.UserName).
 		SetNillableNickname(req.User.NickName).
 		SetNillableEmail(req.User.Email).
 		SetPassword(ph).
-		SetCreateTime(time.Now().UnixMilli()).
-		Save(ctx)
+		SetCreateTime(time.Now().UnixMilli())
+
+	if req.User.Authority != nil {
+		builder.SetAuthority((user.Authority)(req.User.Authority.String()))
+	}
+
+	ret, err := builder.Save(ctx)
 	if err != nil {
 		r.log.Errorf("insert one data failed: %s", err.Error())
 		return nil, err
 	}
 
-	return r.convertEntToProto(res), err
+	return r.convertEntToProto(ret), err
 }
 
 func (r *UserRepo) Update(ctx context.Context, req *v1.UpdateUserRequest) (*v1.User, error) {
@@ -145,6 +158,10 @@ func (r *UserRepo) Update(ctx context.Context, req *v1.UpdateUserRequest) (*v1.U
 		SetNillableEmail(req.User.Email).
 		SetPassword(cryptoPassword).
 		SetUpdateTime(time.Now().UnixMilli())
+
+	if req.User.Authority != nil {
+		builder.SetAuthority((user.Authority)(req.User.Authority.String()))
+	}
 
 	res, err := builder.Save(ctx)
 	if err != nil {

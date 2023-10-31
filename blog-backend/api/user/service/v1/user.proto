@@ -46,6 +46,13 @@ enum VerifyPasswordResult {
   DELETED = 4;// 已删除
 }
 
+// 用户权限
+enum UserAuthority {
+  SYS_ADMIN = 0;  // 系统超级用户
+  CUSTOMER_USER = 1;  // 普通用户
+  GUEST_USER = 2;  // 游客
+}
+
 // 用户
 message User {
   uint32 id = 1;
@@ -65,14 +72,9 @@ message User {
   optional uint32 roleId = 11 [(gnostic.openapi.v3.property) = {description: "角色ID"}]; // 角色ID
   optional uint32 creatorId = 12 [(gnostic.openapi.v3.property) = {description: "创建者ID"}]; // 创建者ID
 
-  optional string authority = 13 [(gnostic.openapi.v3.property) = {
+  optional UserAuthority authority = 13 [(gnostic.openapi.v3.property) = {
     description: "权限"
     default: {string: "CUSTOMER_USER"}
-    enum: [
-      {yaml: "SYS_ADMIN"},
-      {yaml: "CUSTOMER_USER"},
-      {yaml: "GUEST_USER"}
-    ]
   }]; // 权限
 }
 

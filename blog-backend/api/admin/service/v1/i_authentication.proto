@@ -27,18 +27,7 @@ service AuthenticationService {
     };
 
     option(gnostic.openapi.v3.operation) = {
-      security: [
-        {
-          additional_properties: [
-            {
-              name: "OAuth2PasswordBearer";
-              value: {
-                value: []
-              }
-            }
-          ]
-        }
-      ]
+      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
     };
   }
 
@@ -49,18 +38,7 @@ service AuthenticationService {
     };
 
     option(gnostic.openapi.v3.operation) = {
-      security: [
-        {
-          additional_properties: [
-            {
-              name: "OAuth2PasswordBearer";
-              value: {
-                value: []
-              }
-            }
-          ]
-        }
-      ]
+      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
     };
   }
 }

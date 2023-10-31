@@ -34,7 +34,9 @@ type User struct {
 	// 头像
 	Avatar *string `json:"avatar,omitempty"`
 	// 个人说明
-	Description  *string `json:"description,omitempty"`
+	Description *string `json:"description,omitempty"`
+	// 授权
+	Authority    *user.Authority `json:"authority,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -45,7 +47,7 @@ func (*User) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case user.FieldID, user.FieldCreateTime, user.FieldUpdateTime, user.FieldDeleteTime:
 			values[i] = new(sql.NullInt64)
-		case user.FieldUsername, user.FieldPassword, user.FieldNickname, user.FieldEmail, user.FieldAvatar, user.FieldDescription:
+		case user.FieldUsername, user.FieldPassword, user.FieldNickname, user.FieldEmail, user.FieldAvatar, user.FieldDescription, user.FieldAuthority:
 			values[i] = new(sql.NullString)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -131,6 +133,13 @@ func (u *User) assignValues(columns []string, values []any) error {
 				u.Description = new(string)
 				*u.Description = value.String
 			}
+		case user.FieldAuthority:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field authority", values[i])
+			} else if value.Valid {
+				u.Authority = new(user.Authority)
+				*u.Authority = user.Authority(value.String)
+			}
 		default:
 			u.selectValues.Set(columns[i], values[i])
 		}
@@ -210,6 +219,11 @@ func (u *User) String() string {
 	if v := u.Description; v != nil {
 		builder.WriteString("description=")
 		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := u.Authority; v != nil {
+		builder.WriteString("authority=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteByte(')')
 	return builder.String()

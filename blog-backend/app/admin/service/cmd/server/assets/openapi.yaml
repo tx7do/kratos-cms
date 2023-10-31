@@ -2118,6 +2118,7 @@ components:
                     type: string
                     default: CUSTOMER_USER
                     description: 权限
+                    format: enum
             description: 用户
     responses:
         default:
@@ -2129,11 +2130,10 @@ components:
     securitySchemes:
         OAuth2PasswordBearer:
             type: oauth2
-            scheme: bearer
-            bearerFormat: JWT
             flows:
                 password:
                     tokenUrl: /admin/v1/login
+                    scopes: {}
 tags:
     - name: AttachmentService
       description: 附件服务

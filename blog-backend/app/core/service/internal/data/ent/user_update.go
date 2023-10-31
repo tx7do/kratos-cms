@@ -174,6 +174,26 @@ func (uu *UserUpdate) ClearDescription() *UserUpdate {
 	return uu
 }
 
+// SetAuthority sets the "authority" field.
+func (uu *UserUpdate) SetAuthority(u user.Authority) *UserUpdate {
+	uu.mutation.SetAuthority(u)
+	return uu
+}
+
+// SetNillableAuthority sets the "authority" field if the given value is not nil.
+func (uu *UserUpdate) SetNillableAuthority(u *user.Authority) *UserUpdate {
+	if u != nil {
+		uu.SetAuthority(*u)
+	}
+	return uu
+}
+
+// ClearAuthority clears the value of the "authority" field.
+func (uu *UserUpdate) ClearAuthority() *UserUpdate {
+	uu.mutation.ClearAuthority()
+	return uu
+}
+
 // Mutation returns the UserMutation object of the builder.
 func (uu *UserUpdate) Mutation() *UserMutation {
 	return uu.mutation
@@ -240,6 +260,11 @@ func (uu *UserUpdate) check() error {
 	if v, ok := uu.mutation.Description(); ok {
 		if err := user.DescriptionValidator(v); err != nil {
 			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "User.description": %w`, err)}
+		}
+	}
+	if v, ok := uu.mutation.Authority(); ok {
+		if err := user.AuthorityValidator(v); err != nil {
+			return &ValidationError{Name: "authority", err: fmt.Errorf(`ent: validator failed for field "User.authority": %w`, err)}
 		}
 	}
 	return nil
@@ -316,6 +341,12 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if uu.mutation.DescriptionCleared() {
 		_spec.ClearField(user.FieldDescription, field.TypeString)
+	}
+	if value, ok := uu.mutation.Authority(); ok {
+		_spec.SetField(user.FieldAuthority, field.TypeEnum, value)
+	}
+	if uu.mutation.AuthorityCleared() {
+		_spec.ClearField(user.FieldAuthority, field.TypeEnum)
 	}
 	_spec.AddModifiers(uu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, uu.driver, _spec); err != nil {
@@ -485,6 +516,26 @@ func (uuo *UserUpdateOne) ClearDescription() *UserUpdateOne {
 	return uuo
 }
 
+// SetAuthority sets the "authority" field.
+func (uuo *UserUpdateOne) SetAuthority(u user.Authority) *UserUpdateOne {
+	uuo.mutation.SetAuthority(u)
+	return uuo
+}
+
+// SetNillableAuthority sets the "authority" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableAuthority(u *user.Authority) *UserUpdateOne {
+	if u != nil {
+		uuo.SetAuthority(*u)
+	}
+	return uuo
+}
+
+// ClearAuthority clears the value of the "authority" field.
+func (uuo *UserUpdateOne) ClearAuthority() *UserUpdateOne {
+	uuo.mutation.ClearAuthority()
+	return uuo
+}
+
 // Mutation returns the UserMutation object of the builder.
 func (uuo *UserUpdateOne) Mutation() *UserMutation {
 	return uuo.mutation
@@ -564,6 +615,11 @@ func (uuo *UserUpdateOne) check() error {
 	if v, ok := uuo.mutation.Description(); ok {
 		if err := user.DescriptionValidator(v); err != nil {
 			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "User.description": %w`, err)}
+		}
+	}
+	if v, ok := uuo.mutation.Authority(); ok {
+		if err := user.AuthorityValidator(v); err != nil {
+			return &ValidationError{Name: "authority", err: fmt.Errorf(`ent: validator failed for field "User.authority": %w`, err)}
 		}
 	}
 	return nil
@@ -657,6 +713,12 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 	}
 	if uuo.mutation.DescriptionCleared() {
 		_spec.ClearField(user.FieldDescription, field.TypeString)
+	}
+	if value, ok := uuo.mutation.Authority(); ok {
+		_spec.SetField(user.FieldAuthority, field.TypeEnum, value)
+	}
+	if uuo.mutation.AuthorityCleared() {
+		_spec.ClearField(user.FieldAuthority, field.TypeEnum)
 	}
 	_spec.AddModifiers(uuo.modifiers...)
 	_node = &User{config: uuo.config}

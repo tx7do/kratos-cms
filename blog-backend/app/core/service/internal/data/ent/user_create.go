@@ -147,6 +147,20 @@ func (uc *UserCreate) SetNillableDescription(s *string) *UserCreate {
 	return uc
 }
 
+// SetAuthority sets the "authority" field.
+func (uc *UserCreate) SetAuthority(u user.Authority) *UserCreate {
+	uc.mutation.SetAuthority(u)
+	return uc
+}
+
+// SetNillableAuthority sets the "authority" field if the given value is not nil.
+func (uc *UserCreate) SetNillableAuthority(u *user.Authority) *UserCreate {
+	if u != nil {
+		uc.SetAuthority(*u)
+	}
+	return uc
+}
+
 // SetID sets the "id" field.
 func (uc *UserCreate) SetID(u uint32) *UserCreate {
 	uc.mutation.SetID(u)
@@ -192,6 +206,10 @@ func (uc *UserCreate) defaults() {
 		v := user.DefaultCreateTime()
 		uc.mutation.SetCreateTime(v)
 	}
+	if _, ok := uc.mutation.Authority(); !ok {
+		v := user.DefaultAuthority
+		uc.mutation.SetAuthority(v)
+	}
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -224,6 +242,11 @@ func (uc *UserCreate) check() error {
 	if v, ok := uc.mutation.Description(); ok {
 		if err := user.DescriptionValidator(v); err != nil {
 			return &ValidationError{Name: "description", err: fmt.Errorf(`ent: validator failed for field "User.description": %w`, err)}
+		}
+	}
+	if v, ok := uc.mutation.Authority(); ok {
+		if err := user.AuthorityValidator(v); err != nil {
+			return &ValidationError{Name: "authority", err: fmt.Errorf(`ent: validator failed for field "User.authority": %w`, err)}
 		}
 	}
 	if v, ok := uc.mutation.ID(); ok {
@@ -299,6 +322,10 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 	if value, ok := uc.mutation.Description(); ok {
 		_spec.SetField(user.FieldDescription, field.TypeString, value)
 		_node.Description = &value
+	}
+	if value, ok := uc.mutation.Authority(); ok {
+		_spec.SetField(user.FieldAuthority, field.TypeEnum, value)
+		_node.Authority = &value
 	}
 	return _node, _spec
 }
@@ -487,6 +514,24 @@ func (u *UserUpsert) UpdateDescription() *UserUpsert {
 // ClearDescription clears the value of the "description" field.
 func (u *UserUpsert) ClearDescription() *UserUpsert {
 	u.SetNull(user.FieldDescription)
+	return u
+}
+
+// SetAuthority sets the "authority" field.
+func (u *UserUpsert) SetAuthority(v user.Authority) *UserUpsert {
+	u.Set(user.FieldAuthority, v)
+	return u
+}
+
+// UpdateAuthority sets the "authority" field to the value that was provided on create.
+func (u *UserUpsert) UpdateAuthority() *UserUpsert {
+	u.SetExcluded(user.FieldAuthority)
+	return u
+}
+
+// ClearAuthority clears the value of the "authority" field.
+func (u *UserUpsert) ClearAuthority() *UserUpsert {
+	u.SetNull(user.FieldAuthority)
 	return u
 }
 
@@ -702,6 +747,27 @@ func (u *UserUpsertOne) UpdateDescription() *UserUpsertOne {
 func (u *UserUpsertOne) ClearDescription() *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
 		s.ClearDescription()
+	})
+}
+
+// SetAuthority sets the "authority" field.
+func (u *UserUpsertOne) SetAuthority(v user.Authority) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.SetAuthority(v)
+	})
+}
+
+// UpdateAuthority sets the "authority" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateAuthority() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateAuthority()
+	})
+}
+
+// ClearAuthority clears the value of the "authority" field.
+func (u *UserUpsertOne) ClearAuthority() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.ClearAuthority()
 	})
 }
 
@@ -1083,6 +1149,27 @@ func (u *UserUpsertBulk) UpdateDescription() *UserUpsertBulk {
 func (u *UserUpsertBulk) ClearDescription() *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
 		s.ClearDescription()
+	})
+}
+
+// SetAuthority sets the "authority" field.
+func (u *UserUpsertBulk) SetAuthority(v user.Authority) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.SetAuthority(v)
+	})
+}
+
+// UpdateAuthority sets the "authority" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateAuthority() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateAuthority()
+	})
+}
+
+// ClearAuthority clears the value of the "authority" field.
+func (u *UserUpsertBulk) ClearAuthority() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.ClearAuthority()
 	})
 }
 

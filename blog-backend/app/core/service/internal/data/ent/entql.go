@@ -249,6 +249,7 @@ var schemaGraph = func() *sqlgraph.Schema {
 			user.FieldEmail:       {Type: field.TypeString, Column: user.FieldEmail},
 			user.FieldAvatar:      {Type: field.TypeString, Column: user.FieldAvatar},
 			user.FieldDescription: {Type: field.TypeString, Column: user.FieldDescription},
+			user.FieldAuthority:   {Type: field.TypeEnum, Column: user.FieldAuthority},
 		},
 	}
 	return graph
@@ -1178,4 +1179,9 @@ func (f *UserFilter) WhereAvatar(p entql.StringP) {
 // WhereDescription applies the entql string predicate on the description field.
 func (f *UserFilter) WhereDescription(p entql.StringP) {
 	f.Where(p.Field(user.FieldDescription))
+}
+
+// WhereAuthority applies the entql string predicate on the authority field.
+func (f *UserFilter) WhereAuthority(p entql.StringP) {
+	f.Where(p.Field(user.FieldAuthority))
 }

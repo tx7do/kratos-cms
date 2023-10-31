@@ -698,6 +698,36 @@ func DescriptionContainsFold(v string) predicate.User {
 	return predicate.User(sql.FieldContainsFold(FieldDescription, v))
 }
 
+// AuthorityEQ applies the EQ predicate on the "authority" field.
+func AuthorityEQ(v Authority) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldAuthority, v))
+}
+
+// AuthorityNEQ applies the NEQ predicate on the "authority" field.
+func AuthorityNEQ(v Authority) predicate.User {
+	return predicate.User(sql.FieldNEQ(FieldAuthority, v))
+}
+
+// AuthorityIn applies the In predicate on the "authority" field.
+func AuthorityIn(vs ...Authority) predicate.User {
+	return predicate.User(sql.FieldIn(FieldAuthority, vs...))
+}
+
+// AuthorityNotIn applies the NotIn predicate on the "authority" field.
+func AuthorityNotIn(vs ...Authority) predicate.User {
+	return predicate.User(sql.FieldNotIn(FieldAuthority, vs...))
+}
+
+// AuthorityIsNil applies the IsNil predicate on the "authority" field.
+func AuthorityIsNil() predicate.User {
+	return predicate.User(sql.FieldIsNull(FieldAuthority))
+}
+
+// AuthorityNotNil applies the NotNil predicate on the "authority" field.
+func AuthorityNotNil() predicate.User {
+	return predicate.User(sql.FieldNotNull(FieldAuthority))
+}
+
 // And groups predicates with the AND operator between them.
 func And(predicates ...predicate.User) predicate.User {
 	return predicate.User(sql.AndPredicates(predicates...))

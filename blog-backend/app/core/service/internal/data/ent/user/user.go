@@ -3,6 +3,8 @@
 package user
 
 import (
+	"fmt"
+
 	"entgo.io/ent/dialect/sql"
 )
 
@@ -29,6 +31,8 @@ const (
 	FieldAvatar = "avatar"
 	// FieldDescription holds the string denoting the description field in the database.
 	FieldDescription = "description"
+	// FieldAuthority holds the string denoting the authority field in the database.
+	FieldAuthority = "authority"
 	// Table holds the table name of the user in the database.
 	Table = "user"
 )
@@ -45,6 +49,7 @@ var Columns = []string{
 	FieldEmail,
 	FieldAvatar,
 	FieldDescription,
+	FieldAuthority,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -77,6 +82,34 @@ var (
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(uint32) error
 )
+
+// Authority defines the type for the "authority" enum field.
+type Authority string
+
+// AuthorityCUSTOMER_USER is the default value of the Authority enum.
+const DefaultAuthority = AuthorityCUSTOMER_USER
+
+// Authority values.
+const (
+	AuthoritySYS_ADMIN     Authority = "SYS_ADMIN"
+	AuthorityCUSTOMER_USER Authority = "CUSTOMER_USER"
+	AuthorityGUEST_USER    Authority = "GUEST_USER"
+	AuthorityREFRESH_TOKEN Authority = "REFRESH_TOKEN"
+)
+
+func (a Authority) String() string {
+	return string(a)
+}
+
+// AuthorityValidator is a validator for the "authority" field enum values. It is called by the builders before save.
+func AuthorityValidator(a Authority) error {
+	switch a {
+	case AuthoritySYS_ADMIN, AuthorityCUSTOMER_USER, AuthorityGUEST_USER, AuthorityREFRESH_TOKEN:
+		return nil
+	default:
+		return fmt.Errorf("user: invalid enum value for authority field: %q", a)
+	}
+}
 
 // OrderOption defines the ordering options for the User queries.
 type OrderOption func(*sql.Selector)
@@ -129,4 +162,9 @@ func ByAvatar(opts ...sql.OrderTermOption) OrderOption {
 // ByDescription orders the results by the description field.
 func ByDescription(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDescription, opts...).ToFunc()
+}
+
+// ByAuthority orders the results by the authority field.
+func ByAuthority(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldAuthority, opts...).ToFunc()
 }

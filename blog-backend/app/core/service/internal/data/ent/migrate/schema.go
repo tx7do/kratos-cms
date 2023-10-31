@@ -261,6 +261,7 @@ var (
 		{Name: "email", Type: field.TypeString, Nullable: true, Size: 127, Comment: "电子邮箱"},
 		{Name: "avatar", Type: field.TypeString, Nullable: true, Size: 1023, Comment: "头像"},
 		{Name: "description", Type: field.TypeString, Nullable: true, Size: 1023, Comment: "个人说明"},
+		{Name: "authority", Type: field.TypeEnum, Nullable: true, Comment: "授权", Enums: []string{"SYS_ADMIN", "CUSTOMER_USER", "GUEST_USER", "REFRESH_TOKEN"}, Default: "CUSTOMER_USER"},
 	}
 	// UserTable holds the schema information for the "user" table.
 	UserTable = &schema.Table{

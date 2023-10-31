@@ -52,12 +52,10 @@ func (s *UserService) CreateUser(ctx context.Context, req *userV1.CreateUserRequ
 		return nil, v1.ErrorBadRequest("错误的参数")
 	}
 
-	authority := "CUSTOMER_USER"
-
 	req.OperatorId = authInfo.UserId
 	req.User.CreatorId = trans.Uint32(authInfo.UserId)
 	if req.User.Authority == nil {
-		req.User.Authority = &authority
+		req.User.Authority = userV1.UserAuthority_CUSTOMER_USER.Enum()
 	}
 
 	return s.uc.CreateUser(ctx, req)

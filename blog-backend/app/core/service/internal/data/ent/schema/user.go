@@ -69,6 +69,22 @@ func (User) Fields() []ent.Field {
 			MaxLen(1023).
 			Optional().
 			Nillable(),
+
+		field.Enum("authority").
+			Comment("授权").
+			Optional().
+			Nillable().
+			//SchemaType(map[string]string{
+			//	dialect.MySQL:    "authority",
+			//	dialect.Postgres: "authority",
+			//}).
+			Values(
+				"SYS_ADMIN",
+				"CUSTOMER_USER",
+				"GUEST_USER",
+				"REFRESH_TOKEN",
+			).
+			Default("CUSTOMER_USER"),
 	}
 }
 

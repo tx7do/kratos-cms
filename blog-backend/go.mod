@@ -14,7 +14,7 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/stretchr/testify v1.8.4
 	github.com/tx7do/go-utils v1.1.3
-	github.com/tx7do/go-utils/entgo v1.1.3
+	github.com/tx7do/go-utils/entgo v1.1.4
 	github.com/tx7do/kratos-authn v1.0.0
 	github.com/tx7do/kratos-authn/engine/jwt v1.0.0
 	github.com/tx7do/kratos-authn/middleware v1.0.0
@@ -22,7 +22,7 @@ require (
 	github.com/tx7do/kratos-authz/middleware v1.0.0
 	github.com/tx7do/kratos-bootstrap v0.2.12
 	github.com/tx7do/kratos-swagger-ui v0.0.0-20231027101037-78256951ad49
-	google.golang.org/genproto/googleapis/api v0.0.0-20231016165738-49dd2c1f3d0b
+	google.golang.org/genproto/googleapis/api v0.0.0-20231030173426-d783a09b4405
 	google.golang.org/grpc v1.59.0
 	google.golang.org/protobuf v1.31.0
 )
@@ -31,7 +31,7 @@ require (
 	ariga.io/atlas v0.15.0 // indirect
 	entgo.io/contrib v0.4.5 // indirect
 	github.com/agext/levenshtein v1.2.3 // indirect
-	github.com/aliyun/alibaba-cloud-sdk-go v1.62.591 // indirect
+	github.com/aliyun/alibaba-cloud-sdk-go v1.62.593 // indirect
 	github.com/aliyun/aliyun-log-go-sdk v0.1.64 // indirect
 	github.com/apolloconfig/agollo/v4 v4.3.1 // indirect
 	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
@@ -205,8 +205,8 @@ require (
 	golang.org/x/time v0.3.0 // indirect
 	golang.org/x/tools v0.14.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
-	google.golang.org/genproto v0.0.0-20231016165738-49dd2c1f3d0b // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20231016165738-49dd2c1f3d0b // indirect
+	google.golang.org/genproto v0.0.0-20231030173426-d783a09b4405 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20231030173426-d783a09b4405 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
@@ -219,6 +219,6 @@ require (
 	k8s.io/kube-openapi v0.0.0-20231010175941-2dd684a91f00 // indirect
 	k8s.io/utils v0.0.0-20230726121419-3b25d923346b // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
-	sigs.k8s.io/structured-merge-diff/v4 v4.4.0 // indirect
+	sigs.k8s.io/structured-merge-diff/v4 v4.4.1 // indirect
 	sigs.k8s.io/yaml v1.4.0 // indirect
 )

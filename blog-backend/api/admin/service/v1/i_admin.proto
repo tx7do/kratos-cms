@@ -29,11 +29,10 @@ option (gnostic.openapi.v3.document) = {
           value: {
             security_scheme: {
               type: "oauth2";
-              scheme: "bearer";
-              bearer_format: "JWT";
               flows: {
                 password: {
                   token_url: "/admin/v1/login";
+                  scopes: {}
                 }
               }
             }
