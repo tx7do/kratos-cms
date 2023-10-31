@@ -55,7 +55,13 @@ func (r *UserRepo) Count(ctx context.Context, whereCond []func(s *sql.Selector))
 	if len(whereCond) != 0 {
 		builder.Modify(whereCond...)
 	}
-	return builder.Count(ctx)
+
+	count, err := builder.Count(ctx)
+	if err != nil {
+		r.log.Errorf("query count failed: %s", err.Error())
+	}
+
+	return count, err
 }
 
 func (r *UserRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListUserResponse, error) {
@@ -76,6 +82,7 @@ func (r *UserRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 
 	results, err := builder.All(ctx)
 	if err != nil {
+		r.log.Errorf("query list failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -99,6 +106,7 @@ func (r *UserRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 func (r *UserRepo) Get(ctx context.Context, req *v1.GetUserRequest) (*v1.User, error) {
 	res, err := r.data.db.Client().User.Get(ctx, req.GetId())
 	if err != nil && !ent.IsNotFound(err) {
+		r.log.Errorf("query one data failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -119,6 +127,7 @@ func (r *UserRepo) Create(ctx context.Context, req *v1.CreateUserRequest) (*v1.U
 		SetCreateTime(time.Now().UnixMilli()).
 		Save(ctx)
 	if err != nil {
+		r.log.Errorf("insert one data failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -139,6 +148,7 @@ func (r *UserRepo) Update(ctx context.Context, req *v1.UpdateUserRequest) (*v1.U
 
 	res, err := builder.Save(ctx)
 	if err != nil {
+		r.log.Errorf("update one data failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -149,7 +159,11 @@ func (r *UserRepo) Delete(ctx context.Context, req *v1.DeleteUserRequest) (bool,
 	err := r.data.db.Client().User.
 		DeleteOneID(req.GetId()).
 		Exec(ctx)
-	return err != nil, err
+	if err != nil {
+		r.log.Errorf("delete one data failed: %s", err.Error())
+	}
+
+	return err == nil, err
 }
 
 func (r *UserRepo) GetUserByUserName(ctx context.Context, userName string) (*v1.User, error) {
@@ -157,6 +171,7 @@ func (r *UserRepo) GetUserByUserName(ctx context.Context, userName string) (*v1.
 		Where(user.UsernameEQ(userName)).
 		Only(ctx)
 	if err != nil {
+		r.log.Errorf("query user data failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -170,6 +185,7 @@ func (r *UserRepo) VerifyPassword(ctx context.Context, req *v1.VerifyPasswordReq
 		Where(user.UsernameEQ(req.GetUserName())).
 		Only(ctx)
 	if err != nil {
+		r.log.Errorf("query user data failed: %s", err.Error())
 		return false, v1.ErrorUserNotFound("用户未找到")
 	}
 

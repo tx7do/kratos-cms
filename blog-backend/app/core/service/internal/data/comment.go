@@ -60,7 +60,13 @@ func (r *CommentRepo) Count(ctx context.Context, whereCond []func(s *sql.Selecto
 	if len(whereCond) != 0 {
 		builder.Modify(whereCond...)
 	}
-	return builder.Count(ctx)
+
+	count, err := builder.Count(ctx)
+	if err != nil {
+		r.log.Errorf("query count failed: %s", err.Error())
+	}
+
+	return count, err
 }
 
 func (r *CommentRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListCommentResponse, error) {
@@ -81,6 +87,7 @@ func (r *CommentRepo) List(ctx context.Context, req *pagination.PagingRequest) (
 
 	results, err := builder.All(ctx)
 	if err != nil {
+		r.log.Errorf("query list failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -104,6 +111,7 @@ func (r *CommentRepo) List(ctx context.Context, req *pagination.PagingRequest) (
 func (r *CommentRepo) Get(ctx context.Context, req *v1.GetCommentRequest) (*v1.Comment, error) {
 	res, err := r.data.db.Client().Comment.Get(ctx, req.GetId())
 	if err != nil && !ent.IsNotFound(err) {
+		r.log.Errorf("query one data failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -127,6 +135,7 @@ func (r *CommentRepo) Create(ctx context.Context, req *v1.CreateCommentRequest) 
 		SetCreateTime(time.Now().UnixMilli()).
 		Save(ctx)
 	if err != nil {
+		r.log.Errorf("insert one data failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -151,6 +160,7 @@ func (r *CommentRepo) Update(ctx context.Context, req *v1.UpdateCommentRequest) 
 
 	res, err := builder.Save(ctx)
 	if err != nil {
+		r.log.Errorf("update one data failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -161,5 +171,9 @@ func (r *CommentRepo) Delete(ctx context.Context, req *v1.DeleteCommentRequest) 
 	err := r.data.db.Client().Comment.
 		DeleteOneID(req.GetId()).
 		Exec(ctx)
-	return err != nil, err
+	if err != nil {
+		r.log.Errorf("delete one data failed: %s", err.Error())
+	}
+
+	return err == nil, err
 }

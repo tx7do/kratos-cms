@@ -69,7 +69,13 @@ func (r *PostRepo) Count(ctx context.Context, whereCond []func(s *sql.Selector))
 	if len(whereCond) != 0 {
 		builder.Modify(whereCond...)
 	}
-	return builder.Count(ctx)
+
+	count, err := builder.Count(ctx)
+	if err != nil {
+		r.log.Errorf("query count failed: %s", err.Error())
+	}
+
+	return count, err
 }
 
 func (r *PostRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListPostResponse, error) {
@@ -90,6 +96,7 @@ func (r *PostRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 
 	results, err := builder.All(ctx)
 	if err != nil {
+		r.log.Errorf("query list failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -113,6 +120,7 @@ func (r *PostRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 func (r *PostRepo) Get(ctx context.Context, req *v1.GetPostRequest) (*v1.Post, error) {
 	res, err := r.data.db.Client().Post.Get(ctx, req.GetId())
 	if err != nil && !ent.IsNotFound(err) {
+		r.log.Errorf("query one data failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -144,6 +152,7 @@ func (r *PostRepo) Create(ctx context.Context, req *v1.CreatePostRequest) (*v1.P
 		SetCreateTime(time.Now().UnixMilli()).
 		Save(ctx)
 	if err != nil {
+		r.log.Errorf("insert one data failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -177,6 +186,7 @@ func (r *PostRepo) Update(ctx context.Context, req *v1.UpdatePostRequest) (*v1.P
 
 	res, err := builder.Save(ctx)
 	if err != nil {
+		r.log.Errorf("update one data failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -187,5 +197,9 @@ func (r *PostRepo) Delete(ctx context.Context, req *v1.DeletePostRequest) (bool,
 	err := r.data.db.Client().Post.
 		DeleteOneID(req.GetId()).
 		Exec(ctx)
-	return err != nil, err
+	if err != nil {
+		r.log.Errorf("delete one data failed: %s", err.Error())
+	}
+
+	return err == nil, err
 }

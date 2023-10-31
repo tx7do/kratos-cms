@@ -54,7 +54,13 @@ func (r *LinkRepo) Count(ctx context.Context, whereCond []func(s *sql.Selector))
 	if len(whereCond) != 0 {
 		builder.Modify(whereCond...)
 	}
-	return builder.Count(ctx)
+
+	count, err := builder.Count(ctx)
+	if err != nil {
+		r.log.Errorf("query count failed: %s", err.Error())
+	}
+
+	return count, err
 }
 
 func (r *LinkRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListLinkResponse, error) {
@@ -75,6 +81,7 @@ func (r *LinkRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 
 	results, err := builder.All(ctx)
 	if err != nil {
+		r.log.Errorf("query list failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -98,6 +105,7 @@ func (r *LinkRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 func (r *LinkRepo) Get(ctx context.Context, req *v1.GetLinkRequest) (*v1.Link, error) {
 	res, err := r.data.db.Client().Link.Get(ctx, req.GetId())
 	if err != nil && !ent.IsNotFound(err) {
+		r.log.Errorf("query one data failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -115,6 +123,7 @@ func (r *LinkRepo) Create(ctx context.Context, req *v1.CreateLinkRequest) (*v1.L
 		SetCreateTime(time.Now().UnixMilli()).
 		Save(ctx)
 	if err != nil {
+		r.log.Errorf("insert one data failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -133,6 +142,7 @@ func (r *LinkRepo) Update(ctx context.Context, req *v1.UpdateLinkRequest) (*v1.L
 
 	res, err := builder.Save(ctx)
 	if err != nil {
+		r.log.Errorf("update one data failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -143,5 +153,9 @@ func (r *LinkRepo) Delete(ctx context.Context, req *v1.DeleteLinkRequest) (bool,
 	err := r.data.db.Client().Link.
 		DeleteOneID(req.GetId()).
 		Exec(ctx)
-	return err != nil, err
+	if err != nil {
+		r.log.Errorf("delete one data failed: %s", err.Error())
+	}
+
+	return err == nil, err
 }

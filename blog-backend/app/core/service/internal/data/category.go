@@ -57,7 +57,13 @@ func (r *CategoryRepo) Count(ctx context.Context, whereCond []func(s *sql.Select
 	if len(whereCond) != 0 {
 		builder.Modify(whereCond...)
 	}
-	return builder.Count(ctx)
+
+	count, err := builder.Count(ctx)
+	if err != nil {
+		r.log.Errorf("query count failed: %s", err.Error())
+	}
+
+	return count, err
 }
 
 func (r *CategoryRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListCategoryResponse, error) {
@@ -78,6 +84,7 @@ func (r *CategoryRepo) List(ctx context.Context, req *pagination.PagingRequest) 
 
 	results, err := builder.All(ctx)
 	if err != nil {
+		r.log.Errorf("query list failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -101,6 +108,7 @@ func (r *CategoryRepo) List(ctx context.Context, req *pagination.PagingRequest) 
 func (r *CategoryRepo) Get(ctx context.Context, req *v1.GetCategoryRequest) (*v1.Category, error) {
 	res, err := r.data.db.Client().Category.Get(ctx, req.GetId())
 	if err != nil && !ent.IsNotFound(err) {
+		r.log.Errorf("query one data failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -121,6 +129,7 @@ func (r *CategoryRepo) Create(ctx context.Context, req *v1.CreateCategoryRequest
 		SetCreateTime(time.Now().UnixMilli()).
 		Save(ctx)
 	if err != nil {
+		r.log.Errorf("insert one data failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -142,6 +151,7 @@ func (r *CategoryRepo) Update(ctx context.Context, req *v1.UpdateCategoryRequest
 
 	res, err := builder.Save(ctx)
 	if err != nil {
+		r.log.Errorf("update one data failed: %s", err.Error())
 		return nil, err
 	}
 
@@ -152,5 +162,9 @@ func (r *CategoryRepo) Delete(ctx context.Context, req *v1.DeleteCategoryRequest
 	err := r.data.db.Client().Category.
 		DeleteOneID(req.GetId()).
 		Exec(ctx)
-	return err != nil, err
+	if err != nil {
+		r.log.Errorf("delete one data failed: %s", err.Error())
+	}
+
+	return err == nil, err
 }
