@@ -97,6 +97,9 @@ func (r *UserRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 	items := make([]*v1.User, 0, len(results))
 	for _, res := range results {
 		item := r.convertEntToProto(res)
+		if item != nil {
+			item.Password = nil
+		}
 		items = append(items, item)
 	}
 
@@ -112,13 +115,18 @@ func (r *UserRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 }
 
 func (r *UserRepo) Get(ctx context.Context, req *v1.GetUserRequest) (*v1.User, error) {
-	res, err := r.data.db.Client().User.Get(ctx, req.GetId())
+	ret, err := r.data.db.Client().User.Get(ctx, req.GetId())
 	if err != nil && !ent.IsNotFound(err) {
 		r.log.Errorf("query one data failed: %s", err.Error())
 		return nil, err
 	}
 
-	return r.convertEntToProto(res), err
+	u := r.convertEntToProto(ret)
+	if u != nil {
+		u.Password = nil
+	}
+
+	return u, err
 }
 
 func (r *UserRepo) Create(ctx context.Context, req *v1.CreateUserRequest) (*v1.User, error) {
@@ -144,7 +152,12 @@ func (r *UserRepo) Create(ctx context.Context, req *v1.CreateUserRequest) (*v1.U
 		return nil, err
 	}
 
-	return r.convertEntToProto(ret), err
+	u := r.convertEntToProto(ret)
+	if u != nil {
+		u.Password = nil
+	}
+
+	return u, err
 }
 
 func (r *UserRepo) Update(ctx context.Context, req *v1.UpdateUserRequest) (*v1.User, error) {
@@ -163,13 +176,18 @@ func (r *UserRepo) Update(ctx context.Context, req *v1.UpdateUserRequest) (*v1.U
 		builder.SetAuthority((user.Authority)(req.User.Authority.String()))
 	}
 
-	res, err := builder.Save(ctx)
+	ret, err := builder.Save(ctx)
 	if err != nil {
 		r.log.Errorf("update one data failed: %s", err.Error())
 		return nil, err
 	}
 
-	return r.convertEntToProto(res), err
+	u := r.convertEntToProto(ret)
+	if u != nil {
+		u.Password = nil
+	}
+
+	return u, err
 }
 
 func (r *UserRepo) Delete(ctx context.Context, req *v1.DeleteUserRequest) (bool, error) {
@@ -184,7 +202,7 @@ func (r *UserRepo) Delete(ctx context.Context, req *v1.DeleteUserRequest) (bool,
 }
 
 func (r *UserRepo) GetUserByUserName(ctx context.Context, userName string) (*v1.User, error) {
-	res, err := r.data.db.Client().User.Query().
+	ret, err := r.data.db.Client().User.Query().
 		Where(user.UsernameEQ(userName)).
 		Only(ctx)
 	if err != nil {
@@ -192,7 +210,12 @@ func (r *UserRepo) GetUserByUserName(ctx context.Context, userName string) (*v1.
 		return nil, err
 	}
 
-	return r.convertEntToProto(res), nil
+	u := r.convertEntToProto(ret)
+	if u != nil {
+		u.Password = nil
+	}
+
+	return u, err
 }
 
 func (r *UserRepo) VerifyPassword(ctx context.Context, req *v1.VerifyPasswordRequest) (bool, error) {
