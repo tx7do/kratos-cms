@@ -11,7 +11,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/registry"
 	"github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
-	"kratos-cms/app/admin/service/internal/biz"
 	"kratos-cms/app/admin/service/internal/data"
 	"kratos-cms/app/admin/service/internal/server"
 	"kratos-cms/app/admin/service/internal/service"
@@ -20,31 +19,30 @@ import (
 // Injectors from wire.go:
 
 // initApp init kratos application.
-func initApp(logger log.Logger, registrar registry.Registrar, bootstrap *conf.Bootstrap) (*kratos.App, func(), error) {
+func initApp(logger log.Logger, registrar registry.Registrar, bootstrap *v1.Bootstrap) (*kratos.App, func(), error) {
 	authenticator := data.NewAuthenticator(bootstrap)
 	engine := data.NewAuthorizer()
 	discovery := data.NewDiscovery(bootstrap)
 	userServiceClient := data.NewUserServiceClient(discovery, bootstrap)
 	client := data.NewRedisClient(bootstrap, logger)
-	attachmentServiceClient := data.NewAttachmentServiceClient(discovery, bootstrap)
-	commentServiceClient := data.NewCommentServiceClient(discovery, bootstrap)
-	categoryServiceClient := data.NewCategoryServiceClient(discovery, bootstrap)
-	linkServiceClient := data.NewLinkServiceClient(discovery, bootstrap)
-	postServiceClient := data.NewPostServiceClient(discovery, bootstrap)
-	tagServiceClient := data.NewTagServiceClient(discovery, bootstrap)
-	dataData, cleanup, err := data.NewData(client, authenticator, engine, userServiceClient, attachmentServiceClient, commentServiceClient, categoryServiceClient, linkServiceClient, postServiceClient, tagServiceClient, logger)
+	dataData, cleanup, err := data.NewData(client, authenticator, engine, logger)
 	if err != nil {
 		return nil, nil, err
 	}
 	userTokenRepo := data.NewUserTokenRepo(dataData, authenticator, logger)
-	userTokenUseCase := biz.NewUserAuthUseCase(userTokenRepo)
-	authenticationService := service.NewAuthenticationService(logger, userServiceClient, userTokenUseCase)
+	authenticationService := service.NewAuthenticationService(logger, userServiceClient, userTokenRepo)
 	userService := service.NewUserService(logger, userServiceClient)
+	postServiceClient := data.NewPostServiceClient(discovery, bootstrap)
 	postService := service.NewPostService(logger, postServiceClient)
+	linkServiceClient := data.NewLinkServiceClient(discovery, bootstrap)
 	linkService := service.NewLinkService(logger, linkServiceClient)
+	categoryServiceClient := data.NewCategoryServiceClient(discovery, bootstrap)
 	categoryService := service.NewCategoryService(logger, categoryServiceClient)
+	commentServiceClient := data.NewCommentServiceClient(discovery, bootstrap)
 	commentService := service.NewCommentService(logger, commentServiceClient)
+	tagServiceClient := data.NewTagServiceClient(discovery, bootstrap)
 	tagService := service.NewTagService(logger, tagServiceClient)
+	attachmentServiceClient := data.NewAttachmentServiceClient(discovery, bootstrap)
 	attachmentService := service.NewAttachmentService(logger, attachmentServiceClient)
 	httpServer := server.NewHTTPServer(bootstrap, logger, authenticator, engine, authenticationService, userService, postService, linkService, categoryService, commentService, tagService, attachmentService)
 	app := newApp(logger, registrar, httpServer)

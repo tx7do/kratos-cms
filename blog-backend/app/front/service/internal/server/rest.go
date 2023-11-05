@@ -18,12 +18,12 @@ import (
 	swaggerUI "github.com/tx7do/kratos-swagger-ui"
 
 	"github.com/tx7do/kratos-bootstrap"
-	"github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
+	conf "github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
 
 	"kratos-cms/app/front/service/cmd/server/assets"
 	"kratos-cms/app/front/service/internal/service"
 
-	v1 "kratos-cms/gen/api/go/front/service/v1"
+	frontV1 "kratos-cms/gen/api/go/front/service/v1"
 	"kratos-cms/pkg/middleware/auth"
 )
 
@@ -64,13 +64,13 @@ func NewHTTPServer(
 ) *http.Server {
 	srv := bootstrap.CreateRestServer(cfg, newRestMiddleware(authenticator, authorizer, logger)...)
 
-	v1.RegisterAuthenticationServiceHTTPServer(srv, authnSvc)
-	v1.RegisterPostServiceHTTPServer(srv, postSvc)
-	v1.RegisterCategoryServiceHTTPServer(srv, cateSvc)
-	v1.RegisterTagServiceHTTPServer(srv, tagSvc)
-	v1.RegisterLinkServiceHTTPServer(srv, linkSvc)
-	v1.RegisterAttachmentServiceHTTPServer(srv, attachmentSvc)
-	v1.RegisterCommentServiceHTTPServer(srv, commentSvc)
+	frontV1.RegisterAuthenticationServiceHTTPServer(srv, authnSvc)
+	frontV1.RegisterPostServiceHTTPServer(srv, postSvc)
+	frontV1.RegisterCategoryServiceHTTPServer(srv, cateSvc)
+	frontV1.RegisterTagServiceHTTPServer(srv, tagSvc)
+	frontV1.RegisterLinkServiceHTTPServer(srv, linkSvc)
+	frontV1.RegisterAttachmentServiceHTTPServer(srv, attachmentSvc)
+	frontV1.RegisterCommentServiceHTTPServer(srv, commentSvc)
 
 	if cfg.GetServer().GetRest().GetEnableSwagger() {
 		swaggerUI.RegisterSwaggerUIServerWithOption(

@@ -1,10 +1,10 @@
 syntax = "proto3";
 
 package content.service.v1;
-option go_package = "kratos-cms/gen/api/go/content/service/v1;v1";
+
 
 import "google/protobuf/empty.proto";
-import "common/pagination/pagination.proto";
+import "pagination/v1/pagination.proto";
 
 // 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
 

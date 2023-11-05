@@ -6,20 +6,20 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"kratos-cms/app/core/service/internal/biz"
+	"kratos-cms/app/core/service/internal/data"
 
-	"kratos-cms/gen/api/go/common/pagination"
+	pagination "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	v1 "kratos-cms/gen/api/go/content/service/v1"
 )
 
 type TagService struct {
 	v1.UnimplementedTagServiceServer
 
-	uc  *biz.TagUseCase
+	uc  *data.TagRepo
 	log *log.Helper
 }
 
-func NewTagService(logger log.Logger, uc *biz.TagUseCase) *TagService {
+func NewTagService(logger log.Logger, uc *data.TagRepo) *TagService {
 	l := log.NewHelper(log.With(logger, "module", "tag/service/core-service"))
 	return &TagService{
 		log: l,

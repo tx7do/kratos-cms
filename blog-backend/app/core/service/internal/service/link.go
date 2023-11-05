@@ -6,20 +6,20 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"kratos-cms/app/core/service/internal/biz"
+	"kratos-cms/app/core/service/internal/data"
 
-	"kratos-cms/gen/api/go/common/pagination"
-	"kratos-cms/gen/api/go/content/service/v1"
+	pagination "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
+	v1 "kratos-cms/gen/api/go/content/service/v1"
 )
 
 type LinkService struct {
 	v1.UnimplementedLinkServiceServer
 
-	uc  *biz.LinkUseCase
+	uc  *data.LinkRepo
 	log *log.Helper
 }
 
-func NewLinkService(logger log.Logger, uc *biz.LinkUseCase) *LinkService {
+func NewLinkService(logger log.Logger, uc *data.LinkRepo) *LinkService {
 	l := log.NewHelper(log.With(logger, "module", "link/service/core-service"))
 	return &LinkService{
 		log: l,

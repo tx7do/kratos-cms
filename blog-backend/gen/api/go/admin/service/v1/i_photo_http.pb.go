@@ -4,15 +4,15 @@
 // - protoc             (unknown)
 // source: admin/service/v1/i_photo.proto
 
-package v1
+package servicev1
 
 import (
 	context "context"
 	http "github.com/go-kratos/kratos/v2/transport/http"
 	binding "github.com/go-kratos/kratos/v2/transport/http/binding"
+	v1 "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	pagination "kratos-cms/gen/api/go/common/pagination"
-	v1 "kratos-cms/gen/api/go/content/service/v1"
+	v11 "kratos-cms/gen/api/go/content/service/v1"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -30,15 +30,15 @@ const OperationPhotoServiceUpdatePhoto = "/admin.service.v1.PhotoService/UpdateP
 
 type PhotoServiceHTTPServer interface {
 	// CreatePhoto 创建照片
-	CreatePhoto(context.Context, *v1.CreatePhotoRequest) (*v1.Photo, error)
+	CreatePhoto(context.Context, *v11.CreatePhotoRequest) (*v11.Photo, error)
 	// DeletePhoto 删除照片
-	DeletePhoto(context.Context, *v1.DeletePhotoRequest) (*emptypb.Empty, error)
+	DeletePhoto(context.Context, *v11.DeletePhotoRequest) (*emptypb.Empty, error)
 	// GetPhoto 获取照片数据
-	GetPhoto(context.Context, *v1.GetPhotoRequest) (*v1.Photo, error)
+	GetPhoto(context.Context, *v11.GetPhotoRequest) (*v11.Photo, error)
 	// ListPhoto 获取照片列表
-	ListPhoto(context.Context, *pagination.PagingRequest) (*v1.ListPhotoResponse, error)
+	ListPhoto(context.Context, *v1.PagingRequest) (*v11.ListPhotoResponse, error)
 	// UpdatePhoto 更新照片
-	UpdatePhoto(context.Context, *v1.UpdatePhotoRequest) (*v1.Photo, error)
+	UpdatePhoto(context.Context, *v11.UpdatePhotoRequest) (*v11.Photo, error)
 }
 
 func RegisterPhotoServiceHTTPServer(s *http.Server, srv PhotoServiceHTTPServer) {
@@ -52,26 +52,26 @@ func RegisterPhotoServiceHTTPServer(s *http.Server, srv PhotoServiceHTTPServer) 
 
 func _PhotoService_ListPhoto0_HTTP_Handler(srv PhotoServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in pagination.PagingRequest
+		var in v1.PagingRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
 		http.SetOperation(ctx, OperationPhotoServiceListPhoto)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.ListPhoto(ctx, req.(*pagination.PagingRequest))
+			return srv.ListPhoto(ctx, req.(*v1.PagingRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.ListPhotoResponse)
+		reply := out.(*v11.ListPhotoResponse)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _PhotoService_GetPhoto0_HTTP_Handler(srv PhotoServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.GetPhotoRequest
+		var in v11.GetPhotoRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -80,20 +80,20 @@ func _PhotoService_GetPhoto0_HTTP_Handler(srv PhotoServiceHTTPServer) func(ctx h
 		}
 		http.SetOperation(ctx, OperationPhotoServiceGetPhoto)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetPhoto(ctx, req.(*v1.GetPhotoRequest))
+			return srv.GetPhoto(ctx, req.(*v11.GetPhotoRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.Photo)
+		reply := out.(*v11.Photo)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _PhotoService_CreatePhoto0_HTTP_Handler(srv PhotoServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.CreatePhotoRequest
+		var in v11.CreatePhotoRequest
 		if err := ctx.Bind(&in); err != nil {
 			return err
 		}
@@ -102,20 +102,20 @@ func _PhotoService_CreatePhoto0_HTTP_Handler(srv PhotoServiceHTTPServer) func(ct
 		}
 		http.SetOperation(ctx, OperationPhotoServiceCreatePhoto)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.CreatePhoto(ctx, req.(*v1.CreatePhotoRequest))
+			return srv.CreatePhoto(ctx, req.(*v11.CreatePhotoRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.Photo)
+		reply := out.(*v11.Photo)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _PhotoService_UpdatePhoto0_HTTP_Handler(srv PhotoServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.UpdatePhotoRequest
+		var in v11.UpdatePhotoRequest
 		if err := ctx.Bind(&in.Photo); err != nil {
 			return err
 		}
@@ -127,20 +127,20 @@ func _PhotoService_UpdatePhoto0_HTTP_Handler(srv PhotoServiceHTTPServer) func(ct
 		}
 		http.SetOperation(ctx, OperationPhotoServiceUpdatePhoto)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.UpdatePhoto(ctx, req.(*v1.UpdatePhotoRequest))
+			return srv.UpdatePhoto(ctx, req.(*v11.UpdatePhotoRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.Photo)
+		reply := out.(*v11.Photo)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _PhotoService_DeletePhoto0_HTTP_Handler(srv PhotoServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.DeletePhotoRequest
+		var in v11.DeletePhotoRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -149,7 +149,7 @@ func _PhotoService_DeletePhoto0_HTTP_Handler(srv PhotoServiceHTTPServer) func(ct
 		}
 		http.SetOperation(ctx, OperationPhotoServiceDeletePhoto)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.DeletePhoto(ctx, req.(*v1.DeletePhotoRequest))
+			return srv.DeletePhoto(ctx, req.(*v11.DeletePhotoRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -161,11 +161,11 @@ func _PhotoService_DeletePhoto0_HTTP_Handler(srv PhotoServiceHTTPServer) func(ct
 }
 
 type PhotoServiceHTTPClient interface {
-	CreatePhoto(ctx context.Context, req *v1.CreatePhotoRequest, opts ...http.CallOption) (rsp *v1.Photo, err error)
-	DeletePhoto(ctx context.Context, req *v1.DeletePhotoRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
-	GetPhoto(ctx context.Context, req *v1.GetPhotoRequest, opts ...http.CallOption) (rsp *v1.Photo, err error)
-	ListPhoto(ctx context.Context, req *pagination.PagingRequest, opts ...http.CallOption) (rsp *v1.ListPhotoResponse, err error)
-	UpdatePhoto(ctx context.Context, req *v1.UpdatePhotoRequest, opts ...http.CallOption) (rsp *v1.Photo, err error)
+	CreatePhoto(ctx context.Context, req *v11.CreatePhotoRequest, opts ...http.CallOption) (rsp *v11.Photo, err error)
+	DeletePhoto(ctx context.Context, req *v11.DeletePhotoRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
+	GetPhoto(ctx context.Context, req *v11.GetPhotoRequest, opts ...http.CallOption) (rsp *v11.Photo, err error)
+	ListPhoto(ctx context.Context, req *v1.PagingRequest, opts ...http.CallOption) (rsp *v11.ListPhotoResponse, err error)
+	UpdatePhoto(ctx context.Context, req *v11.UpdatePhotoRequest, opts ...http.CallOption) (rsp *v11.Photo, err error)
 }
 
 type PhotoServiceHTTPClientImpl struct {
@@ -176,8 +176,8 @@ func NewPhotoServiceHTTPClient(client *http.Client) PhotoServiceHTTPClient {
 	return &PhotoServiceHTTPClientImpl{client}
 }
 
-func (c *PhotoServiceHTTPClientImpl) CreatePhoto(ctx context.Context, in *v1.CreatePhotoRequest, opts ...http.CallOption) (*v1.Photo, error) {
-	var out v1.Photo
+func (c *PhotoServiceHTTPClientImpl) CreatePhoto(ctx context.Context, in *v11.CreatePhotoRequest, opts ...http.CallOption) (*v11.Photo, error) {
+	var out v11.Photo
 	pattern := "/admin/v1/photos"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationPhotoServiceCreatePhoto))
@@ -189,7 +189,7 @@ func (c *PhotoServiceHTTPClientImpl) CreatePhoto(ctx context.Context, in *v1.Cre
 	return &out, err
 }
 
-func (c *PhotoServiceHTTPClientImpl) DeletePhoto(ctx context.Context, in *v1.DeletePhotoRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
+func (c *PhotoServiceHTTPClientImpl) DeletePhoto(ctx context.Context, in *v11.DeletePhotoRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
 	var out emptypb.Empty
 	pattern := "/admin/v1/photos/{id}"
 	path := binding.EncodeURL(pattern, in, true)
@@ -202,8 +202,8 @@ func (c *PhotoServiceHTTPClientImpl) DeletePhoto(ctx context.Context, in *v1.Del
 	return &out, err
 }
 
-func (c *PhotoServiceHTTPClientImpl) GetPhoto(ctx context.Context, in *v1.GetPhotoRequest, opts ...http.CallOption) (*v1.Photo, error) {
-	var out v1.Photo
+func (c *PhotoServiceHTTPClientImpl) GetPhoto(ctx context.Context, in *v11.GetPhotoRequest, opts ...http.CallOption) (*v11.Photo, error) {
+	var out v11.Photo
 	pattern := "/admin/v1/photos/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationPhotoServiceGetPhoto))
@@ -215,8 +215,8 @@ func (c *PhotoServiceHTTPClientImpl) GetPhoto(ctx context.Context, in *v1.GetPho
 	return &out, err
 }
 
-func (c *PhotoServiceHTTPClientImpl) ListPhoto(ctx context.Context, in *pagination.PagingRequest, opts ...http.CallOption) (*v1.ListPhotoResponse, error) {
-	var out v1.ListPhotoResponse
+func (c *PhotoServiceHTTPClientImpl) ListPhoto(ctx context.Context, in *v1.PagingRequest, opts ...http.CallOption) (*v11.ListPhotoResponse, error) {
+	var out v11.ListPhotoResponse
 	pattern := "/admin/v1/photos"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationPhotoServiceListPhoto))
@@ -228,8 +228,8 @@ func (c *PhotoServiceHTTPClientImpl) ListPhoto(ctx context.Context, in *paginati
 	return &out, err
 }
 
-func (c *PhotoServiceHTTPClientImpl) UpdatePhoto(ctx context.Context, in *v1.UpdatePhotoRequest, opts ...http.CallOption) (*v1.Photo, error) {
-	var out v1.Photo
+func (c *PhotoServiceHTTPClientImpl) UpdatePhoto(ctx context.Context, in *v11.UpdatePhotoRequest, opts ...http.CallOption) (*v11.Photo, error) {
+	var out v11.Photo
 	pattern := "/admin/v1/photos/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationPhotoServiceUpdatePhoto))

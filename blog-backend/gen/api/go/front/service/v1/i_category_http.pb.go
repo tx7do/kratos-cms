@@ -4,15 +4,15 @@
 // - protoc             (unknown)
 // source: front/service/v1/i_category.proto
 
-package v1
+package servicev1
 
 import (
 	context "context"
 	http "github.com/go-kratos/kratos/v2/transport/http"
 	binding "github.com/go-kratos/kratos/v2/transport/http/binding"
+	v1 "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	pagination "kratos-cms/gen/api/go/common/pagination"
-	v1 "kratos-cms/gen/api/go/content/service/v1"
+	v11 "kratos-cms/gen/api/go/content/service/v1"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -30,15 +30,15 @@ const OperationCategoryServiceUpdateCategory = "/front.service.v1.CategoryServic
 
 type CategoryServiceHTTPServer interface {
 	// CreateCategory 创建类别
-	CreateCategory(context.Context, *v1.CreateCategoryRequest) (*v1.Category, error)
+	CreateCategory(context.Context, *v11.CreateCategoryRequest) (*v11.Category, error)
 	// DeleteCategory 删除类别
-	DeleteCategory(context.Context, *v1.DeleteCategoryRequest) (*emptypb.Empty, error)
+	DeleteCategory(context.Context, *v11.DeleteCategoryRequest) (*emptypb.Empty, error)
 	// GetCategory 获取类别数据
-	GetCategory(context.Context, *v1.GetCategoryRequest) (*v1.Category, error)
+	GetCategory(context.Context, *v11.GetCategoryRequest) (*v11.Category, error)
 	// ListCategory 获取类别列表
-	ListCategory(context.Context, *pagination.PagingRequest) (*v1.ListCategoryResponse, error)
+	ListCategory(context.Context, *v1.PagingRequest) (*v11.ListCategoryResponse, error)
 	// UpdateCategory 更新类别
-	UpdateCategory(context.Context, *v1.UpdateCategoryRequest) (*v1.Category, error)
+	UpdateCategory(context.Context, *v11.UpdateCategoryRequest) (*v11.Category, error)
 }
 
 func RegisterCategoryServiceHTTPServer(s *http.Server, srv CategoryServiceHTTPServer) {
@@ -52,26 +52,26 @@ func RegisterCategoryServiceHTTPServer(s *http.Server, srv CategoryServiceHTTPSe
 
 func _CategoryService_ListCategory0_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in pagination.PagingRequest
+		var in v1.PagingRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
 		http.SetOperation(ctx, OperationCategoryServiceListCategory)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.ListCategory(ctx, req.(*pagination.PagingRequest))
+			return srv.ListCategory(ctx, req.(*v1.PagingRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.ListCategoryResponse)
+		reply := out.(*v11.ListCategoryResponse)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _CategoryService_GetCategory0_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.GetCategoryRequest
+		var in v11.GetCategoryRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -80,20 +80,20 @@ func _CategoryService_GetCategory0_HTTP_Handler(srv CategoryServiceHTTPServer) f
 		}
 		http.SetOperation(ctx, OperationCategoryServiceGetCategory)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetCategory(ctx, req.(*v1.GetCategoryRequest))
+			return srv.GetCategory(ctx, req.(*v11.GetCategoryRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.Category)
+		reply := out.(*v11.Category)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _CategoryService_CreateCategory0_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.CreateCategoryRequest
+		var in v11.CreateCategoryRequest
 		if err := ctx.Bind(&in); err != nil {
 			return err
 		}
@@ -102,20 +102,20 @@ func _CategoryService_CreateCategory0_HTTP_Handler(srv CategoryServiceHTTPServer
 		}
 		http.SetOperation(ctx, OperationCategoryServiceCreateCategory)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.CreateCategory(ctx, req.(*v1.CreateCategoryRequest))
+			return srv.CreateCategory(ctx, req.(*v11.CreateCategoryRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.Category)
+		reply := out.(*v11.Category)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _CategoryService_UpdateCategory0_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.UpdateCategoryRequest
+		var in v11.UpdateCategoryRequest
 		if err := ctx.Bind(&in.Category); err != nil {
 			return err
 		}
@@ -127,20 +127,20 @@ func _CategoryService_UpdateCategory0_HTTP_Handler(srv CategoryServiceHTTPServer
 		}
 		http.SetOperation(ctx, OperationCategoryServiceUpdateCategory)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.UpdateCategory(ctx, req.(*v1.UpdateCategoryRequest))
+			return srv.UpdateCategory(ctx, req.(*v11.UpdateCategoryRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.Category)
+		reply := out.(*v11.Category)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _CategoryService_DeleteCategory0_HTTP_Handler(srv CategoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.DeleteCategoryRequest
+		var in v11.DeleteCategoryRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -149,7 +149,7 @@ func _CategoryService_DeleteCategory0_HTTP_Handler(srv CategoryServiceHTTPServer
 		}
 		http.SetOperation(ctx, OperationCategoryServiceDeleteCategory)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.DeleteCategory(ctx, req.(*v1.DeleteCategoryRequest))
+			return srv.DeleteCategory(ctx, req.(*v11.DeleteCategoryRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -161,11 +161,11 @@ func _CategoryService_DeleteCategory0_HTTP_Handler(srv CategoryServiceHTTPServer
 }
 
 type CategoryServiceHTTPClient interface {
-	CreateCategory(ctx context.Context, req *v1.CreateCategoryRequest, opts ...http.CallOption) (rsp *v1.Category, err error)
-	DeleteCategory(ctx context.Context, req *v1.DeleteCategoryRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
-	GetCategory(ctx context.Context, req *v1.GetCategoryRequest, opts ...http.CallOption) (rsp *v1.Category, err error)
-	ListCategory(ctx context.Context, req *pagination.PagingRequest, opts ...http.CallOption) (rsp *v1.ListCategoryResponse, err error)
-	UpdateCategory(ctx context.Context, req *v1.UpdateCategoryRequest, opts ...http.CallOption) (rsp *v1.Category, err error)
+	CreateCategory(ctx context.Context, req *v11.CreateCategoryRequest, opts ...http.CallOption) (rsp *v11.Category, err error)
+	DeleteCategory(ctx context.Context, req *v11.DeleteCategoryRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
+	GetCategory(ctx context.Context, req *v11.GetCategoryRequest, opts ...http.CallOption) (rsp *v11.Category, err error)
+	ListCategory(ctx context.Context, req *v1.PagingRequest, opts ...http.CallOption) (rsp *v11.ListCategoryResponse, err error)
+	UpdateCategory(ctx context.Context, req *v11.UpdateCategoryRequest, opts ...http.CallOption) (rsp *v11.Category, err error)
 }
 
 type CategoryServiceHTTPClientImpl struct {
@@ -176,8 +176,8 @@ func NewCategoryServiceHTTPClient(client *http.Client) CategoryServiceHTTPClient
 	return &CategoryServiceHTTPClientImpl{client}
 }
 
-func (c *CategoryServiceHTTPClientImpl) CreateCategory(ctx context.Context, in *v1.CreateCategoryRequest, opts ...http.CallOption) (*v1.Category, error) {
-	var out v1.Category
+func (c *CategoryServiceHTTPClientImpl) CreateCategory(ctx context.Context, in *v11.CreateCategoryRequest, opts ...http.CallOption) (*v11.Category, error) {
+	var out v11.Category
 	pattern := "/blog/v1/categories"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationCategoryServiceCreateCategory))
@@ -189,7 +189,7 @@ func (c *CategoryServiceHTTPClientImpl) CreateCategory(ctx context.Context, in *
 	return &out, err
 }
 
-func (c *CategoryServiceHTTPClientImpl) DeleteCategory(ctx context.Context, in *v1.DeleteCategoryRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
+func (c *CategoryServiceHTTPClientImpl) DeleteCategory(ctx context.Context, in *v11.DeleteCategoryRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
 	var out emptypb.Empty
 	pattern := "/blog/v1/categories/{id}"
 	path := binding.EncodeURL(pattern, in, true)
@@ -202,8 +202,8 @@ func (c *CategoryServiceHTTPClientImpl) DeleteCategory(ctx context.Context, in *
 	return &out, err
 }
 
-func (c *CategoryServiceHTTPClientImpl) GetCategory(ctx context.Context, in *v1.GetCategoryRequest, opts ...http.CallOption) (*v1.Category, error) {
-	var out v1.Category
+func (c *CategoryServiceHTTPClientImpl) GetCategory(ctx context.Context, in *v11.GetCategoryRequest, opts ...http.CallOption) (*v11.Category, error) {
+	var out v11.Category
 	pattern := "/blog/v1/categories/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationCategoryServiceGetCategory))
@@ -215,8 +215,8 @@ func (c *CategoryServiceHTTPClientImpl) GetCategory(ctx context.Context, in *v1.
 	return &out, err
 }
 
-func (c *CategoryServiceHTTPClientImpl) ListCategory(ctx context.Context, in *pagination.PagingRequest, opts ...http.CallOption) (*v1.ListCategoryResponse, error) {
-	var out v1.ListCategoryResponse
+func (c *CategoryServiceHTTPClientImpl) ListCategory(ctx context.Context, in *v1.PagingRequest, opts ...http.CallOption) (*v11.ListCategoryResponse, error) {
+	var out v11.ListCategoryResponse
 	pattern := "/blog/v1/categories"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationCategoryServiceListCategory))
@@ -228,8 +228,8 @@ func (c *CategoryServiceHTTPClientImpl) ListCategory(ctx context.Context, in *pa
 	return &out, err
 }
 
-func (c *CategoryServiceHTTPClientImpl) UpdateCategory(ctx context.Context, in *v1.UpdateCategoryRequest, opts ...http.CallOption) (*v1.Category, error) {
-	var out v1.Category
+func (c *CategoryServiceHTTPClientImpl) UpdateCategory(ctx context.Context, in *v11.UpdateCategoryRequest, opts ...http.CallOption) (*v11.Category, error) {
+	var out v11.Category
 	pattern := "/blog/v1/categories/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationCategoryServiceUpdateCategory))

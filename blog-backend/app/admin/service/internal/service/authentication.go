@@ -6,7 +6,7 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"kratos-cms/app/admin/service/internal/biz"
+	"kratos-cms/app/admin/service/internal/data"
 
 	v1 "kratos-cms/gen/api/go/admin/service/v1"
 	userV1 "kratos-cms/gen/api/go/user/service/v1"
@@ -18,12 +18,12 @@ type AuthenticationService struct {
 	v1.AuthenticationServiceHTTPServer
 
 	uc   userV1.UserServiceClient
-	utuc *biz.UserTokenUseCase
+	utuc *data.UserTokenRepo
 
 	log *log.Helper
 }
 
-func NewAuthenticationService(logger log.Logger, uc userV1.UserServiceClient, utuc *biz.UserTokenUseCase) *AuthenticationService {
+func NewAuthenticationService(logger log.Logger, uc userV1.UserServiceClient, utuc *data.UserTokenRepo) *AuthenticationService {
 	l := log.NewHelper(log.With(logger, "module", "user/service/admin-service"))
 	return &AuthenticationService{
 		log:  l,

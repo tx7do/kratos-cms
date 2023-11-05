@@ -4,16 +4,16 @@
 // - protoc             (unknown)
 // source: front/service/v1/i_link.proto
 
-package v1
+package servicev1
 
 import (
 	context "context"
+	v1 "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	pagination "kratos-cms/gen/api/go/common/pagination"
-	v1 "kratos-cms/gen/api/go/content/service/v1"
+	v11 "kratos-cms/gen/api/go/content/service/v1"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -34,15 +34,15 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LinkServiceClient interface {
 	// 获取链接列表
-	ListLink(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*v1.ListLinkResponse, error)
+	ListLink(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*v11.ListLinkResponse, error)
 	// 获取链接数据
-	GetLink(ctx context.Context, in *v1.GetLinkRequest, opts ...grpc.CallOption) (*v1.Link, error)
+	GetLink(ctx context.Context, in *v11.GetLinkRequest, opts ...grpc.CallOption) (*v11.Link, error)
 	// 创建链接
-	CreateLink(ctx context.Context, in *v1.CreateLinkRequest, opts ...grpc.CallOption) (*v1.Link, error)
+	CreateLink(ctx context.Context, in *v11.CreateLinkRequest, opts ...grpc.CallOption) (*v11.Link, error)
 	// 更新链接
-	UpdateLink(ctx context.Context, in *v1.UpdateLinkRequest, opts ...grpc.CallOption) (*v1.Link, error)
+	UpdateLink(ctx context.Context, in *v11.UpdateLinkRequest, opts ...grpc.CallOption) (*v11.Link, error)
 	// 删除链接
-	DeleteLink(ctx context.Context, in *v1.DeleteLinkRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	DeleteLink(ctx context.Context, in *v11.DeleteLinkRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type linkServiceClient struct {
@@ -53,8 +53,8 @@ func NewLinkServiceClient(cc grpc.ClientConnInterface) LinkServiceClient {
 	return &linkServiceClient{cc}
 }
 
-func (c *linkServiceClient) ListLink(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*v1.ListLinkResponse, error) {
-	out := new(v1.ListLinkResponse)
+func (c *linkServiceClient) ListLink(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*v11.ListLinkResponse, error) {
+	out := new(v11.ListLinkResponse)
 	err := c.cc.Invoke(ctx, LinkService_ListLink_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -62,8 +62,8 @@ func (c *linkServiceClient) ListLink(ctx context.Context, in *pagination.PagingR
 	return out, nil
 }
 
-func (c *linkServiceClient) GetLink(ctx context.Context, in *v1.GetLinkRequest, opts ...grpc.CallOption) (*v1.Link, error) {
-	out := new(v1.Link)
+func (c *linkServiceClient) GetLink(ctx context.Context, in *v11.GetLinkRequest, opts ...grpc.CallOption) (*v11.Link, error) {
+	out := new(v11.Link)
 	err := c.cc.Invoke(ctx, LinkService_GetLink_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -71,8 +71,8 @@ func (c *linkServiceClient) GetLink(ctx context.Context, in *v1.GetLinkRequest, 
 	return out, nil
 }
 
-func (c *linkServiceClient) CreateLink(ctx context.Context, in *v1.CreateLinkRequest, opts ...grpc.CallOption) (*v1.Link, error) {
-	out := new(v1.Link)
+func (c *linkServiceClient) CreateLink(ctx context.Context, in *v11.CreateLinkRequest, opts ...grpc.CallOption) (*v11.Link, error) {
+	out := new(v11.Link)
 	err := c.cc.Invoke(ctx, LinkService_CreateLink_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -80,8 +80,8 @@ func (c *linkServiceClient) CreateLink(ctx context.Context, in *v1.CreateLinkReq
 	return out, nil
 }
 
-func (c *linkServiceClient) UpdateLink(ctx context.Context, in *v1.UpdateLinkRequest, opts ...grpc.CallOption) (*v1.Link, error) {
-	out := new(v1.Link)
+func (c *linkServiceClient) UpdateLink(ctx context.Context, in *v11.UpdateLinkRequest, opts ...grpc.CallOption) (*v11.Link, error) {
+	out := new(v11.Link)
 	err := c.cc.Invoke(ctx, LinkService_UpdateLink_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -89,7 +89,7 @@ func (c *linkServiceClient) UpdateLink(ctx context.Context, in *v1.UpdateLinkReq
 	return out, nil
 }
 
-func (c *linkServiceClient) DeleteLink(ctx context.Context, in *v1.DeleteLinkRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *linkServiceClient) DeleteLink(ctx context.Context, in *v11.DeleteLinkRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, LinkService_DeleteLink_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -103,15 +103,15 @@ func (c *linkServiceClient) DeleteLink(ctx context.Context, in *v1.DeleteLinkReq
 // for forward compatibility
 type LinkServiceServer interface {
 	// 获取链接列表
-	ListLink(context.Context, *pagination.PagingRequest) (*v1.ListLinkResponse, error)
+	ListLink(context.Context, *v1.PagingRequest) (*v11.ListLinkResponse, error)
 	// 获取链接数据
-	GetLink(context.Context, *v1.GetLinkRequest) (*v1.Link, error)
+	GetLink(context.Context, *v11.GetLinkRequest) (*v11.Link, error)
 	// 创建链接
-	CreateLink(context.Context, *v1.CreateLinkRequest) (*v1.Link, error)
+	CreateLink(context.Context, *v11.CreateLinkRequest) (*v11.Link, error)
 	// 更新链接
-	UpdateLink(context.Context, *v1.UpdateLinkRequest) (*v1.Link, error)
+	UpdateLink(context.Context, *v11.UpdateLinkRequest) (*v11.Link, error)
 	// 删除链接
-	DeleteLink(context.Context, *v1.DeleteLinkRequest) (*emptypb.Empty, error)
+	DeleteLink(context.Context, *v11.DeleteLinkRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedLinkServiceServer()
 }
 
@@ -119,19 +119,19 @@ type LinkServiceServer interface {
 type UnimplementedLinkServiceServer struct {
 }
 
-func (UnimplementedLinkServiceServer) ListLink(context.Context, *pagination.PagingRequest) (*v1.ListLinkResponse, error) {
+func (UnimplementedLinkServiceServer) ListLink(context.Context, *v1.PagingRequest) (*v11.ListLinkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListLink not implemented")
 }
-func (UnimplementedLinkServiceServer) GetLink(context.Context, *v1.GetLinkRequest) (*v1.Link, error) {
+func (UnimplementedLinkServiceServer) GetLink(context.Context, *v11.GetLinkRequest) (*v11.Link, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLink not implemented")
 }
-func (UnimplementedLinkServiceServer) CreateLink(context.Context, *v1.CreateLinkRequest) (*v1.Link, error) {
+func (UnimplementedLinkServiceServer) CreateLink(context.Context, *v11.CreateLinkRequest) (*v11.Link, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateLink not implemented")
 }
-func (UnimplementedLinkServiceServer) UpdateLink(context.Context, *v1.UpdateLinkRequest) (*v1.Link, error) {
+func (UnimplementedLinkServiceServer) UpdateLink(context.Context, *v11.UpdateLinkRequest) (*v11.Link, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateLink not implemented")
 }
-func (UnimplementedLinkServiceServer) DeleteLink(context.Context, *v1.DeleteLinkRequest) (*emptypb.Empty, error) {
+func (UnimplementedLinkServiceServer) DeleteLink(context.Context, *v11.DeleteLinkRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteLink not implemented")
 }
 func (UnimplementedLinkServiceServer) mustEmbedUnimplementedLinkServiceServer() {}
@@ -148,7 +148,7 @@ func RegisterLinkServiceServer(s grpc.ServiceRegistrar, srv LinkServiceServer) {
 }
 
 func _LinkService_ListLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(pagination.PagingRequest)
+	in := new(v1.PagingRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -160,13 +160,13 @@ func _LinkService_ListLink_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: LinkService_ListLink_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LinkServiceServer).ListLink(ctx, req.(*pagination.PagingRequest))
+		return srv.(LinkServiceServer).ListLink(ctx, req.(*v1.PagingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _LinkService_GetLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.GetLinkRequest)
+	in := new(v11.GetLinkRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -178,13 +178,13 @@ func _LinkService_GetLink_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: LinkService_GetLink_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LinkServiceServer).GetLink(ctx, req.(*v1.GetLinkRequest))
+		return srv.(LinkServiceServer).GetLink(ctx, req.(*v11.GetLinkRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _LinkService_CreateLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.CreateLinkRequest)
+	in := new(v11.CreateLinkRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -196,13 +196,13 @@ func _LinkService_CreateLink_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: LinkService_CreateLink_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LinkServiceServer).CreateLink(ctx, req.(*v1.CreateLinkRequest))
+		return srv.(LinkServiceServer).CreateLink(ctx, req.(*v11.CreateLinkRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _LinkService_UpdateLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.UpdateLinkRequest)
+	in := new(v11.UpdateLinkRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -214,13 +214,13 @@ func _LinkService_UpdateLink_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: LinkService_UpdateLink_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LinkServiceServer).UpdateLink(ctx, req.(*v1.UpdateLinkRequest))
+		return srv.(LinkServiceServer).UpdateLink(ctx, req.(*v11.UpdateLinkRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _LinkService_DeleteLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.DeleteLinkRequest)
+	in := new(v11.DeleteLinkRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -232,7 +232,7 @@ func _LinkService_DeleteLink_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: LinkService_DeleteLink_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LinkServiceServer).DeleteLink(ctx, req.(*v1.DeleteLinkRequest))
+		return srv.(LinkServiceServer).DeleteLink(ctx, req.(*v11.DeleteLinkRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

@@ -6,7 +6,7 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"kratos-cms/gen/api/go/common/pagination"
+	pagination "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	fileV1 "kratos-cms/gen/api/go/file/service/v1"
 	v1 "kratos-cms/gen/api/go/front/service/v1"
 )

@@ -4,16 +4,16 @@
 // - protoc             (unknown)
 // source: admin/service/v1/i_tag.proto
 
-package v1
+package servicev1
 
 import (
 	context "context"
+	v1 "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	pagination "kratos-cms/gen/api/go/common/pagination"
-	v1 "kratos-cms/gen/api/go/content/service/v1"
+	v11 "kratos-cms/gen/api/go/content/service/v1"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -34,15 +34,15 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TagServiceClient interface {
 	// 获取标签列表
-	ListTag(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*v1.ListTagResponse, error)
+	ListTag(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*v11.ListTagResponse, error)
 	// 获取标签数据
-	GetTag(ctx context.Context, in *v1.GetTagRequest, opts ...grpc.CallOption) (*v1.Tag, error)
+	GetTag(ctx context.Context, in *v11.GetTagRequest, opts ...grpc.CallOption) (*v11.Tag, error)
 	// 创建标签
-	CreateTag(ctx context.Context, in *v1.CreateTagRequest, opts ...grpc.CallOption) (*v1.Tag, error)
+	CreateTag(ctx context.Context, in *v11.CreateTagRequest, opts ...grpc.CallOption) (*v11.Tag, error)
 	// 更新标签
-	UpdateTag(ctx context.Context, in *v1.UpdateTagRequest, opts ...grpc.CallOption) (*v1.Tag, error)
+	UpdateTag(ctx context.Context, in *v11.UpdateTagRequest, opts ...grpc.CallOption) (*v11.Tag, error)
 	// 删除标签
-	DeleteTag(ctx context.Context, in *v1.DeleteTagRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	DeleteTag(ctx context.Context, in *v11.DeleteTagRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type tagServiceClient struct {
@@ -53,8 +53,8 @@ func NewTagServiceClient(cc grpc.ClientConnInterface) TagServiceClient {
 	return &tagServiceClient{cc}
 }
 
-func (c *tagServiceClient) ListTag(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*v1.ListTagResponse, error) {
-	out := new(v1.ListTagResponse)
+func (c *tagServiceClient) ListTag(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*v11.ListTagResponse, error) {
+	out := new(v11.ListTagResponse)
 	err := c.cc.Invoke(ctx, TagService_ListTag_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -62,8 +62,8 @@ func (c *tagServiceClient) ListTag(ctx context.Context, in *pagination.PagingReq
 	return out, nil
 }
 
-func (c *tagServiceClient) GetTag(ctx context.Context, in *v1.GetTagRequest, opts ...grpc.CallOption) (*v1.Tag, error) {
-	out := new(v1.Tag)
+func (c *tagServiceClient) GetTag(ctx context.Context, in *v11.GetTagRequest, opts ...grpc.CallOption) (*v11.Tag, error) {
+	out := new(v11.Tag)
 	err := c.cc.Invoke(ctx, TagService_GetTag_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -71,8 +71,8 @@ func (c *tagServiceClient) GetTag(ctx context.Context, in *v1.GetTagRequest, opt
 	return out, nil
 }
 
-func (c *tagServiceClient) CreateTag(ctx context.Context, in *v1.CreateTagRequest, opts ...grpc.CallOption) (*v1.Tag, error) {
-	out := new(v1.Tag)
+func (c *tagServiceClient) CreateTag(ctx context.Context, in *v11.CreateTagRequest, opts ...grpc.CallOption) (*v11.Tag, error) {
+	out := new(v11.Tag)
 	err := c.cc.Invoke(ctx, TagService_CreateTag_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -80,8 +80,8 @@ func (c *tagServiceClient) CreateTag(ctx context.Context, in *v1.CreateTagReques
 	return out, nil
 }
 
-func (c *tagServiceClient) UpdateTag(ctx context.Context, in *v1.UpdateTagRequest, opts ...grpc.CallOption) (*v1.Tag, error) {
-	out := new(v1.Tag)
+func (c *tagServiceClient) UpdateTag(ctx context.Context, in *v11.UpdateTagRequest, opts ...grpc.CallOption) (*v11.Tag, error) {
+	out := new(v11.Tag)
 	err := c.cc.Invoke(ctx, TagService_UpdateTag_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -89,7 +89,7 @@ func (c *tagServiceClient) UpdateTag(ctx context.Context, in *v1.UpdateTagReques
 	return out, nil
 }
 
-func (c *tagServiceClient) DeleteTag(ctx context.Context, in *v1.DeleteTagRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *tagServiceClient) DeleteTag(ctx context.Context, in *v11.DeleteTagRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, TagService_DeleteTag_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -103,15 +103,15 @@ func (c *tagServiceClient) DeleteTag(ctx context.Context, in *v1.DeleteTagReques
 // for forward compatibility
 type TagServiceServer interface {
 	// 获取标签列表
-	ListTag(context.Context, *pagination.PagingRequest) (*v1.ListTagResponse, error)
+	ListTag(context.Context, *v1.PagingRequest) (*v11.ListTagResponse, error)
 	// 获取标签数据
-	GetTag(context.Context, *v1.GetTagRequest) (*v1.Tag, error)
+	GetTag(context.Context, *v11.GetTagRequest) (*v11.Tag, error)
 	// 创建标签
-	CreateTag(context.Context, *v1.CreateTagRequest) (*v1.Tag, error)
+	CreateTag(context.Context, *v11.CreateTagRequest) (*v11.Tag, error)
 	// 更新标签
-	UpdateTag(context.Context, *v1.UpdateTagRequest) (*v1.Tag, error)
+	UpdateTag(context.Context, *v11.UpdateTagRequest) (*v11.Tag, error)
 	// 删除标签
-	DeleteTag(context.Context, *v1.DeleteTagRequest) (*emptypb.Empty, error)
+	DeleteTag(context.Context, *v11.DeleteTagRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedTagServiceServer()
 }
 
@@ -119,19 +119,19 @@ type TagServiceServer interface {
 type UnimplementedTagServiceServer struct {
 }
 
-func (UnimplementedTagServiceServer) ListTag(context.Context, *pagination.PagingRequest) (*v1.ListTagResponse, error) {
+func (UnimplementedTagServiceServer) ListTag(context.Context, *v1.PagingRequest) (*v11.ListTagResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListTag not implemented")
 }
-func (UnimplementedTagServiceServer) GetTag(context.Context, *v1.GetTagRequest) (*v1.Tag, error) {
+func (UnimplementedTagServiceServer) GetTag(context.Context, *v11.GetTagRequest) (*v11.Tag, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTag not implemented")
 }
-func (UnimplementedTagServiceServer) CreateTag(context.Context, *v1.CreateTagRequest) (*v1.Tag, error) {
+func (UnimplementedTagServiceServer) CreateTag(context.Context, *v11.CreateTagRequest) (*v11.Tag, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTag not implemented")
 }
-func (UnimplementedTagServiceServer) UpdateTag(context.Context, *v1.UpdateTagRequest) (*v1.Tag, error) {
+func (UnimplementedTagServiceServer) UpdateTag(context.Context, *v11.UpdateTagRequest) (*v11.Tag, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateTag not implemented")
 }
-func (UnimplementedTagServiceServer) DeleteTag(context.Context, *v1.DeleteTagRequest) (*emptypb.Empty, error) {
+func (UnimplementedTagServiceServer) DeleteTag(context.Context, *v11.DeleteTagRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTag not implemented")
 }
 func (UnimplementedTagServiceServer) mustEmbedUnimplementedTagServiceServer() {}
@@ -148,7 +148,7 @@ func RegisterTagServiceServer(s grpc.ServiceRegistrar, srv TagServiceServer) {
 }
 
 func _TagService_ListTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(pagination.PagingRequest)
+	in := new(v1.PagingRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -160,13 +160,13 @@ func _TagService_ListTag_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: TagService_ListTag_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TagServiceServer).ListTag(ctx, req.(*pagination.PagingRequest))
+		return srv.(TagServiceServer).ListTag(ctx, req.(*v1.PagingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _TagService_GetTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.GetTagRequest)
+	in := new(v11.GetTagRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -178,13 +178,13 @@ func _TagService_GetTag_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: TagService_GetTag_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TagServiceServer).GetTag(ctx, req.(*v1.GetTagRequest))
+		return srv.(TagServiceServer).GetTag(ctx, req.(*v11.GetTagRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _TagService_CreateTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.CreateTagRequest)
+	in := new(v11.CreateTagRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -196,13 +196,13 @@ func _TagService_CreateTag_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: TagService_CreateTag_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TagServiceServer).CreateTag(ctx, req.(*v1.CreateTagRequest))
+		return srv.(TagServiceServer).CreateTag(ctx, req.(*v11.CreateTagRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _TagService_UpdateTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.UpdateTagRequest)
+	in := new(v11.UpdateTagRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -214,13 +214,13 @@ func _TagService_UpdateTag_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: TagService_UpdateTag_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TagServiceServer).UpdateTag(ctx, req.(*v1.UpdateTagRequest))
+		return srv.(TagServiceServer).UpdateTag(ctx, req.(*v11.UpdateTagRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _TagService_DeleteTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.DeleteTagRequest)
+	in := new(v11.DeleteTagRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -232,7 +232,7 @@ func _TagService_DeleteTag_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: TagService_DeleteTag_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TagServiceServer).DeleteTag(ctx, req.(*v1.DeleteTagRequest))
+		return srv.(TagServiceServer).DeleteTag(ctx, req.(*v11.DeleteTagRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

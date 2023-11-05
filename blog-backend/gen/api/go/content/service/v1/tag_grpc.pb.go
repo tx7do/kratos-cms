@@ -4,15 +4,15 @@
 // - protoc             (unknown)
 // source: content/service/v1/tag.proto
 
-package v1
+package servicev1
 
 import (
 	context "context"
+	v1 "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	pagination "kratos-cms/gen/api/go/common/pagination"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -33,7 +33,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TagServiceClient interface {
 	// 获取标签列表
-	ListTag(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*ListTagResponse, error)
+	ListTag(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*ListTagResponse, error)
 	// 获取标签数据
 	GetTag(ctx context.Context, in *GetTagRequest, opts ...grpc.CallOption) (*Tag, error)
 	// 创建标签
@@ -52,7 +52,7 @@ func NewTagServiceClient(cc grpc.ClientConnInterface) TagServiceClient {
 	return &tagServiceClient{cc}
 }
 
-func (c *tagServiceClient) ListTag(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*ListTagResponse, error) {
+func (c *tagServiceClient) ListTag(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*ListTagResponse, error) {
 	out := new(ListTagResponse)
 	err := c.cc.Invoke(ctx, TagService_ListTag_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -102,7 +102,7 @@ func (c *tagServiceClient) DeleteTag(ctx context.Context, in *DeleteTagRequest, 
 // for forward compatibility
 type TagServiceServer interface {
 	// 获取标签列表
-	ListTag(context.Context, *pagination.PagingRequest) (*ListTagResponse, error)
+	ListTag(context.Context, *v1.PagingRequest) (*ListTagResponse, error)
 	// 获取标签数据
 	GetTag(context.Context, *GetTagRequest) (*Tag, error)
 	// 创建标签
@@ -118,7 +118,7 @@ type TagServiceServer interface {
 type UnimplementedTagServiceServer struct {
 }
 
-func (UnimplementedTagServiceServer) ListTag(context.Context, *pagination.PagingRequest) (*ListTagResponse, error) {
+func (UnimplementedTagServiceServer) ListTag(context.Context, *v1.PagingRequest) (*ListTagResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListTag not implemented")
 }
 func (UnimplementedTagServiceServer) GetTag(context.Context, *GetTagRequest) (*Tag, error) {
@@ -147,7 +147,7 @@ func RegisterTagServiceServer(s grpc.ServiceRegistrar, srv TagServiceServer) {
 }
 
 func _TagService_ListTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(pagination.PagingRequest)
+	in := new(v1.PagingRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -159,7 +159,7 @@ func _TagService_ListTag_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: TagService_ListTag_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TagServiceServer).ListTag(ctx, req.(*pagination.PagingRequest))
+		return srv.(TagServiceServer).ListTag(ctx, req.(*v1.PagingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

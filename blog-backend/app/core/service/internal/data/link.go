@@ -9,22 +9,19 @@ import (
 	entgo "github.com/tx7do/go-utils/entgo/query"
 	util "github.com/tx7do/go-utils/time"
 
-	"kratos-cms/gen/api/go/common/pagination"
-	"kratos-cms/gen/api/go/content/service/v1"
+	pagination "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
+	v1 "kratos-cms/gen/api/go/content/service/v1"
 
-	"kratos-cms/app/core/service/internal/biz"
 	"kratos-cms/app/core/service/internal/data/ent"
 	"kratos-cms/app/core/service/internal/data/ent/link"
 )
-
-var _ biz.LinkRepo = (*LinkRepo)(nil)
 
 type LinkRepo struct {
 	data *Data
 	log  *log.Helper
 }
 
-func NewLinkRepo(data *Data, logger log.Logger) biz.LinkRepo {
+func NewLinkRepo(data *Data, logger log.Logger) *LinkRepo {
 	l := log.NewHelper(log.With(logger, "module", "link/repo/core-service"))
 	return &LinkRepo{
 		data: data,
@@ -66,7 +63,7 @@ func (r *LinkRepo) Count(ctx context.Context, whereCond []func(s *sql.Selector))
 func (r *LinkRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListLinkResponse, error) {
 	builder := r.data.db.Client().Link.Query()
 
-	err, whereSelectors, querySelectors := entgo.BuildQuerySelector(r.data.db.Driver().Dialect(),
+	err, whereSelectors, querySelectors := entgo.BuildQuerySelector(
 		req.GetQuery(), req.GetOrQuery(),
 		req.GetPage(), req.GetPageSize(), req.GetNoPaging(),
 		req.GetOrderBy(), link.FieldCreateTime)

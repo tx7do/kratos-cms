@@ -6,20 +6,20 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"kratos-cms/gen/api/go/common/pagination"
-	v1 "kratos-cms/gen/api/go/content/service/v1"
+	"kratos-cms/app/core/service/internal/data"
 
-	"kratos-cms/app/core/service/internal/biz"
+	pagination "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
+	v1 "kratos-cms/gen/api/go/content/service/v1"
 )
 
 type CategoryService struct {
 	v1.UnimplementedCategoryServiceServer
 
-	uc  *biz.CategoryUseCase
+	uc  *data.CategoryRepo
 	log *log.Helper
 }
 
-func NewCategoryService(logger log.Logger, uc *biz.CategoryUseCase) *CategoryService {
+func NewCategoryService(logger log.Logger, uc *data.CategoryRepo) *CategoryService {
 	l := log.NewHelper(log.With(logger, "module", "category/service/core-service"))
 	return &CategoryService{
 		log: l,

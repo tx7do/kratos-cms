@@ -1,13 +1,13 @@
 syntax = "proto3";
 
 package front.service.v1;
-option go_package = "kratos-cms/gen/api/go/front/service/v1;v1";
+
 
 import "gnostic/openapi/v3/annotations.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 
-import "common/pagination/pagination.proto";
+import "pagination/v1/pagination.proto";
 import "file/service/v1/attachment.proto";
 
 // 附件服务

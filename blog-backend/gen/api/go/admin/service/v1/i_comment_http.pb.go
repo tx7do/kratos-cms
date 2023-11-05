@@ -4,15 +4,15 @@
 // - protoc             (unknown)
 // source: admin/service/v1/i_comment.proto
 
-package v1
+package servicev1
 
 import (
 	context "context"
 	http "github.com/go-kratos/kratos/v2/transport/http"
 	binding "github.com/go-kratos/kratos/v2/transport/http/binding"
+	v1 "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	v1 "kratos-cms/gen/api/go/comment/service/v1"
-	pagination "kratos-cms/gen/api/go/common/pagination"
+	v11 "kratos-cms/gen/api/go/comment/service/v1"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -30,15 +30,15 @@ const OperationCommentServiceUpdateComment = "/admin.service.v1.CommentService/U
 
 type CommentServiceHTTPServer interface {
 	// CreateComment 创建评论
-	CreateComment(context.Context, *v1.CreateCommentRequest) (*v1.Comment, error)
+	CreateComment(context.Context, *v11.CreateCommentRequest) (*v11.Comment, error)
 	// DeleteComment 删除评论
-	DeleteComment(context.Context, *v1.DeleteCommentRequest) (*emptypb.Empty, error)
+	DeleteComment(context.Context, *v11.DeleteCommentRequest) (*emptypb.Empty, error)
 	// GetComment 获取评论数据
-	GetComment(context.Context, *v1.GetCommentRequest) (*v1.Comment, error)
+	GetComment(context.Context, *v11.GetCommentRequest) (*v11.Comment, error)
 	// ListComment 获取评论列表
-	ListComment(context.Context, *pagination.PagingRequest) (*v1.ListCommentResponse, error)
+	ListComment(context.Context, *v1.PagingRequest) (*v11.ListCommentResponse, error)
 	// UpdateComment 更新评论
-	UpdateComment(context.Context, *v1.UpdateCommentRequest) (*v1.Comment, error)
+	UpdateComment(context.Context, *v11.UpdateCommentRequest) (*v11.Comment, error)
 }
 
 func RegisterCommentServiceHTTPServer(s *http.Server, srv CommentServiceHTTPServer) {
@@ -52,26 +52,26 @@ func RegisterCommentServiceHTTPServer(s *http.Server, srv CommentServiceHTTPServ
 
 func _CommentService_ListComment0_HTTP_Handler(srv CommentServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in pagination.PagingRequest
+		var in v1.PagingRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
 		http.SetOperation(ctx, OperationCommentServiceListComment)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.ListComment(ctx, req.(*pagination.PagingRequest))
+			return srv.ListComment(ctx, req.(*v1.PagingRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.ListCommentResponse)
+		reply := out.(*v11.ListCommentResponse)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _CommentService_GetComment0_HTTP_Handler(srv CommentServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.GetCommentRequest
+		var in v11.GetCommentRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -80,20 +80,20 @@ func _CommentService_GetComment0_HTTP_Handler(srv CommentServiceHTTPServer) func
 		}
 		http.SetOperation(ctx, OperationCommentServiceGetComment)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetComment(ctx, req.(*v1.GetCommentRequest))
+			return srv.GetComment(ctx, req.(*v11.GetCommentRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.Comment)
+		reply := out.(*v11.Comment)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _CommentService_CreateComment0_HTTP_Handler(srv CommentServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.CreateCommentRequest
+		var in v11.CreateCommentRequest
 		if err := ctx.Bind(&in); err != nil {
 			return err
 		}
@@ -102,20 +102,20 @@ func _CommentService_CreateComment0_HTTP_Handler(srv CommentServiceHTTPServer) f
 		}
 		http.SetOperation(ctx, OperationCommentServiceCreateComment)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.CreateComment(ctx, req.(*v1.CreateCommentRequest))
+			return srv.CreateComment(ctx, req.(*v11.CreateCommentRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.Comment)
+		reply := out.(*v11.Comment)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _CommentService_UpdateComment0_HTTP_Handler(srv CommentServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.UpdateCommentRequest
+		var in v11.UpdateCommentRequest
 		if err := ctx.Bind(&in.Comment); err != nil {
 			return err
 		}
@@ -127,20 +127,20 @@ func _CommentService_UpdateComment0_HTTP_Handler(srv CommentServiceHTTPServer) f
 		}
 		http.SetOperation(ctx, OperationCommentServiceUpdateComment)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.UpdateComment(ctx, req.(*v1.UpdateCommentRequest))
+			return srv.UpdateComment(ctx, req.(*v11.UpdateCommentRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.Comment)
+		reply := out.(*v11.Comment)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _CommentService_DeleteComment0_HTTP_Handler(srv CommentServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.DeleteCommentRequest
+		var in v11.DeleteCommentRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -149,7 +149,7 @@ func _CommentService_DeleteComment0_HTTP_Handler(srv CommentServiceHTTPServer) f
 		}
 		http.SetOperation(ctx, OperationCommentServiceDeleteComment)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.DeleteComment(ctx, req.(*v1.DeleteCommentRequest))
+			return srv.DeleteComment(ctx, req.(*v11.DeleteCommentRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -161,11 +161,11 @@ func _CommentService_DeleteComment0_HTTP_Handler(srv CommentServiceHTTPServer) f
 }
 
 type CommentServiceHTTPClient interface {
-	CreateComment(ctx context.Context, req *v1.CreateCommentRequest, opts ...http.CallOption) (rsp *v1.Comment, err error)
-	DeleteComment(ctx context.Context, req *v1.DeleteCommentRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
-	GetComment(ctx context.Context, req *v1.GetCommentRequest, opts ...http.CallOption) (rsp *v1.Comment, err error)
-	ListComment(ctx context.Context, req *pagination.PagingRequest, opts ...http.CallOption) (rsp *v1.ListCommentResponse, err error)
-	UpdateComment(ctx context.Context, req *v1.UpdateCommentRequest, opts ...http.CallOption) (rsp *v1.Comment, err error)
+	CreateComment(ctx context.Context, req *v11.CreateCommentRequest, opts ...http.CallOption) (rsp *v11.Comment, err error)
+	DeleteComment(ctx context.Context, req *v11.DeleteCommentRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
+	GetComment(ctx context.Context, req *v11.GetCommentRequest, opts ...http.CallOption) (rsp *v11.Comment, err error)
+	ListComment(ctx context.Context, req *v1.PagingRequest, opts ...http.CallOption) (rsp *v11.ListCommentResponse, err error)
+	UpdateComment(ctx context.Context, req *v11.UpdateCommentRequest, opts ...http.CallOption) (rsp *v11.Comment, err error)
 }
 
 type CommentServiceHTTPClientImpl struct {
@@ -176,8 +176,8 @@ func NewCommentServiceHTTPClient(client *http.Client) CommentServiceHTTPClient {
 	return &CommentServiceHTTPClientImpl{client}
 }
 
-func (c *CommentServiceHTTPClientImpl) CreateComment(ctx context.Context, in *v1.CreateCommentRequest, opts ...http.CallOption) (*v1.Comment, error) {
-	var out v1.Comment
+func (c *CommentServiceHTTPClientImpl) CreateComment(ctx context.Context, in *v11.CreateCommentRequest, opts ...http.CallOption) (*v11.Comment, error) {
+	var out v11.Comment
 	pattern := "/admin/v1/comments"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationCommentServiceCreateComment))
@@ -189,7 +189,7 @@ func (c *CommentServiceHTTPClientImpl) CreateComment(ctx context.Context, in *v1
 	return &out, err
 }
 
-func (c *CommentServiceHTTPClientImpl) DeleteComment(ctx context.Context, in *v1.DeleteCommentRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
+func (c *CommentServiceHTTPClientImpl) DeleteComment(ctx context.Context, in *v11.DeleteCommentRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
 	var out emptypb.Empty
 	pattern := "/admin/v1/comments/{id}"
 	path := binding.EncodeURL(pattern, in, true)
@@ -202,8 +202,8 @@ func (c *CommentServiceHTTPClientImpl) DeleteComment(ctx context.Context, in *v1
 	return &out, err
 }
 
-func (c *CommentServiceHTTPClientImpl) GetComment(ctx context.Context, in *v1.GetCommentRequest, opts ...http.CallOption) (*v1.Comment, error) {
-	var out v1.Comment
+func (c *CommentServiceHTTPClientImpl) GetComment(ctx context.Context, in *v11.GetCommentRequest, opts ...http.CallOption) (*v11.Comment, error) {
+	var out v11.Comment
 	pattern := "/admin/v1/comments/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationCommentServiceGetComment))
@@ -215,8 +215,8 @@ func (c *CommentServiceHTTPClientImpl) GetComment(ctx context.Context, in *v1.Ge
 	return &out, err
 }
 
-func (c *CommentServiceHTTPClientImpl) ListComment(ctx context.Context, in *pagination.PagingRequest, opts ...http.CallOption) (*v1.ListCommentResponse, error) {
-	var out v1.ListCommentResponse
+func (c *CommentServiceHTTPClientImpl) ListComment(ctx context.Context, in *v1.PagingRequest, opts ...http.CallOption) (*v11.ListCommentResponse, error) {
+	var out v11.ListCommentResponse
 	pattern := "/admin/v1/comments"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationCommentServiceListComment))
@@ -228,8 +228,8 @@ func (c *CommentServiceHTTPClientImpl) ListComment(ctx context.Context, in *pagi
 	return &out, err
 }
 
-func (c *CommentServiceHTTPClientImpl) UpdateComment(ctx context.Context, in *v1.UpdateCommentRequest, opts ...http.CallOption) (*v1.Comment, error) {
-	var out v1.Comment
+func (c *CommentServiceHTTPClientImpl) UpdateComment(ctx context.Context, in *v11.UpdateCommentRequest, opts ...http.CallOption) (*v11.Comment, error) {
+	var out v11.Comment
 	pattern := "/admin/v1/comments/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationCommentServiceUpdateComment))

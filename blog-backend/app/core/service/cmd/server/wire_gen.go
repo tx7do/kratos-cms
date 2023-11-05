@@ -11,7 +11,6 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/registry"
 	"github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
-	"kratos-cms/app/core/service/internal/biz"
 	"kratos-cms/app/core/service/internal/data"
 	"kratos-cms/app/core/service/internal/server"
 	"kratos-cms/app/core/service/internal/service"
@@ -20,7 +19,7 @@ import (
 // Injectors from wire.go:
 
 // initApp init kratos application.
-func initApp(logger log.Logger, registrar registry.Registrar, bootstrap *conf.Bootstrap) (*kratos.App, func(), error) {
+func initApp(logger log.Logger, registrar registry.Registrar, bootstrap *v1.Bootstrap) (*kratos.App, func(), error) {
 	entClient := data.NewEntClient(bootstrap, logger)
 	client := data.NewRedisClient(bootstrap, logger)
 	dataData, cleanup, err := data.NewData(entClient, client, logger)
@@ -28,26 +27,19 @@ func initApp(logger log.Logger, registrar registry.Registrar, bootstrap *conf.Bo
 		return nil, nil, err
 	}
 	commentRepo := data.NewCommentRepo(dataData, logger)
-	commentUseCase := biz.NewCommentUseCase(commentRepo, logger)
-	commentService := service.NewCommentService(logger, commentUseCase)
+	commentService := service.NewCommentService(logger, commentRepo)
 	postRepo := data.NewPostRepo(dataData, logger)
-	postUseCase := biz.NewPostUseCase(postRepo, logger)
-	postService := service.NewPostService(logger, postUseCase)
+	postService := service.NewPostService(logger, postRepo)
 	linkRepo := data.NewLinkRepo(dataData, logger)
-	linkUseCase := biz.NewLinkUseCase(linkRepo, logger)
-	linkService := service.NewLinkService(logger, linkUseCase)
+	linkService := service.NewLinkService(logger, linkRepo)
 	categoryRepo := data.NewCategoryRepo(dataData, logger)
-	categoryUseCase := biz.NewCategoryUseCase(categoryRepo, logger)
-	categoryService := service.NewCategoryService(logger, categoryUseCase)
+	categoryService := service.NewCategoryService(logger, categoryRepo)
 	tagRepo := data.NewTagRepo(dataData, logger)
-	tagUseCase := biz.NewTagUseCase(tagRepo, logger)
-	tagService := service.NewTagService(logger, tagUseCase)
+	tagService := service.NewTagService(logger, tagRepo)
 	userRepo := data.NewUserRepo(dataData, logger)
-	userUseCase := biz.NewUserUseCase(userRepo, logger)
-	userService := service.NewUserService(logger, userUseCase)
+	userService := service.NewUserService(logger, userRepo)
 	attachmentRepo := data.NewAttachmentRepo(dataData, logger)
-	attachmentUseCase := biz.NewAttachmentUseCase(attachmentRepo, logger)
-	attachmentService := service.NewAttachmentService(logger, attachmentUseCase)
+	attachmentService := service.NewAttachmentService(logger, attachmentRepo)
 	grpcServer := server.NewGRPCServer(bootstrap, logger, commentService, postService, linkService, categoryService, tagService, userService, attachmentService)
 	app := newApp(logger, registrar, grpcServer)
 	return app, func() {

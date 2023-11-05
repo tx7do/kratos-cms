@@ -9,22 +9,19 @@ import (
 	entgo "github.com/tx7do/go-utils/entgo/query"
 	util "github.com/tx7do/go-utils/time"
 
-	"kratos-cms/app/core/service/internal/biz"
 	"kratos-cms/app/core/service/internal/data/ent"
 	"kratos-cms/app/core/service/internal/data/ent/comment"
 
+	pagination "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	v1 "kratos-cms/gen/api/go/comment/service/v1"
-	"kratos-cms/gen/api/go/common/pagination"
 )
-
-var _ biz.CommentRepo = (*CommentRepo)(nil)
 
 type CommentRepo struct {
 	data *Data
 	log  *log.Helper
 }
 
-func NewCommentRepo(data *Data, logger log.Logger) biz.CommentRepo {
+func NewCommentRepo(data *Data, logger log.Logger) *CommentRepo {
 	l := log.NewHelper(log.With(logger, "module", "comment/repo/core-service"))
 	return &CommentRepo{
 		data: data,
@@ -72,7 +69,7 @@ func (r *CommentRepo) Count(ctx context.Context, whereCond []func(s *sql.Selecto
 func (r *CommentRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListCommentResponse, error) {
 	builder := r.data.db.Client().Comment.Query()
 
-	err, whereSelectors, querySelectors := entgo.BuildQuerySelector(r.data.db.Driver().Dialect(),
+	err, whereSelectors, querySelectors := entgo.BuildQuerySelector(
 		req.GetQuery(), req.GetOrQuery(),
 		req.GetPage(), req.GetPageSize(), req.GetNoPaging(),
 		req.GetOrderBy(), comment.FieldCreateTime)

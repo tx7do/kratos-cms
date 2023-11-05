@@ -10,7 +10,7 @@ import (
 	_ "github.com/lib/pq"
 
 	"github.com/tx7do/kratos-bootstrap"
-	"github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
+	conf "github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
 
 	"kratos-cms/app/core/service/internal/data/ent"
 )

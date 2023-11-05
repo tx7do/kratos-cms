@@ -4,15 +4,15 @@
 // - protoc             (unknown)
 // source: front/service/v1/i_attachment.proto
 
-package v1
+package servicev1
 
 import (
 	context "context"
 	http "github.com/go-kratos/kratos/v2/transport/http"
 	binding "github.com/go-kratos/kratos/v2/transport/http/binding"
+	v1 "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	pagination "kratos-cms/gen/api/go/common/pagination"
-	v1 "kratos-cms/gen/api/go/file/service/v1"
+	v11 "kratos-cms/gen/api/go/file/service/v1"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -30,15 +30,15 @@ const OperationAttachmentServiceUpdateAttachment = "/front.service.v1.Attachment
 
 type AttachmentServiceHTTPServer interface {
 	// CreateAttachment 创建附件
-	CreateAttachment(context.Context, *v1.CreateAttachmentRequest) (*v1.Attachment, error)
+	CreateAttachment(context.Context, *v11.CreateAttachmentRequest) (*v11.Attachment, error)
 	// DeleteAttachment 删除附件
-	DeleteAttachment(context.Context, *v1.DeleteAttachmentRequest) (*emptypb.Empty, error)
+	DeleteAttachment(context.Context, *v11.DeleteAttachmentRequest) (*emptypb.Empty, error)
 	// GetAttachment 获取附件数据
-	GetAttachment(context.Context, *v1.GetAttachmentRequest) (*v1.Attachment, error)
+	GetAttachment(context.Context, *v11.GetAttachmentRequest) (*v11.Attachment, error)
 	// ListAttachment 获取附件列表
-	ListAttachment(context.Context, *pagination.PagingRequest) (*v1.ListAttachmentResponse, error)
+	ListAttachment(context.Context, *v1.PagingRequest) (*v11.ListAttachmentResponse, error)
 	// UpdateAttachment 更新附件
-	UpdateAttachment(context.Context, *v1.UpdateAttachmentRequest) (*v1.Attachment, error)
+	UpdateAttachment(context.Context, *v11.UpdateAttachmentRequest) (*v11.Attachment, error)
 }
 
 func RegisterAttachmentServiceHTTPServer(s *http.Server, srv AttachmentServiceHTTPServer) {
@@ -52,26 +52,26 @@ func RegisterAttachmentServiceHTTPServer(s *http.Server, srv AttachmentServiceHT
 
 func _AttachmentService_ListAttachment0_HTTP_Handler(srv AttachmentServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in pagination.PagingRequest
+		var in v1.PagingRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
 		http.SetOperation(ctx, OperationAttachmentServiceListAttachment)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.ListAttachment(ctx, req.(*pagination.PagingRequest))
+			return srv.ListAttachment(ctx, req.(*v1.PagingRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.ListAttachmentResponse)
+		reply := out.(*v11.ListAttachmentResponse)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _AttachmentService_GetAttachment0_HTTP_Handler(srv AttachmentServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.GetAttachmentRequest
+		var in v11.GetAttachmentRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -80,20 +80,20 @@ func _AttachmentService_GetAttachment0_HTTP_Handler(srv AttachmentServiceHTTPSer
 		}
 		http.SetOperation(ctx, OperationAttachmentServiceGetAttachment)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetAttachment(ctx, req.(*v1.GetAttachmentRequest))
+			return srv.GetAttachment(ctx, req.(*v11.GetAttachmentRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.Attachment)
+		reply := out.(*v11.Attachment)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _AttachmentService_CreateAttachment0_HTTP_Handler(srv AttachmentServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.CreateAttachmentRequest
+		var in v11.CreateAttachmentRequest
 		if err := ctx.Bind(&in); err != nil {
 			return err
 		}
@@ -102,20 +102,20 @@ func _AttachmentService_CreateAttachment0_HTTP_Handler(srv AttachmentServiceHTTP
 		}
 		http.SetOperation(ctx, OperationAttachmentServiceCreateAttachment)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.CreateAttachment(ctx, req.(*v1.CreateAttachmentRequest))
+			return srv.CreateAttachment(ctx, req.(*v11.CreateAttachmentRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.Attachment)
+		reply := out.(*v11.Attachment)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _AttachmentService_UpdateAttachment0_HTTP_Handler(srv AttachmentServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.UpdateAttachmentRequest
+		var in v11.UpdateAttachmentRequest
 		if err := ctx.Bind(&in.Attachment); err != nil {
 			return err
 		}
@@ -127,20 +127,20 @@ func _AttachmentService_UpdateAttachment0_HTTP_Handler(srv AttachmentServiceHTTP
 		}
 		http.SetOperation(ctx, OperationAttachmentServiceUpdateAttachment)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.UpdateAttachment(ctx, req.(*v1.UpdateAttachmentRequest))
+			return srv.UpdateAttachment(ctx, req.(*v11.UpdateAttachmentRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.Attachment)
+		reply := out.(*v11.Attachment)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _AttachmentService_DeleteAttachment0_HTTP_Handler(srv AttachmentServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.DeleteAttachmentRequest
+		var in v11.DeleteAttachmentRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -149,7 +149,7 @@ func _AttachmentService_DeleteAttachment0_HTTP_Handler(srv AttachmentServiceHTTP
 		}
 		http.SetOperation(ctx, OperationAttachmentServiceDeleteAttachment)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.DeleteAttachment(ctx, req.(*v1.DeleteAttachmentRequest))
+			return srv.DeleteAttachment(ctx, req.(*v11.DeleteAttachmentRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -161,11 +161,11 @@ func _AttachmentService_DeleteAttachment0_HTTP_Handler(srv AttachmentServiceHTTP
 }
 
 type AttachmentServiceHTTPClient interface {
-	CreateAttachment(ctx context.Context, req *v1.CreateAttachmentRequest, opts ...http.CallOption) (rsp *v1.Attachment, err error)
-	DeleteAttachment(ctx context.Context, req *v1.DeleteAttachmentRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
-	GetAttachment(ctx context.Context, req *v1.GetAttachmentRequest, opts ...http.CallOption) (rsp *v1.Attachment, err error)
-	ListAttachment(ctx context.Context, req *pagination.PagingRequest, opts ...http.CallOption) (rsp *v1.ListAttachmentResponse, err error)
-	UpdateAttachment(ctx context.Context, req *v1.UpdateAttachmentRequest, opts ...http.CallOption) (rsp *v1.Attachment, err error)
+	CreateAttachment(ctx context.Context, req *v11.CreateAttachmentRequest, opts ...http.CallOption) (rsp *v11.Attachment, err error)
+	DeleteAttachment(ctx context.Context, req *v11.DeleteAttachmentRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
+	GetAttachment(ctx context.Context, req *v11.GetAttachmentRequest, opts ...http.CallOption) (rsp *v11.Attachment, err error)
+	ListAttachment(ctx context.Context, req *v1.PagingRequest, opts ...http.CallOption) (rsp *v11.ListAttachmentResponse, err error)
+	UpdateAttachment(ctx context.Context, req *v11.UpdateAttachmentRequest, opts ...http.CallOption) (rsp *v11.Attachment, err error)
 }
 
 type AttachmentServiceHTTPClientImpl struct {
@@ -176,8 +176,8 @@ func NewAttachmentServiceHTTPClient(client *http.Client) AttachmentServiceHTTPCl
 	return &AttachmentServiceHTTPClientImpl{client}
 }
 
-func (c *AttachmentServiceHTTPClientImpl) CreateAttachment(ctx context.Context, in *v1.CreateAttachmentRequest, opts ...http.CallOption) (*v1.Attachment, error) {
-	var out v1.Attachment
+func (c *AttachmentServiceHTTPClientImpl) CreateAttachment(ctx context.Context, in *v11.CreateAttachmentRequest, opts ...http.CallOption) (*v11.Attachment, error) {
+	var out v11.Attachment
 	pattern := "/blog/v1/attachments"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationAttachmentServiceCreateAttachment))
@@ -189,7 +189,7 @@ func (c *AttachmentServiceHTTPClientImpl) CreateAttachment(ctx context.Context, 
 	return &out, err
 }
 
-func (c *AttachmentServiceHTTPClientImpl) DeleteAttachment(ctx context.Context, in *v1.DeleteAttachmentRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
+func (c *AttachmentServiceHTTPClientImpl) DeleteAttachment(ctx context.Context, in *v11.DeleteAttachmentRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
 	var out emptypb.Empty
 	pattern := "/blog/v1/attachments/{id}"
 	path := binding.EncodeURL(pattern, in, true)
@@ -202,8 +202,8 @@ func (c *AttachmentServiceHTTPClientImpl) DeleteAttachment(ctx context.Context, 
 	return &out, err
 }
 
-func (c *AttachmentServiceHTTPClientImpl) GetAttachment(ctx context.Context, in *v1.GetAttachmentRequest, opts ...http.CallOption) (*v1.Attachment, error) {
-	var out v1.Attachment
+func (c *AttachmentServiceHTTPClientImpl) GetAttachment(ctx context.Context, in *v11.GetAttachmentRequest, opts ...http.CallOption) (*v11.Attachment, error) {
+	var out v11.Attachment
 	pattern := "/blog/v1/attachments/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationAttachmentServiceGetAttachment))
@@ -215,8 +215,8 @@ func (c *AttachmentServiceHTTPClientImpl) GetAttachment(ctx context.Context, in 
 	return &out, err
 }
 
-func (c *AttachmentServiceHTTPClientImpl) ListAttachment(ctx context.Context, in *pagination.PagingRequest, opts ...http.CallOption) (*v1.ListAttachmentResponse, error) {
-	var out v1.ListAttachmentResponse
+func (c *AttachmentServiceHTTPClientImpl) ListAttachment(ctx context.Context, in *v1.PagingRequest, opts ...http.CallOption) (*v11.ListAttachmentResponse, error) {
+	var out v11.ListAttachmentResponse
 	pattern := "/blog/v1/attachments"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationAttachmentServiceListAttachment))
@@ -228,8 +228,8 @@ func (c *AttachmentServiceHTTPClientImpl) ListAttachment(ctx context.Context, in
 	return &out, err
 }
 
-func (c *AttachmentServiceHTTPClientImpl) UpdateAttachment(ctx context.Context, in *v1.UpdateAttachmentRequest, opts ...http.CallOption) (*v1.Attachment, error) {
-	var out v1.Attachment
+func (c *AttachmentServiceHTTPClientImpl) UpdateAttachment(ctx context.Context, in *v11.UpdateAttachmentRequest, opts ...http.CallOption) (*v11.Attachment, error) {
+	var out v11.Attachment
 	pattern := "/blog/v1/attachments/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationAttachmentServiceUpdateAttachment))

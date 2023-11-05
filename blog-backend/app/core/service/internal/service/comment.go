@@ -6,20 +6,20 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"kratos-cms/app/core/service/internal/biz"
+	"kratos-cms/app/core/service/internal/data"
 
+	pagination "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	v1 "kratos-cms/gen/api/go/comment/service/v1"
-	"kratos-cms/gen/api/go/common/pagination"
 )
 
 type CommentService struct {
 	v1.UnimplementedCommentServiceServer
 
-	uc  *biz.CommentUseCase
+	uc  *data.CommentRepo
 	log *log.Helper
 }
 
-func NewCommentService(logger log.Logger, uc *biz.CommentUseCase) *CommentService {
+func NewCommentService(logger log.Logger, uc *data.CommentRepo) *CommentService {
 	l := log.NewHelper(log.With(logger, "module", "service/comment/core-service"))
 	return &CommentService{
 		log: l,

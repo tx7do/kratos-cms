@@ -4,15 +4,15 @@
 // - protoc             (unknown)
 // source: content/service/v1/link.proto
 
-package v1
+package servicev1
 
 import (
 	context "context"
+	v1 "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	pagination "kratos-cms/gen/api/go/common/pagination"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -33,7 +33,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LinkServiceClient interface {
 	// 获取链接列表
-	ListLink(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*ListLinkResponse, error)
+	ListLink(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*ListLinkResponse, error)
 	// 获取链接数据
 	GetLink(ctx context.Context, in *GetLinkRequest, opts ...grpc.CallOption) (*Link, error)
 	// 创建链接
@@ -52,7 +52,7 @@ func NewLinkServiceClient(cc grpc.ClientConnInterface) LinkServiceClient {
 	return &linkServiceClient{cc}
 }
 
-func (c *linkServiceClient) ListLink(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*ListLinkResponse, error) {
+func (c *linkServiceClient) ListLink(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*ListLinkResponse, error) {
 	out := new(ListLinkResponse)
 	err := c.cc.Invoke(ctx, LinkService_ListLink_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -102,7 +102,7 @@ func (c *linkServiceClient) DeleteLink(ctx context.Context, in *DeleteLinkReques
 // for forward compatibility
 type LinkServiceServer interface {
 	// 获取链接列表
-	ListLink(context.Context, *pagination.PagingRequest) (*ListLinkResponse, error)
+	ListLink(context.Context, *v1.PagingRequest) (*ListLinkResponse, error)
 	// 获取链接数据
 	GetLink(context.Context, *GetLinkRequest) (*Link, error)
 	// 创建链接
@@ -118,7 +118,7 @@ type LinkServiceServer interface {
 type UnimplementedLinkServiceServer struct {
 }
 
-func (UnimplementedLinkServiceServer) ListLink(context.Context, *pagination.PagingRequest) (*ListLinkResponse, error) {
+func (UnimplementedLinkServiceServer) ListLink(context.Context, *v1.PagingRequest) (*ListLinkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListLink not implemented")
 }
 func (UnimplementedLinkServiceServer) GetLink(context.Context, *GetLinkRequest) (*Link, error) {
@@ -147,7 +147,7 @@ func RegisterLinkServiceServer(s grpc.ServiceRegistrar, srv LinkServiceServer) {
 }
 
 func _LinkService_ListLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(pagination.PagingRequest)
+	in := new(v1.PagingRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -159,7 +159,7 @@ func _LinkService_ListLink_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: LinkService_ListLink_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LinkServiceServer).ListLink(ctx, req.(*pagination.PagingRequest))
+		return srv.(LinkServiceServer).ListLink(ctx, req.(*v1.PagingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

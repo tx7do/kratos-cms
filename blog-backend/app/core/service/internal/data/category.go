@@ -2,6 +2,7 @@ package data
 
 import (
 	"context"
+	v1 "kratos-cms/gen/api/go/content/service/v1"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
@@ -9,22 +10,18 @@ import (
 	entgo "github.com/tx7do/go-utils/entgo/query"
 	util "github.com/tx7do/go-utils/time"
 
-	"kratos-cms/app/core/service/internal/biz"
 	"kratos-cms/app/core/service/internal/data/ent"
 	"kratos-cms/app/core/service/internal/data/ent/category"
 
-	"kratos-cms/gen/api/go/common/pagination"
-	"kratos-cms/gen/api/go/content/service/v1"
+	pagination "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 )
-
-var _ biz.CategoryRepo = (*CategoryRepo)(nil)
 
 type CategoryRepo struct {
 	data *Data
 	log  *log.Helper
 }
 
-func NewCategoryRepo(data *Data, logger log.Logger) biz.CategoryRepo {
+func NewCategoryRepo(data *Data, logger log.Logger) *CategoryRepo {
 	l := log.NewHelper(log.With(logger, "module", "category/repo/core-service"))
 	return &CategoryRepo{
 		data: data,
@@ -69,7 +66,7 @@ func (r *CategoryRepo) Count(ctx context.Context, whereCond []func(s *sql.Select
 func (r *CategoryRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListCategoryResponse, error) {
 	builder := r.data.db.Client().Category.Query()
 
-	err, whereSelectors, querySelectors := entgo.BuildQuerySelector(r.data.db.Driver().Dialect(),
+	err, whereSelectors, querySelectors := entgo.BuildQuerySelector(
 		req.GetQuery(), req.GetOrQuery(),
 		req.GetPage(), req.GetPageSize(), req.GetNoPaging(),
 		req.GetOrderBy(), category.FieldCreateTime)

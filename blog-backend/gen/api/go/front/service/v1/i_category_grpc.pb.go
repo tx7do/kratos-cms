@@ -4,16 +4,16 @@
 // - protoc             (unknown)
 // source: front/service/v1/i_category.proto
 
-package v1
+package servicev1
 
 import (
 	context "context"
+	v1 "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	pagination "kratos-cms/gen/api/go/common/pagination"
-	v1 "kratos-cms/gen/api/go/content/service/v1"
+	v11 "kratos-cms/gen/api/go/content/service/v1"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -34,15 +34,15 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CategoryServiceClient interface {
 	// 获取类别列表
-	ListCategory(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*v1.ListCategoryResponse, error)
+	ListCategory(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*v11.ListCategoryResponse, error)
 	// 获取类别数据
-	GetCategory(ctx context.Context, in *v1.GetCategoryRequest, opts ...grpc.CallOption) (*v1.Category, error)
+	GetCategory(ctx context.Context, in *v11.GetCategoryRequest, opts ...grpc.CallOption) (*v11.Category, error)
 	// 创建类别
-	CreateCategory(ctx context.Context, in *v1.CreateCategoryRequest, opts ...grpc.CallOption) (*v1.Category, error)
+	CreateCategory(ctx context.Context, in *v11.CreateCategoryRequest, opts ...grpc.CallOption) (*v11.Category, error)
 	// 更新类别
-	UpdateCategory(ctx context.Context, in *v1.UpdateCategoryRequest, opts ...grpc.CallOption) (*v1.Category, error)
+	UpdateCategory(ctx context.Context, in *v11.UpdateCategoryRequest, opts ...grpc.CallOption) (*v11.Category, error)
 	// 删除类别
-	DeleteCategory(ctx context.Context, in *v1.DeleteCategoryRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	DeleteCategory(ctx context.Context, in *v11.DeleteCategoryRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type categoryServiceClient struct {
@@ -53,8 +53,8 @@ func NewCategoryServiceClient(cc grpc.ClientConnInterface) CategoryServiceClient
 	return &categoryServiceClient{cc}
 }
 
-func (c *categoryServiceClient) ListCategory(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*v1.ListCategoryResponse, error) {
-	out := new(v1.ListCategoryResponse)
+func (c *categoryServiceClient) ListCategory(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*v11.ListCategoryResponse, error) {
+	out := new(v11.ListCategoryResponse)
 	err := c.cc.Invoke(ctx, CategoryService_ListCategory_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -62,8 +62,8 @@ func (c *categoryServiceClient) ListCategory(ctx context.Context, in *pagination
 	return out, nil
 }
 
-func (c *categoryServiceClient) GetCategory(ctx context.Context, in *v1.GetCategoryRequest, opts ...grpc.CallOption) (*v1.Category, error) {
-	out := new(v1.Category)
+func (c *categoryServiceClient) GetCategory(ctx context.Context, in *v11.GetCategoryRequest, opts ...grpc.CallOption) (*v11.Category, error) {
+	out := new(v11.Category)
 	err := c.cc.Invoke(ctx, CategoryService_GetCategory_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -71,8 +71,8 @@ func (c *categoryServiceClient) GetCategory(ctx context.Context, in *v1.GetCateg
 	return out, nil
 }
 
-func (c *categoryServiceClient) CreateCategory(ctx context.Context, in *v1.CreateCategoryRequest, opts ...grpc.CallOption) (*v1.Category, error) {
-	out := new(v1.Category)
+func (c *categoryServiceClient) CreateCategory(ctx context.Context, in *v11.CreateCategoryRequest, opts ...grpc.CallOption) (*v11.Category, error) {
+	out := new(v11.Category)
 	err := c.cc.Invoke(ctx, CategoryService_CreateCategory_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -80,8 +80,8 @@ func (c *categoryServiceClient) CreateCategory(ctx context.Context, in *v1.Creat
 	return out, nil
 }
 
-func (c *categoryServiceClient) UpdateCategory(ctx context.Context, in *v1.UpdateCategoryRequest, opts ...grpc.CallOption) (*v1.Category, error) {
-	out := new(v1.Category)
+func (c *categoryServiceClient) UpdateCategory(ctx context.Context, in *v11.UpdateCategoryRequest, opts ...grpc.CallOption) (*v11.Category, error) {
+	out := new(v11.Category)
 	err := c.cc.Invoke(ctx, CategoryService_UpdateCategory_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -89,7 +89,7 @@ func (c *categoryServiceClient) UpdateCategory(ctx context.Context, in *v1.Updat
 	return out, nil
 }
 
-func (c *categoryServiceClient) DeleteCategory(ctx context.Context, in *v1.DeleteCategoryRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *categoryServiceClient) DeleteCategory(ctx context.Context, in *v11.DeleteCategoryRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, CategoryService_DeleteCategory_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -103,15 +103,15 @@ func (c *categoryServiceClient) DeleteCategory(ctx context.Context, in *v1.Delet
 // for forward compatibility
 type CategoryServiceServer interface {
 	// 获取类别列表
-	ListCategory(context.Context, *pagination.PagingRequest) (*v1.ListCategoryResponse, error)
+	ListCategory(context.Context, *v1.PagingRequest) (*v11.ListCategoryResponse, error)
 	// 获取类别数据
-	GetCategory(context.Context, *v1.GetCategoryRequest) (*v1.Category, error)
+	GetCategory(context.Context, *v11.GetCategoryRequest) (*v11.Category, error)
 	// 创建类别
-	CreateCategory(context.Context, *v1.CreateCategoryRequest) (*v1.Category, error)
+	CreateCategory(context.Context, *v11.CreateCategoryRequest) (*v11.Category, error)
 	// 更新类别
-	UpdateCategory(context.Context, *v1.UpdateCategoryRequest) (*v1.Category, error)
+	UpdateCategory(context.Context, *v11.UpdateCategoryRequest) (*v11.Category, error)
 	// 删除类别
-	DeleteCategory(context.Context, *v1.DeleteCategoryRequest) (*emptypb.Empty, error)
+	DeleteCategory(context.Context, *v11.DeleteCategoryRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedCategoryServiceServer()
 }
 
@@ -119,19 +119,19 @@ type CategoryServiceServer interface {
 type UnimplementedCategoryServiceServer struct {
 }
 
-func (UnimplementedCategoryServiceServer) ListCategory(context.Context, *pagination.PagingRequest) (*v1.ListCategoryResponse, error) {
+func (UnimplementedCategoryServiceServer) ListCategory(context.Context, *v1.PagingRequest) (*v11.ListCategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCategory not implemented")
 }
-func (UnimplementedCategoryServiceServer) GetCategory(context.Context, *v1.GetCategoryRequest) (*v1.Category, error) {
+func (UnimplementedCategoryServiceServer) GetCategory(context.Context, *v11.GetCategoryRequest) (*v11.Category, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCategory not implemented")
 }
-func (UnimplementedCategoryServiceServer) CreateCategory(context.Context, *v1.CreateCategoryRequest) (*v1.Category, error) {
+func (UnimplementedCategoryServiceServer) CreateCategory(context.Context, *v11.CreateCategoryRequest) (*v11.Category, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCategory not implemented")
 }
-func (UnimplementedCategoryServiceServer) UpdateCategory(context.Context, *v1.UpdateCategoryRequest) (*v1.Category, error) {
+func (UnimplementedCategoryServiceServer) UpdateCategory(context.Context, *v11.UpdateCategoryRequest) (*v11.Category, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCategory not implemented")
 }
-func (UnimplementedCategoryServiceServer) DeleteCategory(context.Context, *v1.DeleteCategoryRequest) (*emptypb.Empty, error) {
+func (UnimplementedCategoryServiceServer) DeleteCategory(context.Context, *v11.DeleteCategoryRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteCategory not implemented")
 }
 func (UnimplementedCategoryServiceServer) mustEmbedUnimplementedCategoryServiceServer() {}
@@ -148,7 +148,7 @@ func RegisterCategoryServiceServer(s grpc.ServiceRegistrar, srv CategoryServiceS
 }
 
 func _CategoryService_ListCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(pagination.PagingRequest)
+	in := new(v1.PagingRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -160,13 +160,13 @@ func _CategoryService_ListCategory_Handler(srv interface{}, ctx context.Context,
 		FullMethod: CategoryService_ListCategory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CategoryServiceServer).ListCategory(ctx, req.(*pagination.PagingRequest))
+		return srv.(CategoryServiceServer).ListCategory(ctx, req.(*v1.PagingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _CategoryService_GetCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.GetCategoryRequest)
+	in := new(v11.GetCategoryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -178,13 +178,13 @@ func _CategoryService_GetCategory_Handler(srv interface{}, ctx context.Context, 
 		FullMethod: CategoryService_GetCategory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CategoryServiceServer).GetCategory(ctx, req.(*v1.GetCategoryRequest))
+		return srv.(CategoryServiceServer).GetCategory(ctx, req.(*v11.GetCategoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _CategoryService_CreateCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.CreateCategoryRequest)
+	in := new(v11.CreateCategoryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -196,13 +196,13 @@ func _CategoryService_CreateCategory_Handler(srv interface{}, ctx context.Contex
 		FullMethod: CategoryService_CreateCategory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CategoryServiceServer).CreateCategory(ctx, req.(*v1.CreateCategoryRequest))
+		return srv.(CategoryServiceServer).CreateCategory(ctx, req.(*v11.CreateCategoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _CategoryService_UpdateCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.UpdateCategoryRequest)
+	in := new(v11.UpdateCategoryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -214,13 +214,13 @@ func _CategoryService_UpdateCategory_Handler(srv interface{}, ctx context.Contex
 		FullMethod: CategoryService_UpdateCategory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CategoryServiceServer).UpdateCategory(ctx, req.(*v1.UpdateCategoryRequest))
+		return srv.(CategoryServiceServer).UpdateCategory(ctx, req.(*v11.UpdateCategoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _CategoryService_DeleteCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.DeleteCategoryRequest)
+	in := new(v11.DeleteCategoryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -232,7 +232,7 @@ func _CategoryService_DeleteCategory_Handler(srv interface{}, ctx context.Contex
 		FullMethod: CategoryService_DeleteCategory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CategoryServiceServer).DeleteCategory(ctx, req.(*v1.DeleteCategoryRequest))
+		return srv.(CategoryServiceServer).DeleteCategory(ctx, req.(*v11.DeleteCategoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

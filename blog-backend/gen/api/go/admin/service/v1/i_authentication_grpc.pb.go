@@ -4,7 +4,7 @@
 // - protoc             (unknown)
 // source: admin/service/v1/i_authentication.proto
 
-package v1
+package servicev1
 
 import (
 	context "context"

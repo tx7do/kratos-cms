@@ -4,14 +4,14 @@
 // - protoc             (unknown)
 // source: admin/service/v1/i_system.proto
 
-package v1
+package servicev1
 
 import (
 	context "context"
 	http "github.com/go-kratos/kratos/v2/transport/http"
 	binding "github.com/go-kratos/kratos/v2/transport/http/binding"
+	v1 "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	pagination "kratos-cms/gen/api/go/common/pagination"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -35,7 +35,7 @@ type SystemServiceHTTPServer interface {
 	// GetSystem 获取系统设置数据
 	GetSystem(context.Context, *GetSystemRequest) (*System, error)
 	// ListSystem 获取系统设置列表
-	ListSystem(context.Context, *pagination.PagingRequest) (*ListSystemResponse, error)
+	ListSystem(context.Context, *v1.PagingRequest) (*ListSystemResponse, error)
 	// UpdateSystem 更新系统设置
 	UpdateSystem(context.Context, *UpdateSystemRequest) (*System, error)
 }
@@ -51,13 +51,13 @@ func RegisterSystemServiceHTTPServer(s *http.Server, srv SystemServiceHTTPServer
 
 func _SystemService_ListSystem0_HTTP_Handler(srv SystemServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in pagination.PagingRequest
+		var in v1.PagingRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
 		http.SetOperation(ctx, OperationSystemServiceListSystem)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.ListSystem(ctx, req.(*pagination.PagingRequest))
+			return srv.ListSystem(ctx, req.(*v1.PagingRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -163,7 +163,7 @@ type SystemServiceHTTPClient interface {
 	CreateSystem(ctx context.Context, req *CreateSystemRequest, opts ...http.CallOption) (rsp *System, err error)
 	DeleteSystem(ctx context.Context, req *DeleteSystemRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
 	GetSystem(ctx context.Context, req *GetSystemRequest, opts ...http.CallOption) (rsp *System, err error)
-	ListSystem(ctx context.Context, req *pagination.PagingRequest, opts ...http.CallOption) (rsp *ListSystemResponse, err error)
+	ListSystem(ctx context.Context, req *v1.PagingRequest, opts ...http.CallOption) (rsp *ListSystemResponse, err error)
 	UpdateSystem(ctx context.Context, req *UpdateSystemRequest, opts ...http.CallOption) (rsp *System, err error)
 }
 
@@ -214,7 +214,7 @@ func (c *SystemServiceHTTPClientImpl) GetSystem(ctx context.Context, in *GetSyst
 	return &out, err
 }
 
-func (c *SystemServiceHTTPClientImpl) ListSystem(ctx context.Context, in *pagination.PagingRequest, opts ...http.CallOption) (*ListSystemResponse, error) {
+func (c *SystemServiceHTTPClientImpl) ListSystem(ctx context.Context, in *v1.PagingRequest, opts ...http.CallOption) (*ListSystemResponse, error) {
 	var out ListSystemResponse
 	pattern := "/admin/v1/system"
 	path := binding.EncodeURL(pattern, in, true)

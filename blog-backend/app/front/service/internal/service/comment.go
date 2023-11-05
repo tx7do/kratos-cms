@@ -6,8 +6,8 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
 
+	pagination "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	commentV1 "kratos-cms/gen/api/go/comment/service/v1"
-	"kratos-cms/gen/api/go/common/pagination"
 	v1 "kratos-cms/gen/api/go/front/service/v1"
 )
 

@@ -4,15 +4,15 @@
 // - protoc             (unknown)
 // source: front/service/v1/i_link.proto
 
-package v1
+package servicev1
 
 import (
 	context "context"
 	http "github.com/go-kratos/kratos/v2/transport/http"
 	binding "github.com/go-kratos/kratos/v2/transport/http/binding"
+	v1 "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	pagination "kratos-cms/gen/api/go/common/pagination"
-	v1 "kratos-cms/gen/api/go/content/service/v1"
+	v11 "kratos-cms/gen/api/go/content/service/v1"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -30,15 +30,15 @@ const OperationLinkServiceUpdateLink = "/front.service.v1.LinkService/UpdateLink
 
 type LinkServiceHTTPServer interface {
 	// CreateLink 创建链接
-	CreateLink(context.Context, *v1.CreateLinkRequest) (*v1.Link, error)
+	CreateLink(context.Context, *v11.CreateLinkRequest) (*v11.Link, error)
 	// DeleteLink 删除链接
-	DeleteLink(context.Context, *v1.DeleteLinkRequest) (*emptypb.Empty, error)
+	DeleteLink(context.Context, *v11.DeleteLinkRequest) (*emptypb.Empty, error)
 	// GetLink 获取链接数据
-	GetLink(context.Context, *v1.GetLinkRequest) (*v1.Link, error)
+	GetLink(context.Context, *v11.GetLinkRequest) (*v11.Link, error)
 	// ListLink 获取链接列表
-	ListLink(context.Context, *pagination.PagingRequest) (*v1.ListLinkResponse, error)
+	ListLink(context.Context, *v1.PagingRequest) (*v11.ListLinkResponse, error)
 	// UpdateLink 更新链接
-	UpdateLink(context.Context, *v1.UpdateLinkRequest) (*v1.Link, error)
+	UpdateLink(context.Context, *v11.UpdateLinkRequest) (*v11.Link, error)
 }
 
 func RegisterLinkServiceHTTPServer(s *http.Server, srv LinkServiceHTTPServer) {
@@ -52,26 +52,26 @@ func RegisterLinkServiceHTTPServer(s *http.Server, srv LinkServiceHTTPServer) {
 
 func _LinkService_ListLink0_HTTP_Handler(srv LinkServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in pagination.PagingRequest
+		var in v1.PagingRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
 		http.SetOperation(ctx, OperationLinkServiceListLink)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.ListLink(ctx, req.(*pagination.PagingRequest))
+			return srv.ListLink(ctx, req.(*v1.PagingRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.ListLinkResponse)
+		reply := out.(*v11.ListLinkResponse)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _LinkService_GetLink0_HTTP_Handler(srv LinkServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.GetLinkRequest
+		var in v11.GetLinkRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -80,20 +80,20 @@ func _LinkService_GetLink0_HTTP_Handler(srv LinkServiceHTTPServer) func(ctx http
 		}
 		http.SetOperation(ctx, OperationLinkServiceGetLink)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetLink(ctx, req.(*v1.GetLinkRequest))
+			return srv.GetLink(ctx, req.(*v11.GetLinkRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.Link)
+		reply := out.(*v11.Link)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _LinkService_CreateLink0_HTTP_Handler(srv LinkServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.CreateLinkRequest
+		var in v11.CreateLinkRequest
 		if err := ctx.Bind(&in); err != nil {
 			return err
 		}
@@ -102,20 +102,20 @@ func _LinkService_CreateLink0_HTTP_Handler(srv LinkServiceHTTPServer) func(ctx h
 		}
 		http.SetOperation(ctx, OperationLinkServiceCreateLink)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.CreateLink(ctx, req.(*v1.CreateLinkRequest))
+			return srv.CreateLink(ctx, req.(*v11.CreateLinkRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.Link)
+		reply := out.(*v11.Link)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _LinkService_UpdateLink0_HTTP_Handler(srv LinkServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.UpdateLinkRequest
+		var in v11.UpdateLinkRequest
 		if err := ctx.Bind(&in.Link); err != nil {
 			return err
 		}
@@ -127,20 +127,20 @@ func _LinkService_UpdateLink0_HTTP_Handler(srv LinkServiceHTTPServer) func(ctx h
 		}
 		http.SetOperation(ctx, OperationLinkServiceUpdateLink)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.UpdateLink(ctx, req.(*v1.UpdateLinkRequest))
+			return srv.UpdateLink(ctx, req.(*v11.UpdateLinkRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.Link)
+		reply := out.(*v11.Link)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _LinkService_DeleteLink0_HTTP_Handler(srv LinkServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.DeleteLinkRequest
+		var in v11.DeleteLinkRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -149,7 +149,7 @@ func _LinkService_DeleteLink0_HTTP_Handler(srv LinkServiceHTTPServer) func(ctx h
 		}
 		http.SetOperation(ctx, OperationLinkServiceDeleteLink)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.DeleteLink(ctx, req.(*v1.DeleteLinkRequest))
+			return srv.DeleteLink(ctx, req.(*v11.DeleteLinkRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -161,11 +161,11 @@ func _LinkService_DeleteLink0_HTTP_Handler(srv LinkServiceHTTPServer) func(ctx h
 }
 
 type LinkServiceHTTPClient interface {
-	CreateLink(ctx context.Context, req *v1.CreateLinkRequest, opts ...http.CallOption) (rsp *v1.Link, err error)
-	DeleteLink(ctx context.Context, req *v1.DeleteLinkRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
-	GetLink(ctx context.Context, req *v1.GetLinkRequest, opts ...http.CallOption) (rsp *v1.Link, err error)
-	ListLink(ctx context.Context, req *pagination.PagingRequest, opts ...http.CallOption) (rsp *v1.ListLinkResponse, err error)
-	UpdateLink(ctx context.Context, req *v1.UpdateLinkRequest, opts ...http.CallOption) (rsp *v1.Link, err error)
+	CreateLink(ctx context.Context, req *v11.CreateLinkRequest, opts ...http.CallOption) (rsp *v11.Link, err error)
+	DeleteLink(ctx context.Context, req *v11.DeleteLinkRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
+	GetLink(ctx context.Context, req *v11.GetLinkRequest, opts ...http.CallOption) (rsp *v11.Link, err error)
+	ListLink(ctx context.Context, req *v1.PagingRequest, opts ...http.CallOption) (rsp *v11.ListLinkResponse, err error)
+	UpdateLink(ctx context.Context, req *v11.UpdateLinkRequest, opts ...http.CallOption) (rsp *v11.Link, err error)
 }
 
 type LinkServiceHTTPClientImpl struct {
@@ -176,8 +176,8 @@ func NewLinkServiceHTTPClient(client *http.Client) LinkServiceHTTPClient {
 	return &LinkServiceHTTPClientImpl{client}
 }
 
-func (c *LinkServiceHTTPClientImpl) CreateLink(ctx context.Context, in *v1.CreateLinkRequest, opts ...http.CallOption) (*v1.Link, error) {
-	var out v1.Link
+func (c *LinkServiceHTTPClientImpl) CreateLink(ctx context.Context, in *v11.CreateLinkRequest, opts ...http.CallOption) (*v11.Link, error) {
+	var out v11.Link
 	pattern := "/blog/v1/links"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationLinkServiceCreateLink))
@@ -189,7 +189,7 @@ func (c *LinkServiceHTTPClientImpl) CreateLink(ctx context.Context, in *v1.Creat
 	return &out, err
 }
 
-func (c *LinkServiceHTTPClientImpl) DeleteLink(ctx context.Context, in *v1.DeleteLinkRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
+func (c *LinkServiceHTTPClientImpl) DeleteLink(ctx context.Context, in *v11.DeleteLinkRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
 	var out emptypb.Empty
 	pattern := "/blog/v1/links/{id}"
 	path := binding.EncodeURL(pattern, in, true)
@@ -202,8 +202,8 @@ func (c *LinkServiceHTTPClientImpl) DeleteLink(ctx context.Context, in *v1.Delet
 	return &out, err
 }
 
-func (c *LinkServiceHTTPClientImpl) GetLink(ctx context.Context, in *v1.GetLinkRequest, opts ...http.CallOption) (*v1.Link, error) {
-	var out v1.Link
+func (c *LinkServiceHTTPClientImpl) GetLink(ctx context.Context, in *v11.GetLinkRequest, opts ...http.CallOption) (*v11.Link, error) {
+	var out v11.Link
 	pattern := "/blog/v1/links/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationLinkServiceGetLink))
@@ -215,8 +215,8 @@ func (c *LinkServiceHTTPClientImpl) GetLink(ctx context.Context, in *v1.GetLinkR
 	return &out, err
 }
 
-func (c *LinkServiceHTTPClientImpl) ListLink(ctx context.Context, in *pagination.PagingRequest, opts ...http.CallOption) (*v1.ListLinkResponse, error) {
-	var out v1.ListLinkResponse
+func (c *LinkServiceHTTPClientImpl) ListLink(ctx context.Context, in *v1.PagingRequest, opts ...http.CallOption) (*v11.ListLinkResponse, error) {
+	var out v11.ListLinkResponse
 	pattern := "/blog/v1/links"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationLinkServiceListLink))
@@ -228,8 +228,8 @@ func (c *LinkServiceHTTPClientImpl) ListLink(ctx context.Context, in *pagination
 	return &out, err
 }
 
-func (c *LinkServiceHTTPClientImpl) UpdateLink(ctx context.Context, in *v1.UpdateLinkRequest, opts ...http.CallOption) (*v1.Link, error) {
-	var out v1.Link
+func (c *LinkServiceHTTPClientImpl) UpdateLink(ctx context.Context, in *v11.UpdateLinkRequest, opts ...http.CallOption) (*v11.Link, error) {
+	var out v11.Link
 	pattern := "/blog/v1/links/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationLinkServiceUpdateLink))

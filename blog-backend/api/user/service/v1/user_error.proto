@@ -1,7 +1,6 @@
 syntax = "proto3";
 
 package user.service.v1;
-option go_package = "kratos-cms/gen/api/go/user/service/v1;v1";
 
 import "errors/errors.proto";
 

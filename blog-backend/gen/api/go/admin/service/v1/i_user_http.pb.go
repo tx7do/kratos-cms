@@ -4,15 +4,15 @@
 // - protoc             (unknown)
 // source: admin/service/v1/i_user.proto
 
-package v1
+package servicev1
 
 import (
 	context "context"
 	http "github.com/go-kratos/kratos/v2/transport/http"
 	binding "github.com/go-kratos/kratos/v2/transport/http/binding"
+	v1 "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	pagination "kratos-cms/gen/api/go/common/pagination"
-	v1 "kratos-cms/gen/api/go/user/service/v1"
+	v11 "kratos-cms/gen/api/go/user/service/v1"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -30,15 +30,15 @@ const OperationUserServiceUpdateUser = "/admin.service.v1.UserService/UpdateUser
 
 type UserServiceHTTPServer interface {
 	// CreateUser 创建用户
-	CreateUser(context.Context, *v1.CreateUserRequest) (*v1.User, error)
+	CreateUser(context.Context, *v11.CreateUserRequest) (*v11.User, error)
 	// DeleteUser 删除用户
-	DeleteUser(context.Context, *v1.DeleteUserRequest) (*emptypb.Empty, error)
+	DeleteUser(context.Context, *v11.DeleteUserRequest) (*emptypb.Empty, error)
 	// GetUser 获取用户数据
-	GetUser(context.Context, *v1.GetUserRequest) (*v1.User, error)
+	GetUser(context.Context, *v11.GetUserRequest) (*v11.User, error)
 	// ListUser 获取用户列表
-	ListUser(context.Context, *pagination.PagingRequest) (*v1.ListUserResponse, error)
+	ListUser(context.Context, *v1.PagingRequest) (*v11.ListUserResponse, error)
 	// UpdateUser 更新用户
-	UpdateUser(context.Context, *v1.UpdateUserRequest) (*v1.User, error)
+	UpdateUser(context.Context, *v11.UpdateUserRequest) (*v11.User, error)
 }
 
 func RegisterUserServiceHTTPServer(s *http.Server, srv UserServiceHTTPServer) {
@@ -52,26 +52,26 @@ func RegisterUserServiceHTTPServer(s *http.Server, srv UserServiceHTTPServer) {
 
 func _UserService_ListUser0_HTTP_Handler(srv UserServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in pagination.PagingRequest
+		var in v1.PagingRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
 		http.SetOperation(ctx, OperationUserServiceListUser)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.ListUser(ctx, req.(*pagination.PagingRequest))
+			return srv.ListUser(ctx, req.(*v1.PagingRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.ListUserResponse)
+		reply := out.(*v11.ListUserResponse)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _UserService_GetUser0_HTTP_Handler(srv UserServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.GetUserRequest
+		var in v11.GetUserRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -80,20 +80,20 @@ func _UserService_GetUser0_HTTP_Handler(srv UserServiceHTTPServer) func(ctx http
 		}
 		http.SetOperation(ctx, OperationUserServiceGetUser)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GetUser(ctx, req.(*v1.GetUserRequest))
+			return srv.GetUser(ctx, req.(*v11.GetUserRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.User)
+		reply := out.(*v11.User)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _UserService_CreateUser0_HTTP_Handler(srv UserServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.CreateUserRequest
+		var in v11.CreateUserRequest
 		if err := ctx.Bind(&in.User); err != nil {
 			return err
 		}
@@ -102,20 +102,20 @@ func _UserService_CreateUser0_HTTP_Handler(srv UserServiceHTTPServer) func(ctx h
 		}
 		http.SetOperation(ctx, OperationUserServiceCreateUser)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.CreateUser(ctx, req.(*v1.CreateUserRequest))
+			return srv.CreateUser(ctx, req.(*v11.CreateUserRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.User)
+		reply := out.(*v11.User)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _UserService_UpdateUser0_HTTP_Handler(srv UserServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.UpdateUserRequest
+		var in v11.UpdateUserRequest
 		if err := ctx.Bind(&in.User); err != nil {
 			return err
 		}
@@ -127,20 +127,20 @@ func _UserService_UpdateUser0_HTTP_Handler(srv UserServiceHTTPServer) func(ctx h
 		}
 		http.SetOperation(ctx, OperationUserServiceUpdateUser)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.UpdateUser(ctx, req.(*v1.UpdateUserRequest))
+			return srv.UpdateUser(ctx, req.(*v11.UpdateUserRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*v1.User)
+		reply := out.(*v11.User)
 		return ctx.Result(200, reply)
 	}
 }
 
 func _UserService_DeleteUser0_HTTP_Handler(srv UserServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in v1.DeleteUserRequest
+		var in v11.DeleteUserRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
@@ -149,7 +149,7 @@ func _UserService_DeleteUser0_HTTP_Handler(srv UserServiceHTTPServer) func(ctx h
 		}
 		http.SetOperation(ctx, OperationUserServiceDeleteUser)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.DeleteUser(ctx, req.(*v1.DeleteUserRequest))
+			return srv.DeleteUser(ctx, req.(*v11.DeleteUserRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -161,11 +161,11 @@ func _UserService_DeleteUser0_HTTP_Handler(srv UserServiceHTTPServer) func(ctx h
 }
 
 type UserServiceHTTPClient interface {
-	CreateUser(ctx context.Context, req *v1.CreateUserRequest, opts ...http.CallOption) (rsp *v1.User, err error)
-	DeleteUser(ctx context.Context, req *v1.DeleteUserRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
-	GetUser(ctx context.Context, req *v1.GetUserRequest, opts ...http.CallOption) (rsp *v1.User, err error)
-	ListUser(ctx context.Context, req *pagination.PagingRequest, opts ...http.CallOption) (rsp *v1.ListUserResponse, err error)
-	UpdateUser(ctx context.Context, req *v1.UpdateUserRequest, opts ...http.CallOption) (rsp *v1.User, err error)
+	CreateUser(ctx context.Context, req *v11.CreateUserRequest, opts ...http.CallOption) (rsp *v11.User, err error)
+	DeleteUser(ctx context.Context, req *v11.DeleteUserRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
+	GetUser(ctx context.Context, req *v11.GetUserRequest, opts ...http.CallOption) (rsp *v11.User, err error)
+	ListUser(ctx context.Context, req *v1.PagingRequest, opts ...http.CallOption) (rsp *v11.ListUserResponse, err error)
+	UpdateUser(ctx context.Context, req *v11.UpdateUserRequest, opts ...http.CallOption) (rsp *v11.User, err error)
 }
 
 type UserServiceHTTPClientImpl struct {
@@ -176,8 +176,8 @@ func NewUserServiceHTTPClient(client *http.Client) UserServiceHTTPClient {
 	return &UserServiceHTTPClientImpl{client}
 }
 
-func (c *UserServiceHTTPClientImpl) CreateUser(ctx context.Context, in *v1.CreateUserRequest, opts ...http.CallOption) (*v1.User, error) {
-	var out v1.User
+func (c *UserServiceHTTPClientImpl) CreateUser(ctx context.Context, in *v11.CreateUserRequest, opts ...http.CallOption) (*v11.User, error) {
+	var out v11.User
 	pattern := "/admin/v1/users"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationUserServiceCreateUser))
@@ -189,7 +189,7 @@ func (c *UserServiceHTTPClientImpl) CreateUser(ctx context.Context, in *v1.Creat
 	return &out, err
 }
 
-func (c *UserServiceHTTPClientImpl) DeleteUser(ctx context.Context, in *v1.DeleteUserRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
+func (c *UserServiceHTTPClientImpl) DeleteUser(ctx context.Context, in *v11.DeleteUserRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
 	var out emptypb.Empty
 	pattern := "/admin/v1/users/{id}"
 	path := binding.EncodeURL(pattern, in, true)
@@ -202,8 +202,8 @@ func (c *UserServiceHTTPClientImpl) DeleteUser(ctx context.Context, in *v1.Delet
 	return &out, err
 }
 
-func (c *UserServiceHTTPClientImpl) GetUser(ctx context.Context, in *v1.GetUserRequest, opts ...http.CallOption) (*v1.User, error) {
-	var out v1.User
+func (c *UserServiceHTTPClientImpl) GetUser(ctx context.Context, in *v11.GetUserRequest, opts ...http.CallOption) (*v11.User, error) {
+	var out v11.User
 	pattern := "/admin/v1/users/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationUserServiceGetUser))
@@ -215,8 +215,8 @@ func (c *UserServiceHTTPClientImpl) GetUser(ctx context.Context, in *v1.GetUserR
 	return &out, err
 }
 
-func (c *UserServiceHTTPClientImpl) ListUser(ctx context.Context, in *pagination.PagingRequest, opts ...http.CallOption) (*v1.ListUserResponse, error) {
-	var out v1.ListUserResponse
+func (c *UserServiceHTTPClientImpl) ListUser(ctx context.Context, in *v1.PagingRequest, opts ...http.CallOption) (*v11.ListUserResponse, error) {
+	var out v11.ListUserResponse
 	pattern := "/admin/v1/users"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationUserServiceListUser))
@@ -228,8 +228,8 @@ func (c *UserServiceHTTPClientImpl) ListUser(ctx context.Context, in *pagination
 	return &out, err
 }
 
-func (c *UserServiceHTTPClientImpl) UpdateUser(ctx context.Context, in *v1.UpdateUserRequest, opts ...http.CallOption) (*v1.User, error) {
-	var out v1.User
+func (c *UserServiceHTTPClientImpl) UpdateUser(ctx context.Context, in *v11.UpdateUserRequest, opts ...http.CallOption) (*v11.User, error) {
+	var out v11.User
 	pattern := "/admin/v1/users/{id}"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationUserServiceUpdateUser))

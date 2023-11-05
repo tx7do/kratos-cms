@@ -4,15 +4,15 @@
 // - protoc             (unknown)
 // source: content/service/v1/photo.proto
 
-package v1
+package servicev1
 
 import (
 	context "context"
+	v1 "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	pagination "kratos-cms/gen/api/go/common/pagination"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -33,7 +33,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PhotoServiceClient interface {
 	// 获取照片列表
-	ListPhoto(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*ListPhotoResponse, error)
+	ListPhoto(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*ListPhotoResponse, error)
 	// 获取照片数据
 	GetPhoto(ctx context.Context, in *GetPhotoRequest, opts ...grpc.CallOption) (*Photo, error)
 	// 创建照片
@@ -52,7 +52,7 @@ func NewPhotoServiceClient(cc grpc.ClientConnInterface) PhotoServiceClient {
 	return &photoServiceClient{cc}
 }
 
-func (c *photoServiceClient) ListPhoto(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*ListPhotoResponse, error) {
+func (c *photoServiceClient) ListPhoto(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*ListPhotoResponse, error) {
 	out := new(ListPhotoResponse)
 	err := c.cc.Invoke(ctx, PhotoService_ListPhoto_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -102,7 +102,7 @@ func (c *photoServiceClient) DeletePhoto(ctx context.Context, in *DeletePhotoReq
 // for forward compatibility
 type PhotoServiceServer interface {
 	// 获取照片列表
-	ListPhoto(context.Context, *pagination.PagingRequest) (*ListPhotoResponse, error)
+	ListPhoto(context.Context, *v1.PagingRequest) (*ListPhotoResponse, error)
 	// 获取照片数据
 	GetPhoto(context.Context, *GetPhotoRequest) (*Photo, error)
 	// 创建照片
@@ -118,7 +118,7 @@ type PhotoServiceServer interface {
 type UnimplementedPhotoServiceServer struct {
 }
 
-func (UnimplementedPhotoServiceServer) ListPhoto(context.Context, *pagination.PagingRequest) (*ListPhotoResponse, error) {
+func (UnimplementedPhotoServiceServer) ListPhoto(context.Context, *v1.PagingRequest) (*ListPhotoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPhoto not implemented")
 }
 func (UnimplementedPhotoServiceServer) GetPhoto(context.Context, *GetPhotoRequest) (*Photo, error) {
@@ -147,7 +147,7 @@ func RegisterPhotoServiceServer(s grpc.ServiceRegistrar, srv PhotoServiceServer)
 }
 
 func _PhotoService_ListPhoto_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(pagination.PagingRequest)
+	in := new(v1.PagingRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -159,7 +159,7 @@ func _PhotoService_ListPhoto_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: PhotoService_ListPhoto_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PhotoServiceServer).ListPhoto(ctx, req.(*pagination.PagingRequest))
+		return srv.(PhotoServiceServer).ListPhoto(ctx, req.(*v1.PagingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

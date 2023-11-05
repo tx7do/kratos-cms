@@ -9,22 +9,19 @@ import (
 	entgo "github.com/tx7do/go-utils/entgo/query"
 	util "github.com/tx7do/go-utils/time"
 
-	"kratos-cms/app/core/service/internal/biz"
 	"kratos-cms/app/core/service/internal/data/ent"
 	"kratos-cms/app/core/service/internal/data/ent/tag"
 
-	"kratos-cms/gen/api/go/common/pagination"
-	"kratos-cms/gen/api/go/content/service/v1"
+	pagination "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
+	v1 "kratos-cms/gen/api/go/content/service/v1"
 )
-
-var _ biz.TagRepo = (*TagRepo)(nil)
 
 type TagRepo struct {
 	data *Data
 	log  *log.Helper
 }
 
-func NewTagRepo(data *Data, logger log.Logger) biz.TagRepo {
+func NewTagRepo(data *Data, logger log.Logger) *TagRepo {
 	l := log.NewHelper(log.With(logger, "module", "tag/repo/core-service"))
 	return &TagRepo{
 		data: data,
@@ -66,7 +63,7 @@ func (r *TagRepo) Count(ctx context.Context, whereCond []func(s *sql.Selector)) 
 func (r *TagRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListTagResponse, error) {
 	builder := r.data.db.Client().Tag.Query()
 
-	err, whereSelectors, querySelectors := entgo.BuildQuerySelector(r.data.db.Driver().Dialect(),
+	err, whereSelectors, querySelectors := entgo.BuildQuerySelector(
 		req.GetQuery(), req.GetOrQuery(),
 		req.GetPage(), req.GetPageSize(), req.GetNoPaging(),
 		req.GetOrderBy(), tag.FieldCreateTime)

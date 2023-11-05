@@ -15,7 +15,7 @@ import (
 	"github.com/go-kratos/kratos/v2/registry"
 
 	"github.com/tx7do/kratos-bootstrap"
-	"github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
+	conf "github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
 
 	commentV1 "kratos-cms/gen/api/go/comment/service/v1"
 	contentV1 "kratos-cms/gen/api/go/content/service/v1"
@@ -32,43 +32,21 @@ type Data struct {
 
 	authenticator authnEngine.Authenticator
 	authorizer    authzEngine.Engine
-
-	userClient       userV1.UserServiceClient
-	attachmentClient fileV1.AttachmentServiceClient
-	commentClient    commentV1.CommentServiceClient
-	categoryClient   contentV1.CategoryServiceClient
-	linkClient       contentV1.LinkServiceClient
-	postClient       contentV1.PostServiceClient
-	tagClient        contentV1.TagServiceClient
 }
 
 // NewData .
 func NewData(redisClient *redis.Client,
 	authenticator authnEngine.Authenticator,
 	authorizer authzEngine.Engine,
-	userClient userV1.UserServiceClient,
-	attachmentClient fileV1.AttachmentServiceClient,
-	commentClient commentV1.CommentServiceClient,
-	categoryClient contentV1.CategoryServiceClient,
-	linkClient contentV1.LinkServiceClient,
-	postClient contentV1.PostServiceClient,
-	tagClient contentV1.TagServiceClient,
 	logger log.Logger,
 ) (*Data, func(), error) {
 	l := log.NewHelper(log.With(logger, "module", "data/admin-service"))
 
 	d := &Data{
-		rdb:              redisClient,
-		log:              l,
-		authenticator:    authenticator,
-		authorizer:       authorizer,
-		userClient:       userClient,
-		attachmentClient: attachmentClient,
-		commentClient:    commentClient,
-		categoryClient:   categoryClient,
-		linkClient:       linkClient,
-		postClient:       postClient,
-		tagClient:        tagClient,
+		rdb:           redisClient,
+		log:           l,
+		authenticator: authenticator,
+		authorizer:    authorizer,
 	}
 
 	return d, func() {

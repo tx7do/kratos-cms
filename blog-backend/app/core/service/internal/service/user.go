@@ -7,20 +7,20 @@ import (
 	"github.com/tx7do/go-utils/trans"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"kratos-cms/app/core/service/internal/biz"
+	"kratos-cms/app/core/service/internal/data"
 
-	"kratos-cms/gen/api/go/common/pagination"
+	pagination "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	v1 "kratos-cms/gen/api/go/user/service/v1"
 )
 
 type UserService struct {
 	v1.UnimplementedUserServiceServer
 
-	uc  *biz.UserUseCase
+	uc  *data.UserRepo
 	log *log.Helper
 }
 
-func NewUserService(logger log.Logger, uc *biz.UserUseCase) *UserService {
+func NewUserService(logger log.Logger, uc *data.UserRepo) *UserService {
 	l := log.NewHelper(log.With(logger, "module", "user/service/core-service"))
 	return &UserService{
 		log: l,

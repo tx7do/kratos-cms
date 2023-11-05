@@ -18,19 +18,19 @@ import (
 	swaggerUI "github.com/tx7do/kratos-swagger-ui"
 
 	bootstrap "github.com/tx7do/kratos-bootstrap"
-	"github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
+	conf "github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
 
 	"kratos-cms/app/admin/service/cmd/server/assets"
 	"kratos-cms/app/admin/service/internal/service"
 
-	v1 "kratos-cms/gen/api/go/admin/service/v1"
+	adminV1 "kratos-cms/gen/api/go/admin/service/v1"
 	"kratos-cms/pkg/middleware/auth"
 )
 
 // NewWhiteListMatcher 创建jwt白名单
 func newRestWhiteListMatcher() selector.MatchFunc {
 	whiteList := make(map[string]bool)
-	whiteList[v1.OperationAuthenticationServiceLogin] = true
+	whiteList[adminV1.OperationAuthenticationServiceLogin] = true
 	return func(ctx context.Context, operation string) bool {
 		if _, ok := whiteList[operation]; ok {
 			return false
@@ -66,14 +66,14 @@ func NewHTTPServer(
 ) *http.Server {
 	srv := bootstrap.CreateRestServer(cfg, newRestMiddleware(authenticator, authorizer, logger)...)
 
-	v1.RegisterAuthenticationServiceHTTPServer(srv, authnSvc)
-	v1.RegisterPostServiceHTTPServer(srv, postSvc)
-	v1.RegisterCategoryServiceHTTPServer(srv, cateSvc)
-	v1.RegisterTagServiceHTTPServer(srv, tagSvc)
-	v1.RegisterLinkServiceHTTPServer(srv, linkSvc)
-	v1.RegisterUserServiceHTTPServer(srv, userSvc)
-	v1.RegisterAttachmentServiceHTTPServer(srv, attachmentSvc)
-	v1.RegisterCommentServiceHTTPServer(srv, commentSvc)
+	adminV1.RegisterAuthenticationServiceHTTPServer(srv, authnSvc)
+	adminV1.RegisterPostServiceHTTPServer(srv, postSvc)
+	adminV1.RegisterCategoryServiceHTTPServer(srv, cateSvc)
+	adminV1.RegisterTagServiceHTTPServer(srv, tagSvc)
+	adminV1.RegisterLinkServiceHTTPServer(srv, linkSvc)
+	adminV1.RegisterUserServiceHTTPServer(srv, userSvc)
+	adminV1.RegisterAttachmentServiceHTTPServer(srv, attachmentSvc)
+	adminV1.RegisterCommentServiceHTTPServer(srv, commentSvc)
 
 	if cfg.GetServer().GetRest().GetEnableSwagger() {
 		swaggerUI.RegisterSwaggerUIServerWithOption(

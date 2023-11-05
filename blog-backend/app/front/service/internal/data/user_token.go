@@ -8,29 +8,29 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-redis/redis/v8"
+
 	authn "github.com/tx7do/kratos-authn/engine"
 	authnEngine "github.com/tx7do/kratos-authn/engine"
 
-	"kratos-cms/app/front/service/internal/biz"
 	v1 "kratos-cms/gen/api/go/user/service/v1"
 )
 
-type userTokenRepo struct {
+type UserTokenRepo struct {
 	data          *Data
 	log           *log.Helper
 	authenticator authnEngine.Authenticator
 }
 
-func NewUserTokenRepo(data *Data, authenticator authnEngine.Authenticator, logger log.Logger) biz.UserTokenRepo {
+func NewUserTokenRepo(data *Data, authenticator authnEngine.Authenticator, logger log.Logger) *UserTokenRepo {
 	l := log.NewHelper(log.With(logger, "module", "user-token/repo/user-service"))
-	return &userTokenRepo{
+	return &UserTokenRepo{
 		data:          data,
 		log:           l,
 		authenticator: authenticator,
 	}
 }
 
-func (r *userTokenRepo) createAccessJwtToken(_ string, userId uint32) string {
+func (r *UserTokenRepo) createAccessJwtToken(_ string, userId uint32) string {
 	principal := authn.AuthClaims{
 		Subject: strconv.FormatUint(uint64(userId), 10),
 		Scopes:  make(authn.ScopeSet),
@@ -44,7 +44,7 @@ func (r *userTokenRepo) createAccessJwtToken(_ string, userId uint32) string {
 	return signedToken
 }
 
-func (r *userTokenRepo) GenerateToken(ctx context.Context, user *v1.User) (string, error) {
+func (r *UserTokenRepo) GenerateToken(ctx context.Context, user *v1.User) (string, error) {
 	token := r.createAccessJwtToken(user.GetUserName(), user.GetId())
 	if token == "" {
 		return "", errors.New("create token failed")
@@ -58,11 +58,11 @@ func (r *userTokenRepo) GenerateToken(ctx context.Context, user *v1.User) (strin
 	return token, nil
 }
 
-func (r *userTokenRepo) GetToken(ctx context.Context, userId uint32) string {
+func (r *UserTokenRepo) GetToken(ctx context.Context, userId uint32) string {
 	return r.getToken(ctx, userId)
 }
 
-func (r *userTokenRepo) RemoveToken(ctx context.Context, userId uint32) error {
+func (r *UserTokenRepo) RemoveToken(ctx context.Context, userId uint32) error {
 	validToken := r.getToken(ctx, userId)
 	if validToken == "" {
 		return v1.ErrorTokenNotExist("令牌不存在")
@@ -71,7 +71,7 @@ func (r *userTokenRepo) RemoveToken(ctx context.Context, userId uint32) error {
 	return r.deleteToken(ctx, userId)
 }
 
-func (r *userTokenRepo) RemoveUserToken(ctx context.Context, userId uint32) error {
+func (r *UserTokenRepo) RemoveUserToken(ctx context.Context, userId uint32) error {
 	validToken := r.getToken(ctx, userId)
 	if validToken == "" {
 		return v1.ErrorTokenNotExist("令牌不存在")
@@ -82,12 +82,12 @@ func (r *userTokenRepo) RemoveUserToken(ctx context.Context, userId uint32) erro
 
 const userTokenKeyPrefix = "ut_"
 
-func (r *userTokenRepo) setToken(ctx context.Context, userId uint32, token string) error {
+func (r *UserTokenRepo) setToken(ctx context.Context, userId uint32, token string) error {
 	key := fmt.Sprintf("%s%d", userTokenKeyPrefix, userId)
 	return r.data.rdb.Set(ctx, key, token, 0).Err()
 }
 
-func (r *userTokenRepo) getToken(ctx context.Context, userId uint32) string {
+func (r *UserTokenRepo) getToken(ctx context.Context, userId uint32) string {
 	key := fmt.Sprintf("%s%d", userTokenKeyPrefix, userId)
 	result, err := r.data.rdb.Get(ctx, key).Result()
 	if err != nil {
@@ -99,7 +99,7 @@ func (r *userTokenRepo) getToken(ctx context.Context, userId uint32) string {
 	return result
 }
 
-func (r *userTokenRepo) deleteToken(ctx context.Context, userId uint32) error {
+func (r *UserTokenRepo) deleteToken(ctx context.Context, userId uint32) error {
 	key := fmt.Sprintf("%s%d", userTokenKeyPrefix, userId)
 	return r.data.rdb.Del(ctx, key).Err()
 }

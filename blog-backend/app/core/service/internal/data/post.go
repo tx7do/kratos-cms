@@ -9,22 +9,19 @@ import (
 	entgo "github.com/tx7do/go-utils/entgo/query"
 	util "github.com/tx7do/go-utils/time"
 
-	"kratos-cms/app/core/service/internal/biz"
 	"kratos-cms/app/core/service/internal/data/ent"
 	"kratos-cms/app/core/service/internal/data/ent/post"
 
-	"kratos-cms/gen/api/go/common/pagination"
-	"kratos-cms/gen/api/go/content/service/v1"
+	pagination "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
+	v1 "kratos-cms/gen/api/go/content/service/v1"
 )
-
-var _ biz.PostRepo = (*PostRepo)(nil)
 
 type PostRepo struct {
 	data *Data
 	log  *log.Helper
 }
 
-func NewPostRepo(data *Data, logger log.Logger) biz.PostRepo {
+func NewPostRepo(data *Data, logger log.Logger) *PostRepo {
 	l := log.NewHelper(log.With(logger, "module", "post/repo/core-service"))
 	return &PostRepo{
 		data: data,
@@ -81,7 +78,7 @@ func (r *PostRepo) Count(ctx context.Context, whereCond []func(s *sql.Selector))
 func (r *PostRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1.ListPostResponse, error) {
 	builder := r.data.db.Client().Post.Query()
 
-	err, whereSelectors, querySelectors := entgo.BuildQuerySelector(r.data.db.Driver().Dialect(),
+	err, whereSelectors, querySelectors := entgo.BuildQuerySelector(
 		req.GetQuery(), req.GetOrQuery(),
 		req.GetPage(), req.GetPageSize(), req.GetNoPaging(),
 		req.GetOrderBy(), post.FieldCreateTime)

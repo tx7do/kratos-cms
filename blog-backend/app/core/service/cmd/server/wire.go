@@ -14,7 +14,6 @@ import (
 
 	conf "github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
 
-	"kratos-cms/app/core/service/internal/biz"
 	"kratos-cms/app/core/service/internal/data"
 	"kratos-cms/app/core/service/internal/server"
 	"kratos-cms/app/core/service/internal/service"
@@ -22,5 +21,5 @@ import (
 
 // initApp init kratos application.
 func initApp(log.Logger, registry.Registrar, *conf.Bootstrap) (*kratos.App, func(), error) {
-	panic(wire.Build(server.ProviderSet, data.ProviderSet, biz.ProviderSet, service.ProviderSet, newApp))
+	panic(wire.Build(server.ProviderSet, data.ProviderSet, service.ProviderSet, newApp))
 }

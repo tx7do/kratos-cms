@@ -4,15 +4,15 @@
 // - protoc             (unknown)
 // source: content/service/v1/post.proto
 
-package v1
+package servicev1
 
 import (
 	context "context"
+	v1 "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	pagination "kratos-cms/gen/api/go/common/pagination"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -33,7 +33,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PostServiceClient interface {
 	// 获取帖子列表
-	ListPost(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*ListPostResponse, error)
+	ListPost(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*ListPostResponse, error)
 	// 获取帖子数据
 	GetPost(ctx context.Context, in *GetPostRequest, opts ...grpc.CallOption) (*Post, error)
 	// 创建帖子
@@ -52,7 +52,7 @@ func NewPostServiceClient(cc grpc.ClientConnInterface) PostServiceClient {
 	return &postServiceClient{cc}
 }
 
-func (c *postServiceClient) ListPost(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*ListPostResponse, error) {
+func (c *postServiceClient) ListPost(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*ListPostResponse, error) {
 	out := new(ListPostResponse)
 	err := c.cc.Invoke(ctx, PostService_ListPost_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -102,7 +102,7 @@ func (c *postServiceClient) DeletePost(ctx context.Context, in *DeletePostReques
 // for forward compatibility
 type PostServiceServer interface {
 	// 获取帖子列表
-	ListPost(context.Context, *pagination.PagingRequest) (*ListPostResponse, error)
+	ListPost(context.Context, *v1.PagingRequest) (*ListPostResponse, error)
 	// 获取帖子数据
 	GetPost(context.Context, *GetPostRequest) (*Post, error)
 	// 创建帖子
@@ -118,7 +118,7 @@ type PostServiceServer interface {
 type UnimplementedPostServiceServer struct {
 }
 
-func (UnimplementedPostServiceServer) ListPost(context.Context, *pagination.PagingRequest) (*ListPostResponse, error) {
+func (UnimplementedPostServiceServer) ListPost(context.Context, *v1.PagingRequest) (*ListPostResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPost not implemented")
 }
 func (UnimplementedPostServiceServer) GetPost(context.Context, *GetPostRequest) (*Post, error) {
@@ -147,7 +147,7 @@ func RegisterPostServiceServer(s grpc.ServiceRegistrar, srv PostServiceServer) {
 }
 
 func _PostService_ListPost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(pagination.PagingRequest)
+	in := new(v1.PagingRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -159,7 +159,7 @@ func _PostService_ListPost_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: PostService_ListPost_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PostServiceServer).ListPost(ctx, req.(*pagination.PagingRequest))
+		return srv.(PostServiceServer).ListPost(ctx, req.(*v1.PagingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

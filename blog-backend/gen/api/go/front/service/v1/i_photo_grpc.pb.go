@@ -4,16 +4,16 @@
 // - protoc             (unknown)
 // source: front/service/v1/i_photo.proto
 
-package v1
+package servicev1
 
 import (
 	context "context"
+	v1 "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	pagination "kratos-cms/gen/api/go/common/pagination"
-	v1 "kratos-cms/gen/api/go/content/service/v1"
+	v11 "kratos-cms/gen/api/go/content/service/v1"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -34,15 +34,15 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PhotoServiceClient interface {
 	// 获取照片列表
-	ListPhoto(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*v1.ListPhotoResponse, error)
+	ListPhoto(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*v11.ListPhotoResponse, error)
 	// 获取照片数据
-	GetPhoto(ctx context.Context, in *v1.GetPhotoRequest, opts ...grpc.CallOption) (*v1.Photo, error)
+	GetPhoto(ctx context.Context, in *v11.GetPhotoRequest, opts ...grpc.CallOption) (*v11.Photo, error)
 	// 创建照片
-	CreatePhoto(ctx context.Context, in *v1.CreatePhotoRequest, opts ...grpc.CallOption) (*v1.Photo, error)
+	CreatePhoto(ctx context.Context, in *v11.CreatePhotoRequest, opts ...grpc.CallOption) (*v11.Photo, error)
 	// 更新照片
-	UpdatePhoto(ctx context.Context, in *v1.UpdatePhotoRequest, opts ...grpc.CallOption) (*v1.Photo, error)
+	UpdatePhoto(ctx context.Context, in *v11.UpdatePhotoRequest, opts ...grpc.CallOption) (*v11.Photo, error)
 	// 删除照片
-	DeletePhoto(ctx context.Context, in *v1.DeletePhotoRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	DeletePhoto(ctx context.Context, in *v11.DeletePhotoRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type photoServiceClient struct {
@@ -53,8 +53,8 @@ func NewPhotoServiceClient(cc grpc.ClientConnInterface) PhotoServiceClient {
 	return &photoServiceClient{cc}
 }
 
-func (c *photoServiceClient) ListPhoto(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*v1.ListPhotoResponse, error) {
-	out := new(v1.ListPhotoResponse)
+func (c *photoServiceClient) ListPhoto(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*v11.ListPhotoResponse, error) {
+	out := new(v11.ListPhotoResponse)
 	err := c.cc.Invoke(ctx, PhotoService_ListPhoto_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -62,8 +62,8 @@ func (c *photoServiceClient) ListPhoto(ctx context.Context, in *pagination.Pagin
 	return out, nil
 }
 
-func (c *photoServiceClient) GetPhoto(ctx context.Context, in *v1.GetPhotoRequest, opts ...grpc.CallOption) (*v1.Photo, error) {
-	out := new(v1.Photo)
+func (c *photoServiceClient) GetPhoto(ctx context.Context, in *v11.GetPhotoRequest, opts ...grpc.CallOption) (*v11.Photo, error) {
+	out := new(v11.Photo)
 	err := c.cc.Invoke(ctx, PhotoService_GetPhoto_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -71,8 +71,8 @@ func (c *photoServiceClient) GetPhoto(ctx context.Context, in *v1.GetPhotoReques
 	return out, nil
 }
 
-func (c *photoServiceClient) CreatePhoto(ctx context.Context, in *v1.CreatePhotoRequest, opts ...grpc.CallOption) (*v1.Photo, error) {
-	out := new(v1.Photo)
+func (c *photoServiceClient) CreatePhoto(ctx context.Context, in *v11.CreatePhotoRequest, opts ...grpc.CallOption) (*v11.Photo, error) {
+	out := new(v11.Photo)
 	err := c.cc.Invoke(ctx, PhotoService_CreatePhoto_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -80,8 +80,8 @@ func (c *photoServiceClient) CreatePhoto(ctx context.Context, in *v1.CreatePhoto
 	return out, nil
 }
 
-func (c *photoServiceClient) UpdatePhoto(ctx context.Context, in *v1.UpdatePhotoRequest, opts ...grpc.CallOption) (*v1.Photo, error) {
-	out := new(v1.Photo)
+func (c *photoServiceClient) UpdatePhoto(ctx context.Context, in *v11.UpdatePhotoRequest, opts ...grpc.CallOption) (*v11.Photo, error) {
+	out := new(v11.Photo)
 	err := c.cc.Invoke(ctx, PhotoService_UpdatePhoto_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -89,7 +89,7 @@ func (c *photoServiceClient) UpdatePhoto(ctx context.Context, in *v1.UpdatePhoto
 	return out, nil
 }
 
-func (c *photoServiceClient) DeletePhoto(ctx context.Context, in *v1.DeletePhotoRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *photoServiceClient) DeletePhoto(ctx context.Context, in *v11.DeletePhotoRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, PhotoService_DeletePhoto_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -103,15 +103,15 @@ func (c *photoServiceClient) DeletePhoto(ctx context.Context, in *v1.DeletePhoto
 // for forward compatibility
 type PhotoServiceServer interface {
 	// 获取照片列表
-	ListPhoto(context.Context, *pagination.PagingRequest) (*v1.ListPhotoResponse, error)
+	ListPhoto(context.Context, *v1.PagingRequest) (*v11.ListPhotoResponse, error)
 	// 获取照片数据
-	GetPhoto(context.Context, *v1.GetPhotoRequest) (*v1.Photo, error)
+	GetPhoto(context.Context, *v11.GetPhotoRequest) (*v11.Photo, error)
 	// 创建照片
-	CreatePhoto(context.Context, *v1.CreatePhotoRequest) (*v1.Photo, error)
+	CreatePhoto(context.Context, *v11.CreatePhotoRequest) (*v11.Photo, error)
 	// 更新照片
-	UpdatePhoto(context.Context, *v1.UpdatePhotoRequest) (*v1.Photo, error)
+	UpdatePhoto(context.Context, *v11.UpdatePhotoRequest) (*v11.Photo, error)
 	// 删除照片
-	DeletePhoto(context.Context, *v1.DeletePhotoRequest) (*emptypb.Empty, error)
+	DeletePhoto(context.Context, *v11.DeletePhotoRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedPhotoServiceServer()
 }
 
@@ -119,19 +119,19 @@ type PhotoServiceServer interface {
 type UnimplementedPhotoServiceServer struct {
 }
 
-func (UnimplementedPhotoServiceServer) ListPhoto(context.Context, *pagination.PagingRequest) (*v1.ListPhotoResponse, error) {
+func (UnimplementedPhotoServiceServer) ListPhoto(context.Context, *v1.PagingRequest) (*v11.ListPhotoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPhoto not implemented")
 }
-func (UnimplementedPhotoServiceServer) GetPhoto(context.Context, *v1.GetPhotoRequest) (*v1.Photo, error) {
+func (UnimplementedPhotoServiceServer) GetPhoto(context.Context, *v11.GetPhotoRequest) (*v11.Photo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPhoto not implemented")
 }
-func (UnimplementedPhotoServiceServer) CreatePhoto(context.Context, *v1.CreatePhotoRequest) (*v1.Photo, error) {
+func (UnimplementedPhotoServiceServer) CreatePhoto(context.Context, *v11.CreatePhotoRequest) (*v11.Photo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePhoto not implemented")
 }
-func (UnimplementedPhotoServiceServer) UpdatePhoto(context.Context, *v1.UpdatePhotoRequest) (*v1.Photo, error) {
+func (UnimplementedPhotoServiceServer) UpdatePhoto(context.Context, *v11.UpdatePhotoRequest) (*v11.Photo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdatePhoto not implemented")
 }
-func (UnimplementedPhotoServiceServer) DeletePhoto(context.Context, *v1.DeletePhotoRequest) (*emptypb.Empty, error) {
+func (UnimplementedPhotoServiceServer) DeletePhoto(context.Context, *v11.DeletePhotoRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePhoto not implemented")
 }
 func (UnimplementedPhotoServiceServer) mustEmbedUnimplementedPhotoServiceServer() {}
@@ -148,7 +148,7 @@ func RegisterPhotoServiceServer(s grpc.ServiceRegistrar, srv PhotoServiceServer)
 }
 
 func _PhotoService_ListPhoto_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(pagination.PagingRequest)
+	in := new(v1.PagingRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -160,13 +160,13 @@ func _PhotoService_ListPhoto_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: PhotoService_ListPhoto_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PhotoServiceServer).ListPhoto(ctx, req.(*pagination.PagingRequest))
+		return srv.(PhotoServiceServer).ListPhoto(ctx, req.(*v1.PagingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _PhotoService_GetPhoto_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.GetPhotoRequest)
+	in := new(v11.GetPhotoRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -178,13 +178,13 @@ func _PhotoService_GetPhoto_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: PhotoService_GetPhoto_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PhotoServiceServer).GetPhoto(ctx, req.(*v1.GetPhotoRequest))
+		return srv.(PhotoServiceServer).GetPhoto(ctx, req.(*v11.GetPhotoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _PhotoService_CreatePhoto_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.CreatePhotoRequest)
+	in := new(v11.CreatePhotoRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -196,13 +196,13 @@ func _PhotoService_CreatePhoto_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: PhotoService_CreatePhoto_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PhotoServiceServer).CreatePhoto(ctx, req.(*v1.CreatePhotoRequest))
+		return srv.(PhotoServiceServer).CreatePhoto(ctx, req.(*v11.CreatePhotoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _PhotoService_UpdatePhoto_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.UpdatePhotoRequest)
+	in := new(v11.UpdatePhotoRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -214,13 +214,13 @@ func _PhotoService_UpdatePhoto_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: PhotoService_UpdatePhoto_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PhotoServiceServer).UpdatePhoto(ctx, req.(*v1.UpdatePhotoRequest))
+		return srv.(PhotoServiceServer).UpdatePhoto(ctx, req.(*v11.UpdatePhotoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _PhotoService_DeletePhoto_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.DeletePhotoRequest)
+	in := new(v11.DeletePhotoRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -232,7 +232,7 @@ func _PhotoService_DeletePhoto_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: PhotoService_DeletePhoto_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PhotoServiceServer).DeletePhoto(ctx, req.(*v1.DeletePhotoRequest))
+		return srv.(PhotoServiceServer).DeletePhoto(ctx, req.(*v11.DeletePhotoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

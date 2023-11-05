@@ -9,18 +9,16 @@ require (
 	github.com/go-sql-driver/mysql v1.7.1
 	github.com/google/gnostic v0.7.0
 	github.com/google/wire v0.5.0
-	github.com/gosimple/slug v1.13.1
 	github.com/jackc/pgx/v4 v4.18.1
 	github.com/lib/pq v1.10.9
-	github.com/stretchr/testify v1.8.4
-	github.com/tx7do/go-utils v1.1.3
-	github.com/tx7do/go-utils/entgo v1.1.4
+	github.com/tx7do/go-utils v1.1.4
+	github.com/tx7do/go-utils/entgo v1.1.6
 	github.com/tx7do/kratos-authn v1.0.0
 	github.com/tx7do/kratos-authn/engine/jwt v1.0.0
 	github.com/tx7do/kratos-authn/middleware v1.0.0
 	github.com/tx7do/kratos-authz v1.0.0
 	github.com/tx7do/kratos-authz/middleware v1.0.0
-	github.com/tx7do/kratos-bootstrap v0.2.12
+	github.com/tx7do/kratos-bootstrap v0.2.16
 	github.com/tx7do/kratos-swagger-ui v0.0.0-20231027101037-78256951ad49
 	google.golang.org/genproto/googleapis/api v0.0.0-20231030173426-d783a09b4405
 	google.golang.org/grpc v1.59.0
@@ -101,7 +99,6 @@ require (
 	github.com/gorilla/handlers v1.5.1 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
-	github.com/gosimple/unidecode v1.0.1 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.18.0 // indirect
 	github.com/hashicorp/consul/api v1.25.1 // indirect
@@ -153,7 +150,6 @@ require (
 	github.com/philhofer/fwd v1.1.2 // indirect
 	github.com/pierrec/lz4 v2.6.1+incompatible // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/power-devops/perfstat v0.0.0-20221212215047-62379fc7944b // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/rs/xid v1.5.0 // indirect
@@ -162,6 +158,7 @@ require (
 	github.com/shirou/gopsutil/v3 v3.23.9 // indirect
 	github.com/shoenig/go-m1cpu v0.1.6 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
+	github.com/sony/sonyflake v1.2.0 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/spf13/afero v1.10.0 // indirect
 	github.com/spf13/cast v1.5.1 // indirect

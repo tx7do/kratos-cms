@@ -15,7 +15,7 @@ import (
 	"github.com/go-kratos/kratos/v2/registry"
 
 	"github.com/tx7do/kratos-bootstrap"
-	"github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
+	conf "github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
 
 	commentV1 "kratos-cms/gen/api/go/comment/service/v1"
 	contentV1 "kratos-cms/gen/api/go/content/service/v1"

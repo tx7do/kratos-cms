@@ -4,15 +4,15 @@
 // - protoc             (unknown)
 // source: admin/service/v1/i_system.proto
 
-package v1
+package servicev1
 
 import (
 	context "context"
+	v1 "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	pagination "kratos-cms/gen/api/go/common/pagination"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -33,7 +33,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SystemServiceClient interface {
 	// 获取系统设置列表
-	ListSystem(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*ListSystemResponse, error)
+	ListSystem(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*ListSystemResponse, error)
 	// 获取系统设置数据
 	GetSystem(ctx context.Context, in *GetSystemRequest, opts ...grpc.CallOption) (*System, error)
 	// 创建系统设置
@@ -52,7 +52,7 @@ func NewSystemServiceClient(cc grpc.ClientConnInterface) SystemServiceClient {
 	return &systemServiceClient{cc}
 }
 
-func (c *systemServiceClient) ListSystem(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*ListSystemResponse, error) {
+func (c *systemServiceClient) ListSystem(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*ListSystemResponse, error) {
 	out := new(ListSystemResponse)
 	err := c.cc.Invoke(ctx, SystemService_ListSystem_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -102,7 +102,7 @@ func (c *systemServiceClient) DeleteSystem(ctx context.Context, in *DeleteSystem
 // for forward compatibility
 type SystemServiceServer interface {
 	// 获取系统设置列表
-	ListSystem(context.Context, *pagination.PagingRequest) (*ListSystemResponse, error)
+	ListSystem(context.Context, *v1.PagingRequest) (*ListSystemResponse, error)
 	// 获取系统设置数据
 	GetSystem(context.Context, *GetSystemRequest) (*System, error)
 	// 创建系统设置
@@ -118,7 +118,7 @@ type SystemServiceServer interface {
 type UnimplementedSystemServiceServer struct {
 }
 
-func (UnimplementedSystemServiceServer) ListSystem(context.Context, *pagination.PagingRequest) (*ListSystemResponse, error) {
+func (UnimplementedSystemServiceServer) ListSystem(context.Context, *v1.PagingRequest) (*ListSystemResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListSystem not implemented")
 }
 func (UnimplementedSystemServiceServer) GetSystem(context.Context, *GetSystemRequest) (*System, error) {
@@ -147,7 +147,7 @@ func RegisterSystemServiceServer(s grpc.ServiceRegistrar, srv SystemServiceServe
 }
 
 func _SystemService_ListSystem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(pagination.PagingRequest)
+	in := new(v1.PagingRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -159,7 +159,7 @@ func _SystemService_ListSystem_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: SystemService_ListSystem_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SystemServiceServer).ListSystem(ctx, req.(*pagination.PagingRequest))
+		return srv.(SystemServiceServer).ListSystem(ctx, req.(*v1.PagingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

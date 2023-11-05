@@ -4,16 +4,16 @@
 // - protoc             (unknown)
 // source: front/service/v1/i_comment.proto
 
-package v1
+package servicev1
 
 import (
 	context "context"
+	v1 "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	v1 "kratos-cms/gen/api/go/comment/service/v1"
-	pagination "kratos-cms/gen/api/go/common/pagination"
+	v11 "kratos-cms/gen/api/go/comment/service/v1"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -34,15 +34,15 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CommentServiceClient interface {
 	// 获取评论列表
-	ListComment(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*v1.ListCommentResponse, error)
+	ListComment(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*v11.ListCommentResponse, error)
 	// 获取评论数据
-	GetComment(ctx context.Context, in *v1.GetCommentRequest, opts ...grpc.CallOption) (*v1.Comment, error)
+	GetComment(ctx context.Context, in *v11.GetCommentRequest, opts ...grpc.CallOption) (*v11.Comment, error)
 	// 创建评论
-	CreateComment(ctx context.Context, in *v1.CreateCommentRequest, opts ...grpc.CallOption) (*v1.Comment, error)
+	CreateComment(ctx context.Context, in *v11.CreateCommentRequest, opts ...grpc.CallOption) (*v11.Comment, error)
 	// 更新评论
-	UpdateComment(ctx context.Context, in *v1.UpdateCommentRequest, opts ...grpc.CallOption) (*v1.Comment, error)
+	UpdateComment(ctx context.Context, in *v11.UpdateCommentRequest, opts ...grpc.CallOption) (*v11.Comment, error)
 	// 删除评论
-	DeleteComment(ctx context.Context, in *v1.DeleteCommentRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	DeleteComment(ctx context.Context, in *v11.DeleteCommentRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type commentServiceClient struct {
@@ -53,8 +53,8 @@ func NewCommentServiceClient(cc grpc.ClientConnInterface) CommentServiceClient {
 	return &commentServiceClient{cc}
 }
 
-func (c *commentServiceClient) ListComment(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*v1.ListCommentResponse, error) {
-	out := new(v1.ListCommentResponse)
+func (c *commentServiceClient) ListComment(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*v11.ListCommentResponse, error) {
+	out := new(v11.ListCommentResponse)
 	err := c.cc.Invoke(ctx, CommentService_ListComment_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -62,8 +62,8 @@ func (c *commentServiceClient) ListComment(ctx context.Context, in *pagination.P
 	return out, nil
 }
 
-func (c *commentServiceClient) GetComment(ctx context.Context, in *v1.GetCommentRequest, opts ...grpc.CallOption) (*v1.Comment, error) {
-	out := new(v1.Comment)
+func (c *commentServiceClient) GetComment(ctx context.Context, in *v11.GetCommentRequest, opts ...grpc.CallOption) (*v11.Comment, error) {
+	out := new(v11.Comment)
 	err := c.cc.Invoke(ctx, CommentService_GetComment_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -71,8 +71,8 @@ func (c *commentServiceClient) GetComment(ctx context.Context, in *v1.GetComment
 	return out, nil
 }
 
-func (c *commentServiceClient) CreateComment(ctx context.Context, in *v1.CreateCommentRequest, opts ...grpc.CallOption) (*v1.Comment, error) {
-	out := new(v1.Comment)
+func (c *commentServiceClient) CreateComment(ctx context.Context, in *v11.CreateCommentRequest, opts ...grpc.CallOption) (*v11.Comment, error) {
+	out := new(v11.Comment)
 	err := c.cc.Invoke(ctx, CommentService_CreateComment_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -80,8 +80,8 @@ func (c *commentServiceClient) CreateComment(ctx context.Context, in *v1.CreateC
 	return out, nil
 }
 
-func (c *commentServiceClient) UpdateComment(ctx context.Context, in *v1.UpdateCommentRequest, opts ...grpc.CallOption) (*v1.Comment, error) {
-	out := new(v1.Comment)
+func (c *commentServiceClient) UpdateComment(ctx context.Context, in *v11.UpdateCommentRequest, opts ...grpc.CallOption) (*v11.Comment, error) {
+	out := new(v11.Comment)
 	err := c.cc.Invoke(ctx, CommentService_UpdateComment_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -89,7 +89,7 @@ func (c *commentServiceClient) UpdateComment(ctx context.Context, in *v1.UpdateC
 	return out, nil
 }
 
-func (c *commentServiceClient) DeleteComment(ctx context.Context, in *v1.DeleteCommentRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *commentServiceClient) DeleteComment(ctx context.Context, in *v11.DeleteCommentRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, CommentService_DeleteComment_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -103,15 +103,15 @@ func (c *commentServiceClient) DeleteComment(ctx context.Context, in *v1.DeleteC
 // for forward compatibility
 type CommentServiceServer interface {
 	// 获取评论列表
-	ListComment(context.Context, *pagination.PagingRequest) (*v1.ListCommentResponse, error)
+	ListComment(context.Context, *v1.PagingRequest) (*v11.ListCommentResponse, error)
 	// 获取评论数据
-	GetComment(context.Context, *v1.GetCommentRequest) (*v1.Comment, error)
+	GetComment(context.Context, *v11.GetCommentRequest) (*v11.Comment, error)
 	// 创建评论
-	CreateComment(context.Context, *v1.CreateCommentRequest) (*v1.Comment, error)
+	CreateComment(context.Context, *v11.CreateCommentRequest) (*v11.Comment, error)
 	// 更新评论
-	UpdateComment(context.Context, *v1.UpdateCommentRequest) (*v1.Comment, error)
+	UpdateComment(context.Context, *v11.UpdateCommentRequest) (*v11.Comment, error)
 	// 删除评论
-	DeleteComment(context.Context, *v1.DeleteCommentRequest) (*emptypb.Empty, error)
+	DeleteComment(context.Context, *v11.DeleteCommentRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedCommentServiceServer()
 }
 
@@ -119,19 +119,19 @@ type CommentServiceServer interface {
 type UnimplementedCommentServiceServer struct {
 }
 
-func (UnimplementedCommentServiceServer) ListComment(context.Context, *pagination.PagingRequest) (*v1.ListCommentResponse, error) {
+func (UnimplementedCommentServiceServer) ListComment(context.Context, *v1.PagingRequest) (*v11.ListCommentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListComment not implemented")
 }
-func (UnimplementedCommentServiceServer) GetComment(context.Context, *v1.GetCommentRequest) (*v1.Comment, error) {
+func (UnimplementedCommentServiceServer) GetComment(context.Context, *v11.GetCommentRequest) (*v11.Comment, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetComment not implemented")
 }
-func (UnimplementedCommentServiceServer) CreateComment(context.Context, *v1.CreateCommentRequest) (*v1.Comment, error) {
+func (UnimplementedCommentServiceServer) CreateComment(context.Context, *v11.CreateCommentRequest) (*v11.Comment, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateComment not implemented")
 }
-func (UnimplementedCommentServiceServer) UpdateComment(context.Context, *v1.UpdateCommentRequest) (*v1.Comment, error) {
+func (UnimplementedCommentServiceServer) UpdateComment(context.Context, *v11.UpdateCommentRequest) (*v11.Comment, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateComment not implemented")
 }
-func (UnimplementedCommentServiceServer) DeleteComment(context.Context, *v1.DeleteCommentRequest) (*emptypb.Empty, error) {
+func (UnimplementedCommentServiceServer) DeleteComment(context.Context, *v11.DeleteCommentRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteComment not implemented")
 }
 func (UnimplementedCommentServiceServer) mustEmbedUnimplementedCommentServiceServer() {}
@@ -148,7 +148,7 @@ func RegisterCommentServiceServer(s grpc.ServiceRegistrar, srv CommentServiceSer
 }
 
 func _CommentService_ListComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(pagination.PagingRequest)
+	in := new(v1.PagingRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -160,13 +160,13 @@ func _CommentService_ListComment_Handler(srv interface{}, ctx context.Context, d
 		FullMethod: CommentService_ListComment_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CommentServiceServer).ListComment(ctx, req.(*pagination.PagingRequest))
+		return srv.(CommentServiceServer).ListComment(ctx, req.(*v1.PagingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _CommentService_GetComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.GetCommentRequest)
+	in := new(v11.GetCommentRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -178,13 +178,13 @@ func _CommentService_GetComment_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: CommentService_GetComment_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CommentServiceServer).GetComment(ctx, req.(*v1.GetCommentRequest))
+		return srv.(CommentServiceServer).GetComment(ctx, req.(*v11.GetCommentRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _CommentService_CreateComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.CreateCommentRequest)
+	in := new(v11.CreateCommentRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -196,13 +196,13 @@ func _CommentService_CreateComment_Handler(srv interface{}, ctx context.Context,
 		FullMethod: CommentService_CreateComment_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CommentServiceServer).CreateComment(ctx, req.(*v1.CreateCommentRequest))
+		return srv.(CommentServiceServer).CreateComment(ctx, req.(*v11.CreateCommentRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _CommentService_UpdateComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.UpdateCommentRequest)
+	in := new(v11.UpdateCommentRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -214,13 +214,13 @@ func _CommentService_UpdateComment_Handler(srv interface{}, ctx context.Context,
 		FullMethod: CommentService_UpdateComment_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CommentServiceServer).UpdateComment(ctx, req.(*v1.UpdateCommentRequest))
+		return srv.(CommentServiceServer).UpdateComment(ctx, req.(*v11.UpdateCommentRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _CommentService_DeleteComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.DeleteCommentRequest)
+	in := new(v11.DeleteCommentRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -232,7 +232,7 @@ func _CommentService_DeleteComment_Handler(srv interface{}, ctx context.Context,
 		FullMethod: CommentService_DeleteComment_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CommentServiceServer).DeleteComment(ctx, req.(*v1.DeleteCommentRequest))
+		return srv.(CommentServiceServer).DeleteComment(ctx, req.(*v11.DeleteCommentRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

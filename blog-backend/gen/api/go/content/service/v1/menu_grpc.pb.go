@@ -4,15 +4,15 @@
 // - protoc             (unknown)
 // source: content/service/v1/menu.proto
 
-package v1
+package servicev1
 
 import (
 	context "context"
+	v1 "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	pagination "kratos-cms/gen/api/go/common/pagination"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -33,7 +33,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MenuServiceClient interface {
 	// 获取菜单列表
-	ListMenu(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*ListMenuResponse, error)
+	ListMenu(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*ListMenuResponse, error)
 	// 获取菜单数据
 	GetMenu(ctx context.Context, in *GetMenuRequest, opts ...grpc.CallOption) (*Menu, error)
 	// 创建菜单
@@ -52,7 +52,7 @@ func NewMenuServiceClient(cc grpc.ClientConnInterface) MenuServiceClient {
 	return &menuServiceClient{cc}
 }
 
-func (c *menuServiceClient) ListMenu(ctx context.Context, in *pagination.PagingRequest, opts ...grpc.CallOption) (*ListMenuResponse, error) {
+func (c *menuServiceClient) ListMenu(ctx context.Context, in *v1.PagingRequest, opts ...grpc.CallOption) (*ListMenuResponse, error) {
 	out := new(ListMenuResponse)
 	err := c.cc.Invoke(ctx, MenuService_ListMenu_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -102,7 +102,7 @@ func (c *menuServiceClient) DeleteMenu(ctx context.Context, in *DeleteMenuReques
 // for forward compatibility
 type MenuServiceServer interface {
 	// 获取菜单列表
-	ListMenu(context.Context, *pagination.PagingRequest) (*ListMenuResponse, error)
+	ListMenu(context.Context, *v1.PagingRequest) (*ListMenuResponse, error)
 	// 获取菜单数据
 	GetMenu(context.Context, *GetMenuRequest) (*Menu, error)
 	// 创建菜单
@@ -118,7 +118,7 @@ type MenuServiceServer interface {
 type UnimplementedMenuServiceServer struct {
 }
 
-func (UnimplementedMenuServiceServer) ListMenu(context.Context, *pagination.PagingRequest) (*ListMenuResponse, error) {
+func (UnimplementedMenuServiceServer) ListMenu(context.Context, *v1.PagingRequest) (*ListMenuResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListMenu not implemented")
 }
 func (UnimplementedMenuServiceServer) GetMenu(context.Context, *GetMenuRequest) (*Menu, error) {
@@ -147,7 +147,7 @@ func RegisterMenuServiceServer(s grpc.ServiceRegistrar, srv MenuServiceServer) {
 }
 
 func _MenuService_ListMenu_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(pagination.PagingRequest)
+	in := new(v1.PagingRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -159,7 +159,7 @@ func _MenuService_ListMenu_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: MenuService_ListMenu_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MenuServiceServer).ListMenu(ctx, req.(*pagination.PagingRequest))
+		return srv.(MenuServiceServer).ListMenu(ctx, req.(*v1.PagingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
