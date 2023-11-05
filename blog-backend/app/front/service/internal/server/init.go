@@ -1,3 +1,6 @@
+//go:build wireinject
+// +build wireinject
+
 package server
 
 import (
@@ -5,4 +8,6 @@ import (
 )
 
 // ProviderSet is server providers.
-var ProviderSet = wire.NewSet(NewHTTPServer)
+var ProviderSet = wire.NewSet(
+	NewHTTPServer,
+)
