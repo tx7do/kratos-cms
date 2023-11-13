@@ -100,7 +100,7 @@ lint:
 	@golangci-lint run
 
 # build service app
-app: api wire conf ent build
+app: api wire ent build
 
 # show help
 help:
