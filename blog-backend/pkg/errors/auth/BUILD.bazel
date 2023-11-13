@@ -1,9 +1,0 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
-
-go_library(
-    name = "auth",
-    srcs = ["error.go"],
-    importpath = "kratos-cms/pkg/errors/auth",
-    visibility = ["//visibility:public"],
-    deps = ["@com_github_go_kratos_kratos_v2//errors"],
-)

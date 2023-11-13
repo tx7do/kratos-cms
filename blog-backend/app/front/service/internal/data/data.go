@@ -3,7 +3,7 @@ package data
 import (
 	"context"
 
-	"github.com/go-redis/redis/v8"
+	"github.com/redis/go-redis/v9"
 
 	authnEngine "github.com/tx7do/kratos-authn/engine"
 	"github.com/tx7do/kratos-authn/engine/jwt"
@@ -32,43 +32,21 @@ type Data struct {
 
 	authenticator authnEngine.Authenticator
 	authorizer    authzEngine.Engine
-
-	userClient       userV1.UserServiceClient
-	attachmentClient fileV1.AttachmentServiceClient
-	commentClient    commentV1.CommentServiceClient
-	categoryClient   contentV1.CategoryServiceClient
-	linkClient       contentV1.LinkServiceClient
-	postClient       contentV1.PostServiceClient
-	tagClient        contentV1.TagServiceClient
 }
 
 // NewData .
 func NewData(redisClient *redis.Client,
 	authenticator authnEngine.Authenticator,
 	authorizer authzEngine.Engine,
-	userClient userV1.UserServiceClient,
-	attachmentClient fileV1.AttachmentServiceClient,
-	commentClient commentV1.CommentServiceClient,
-	categoryClient contentV1.CategoryServiceClient,
-	linkClient contentV1.LinkServiceClient,
-	postClient contentV1.PostServiceClient,
-	tagClient contentV1.TagServiceClient,
 	logger log.Logger,
 ) (*Data, func(), error) {
 	l := log.NewHelper(log.With(logger, "module", "data/front-service"))
 
 	d := &Data{
-		rdb:              redisClient,
-		log:              l,
-		authenticator:    authenticator,
-		authorizer:       authorizer,
-		userClient:       userClient,
-		attachmentClient: attachmentClient,
-		commentClient:    commentClient,
-		categoryClient:   categoryClient,
-		linkClient:       linkClient,
-		postClient:       postClient,
-		tagClient:        tagClient,
+		rdb:           redisClient,
+		log:           l,
+		authenticator: authenticator,
+		authorizer:    authorizer,
 	}
 
 	return d, func() {
@@ -80,7 +58,7 @@ func NewData(redisClient *redis.Client,
 }
 
 // NewRedisClient 创建Redis客户端
-func NewRedisClient(cfg *conf.Bootstrap, logger log.Logger) *redis.Client {
+func NewRedisClient(cfg *conf.Bootstrap, _ log.Logger) *redis.Client {
 	//l := log.NewHelper(log.With(logger, "module", "redis/data/front-service"))
 	return bootstrap.NewRedisClient(cfg.Data)
 }

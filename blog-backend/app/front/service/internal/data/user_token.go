@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/go-redis/redis/v8"
+	"github.com/redis/go-redis/v9"
 
 	authn "github.com/tx7do/kratos-authn/engine"
 	authnEngine "github.com/tx7do/kratos-authn/engine"

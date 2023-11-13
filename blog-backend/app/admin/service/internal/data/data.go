@@ -3,7 +3,7 @@ package data
 import (
 	"context"
 
-	"github.com/go-redis/redis/v8"
+	"github.com/redis/go-redis/v9"
 
 	authnEngine "github.com/tx7do/kratos-authn/engine"
 	"github.com/tx7do/kratos-authn/engine/jwt"
@@ -58,7 +58,7 @@ func NewData(redisClient *redis.Client,
 }
 
 // NewRedisClient 创建Redis客户端
-func NewRedisClient(cfg *conf.Bootstrap, logger log.Logger) *redis.Client {
+func NewRedisClient(cfg *conf.Bootstrap, _ log.Logger) *redis.Client {
 	//l := log.NewHelper(log.With(logger, "module", "redis/data/admin-service"))
 	return bootstrap.NewRedisClient(cfg.Data)
 }
