@@ -6,8 +6,9 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/go-kratos/kratos/v2/log"
+
 	entgo "github.com/tx7do/go-utils/entgo/query"
-	util "github.com/tx7do/go-utils/time"
+	util "github.com/tx7do/go-utils/timeutil"
 
 	"kratos-cms/app/core/service/internal/data/ent"
 	"kratos-cms/app/core/service/internal/data/ent/post"
@@ -81,7 +82,9 @@ func (r *PostRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 	err, whereSelectors, querySelectors := entgo.BuildQuerySelector(
 		req.GetQuery(), req.GetOrQuery(),
 		req.GetPage(), req.GetPageSize(), req.GetNoPaging(),
-		req.GetOrderBy(), post.FieldCreateTime)
+		req.GetOrderBy(), post.FieldCreateTime,
+		req.GetFieldMask().GetPaths(),
+	)
 	if err != nil {
 		r.log.Errorf("解析条件发生错误[%s]", err.Error())
 		return nil, err

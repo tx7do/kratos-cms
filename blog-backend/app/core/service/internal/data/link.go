@@ -6,14 +6,15 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/go-kratos/kratos/v2/log"
-	entgo "github.com/tx7do/go-utils/entgo/query"
-	util "github.com/tx7do/go-utils/time"
 
-	pagination "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
-	v1 "kratos-cms/gen/api/go/content/service/v1"
+	entgo "github.com/tx7do/go-utils/entgo/query"
+	util "github.com/tx7do/go-utils/timeutil"
 
 	"kratos-cms/app/core/service/internal/data/ent"
 	"kratos-cms/app/core/service/internal/data/ent/link"
+
+	pagination "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
+	v1 "kratos-cms/gen/api/go/content/service/v1"
 )
 
 type LinkRepo struct {
@@ -66,7 +67,9 @@ func (r *LinkRepo) List(ctx context.Context, req *pagination.PagingRequest) (*v1
 	err, whereSelectors, querySelectors := entgo.BuildQuerySelector(
 		req.GetQuery(), req.GetOrQuery(),
 		req.GetPage(), req.GetPageSize(), req.GetNoPaging(),
-		req.GetOrderBy(), link.FieldCreateTime)
+		req.GetOrderBy(), link.FieldCreateTime,
+		req.GetFieldMask().GetPaths(),
+	)
 	if err != nil {
 		r.log.Errorf("解析条件发生错误[%s]", err.Error())
 		return nil, err

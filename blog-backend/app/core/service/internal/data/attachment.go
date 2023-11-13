@@ -5,10 +5,10 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
-
 	"github.com/go-kratos/kratos/v2/log"
+
 	entgo "github.com/tx7do/go-utils/entgo/query"
-	util "github.com/tx7do/go-utils/time"
+	util "github.com/tx7do/go-utils/timeutil"
 
 	"kratos-cms/app/core/service/internal/data/ent"
 	"kratos-cms/app/core/service/internal/data/ent/attachment"
@@ -71,7 +71,9 @@ func (r *AttachmentRepo) List(ctx context.Context, req *pagination.PagingRequest
 	err, whereSelectors, querySelectors := entgo.BuildQuerySelector(
 		req.GetQuery(), req.GetOrQuery(),
 		req.GetPage(), req.GetPageSize(), req.GetNoPaging(),
-		req.GetOrderBy(), attachment.FieldCreateTime)
+		req.GetOrderBy(), attachment.FieldCreateTime,
+		req.GetFieldMask().GetPaths(),
+	)
 	if err != nil {
 		r.log.Errorf("解析条件发生错误[%s]", err.Error())
 		return nil, err

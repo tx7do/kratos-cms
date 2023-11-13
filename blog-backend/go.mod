@@ -11,8 +11,8 @@ require (
 	github.com/jackc/pgx/v4 v4.18.1
 	github.com/lib/pq v1.10.9
 	github.com/redis/go-redis/v9 v9.3.0
-	github.com/tx7do/go-utils v1.1.4
-	github.com/tx7do/go-utils/entgo v1.1.6
+	github.com/tx7do/go-utils v1.1.8
+	github.com/tx7do/go-utils/entgo v1.1.10
 	github.com/tx7do/kratos-authn v1.0.0
 	github.com/tx7do/kratos-authn/engine/jwt v1.0.0
 	github.com/tx7do/kratos-authn/middleware v1.0.0
