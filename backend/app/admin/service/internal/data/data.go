@@ -22,6 +22,7 @@ import (
 	fileV1 "kratos-cms/gen/api/go/file/service/v1"
 	userV1 "kratos-cms/gen/api/go/user/service/v1"
 
+	"kratos-cms/pkg/cache"
 	"kratos-cms/pkg/service"
 )
 
@@ -80,6 +81,14 @@ func NewAuthenticator(cfg *conf.Bootstrap) authnEngine.Authenticator {
 // NewAuthorizer 创建权鉴器
 func NewAuthorizer() authzEngine.Engine {
 	return noop.State{}
+}
+
+func NewUserTokenRepo(data *Data, authenticator authnEngine.Authenticator, logger log.Logger) *cache.UserToken {
+	const (
+		userAccessTokenKeyPrefix  = "admin_uat_"
+		userRefreshTokenKeyPrefix = "admin_urt_"
+	)
+	return cache.NewUserToken(data.rdb, authenticator, logger, userAccessTokenKeyPrefix, userRefreshTokenKeyPrefix)
 }
 
 func NewUserServiceClient(r registry.Discovery, c *conf.Bootstrap) userV1.UserServiceClient {

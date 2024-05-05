@@ -29,8 +29,8 @@ func initApp(logger log.Logger, registrar registry.Registrar, bootstrap *v1.Boot
 	if err != nil {
 		return nil, nil, err
 	}
-	userTokenRepo := data.NewUserTokenRepo(dataData, authenticator, logger)
-	authenticationService := service.NewAuthenticationService(logger, userServiceClient, userTokenRepo)
+	userToken := data.NewUserTokenRepo(dataData, authenticator, logger)
+	authenticationService := service.NewAuthenticationService(logger, userServiceClient, userToken)
 	userService := service.NewUserService(logger, userServiceClient)
 	postServiceClient := data.NewPostServiceClient(discovery, bootstrap)
 	postService := service.NewPostService(logger, postServiceClient)
