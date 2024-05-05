@@ -7,33 +7,33 @@
 
 ## 项目结构
 
-| 子项目名 | 项目路径                                                                                   |
-|------|----------------------------------------------------------------------------------------|
-| 后端   | [/blog-backend](https://github.com/tx7do/kratos-blog/tree/main/blog-backend)           |
-| 管理前端 | [/blog-admin](https://github.com/tx7do/kratos-blog/tree/main/blog-frontend/blog-admin) |
-| 展现前端 | [/blog-view](https://github.com/tx7do/kratos-blog/tree/main/blog-frontend/blog-view)   |
+| 子项目名 | 项目路径                                                                    |
+|------|-------------------------------------------------------------------------|
+| 后端   | [/backend](https://github.com/tx7do/kratos-blog/tree/main/backend)      |
+| 管理前端 | [/admin](https://github.com/tx7do/kratos-blog/tree/main/frontend/admin) |
+| 展现前端 | [/view](https://github.com/tx7do/kratos-blog/tree/main/rontend/app)     |
 
 ## 管理后台截图
 
 - 登陆界面
 
-![登陆界面](./blog-frontend/blog-admin/docs/kratos-blog-login.png)
+![登陆界面](./frontend/admin/docs/kratos-blog-login.png)
 
 - 分析页面
 
-![分析页面](./blog-frontend/blog-admin/docs/kratos-blog-analysis.png)
+![分析页面](./frontend/admin/docs/kratos-blog-analysis.png)
 
 - 博文列表
 
-![博文列表](./blog-frontend/blog-admin/docs/kratos-blog-posts.png)
+![博文列表](./frontend/admin/docs/kratos-blog-posts.png)
 
 - 写文章
 
-![写文章](./blog-frontend/blog-admin/docs/kratos-blog-write-post.png)
+![写文章](./frontend/admin/docs/kratos-blog-write-post.png)
 
 - 评论列表
 
-![评论列表](./blog-frontend/blog-admin/docs/kratos-blog-comments.png)
+![评论列表](./frontend/admin/docs/kratos-blog-comments.png)
 
 ## 博客基本功能设计要点
 
