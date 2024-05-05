@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package front.service.v1;
 
-
 import "gnostic/openapi/v3/annotations.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
@@ -17,20 +16,12 @@ service CommentService {
     option (google.api.http) = {
       get: "/blog/v1/comments"
     };
-
-    option(gnostic.openapi.v3.operation) = {
-      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
-    };
   }
 
   // 获取评论数据
   rpc GetComment (comment.service.v1.GetCommentRequest) returns (comment.service.v1.Comment) {
     option (google.api.http) = {
       get: "/blog/v1/comments/{id}"
-    };
-
-    option(gnostic.openapi.v3.operation) = {
-      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
     };
   }
 
@@ -40,10 +31,6 @@ service CommentService {
       post: "/blog/v1/comments"
       body: "*"
     };
-
-    option(gnostic.openapi.v3.operation) = {
-      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
-    };
   }
 
   // 更新评论
@@ -52,20 +39,12 @@ service CommentService {
       put: "/blog/v1/comments/{id}"
       body: "comment"
     };
-
-    option(gnostic.openapi.v3.operation) = {
-      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
-    };
   }
 
   // 删除评论
   rpc DeleteComment (comment.service.v1.DeleteCommentRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/blog/v1/comments/{id}"
-    };
-
-    option(gnostic.openapi.v3.operation) = {
-      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
     };
   }
 }

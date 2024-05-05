@@ -21,6 +21,17 @@ option (gnostic.openapi.v3.document) = {
       url: "https://github.com/tx7do/kratos-cms/blob/master/LICENSE";
     }
   }
+
+  security: [
+    {
+      additional_properties: [
+        {
+          name: "OAuth2PasswordBearer"; value: {}
+        }
+      ]
+    }
+  ]
+
   components: {
     security_schemes: {
       additional_properties: [
@@ -32,6 +43,7 @@ option (gnostic.openapi.v3.document) = {
               flows: {
                 password: {
                   token_url: "/admin/v1/login";
+                  refresh_url: "/admin/v1/refresh_token";
                   scopes: {}
                 }
               }

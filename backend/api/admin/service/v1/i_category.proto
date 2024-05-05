@@ -17,20 +17,12 @@ service CategoryService {
     option (google.api.http) = {
       get: "/admin/v1/categories"
     };
-
-    option(gnostic.openapi.v3.operation) = {
-      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
-    };
   }
 
   // 获取类别数据
   rpc GetCategory (content.service.v1.GetCategoryRequest) returns (content.service.v1.Category) {
     option (google.api.http) = {
       get: "/admin/v1/categories/{id}"
-    };
-
-    option(gnostic.openapi.v3.operation) = {
-      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
     };
   }
 
@@ -40,10 +32,6 @@ service CategoryService {
       post: "/admin/v1/categories"
       body: "*"
     };
-
-    option(gnostic.openapi.v3.operation) = {
-      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
-    };
   }
 
   // 更新类别
@@ -52,20 +40,12 @@ service CategoryService {
       put: "/admin/v1/categories/{id}"
       body: "category"
     };
-
-    option(gnostic.openapi.v3.operation) = {
-      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
-    };
   }
 
   // 删除类别
   rpc DeleteCategory (content.service.v1.DeleteCategoryRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/admin/v1/categories/{id}"
-    };
-
-    option(gnostic.openapi.v3.operation) = {
-      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
     };
   }
 }

@@ -68,8 +68,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ListAttachmentResponse'
-            security:
-                - OAuth2PasswordBearer: []
         post:
             tags:
                 - AttachmentService
@@ -88,8 +86,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Attachment'
-            security:
-                - OAuth2PasswordBearer: []
     /blog/v1/attachments/{id}:
         get:
             tags:
@@ -110,8 +106,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Attachment'
-            security:
-                - OAuth2PasswordBearer: []
         put:
             tags:
                 - AttachmentService
@@ -142,8 +136,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Attachment'
-            security:
-                - OAuth2PasswordBearer: []
         delete:
             tags:
                 - AttachmentService
@@ -165,8 +157,6 @@ paths:
                 "200":
                     description: OK
                     content: {}
-            security:
-                - OAuth2PasswordBearer: []
     /blog/v1/categories:
         get:
             tags:
@@ -221,8 +211,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ListCategoryResponse'
-            security:
-                - OAuth2PasswordBearer: []
         post:
             tags:
                 - CategoryService
@@ -241,8 +229,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Category'
-            security:
-                - OAuth2PasswordBearer: []
     /blog/v1/categories/{id}:
         get:
             tags:
@@ -268,8 +254,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Category'
-            security:
-                - OAuth2PasswordBearer: []
         put:
             tags:
                 - CategoryService
@@ -300,8 +284,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Category'
-            security:
-                - OAuth2PasswordBearer: []
         delete:
             tags:
                 - CategoryService
@@ -323,8 +305,6 @@ paths:
                 "200":
                     description: OK
                     content: {}
-            security:
-                - OAuth2PasswordBearer: []
     /blog/v1/comments:
         get:
             tags:
@@ -379,8 +359,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ListCommentResponse'
-            security:
-                - OAuth2PasswordBearer: []
         post:
             tags:
                 - CommentService
@@ -399,8 +377,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Comment'
-            security:
-                - OAuth2PasswordBearer: []
     /blog/v1/comments/{id}:
         get:
             tags:
@@ -421,8 +397,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Comment'
-            security:
-                - OAuth2PasswordBearer: []
         put:
             tags:
                 - CommentService
@@ -453,8 +427,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Comment'
-            security:
-                - OAuth2PasswordBearer: []
         delete:
             tags:
                 - CommentService
@@ -476,8 +448,6 @@ paths:
                 "200":
                     description: OK
                     content: {}
-            security:
-                - OAuth2PasswordBearer: []
     /blog/v1/links:
         get:
             tags:
@@ -532,8 +502,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ListLinkResponse'
-            security:
-                - OAuth2PasswordBearer: []
         post:
             tags:
                 - LinkService
@@ -552,8 +520,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Link'
-            security:
-                - OAuth2PasswordBearer: []
     /blog/v1/links/{id}:
         get:
             tags:
@@ -574,8 +540,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Link'
-            security:
-                - OAuth2PasswordBearer: []
         put:
             tags:
                 - LinkService
@@ -606,8 +570,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Link'
-            security:
-                - OAuth2PasswordBearer: []
         delete:
             tags:
                 - LinkService
@@ -629,8 +591,6 @@ paths:
                 "200":
                     description: OK
                     content: {}
-            security:
-                - OAuth2PasswordBearer: []
     /blog/v1/login:
         post:
             tags:
@@ -650,6 +610,8 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/LoginResponse'
+            security:
+                - {}
     /blog/v1/logout:
         post:
             tags:
@@ -666,8 +628,6 @@ paths:
                 "200":
                     description: OK
                     content: {}
-            security:
-                - OAuth2PasswordBearer: []
     /blog/v1/me:
         get:
             tags:
@@ -687,8 +647,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/User'
-            security:
-                - OAuth2PasswordBearer: []
     /blog/v1/menus:
         get:
             tags:
@@ -743,8 +701,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ListMenuResponse'
-            security:
-                - OAuth2PasswordBearer: []
         post:
             tags:
                 - MenuService
@@ -763,8 +719,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Menu'
-            security:
-                - OAuth2PasswordBearer: []
     /blog/v1/menus/{id}:
         get:
             tags:
@@ -785,8 +739,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Menu'
-            security:
-                - OAuth2PasswordBearer: []
         put:
             tags:
                 - MenuService
@@ -817,8 +769,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Menu'
-            security:
-                - OAuth2PasswordBearer: []
         delete:
             tags:
                 - MenuService
@@ -840,8 +790,6 @@ paths:
                 "200":
                     description: OK
                     content: {}
-            security:
-                - OAuth2PasswordBearer: []
     /blog/v1/photos:
         get:
             tags:
@@ -896,8 +844,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ListPhotoResponse'
-            security:
-                - OAuth2PasswordBearer: []
         post:
             tags:
                 - PhotoService
@@ -916,8 +862,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Photo'
-            security:
-                - OAuth2PasswordBearer: []
     /blog/v1/photos/{id}:
         get:
             tags:
@@ -938,8 +882,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Photo'
-            security:
-                - OAuth2PasswordBearer: []
         put:
             tags:
                 - PhotoService
@@ -970,8 +912,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Photo'
-            security:
-                - OAuth2PasswordBearer: []
         delete:
             tags:
                 - PhotoService
@@ -993,8 +933,6 @@ paths:
                 "200":
                     description: OK
                     content: {}
-            security:
-                - OAuth2PasswordBearer: []
     /blog/v1/posts:
         get:
             tags:
@@ -1049,8 +987,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ListPostResponse'
-            security:
-                - OAuth2PasswordBearer: []
         post:
             tags:
                 - PostService
@@ -1069,8 +1005,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Post'
-            security:
-                - OAuth2PasswordBearer: []
     /blog/v1/posts/{id}:
         get:
             tags:
@@ -1091,8 +1025,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Post'
-            security:
-                - OAuth2PasswordBearer: []
         put:
             tags:
                 - PostService
@@ -1123,8 +1055,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Post'
-            security:
-                - OAuth2PasswordBearer: []
         delete:
             tags:
                 - PostService
@@ -1146,8 +1076,6 @@ paths:
                 "200":
                     description: OK
                     content: {}
-            security:
-                - OAuth2PasswordBearer: []
     /blog/v1/tags:
         get:
             tags:
@@ -1202,8 +1130,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ListTagResponse'
-            security:
-                - OAuth2PasswordBearer: []
         post:
             tags:
                 - TagService
@@ -1222,8 +1148,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Tag'
-            security:
-                - OAuth2PasswordBearer: []
     /blog/v1/tags/{id}:
         get:
             tags:
@@ -1244,8 +1168,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Tag'
-            security:
-                - OAuth2PasswordBearer: []
         put:
             tags:
                 - TagService
@@ -1276,8 +1198,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Tag'
-            security:
-                - OAuth2PasswordBearer: []
         delete:
             tags:
                 - TagService
@@ -1299,8 +1219,6 @@ paths:
                 "200":
                     description: OK
                     content: {}
-            security:
-                - OAuth2PasswordBearer: []
 components:
     schemas:
         Any:
@@ -1923,8 +1841,11 @@ components:
             type: oauth2
             flows:
                 password:
-                    tokenUrl: /front/v1/login
+                    tokenUrl: /blog/v1/login
+                    refreshUrl: /blog/v1/refresh_token
                     scopes: {}
+security:
+    - OAuth2PasswordBearer: []
 tags:
     - name: AttachmentService
       description: 附件服务

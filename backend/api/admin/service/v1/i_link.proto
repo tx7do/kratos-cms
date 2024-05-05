@@ -17,20 +17,12 @@ service LinkService {
     option (google.api.http) = {
       get: "/admin/v1/links"
     };
-
-    option(gnostic.openapi.v3.operation) = {
-      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
-    };
   }
 
   // 获取链接数据
   rpc GetLink (content.service.v1.GetLinkRequest) returns (content.service.v1.Link) {
     option (google.api.http) = {
       get: "/admin/v1/links/{id}"
-    };
-
-    option(gnostic.openapi.v3.operation) = {
-      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
     };
   }
 
@@ -40,10 +32,6 @@ service LinkService {
       post: "/admin/v1/links"
       body: "*"
     };
-
-    option(gnostic.openapi.v3.operation) = {
-      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
-    };
   }
 
   // 更新链接
@@ -52,20 +40,12 @@ service LinkService {
       put: "/admin/v1/links/{id}"
       body: "link"
     };
-
-    option(gnostic.openapi.v3.operation) = {
-      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
-    };
   }
 
   // 删除链接
   rpc DeleteLink (content.service.v1.DeleteLinkRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/admin/v1/links/{id}"
-    };
-
-    option(gnostic.openapi.v3.operation) = {
-      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
     };
   }
 }

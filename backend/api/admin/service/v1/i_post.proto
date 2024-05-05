@@ -17,20 +17,12 @@ service PostService {
     option (google.api.http) = {
       get: "/admin/v1/posts"
     };
-
-    option(gnostic.openapi.v3.operation) = {
-      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
-    };
   }
 
   // 获取帖子数据
   rpc GetPost (content.service.v1.GetPostRequest) returns (content.service.v1.Post) {
     option (google.api.http) = {
       get: "/admin/v1/posts/{id}"
-    };
-
-    option(gnostic.openapi.v3.operation) = {
-      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
     };
   }
 
@@ -40,10 +32,6 @@ service PostService {
       post: "/admin/v1/posts"
       body: "*"
     };
-
-    option(gnostic.openapi.v3.operation) = {
-      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
-    };
   }
 
   // 更新帖子
@@ -52,20 +40,12 @@ service PostService {
       put: "/admin/v1/posts/{id}"
       body: "post"
     };
-
-    option(gnostic.openapi.v3.operation) = {
-      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
-    };
   }
 
   // 删除帖子
   rpc DeletePost (content.service.v1.DeletePostRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/admin/v1/posts/{id}"
-    };
-
-    option(gnostic.openapi.v3.operation) = {
-      security: [{additional_properties: [{name: "OAuth2PasswordBearer"; value: {}}]}]
     };
   }
 }
