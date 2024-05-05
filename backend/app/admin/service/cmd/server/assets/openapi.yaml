@@ -1882,29 +1882,51 @@ components:
                     format: int32
             description: 获取用户列表 - 答复
         LoginRequest:
+            required:
+                - username
+                - password
+                - grant_type
             type: object
             properties:
                 username:
                     type: string
                 password:
                     type: string
-                grand_type:
+                grant_type:
                     type: string
+                    default: password
+                    description: 授权类型，此处的值固定为"password"，必选项。
+                scope:
+                    type: string
+                client_id:
+                    type: string
+                    description: 应用程序的识别ID
+                client_secret:
+                    type: string
+                    description: 应用程序的密码
             description: 用户后台登陆 - 请求
         LoginResponse:
+            required:
+                - access_token
+                - refresh_token
             type: object
             properties:
-                id:
-                    type: integer
-                    format: uint32
-                username:
-                    type: string
-                token_type:
-                    type: string
                 access_token:
                     type: string
+                    description: 访问令牌，必选项。授权服务器颁发的访问令牌字符串。
                 refresh_token:
                     type: string
+                    description: 更新令牌，用来获取下一次的访问令牌，可选项。如果访问令牌将过期，则返回刷新令牌很有用，应用程序可以使用该刷新令牌来获取另一个访问令牌。但是，通过隐式授予颁发的令牌不能颁发刷新令牌。
+                token_type:
+                    type: string
+                    default: Bearer
+                    description: 令牌的类型，该值大小写不敏感，必选项，可以是bearer类型或mac类型，通常只是字符串“Bearer”。
+                expires_in:
+                    type: string
+                    description: 令牌有效时间，单位为秒。如果访问令牌过期，服务器应回复授予访问令牌的持续时间。如果省略该参数，必须其他方式设置过期时间。
+                scope:
+                    type: string
+                    description: 以空格分隔的用户授予范围列表。如果未提供，scope则授权任何范围，默认为空列表。
             description: 用户后台登陆 - 回应
         LogoutRequest:
             type: object

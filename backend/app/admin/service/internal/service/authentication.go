@@ -8,14 +8,14 @@ import (
 
 	"kratos-cms/app/admin/service/internal/data"
 
-	v1 "kratos-cms/gen/api/go/admin/service/v1"
+	adminV1 "kratos-cms/gen/api/go/admin/service/v1"
 	userV1 "kratos-cms/gen/api/go/user/service/v1"
 
 	"kratos-cms/pkg/middleware/auth"
 )
 
 type AuthenticationService struct {
-	v1.AuthenticationServiceHTTPServer
+	adminV1.AuthenticationServiceHTTPServer
 
 	uc   userV1.UserServiceClient
 	utuc *data.UserTokenRepo
@@ -33,34 +33,33 @@ func NewAuthenticationService(logger log.Logger, uc userV1.UserServiceClient, ut
 }
 
 // Login 登陆
-func (s *AuthenticationService) Login(ctx context.Context, req *v1.LoginRequest) (*v1.LoginResponse, error) {
+func (s *AuthenticationService) Login(ctx context.Context, req *adminV1.LoginRequest) (*adminV1.LoginResponse, error) {
 	if _, err := s.uc.VerifyPassword(ctx, &userV1.VerifyPasswordRequest{
 		UserName: req.GetUsername(),
 		Password: req.GetPassword(),
 	}); err != nil {
-		return &v1.LoginResponse{}, err
+		return &adminV1.LoginResponse{}, err
 	}
 
 	user, err := s.uc.GetUserByUserName(ctx, &userV1.GetUserByUserNameRequest{UserName: req.GetUsername()})
 	if err != nil {
-		return &v1.LoginResponse{}, err
+		return &adminV1.LoginResponse{}, err
 	}
 
-	token, err := s.utuc.GenerateToken(ctx, user)
+	accessToken, refreshToken, err := s.utuc.GenerateToken(ctx, user)
 	if err != nil {
-		return &v1.LoginResponse{}, err
+		return nil, err
 	}
 
-	return &v1.LoginResponse{
-		TokenType:   "bearer",
-		AccessToken: token,
-		Id:          user.GetId(),
-		Username:    user.GetUserName(),
+	return &adminV1.LoginResponse{
+		TokenType:    adminV1.TokenType_bearer.String(),
+		AccessToken:  accessToken,
+		RefreshToken: refreshToken,
 	}, nil
 }
 
 // Logout 登出
-func (s *AuthenticationService) Logout(ctx context.Context, req *v1.LogoutRequest) (*emptypb.Empty, error) {
+func (s *AuthenticationService) Logout(ctx context.Context, req *adminV1.LogoutRequest) (*emptypb.Empty, error) {
 	err := s.utuc.RemoveToken(ctx, req.GetId())
 	if err != nil {
 		return nil, err
@@ -68,11 +67,11 @@ func (s *AuthenticationService) Logout(ctx context.Context, req *v1.LogoutReques
 	return &emptypb.Empty{}, nil
 }
 
-func (s *AuthenticationService) GetMe(ctx context.Context, req *v1.GetMeRequest) (*userV1.User, error) {
+func (s *AuthenticationService) GetMe(ctx context.Context, req *adminV1.GetMeRequest) (*userV1.User, error) {
 	authInfo, err := auth.FromContext(ctx)
 	if err != nil {
 		s.log.Errorf("用户认证失败[%s]", err.Error())
-		return nil, v1.ErrorAccessForbidden("用户认证失败")
+		return nil, adminV1.ErrorAccessForbidden("用户认证失败")
 	}
 
 	req.Id = authInfo.UserId
