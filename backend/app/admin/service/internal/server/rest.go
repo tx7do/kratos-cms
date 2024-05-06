@@ -78,7 +78,7 @@ func NewHTTPServer(
 	if cfg.GetServer().GetRest().GetEnableSwagger() {
 		swaggerUI.RegisterSwaggerUIServerWithOption(
 			srv,
-			swaggerUI.WithTitle("Front Service"),
+			swaggerUI.WithTitle("Admin Service"),
 			swaggerUI.WithMemoryData(assets.OpenApiData, "yaml"),
 		)
 	}
