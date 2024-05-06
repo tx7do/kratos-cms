@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package comment.service.v1;
+
+import "google/protobuf/empty.proto";
+import "pagination/v1/pagination.proto";
+
+// 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
+
+// 评论服务
+service CommentService {
+  // 获取评论列表
+  rpc ListComment (pagination.PagingRequest) returns (ListCommentResponse) {}
+
+  // 获取评论数据
+  rpc GetComment (GetCommentRequest) returns (Comment) {}
+
+  // 创建评论
+  rpc CreateComment (CreateCommentRequest) returns (Comment) {}
+
+  // 更新评论
+  rpc UpdateComment (UpdateCommentRequest) returns (Comment) {}
+
+  // 删除评论
+  rpc DeleteComment (DeleteCommentRequest) returns (google.protobuf.Empty) {}
+}
+
+// 评论
+message Comment {
+  uint32 id = 1;
+  optional string author = 2;
+  optional string email = 3;
+  optional string ipAddress = 4;
+  optional string authorUrl = 5;
+  optional string gravatarMd5 = 6;
+  optional string content = 7;
+  optional uint32 status = 8;
+  optional string userAgent = 9;
+  optional uint32 parentId = 10;
+  optional bool isAdmin = 11;
+  optional bool allowNotification = 12;
+  optional string avatar = 13;
+  optional string createTime = 14;
+  optional string updateTime = 15;
+}
+
+// 回应 - 评论列表
+message ListCommentResponse {
+  repeated Comment items = 1;
+  int32 total = 2;
+}
+
+// 请求 - 评论数据
+message GetCommentRequest {
+  uint32 id = 1;
+}
+
+// 请求 - 创建评论
+message CreateCommentRequest {
+  Comment comment = 1;
+  optional uint32 operatorId = 2;
+}
+
+// 请求 - 更新评论
+message UpdateCommentRequest {
+  uint32 id = 1;
+  Comment comment = 2;
+  optional uint32 operatorId = 3;
+}
+
+// 请求 - 删除评论
+message DeleteCommentRequest {
+  uint32 id = 1;
+  optional uint32 operatorId = 2;
+}

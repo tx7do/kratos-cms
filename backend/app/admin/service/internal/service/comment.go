@@ -7,8 +7,8 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 
 	pagination "github.com/tx7do/kratos-bootstrap/api/gen/go/pagination/v1"
-	v1 "kratos-cms/gen/api/go/admin/service/v1"
-	commentV1 "kratos-cms/gen/api/go/comment/service/v1"
+	v1 "kratos-cms/api/gen/go/admin/service/v1"
+	commentV1 "kratos-cms/api/gen/go/comment/service/v1"
 )
 
 type CommentService struct {

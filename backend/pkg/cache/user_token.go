@@ -14,7 +14,7 @@ import (
 	authn "github.com/tx7do/kratos-authn/engine"
 	authnEngine "github.com/tx7do/kratos-authn/engine"
 
-	userV1 "kratos-cms/gen/api/go/user/service/v1"
+	userV1 "kratos-cms/api/gen/go/user/service/v1"
 )
 
 type UserToken struct {

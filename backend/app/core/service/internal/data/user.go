@@ -16,7 +16,7 @@ import (
 	"kratos-cms/app/core/service/internal/data/ent/user"
 
 	pagination "github.com/tx7do/kratos-bootstrap/api/gen/go/pagination/v1"
-	v1 "kratos-cms/gen/api/go/user/service/v1"
+	v1 "kratos-cms/api/gen/go/user/service/v1"
 )
 
 type UserRepo struct {

@@ -10,10 +10,10 @@ import (
 
 	"kratos-cms/app/core/service/internal/service"
 
-	commentV1 "kratos-cms/gen/api/go/comment/service/v1"
-	contentV1 "kratos-cms/gen/api/go/content/service/v1"
-	fileV1 "kratos-cms/gen/api/go/file/service/v1"
-	userV1 "kratos-cms/gen/api/go/user/service/v1"
+	commentV1 "kratos-cms/api/gen/go/comment/service/v1"
+	contentV1 "kratos-cms/api/gen/go/content/service/v1"
+	fileV1 "kratos-cms/api/gen/go/file/service/v1"
+	userV1 "kratos-cms/api/gen/go/user/service/v1"
 )
 
 // NewGRPCServer new a gRPC server.

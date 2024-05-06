@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package content.service.v1;
+
+
+import "google/protobuf/empty.proto";
+import "pagination/v1/pagination.proto";
+
+// 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
+
+// 帖子服务
+service PostService {
+  // 获取帖子列表
+  rpc ListPost (pagination.PagingRequest) returns (ListPostResponse) {}
+
+  // 获取帖子数据
+  rpc GetPost (GetPostRequest) returns (Post) {}
+
+  // 创建帖子
+  rpc CreatePost (CreatePostRequest) returns (Post) {}
+
+  // 更新帖子
+  rpc UpdatePost (UpdatePostRequest) returns (Post) {}
+
+  // 删除帖子
+  rpc DeletePost (DeletePostRequest) returns (google.protobuf.Empty) {}
+}
+
+// 帖子
+message Post {
+  uint32 id = 1;
+  optional string title = 2;
+  optional int32 status = 3;
+  optional string slug = 4;
+  optional int32 editorType = 5;
+  optional string metaKeywords = 6;
+  optional string metaDescription = 7;
+  optional string fullPath = 8;
+  optional string summary = 9;
+  optional string thumbnail = 10;
+  optional string password = 11;
+  optional string template = 12;
+  optional string content = 13;
+  optional string originalContent = 14;
+  optional int32 visits = 15;
+  optional int32 topPriority = 16;
+  optional int32 likes = 17;
+  optional int32 wordCount = 18;
+  optional int32 commentCount = 19;
+  optional bool disallowComment = 20;
+  optional bool inProgress = 21;
+  optional string createTime = 22;
+  optional string updateTime = 23;
+  optional string editTime = 24;
+}
+
+// 回应 - 帖子列表
+message ListPostResponse {
+  repeated Post items = 1;
+  int32 total = 2;
+}
+
+// 请求 - 帖子数据
+message GetPostRequest {
+  uint32 id = 1;
+}
+
+// 请求 - 创建帖子
+message CreatePostRequest {
+  Post post = 1;
+  optional uint32 operatorId = 2;
+}
+
+// 请求 - 更新帖子
+message UpdatePostRequest {
+  uint32 id = 1;
+  Post post = 2;
+  optional uint32 operatorId = 3;
+}
+
+// 请求 - 删除帖子
+message DeletePostRequest {
+  uint32 id = 1;
+  optional uint32 operatorId = 2;
+}

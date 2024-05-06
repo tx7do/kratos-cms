@@ -23,7 +23,7 @@ import (
 	"kratos-cms/app/front/service/cmd/server/assets"
 	"kratos-cms/app/front/service/internal/service"
 
-	frontV1 "kratos-cms/gen/api/go/front/service/v1"
+	frontV1 "kratos-cms/api/gen/go/front/service/v1"
 	"kratos-cms/pkg/middleware/auth"
 )
 

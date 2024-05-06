@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package content.service.v1;
+
+
+import "google/protobuf/empty.proto";
+import "pagination/v1/pagination.proto";
+
+// 变量的命名一律使用小驼峰命名法，例如：firstName、lastName等。
+
+// 标签服务
+service TagService {
+  // 获取标签列表
+  rpc ListTag (pagination.PagingRequest) returns (ListTagResponse) {}
+
+  // 获取标签数据
+  rpc GetTag (GetTagRequest) returns (Tag) {}
+
+  // 创建标签
+  rpc CreateTag (CreateTagRequest) returns (Tag) {}
+
+  // 更新标签
+  rpc UpdateTag (UpdateTagRequest) returns (Tag) {}
+
+  // 删除标签
+  rpc DeleteTag (DeleteTagRequest) returns (google.protobuf.Empty) {}
+}
+
+// 标签
+message Tag {
+  uint32 id = 1;
+  optional string name = 2;
+  optional string slug = 3;
+  optional string slugName = 4;
+  optional string color = 5;
+  optional string thumbnail = 6;
+  optional string createTime = 7;
+  optional string updateTime = 8;
+  optional uint32 postCount = 9;
+  optional string fullPath = 10;
+}
+
+// 回应 - 标签列表
+message ListTagResponse {
+  repeated Tag items = 1;
+  int32 total = 2;
+}
+
+// 请求 - 标签数据
+message GetTagRequest {
+  uint32 id = 1;
+}
+
+// 请求 - 创建标签
+message CreateTagRequest {
+  Tag tag = 1;
+  optional uint32 operatorId = 2;
+}
+
+// 请求 - 更新标签
+message UpdateTagRequest {
+  uint32 id = 1;
+  Tag tag = 2;
+  optional uint32 operatorId = 3;
+}
+
+// 请求 - 删除标签
+message DeleteTagRequest {
+  uint32 id = 1;
+  optional uint32 operatorId = 2;
+}

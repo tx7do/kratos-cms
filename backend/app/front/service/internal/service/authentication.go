@@ -6,8 +6,8 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	frontV1 "kratos-cms/gen/api/go/front/service/v1"
-	userV1 "kratos-cms/gen/api/go/user/service/v1"
+	frontV1 "kratos-cms/api/gen/go/front/service/v1"
+	userV1 "kratos-cms/api/gen/go/user/service/v1"
 
 	"kratos-cms/pkg/cache"
 	"kratos-cms/pkg/middleware/auth"

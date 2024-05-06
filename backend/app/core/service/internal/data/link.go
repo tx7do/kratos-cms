@@ -14,7 +14,7 @@ import (
 	"kratos-cms/app/core/service/internal/data/ent/link"
 
 	pagination "github.com/tx7do/kratos-bootstrap/api/gen/go/pagination/v1"
-	v1 "kratos-cms/gen/api/go/content/service/v1"
+	v1 "kratos-cms/api/gen/go/content/service/v1"
 )
 
 type LinkRepo struct {
