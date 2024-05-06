@@ -14,8 +14,10 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/registry"
 
-	"github.com/tx7do/kratos-bootstrap"
-	conf "github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
+	conf "github.com/tx7do/kratos-bootstrap/api/gen/go/conf/v1"
+	redisClient "github.com/tx7do/kratos-bootstrap/cache/redis"
+	bRegistry "github.com/tx7do/kratos-bootstrap/registry"
+	"github.com/tx7do/kratos-bootstrap/rpc"
 
 	commentV1 "kratos-cms/gen/api/go/comment/service/v1"
 	contentV1 "kratos-cms/gen/api/go/content/service/v1"
@@ -61,12 +63,12 @@ func NewData(redisClient *redis.Client,
 // NewRedisClient 创建Redis客户端
 func NewRedisClient(cfg *conf.Bootstrap, _ log.Logger) *redis.Client {
 	//l := log.NewHelper(log.With(logger, "module", "redis/data/front-service"))
-	return bootstrap.NewRedisClient(cfg.Data)
+	return redisClient.NewClient(cfg.Data)
 }
 
 // NewDiscovery 创建服务发现客户端
 func NewDiscovery(cfg *conf.Bootstrap) registry.Discovery {
-	return bootstrap.NewConsulRegistry(cfg.Registry)
+	return bRegistry.NewDiscovery(cfg.Registry)
 }
 
 // NewAuthenticator 创建认证器
@@ -92,29 +94,29 @@ func NewUserTokenRepo(data *Data, authenticator authnEngine.Authenticator, logge
 }
 
 func NewUserServiceClient(r registry.Discovery, c *conf.Bootstrap) userV1.UserServiceClient {
-	return userV1.NewUserServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.CoreService, c))
+	return userV1.NewUserServiceClient(rpc.CreateGrpcClient(context.Background(), r, service.CoreService, c))
 }
 
 func NewAttachmentServiceClient(r registry.Discovery, c *conf.Bootstrap) fileV1.AttachmentServiceClient {
-	return fileV1.NewAttachmentServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.CoreService, c))
+	return fileV1.NewAttachmentServiceClient(rpc.CreateGrpcClient(context.Background(), r, service.CoreService, c))
 }
 
 func NewCommentServiceClient(r registry.Discovery, c *conf.Bootstrap) commentV1.CommentServiceClient {
-	return commentV1.NewCommentServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.CoreService, c))
+	return commentV1.NewCommentServiceClient(rpc.CreateGrpcClient(context.Background(), r, service.CoreService, c))
 }
 
 func NewCategoryServiceClient(r registry.Discovery, c *conf.Bootstrap) contentV1.CategoryServiceClient {
-	return contentV1.NewCategoryServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.CoreService, c))
+	return contentV1.NewCategoryServiceClient(rpc.CreateGrpcClient(context.Background(), r, service.CoreService, c))
 }
 
 func NewLinkServiceClient(r registry.Discovery, c *conf.Bootstrap) contentV1.LinkServiceClient {
-	return contentV1.NewLinkServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.CoreService, c))
+	return contentV1.NewLinkServiceClient(rpc.CreateGrpcClient(context.Background(), r, service.CoreService, c))
 }
 
 func NewPostServiceClient(r registry.Discovery, c *conf.Bootstrap) contentV1.PostServiceClient {
-	return contentV1.NewPostServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.CoreService, c))
+	return contentV1.NewPostServiceClient(rpc.CreateGrpcClient(context.Background(), r, service.CoreService, c))
 }
 
 func NewTagServiceClient(r registry.Discovery, c *conf.Bootstrap) contentV1.TagServiceClient {
-	return contentV1.NewTagServiceClient(bootstrap.CreateGrpcClient(context.Background(), r, service.CoreService, c))
+	return contentV1.NewTagServiceClient(rpc.CreateGrpcClient(context.Background(), r, service.CoreService, c))
 }

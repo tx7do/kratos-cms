@@ -8,7 +8,7 @@ import (
 
 	"kratos-cms/app/core/service/internal/data"
 
-	pagination "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
+	pagination "github.com/tx7do/kratos-bootstrap/api/gen/go/pagination/v1"
 	v1 "kratos-cms/gen/api/go/content/service/v1"
 )
 

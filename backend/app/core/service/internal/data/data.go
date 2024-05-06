@@ -2,7 +2,6 @@ package data
 
 import (
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/tx7do/go-utils/entgo"
 
 	"github.com/redis/go-redis/v9"
 
@@ -10,8 +9,9 @@ import (
 	_ "github.com/jackc/pgx/v4/stdlib"
 	_ "github.com/lib/pq"
 
-	"github.com/tx7do/kratos-bootstrap"
-	conf "github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
+	"github.com/tx7do/go-utils/entgo"
+	conf "github.com/tx7do/kratos-bootstrap/api/gen/go/conf/v1"
+	redisClient "github.com/tx7do/kratos-bootstrap/cache/redis"
 
 	"kratos-cms/app/core/service/internal/data/ent"
 )
@@ -35,7 +35,7 @@ func NewData(entClient *entgo.EntClient[*ent.Client], redisClient *redis.Client,
 
 	return d, func() {
 		l.Info("message", "closing the data resources")
-		d.db.Close()
+		_ = d.db.Close()
 		if err := d.rdb.Close(); err != nil {
 			l.Error(err)
 		}
@@ -45,5 +45,5 @@ func NewData(entClient *entgo.EntClient[*ent.Client], redisClient *redis.Client,
 // NewRedisClient 创建Redis客户端
 func NewRedisClient(cfg *conf.Bootstrap, _ log.Logger) *redis.Client {
 	//l := log.NewHelper(log.With(logger, "module", "redis/data/core-service"))
-	return bootstrap.NewRedisClient(cfg.Data)
+	return redisClient.NewClient(cfg.Data)
 }

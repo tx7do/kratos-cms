@@ -7,7 +7,7 @@ import (
 	"github.com/tx7do/go-utils/trans"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	pagination "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
+	pagination "github.com/tx7do/kratos-bootstrap/api/gen/go/pagination/v1"
 	v1 "kratos-cms/gen/api/go/admin/service/v1"
 	userV1 "kratos-cms/gen/api/go/user/service/v1"
 

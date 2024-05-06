@@ -4,8 +4,8 @@ deps:
   - remote: buf.build
     owner: envoyproxy
     repository: protoc-gen-validate
-    commit: eac44469a7af47e7839a7f1f3d7ac004
-    digest: shake256:0feabcde01b6b11e3c75a5e3f807968d5995626546f39c37e5d4205892b3a59cced0ed83b35a2eb9e6dddd3309660ad46b737c9dcd224b425de0a6654ce04417
+    commit: ea113bc841fa448ab34bf3f9fa6cef0f
+    digest: shake256:8f3653779e824957a4fe3d18cdb73531f7f7ed1393848082dfe1f90026fd187da9534e759b5833f4e5487be0d34cfa7d4ff149af9a2694863773387d61d09fce
   - remote: buf.build
     owner: gnostic
     repository: gnostic
@@ -19,8 +19,8 @@ deps:
   - remote: buf.build
     owner: googleapis
     repository: googleapis
-    commit: 28151c0d0a1641bf938a7672c500e01d
-    digest: shake256:49215edf8ef57f7863004539deff8834cfb2195113f0b890dd1f67815d9353e28e668019165b9d872395871eeafcbab3ccfdb2b5f11734d3cca95be9e8d139de
+    commit: 74015a8aeb8445aa9e3e1454cb54bc35
+    digest: shake256:7149cf5e9955c692d381e557830555d4e93f205a0f1b8e2dfdae46d029369aa3fc1980e35df0d310f7cc3b622f93e19ad276769a283a967dd3065ddfd3a40e13
   - remote: buf.build
     owner: kratos
     repository: apis
@@ -29,5 +29,5 @@ deps:
   - remote: buf.build
     owner: tx7do
     repository: pagination
-    commit: 66a7080a8ac446d0abfb0250f17cad60
-    digest: shake256:cb27e819fe006fad3688c7f6c882a65ebd1511c26301fc498d652d2d3b203d6afc46346bf6173243afc854914f256cd3ac77c2c5c18638809b2d31197873bcd1
+    commit: 7a9682e38b7d47d98eafd742399a16b0
+    digest: shake256:c2e448ce9c66de9838cd7573fb62d562f6649661ac4029471427bd00fcf7ecb5bebdaa79dbddb5616446345eff22c1f36a46b3717e0778b3933e24dabef03c34

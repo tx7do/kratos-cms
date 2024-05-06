@@ -37,7 +37,7 @@ build:
 ifeq ("$(wildcard ./bin/)","")
 	mkdir bin
 endif
-	@go build -ldflags "-X main.Service.Version=$(APP_VERSION)" -o ./bin/ ./...
+	@go build -ldflags "-X main.version=$(APP_VERSION)" -o ./bin/ ./...
 
 # clean build files
 clean:

@@ -5,8 +5,8 @@ import (
 	"github.com/go-kratos/kratos/v2/middleware/logging"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 
-	bootstrap "github.com/tx7do/kratos-bootstrap"
-	conf "github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
+	conf "github.com/tx7do/kratos-bootstrap/api/gen/go/conf/v1"
+	"github.com/tx7do/kratos-bootstrap/rpc"
 
 	"kratos-cms/app/core/service/internal/service"
 
@@ -29,7 +29,7 @@ func NewGRPCServer(cfg *conf.Bootstrap, logger log.Logger,
 
 	attachmentSvc *service.AttachmentService,
 ) *grpc.Server {
-	srv := bootstrap.CreateGrpcServer(cfg, logging.Server(logger))
+	srv := rpc.CreateGrpcServer(cfg, logging.Server(logger))
 
 	commentV1.RegisterCommentServiceServer(srv, commentService)
 

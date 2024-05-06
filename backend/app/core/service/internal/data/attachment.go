@@ -13,7 +13,7 @@ import (
 	"kratos-cms/app/core/service/internal/data/ent"
 	"kratos-cms/app/core/service/internal/data/ent/attachment"
 
-	pagination "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
+	pagination "github.com/tx7do/kratos-bootstrap/api/gen/go/pagination/v1"
 	v1 "kratos-cms/gen/api/go/file/service/v1"
 )
 

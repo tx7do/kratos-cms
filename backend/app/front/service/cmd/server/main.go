@@ -5,46 +5,21 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/registry"
 	"github.com/go-kratos/kratos/v2/transport/http"
+
+	"github.com/tx7do/go-utils/trans"
 	bootstrap "github.com/tx7do/kratos-bootstrap"
 
 	"kratos-cms/pkg/service"
 )
 
-// go build -ldflags "-X main.Service.Version=x.y.z"
+var version string
 
-var (
-	Service = bootstrap.NewServiceInfo(
-		service.FrontService,
-		"1.0.0",
-		"",
-	)
-)
+// go build -ldflags "-X main.version=x.y.z"
 
 func newApp(ll log.Logger, rr registry.Registrar, hs *http.Server) *kratos.App {
-	return kratos.New(
-		kratos.ID(Service.GetInstanceId()),
-		kratos.Name(Service.Name),
-		kratos.Version(Service.Version),
-		kratos.Metadata(Service.Metadata),
-		kratos.Logger(ll),
-		kratos.Server(
-			hs,
-		),
-		kratos.Registrar(rr),
-	)
+	return bootstrap.NewApp(ll, rr, hs)
 }
 
 func main() {
-	// bootstrap
-	cfg, ll, reg := bootstrap.Bootstrap(Service)
-
-	app, cleanup, err := initApp(ll, reg, cfg)
-	if err != nil {
-		panic(err)
-	}
-	defer cleanup()
-
-	if err := app.Run(); err != nil {
-		panic(err)
-	}
+	bootstrap.Bootstrap(initApp, trans.Ptr(service.FrontService), trans.Ptr(version))
 }

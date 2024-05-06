@@ -17,8 +17,8 @@ import (
 
 	swaggerUI "github.com/tx7do/kratos-swagger-ui"
 
-	bootstrap "github.com/tx7do/kratos-bootstrap"
-	conf "github.com/tx7do/kratos-bootstrap/gen/api/go/conf/v1"
+	conf "github.com/tx7do/kratos-bootstrap/api/gen/go/conf/v1"
+	"github.com/tx7do/kratos-bootstrap/rpc"
 
 	"kratos-cms/app/admin/service/cmd/server/assets"
 	"kratos-cms/app/admin/service/internal/service"
@@ -64,7 +64,7 @@ func NewHTTPServer(
 	tagSvc *service.TagService,
 	attachmentSvc *service.AttachmentService,
 ) *http.Server {
-	srv := bootstrap.CreateRestServer(cfg, newRestMiddleware(authenticator, authorizer, logger)...)
+	srv := rpc.CreateRestServer(cfg, newRestMiddleware(authenticator, authorizer, logger)...)
 
 	adminV1.RegisterAuthenticationServiceHTTPServer(srv, authnSvc)
 	adminV1.RegisterPostServiceHTTPServer(srv, postSvc)

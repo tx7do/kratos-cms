@@ -7,7 +7,7 @@
 package servicev1
 
 import (
-	v1 "github.com/tx7do/kratos-bootstrap/gen/api/go/pagination/v1"
+	v1 "github.com/tx7do/kratos-bootstrap/api/gen/go/pagination/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
