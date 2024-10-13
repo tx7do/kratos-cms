@@ -790,6 +790,25 @@ paths:
                 "200":
                     description: OK
                     content: {}
+    /blog/v1/oss-upload-url:
+        post:
+            tags:
+                - FileService
+            description: 获取对象存储（OSS）上传链接
+            operationId: FileService_OssUploadUrl
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/OssUploadUrlRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/OssUploadUrlResponse'
     /blog/v1/photos:
         get:
             tags:
@@ -1667,6 +1686,50 @@ components:
                         - $ref: '#/components/schemas/ServerVariable'
                     description: Mapped value
             description: Automatically-generated message used to represent maps of ServerVariable as ordered (name,value) pairs.
+        OssUploadUrlRequest:
+            type: object
+            properties:
+                method:
+                    enum:
+                        - Put
+                        - Post
+                    type: string
+                    description: 上传文件所用的HTTP方法，支持POST和PUT
+                    format: enum
+                contentType:
+                    type: string
+                    description: 文件的MIME类型
+                bucketName:
+                    type: string
+                    description: 文件桶名称，如果不填写，将会根据文件名或者MIME类型进行自动解析
+                filePath:
+                    type: string
+                    description: 远端的文件路径，可以不填写
+                fileName:
+                    type: string
+                    description: 文件名，如果不填写，则会生成UUID，有同名文件也会改为UUID
+            description: 获取对象存储上传链接 - 请求
+        OssUploadUrlResponse:
+            type: object
+            properties:
+                uploadUrl:
+                    type: string
+                    description: 文件的上传链接，默认1个小时的过期时间
+                downloadUrl:
+                    type: string
+                    description: 文件的下载链接
+                bucketName:
+                    type: string
+                    description: 文件桶名称
+                objectName:
+                    type: string
+                    description: 文件名
+                formData:
+                    type: object
+                    additionalProperties:
+                        type: string
+                    description: 表单数据，使用POST方法时填写
+            description: 获取对象存储上传链接 - 回应
         Photo:
             type: object
             properties:
@@ -1877,6 +1940,8 @@ tags:
       description: 类别服务
     - name: CommentService
       description: 评论服务
+    - name: FileService
+      description: 文件服务
     - name: LinkService
       description: 链接服务
     - name: MenuService

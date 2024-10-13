@@ -24,4 +24,5 @@ var ProviderSet = wire.NewSet(
 	NewLinkServiceClient,
 	NewPostServiceClient,
 	NewTagServiceClient,
+	NewFileServiceClient,
 )

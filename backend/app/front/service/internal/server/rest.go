@@ -61,6 +61,7 @@ func NewHTTPServer(
 	commentSvc *service.CommentService,
 	tagSvc *service.TagService,
 	attachmentSvc *service.AttachmentService,
+	fileSvc *service.FileService,
 ) *http.Server {
 	srv := rpc.CreateRestServer(cfg, newRestMiddleware(authenticator, authorizer, logger)...)
 
@@ -71,6 +72,7 @@ func NewHTTPServer(
 	frontV1.RegisterLinkServiceHTTPServer(srv, linkSvc)
 	frontV1.RegisterAttachmentServiceHTTPServer(srv, attachmentSvc)
 	frontV1.RegisterCommentServiceHTTPServer(srv, commentSvc)
+	frontV1.RegisterFileServiceHTTPServer(srv, fileSvc)
 
 	if cfg.GetServer().GetRest().GetEnableSwagger() {
 		swaggerUI.RegisterSwaggerUIServerWithOption(

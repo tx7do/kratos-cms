@@ -120,3 +120,7 @@ func NewPostServiceClient(r registry.Discovery, c *conf.Bootstrap) contentV1.Pos
 func NewTagServiceClient(r registry.Discovery, c *conf.Bootstrap) contentV1.TagServiceClient {
 	return contentV1.NewTagServiceClient(rpc.CreateGrpcClient(context.Background(), r, service.CoreService, c))
 }
+
+func NewFileServiceClient(r registry.Discovery, cfg *conf.Bootstrap) fileV1.FileServiceClient {
+	return fileV1.NewFileServiceClient(rpc.CreateGrpcClient(context.Background(), r, service.CoreService, cfg))
+}
