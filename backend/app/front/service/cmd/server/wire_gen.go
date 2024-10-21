@@ -43,7 +43,9 @@ func initApp(logger log.Logger, registrar registry.Registrar, bootstrap *v1.Boot
 	tagService := service.NewTagService(logger, tagServiceClient)
 	attachmentServiceClient := data.NewAttachmentServiceClient(discovery, bootstrap)
 	attachmentService := service.NewAttachmentService(logger, attachmentServiceClient)
-	httpServer := server.NewHTTPServer(bootstrap, logger, authenticator, engine, authenticationService, postService, linkService, categoryService, commentService, tagService, attachmentService)
+	fileServiceClient := data.NewFileServiceClient(discovery, bootstrap)
+	fileService := service.NewFileService(logger, fileServiceClient)
+	httpServer := server.NewHTTPServer(bootstrap, logger, authenticator, engine, authenticationService, postService, linkService, categoryService, commentService, tagService, attachmentService, fileService)
 	app := newApp(logger, registrar, httpServer)
 	return app, func() {
 		cleanup()

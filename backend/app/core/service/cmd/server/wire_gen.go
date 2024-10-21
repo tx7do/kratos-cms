@@ -40,7 +40,9 @@ func initApp(logger log.Logger, registrar registry.Registrar, bootstrap *v1.Boot
 	userService := service.NewUserService(logger, userRepo)
 	attachmentRepo := data.NewAttachmentRepo(dataData, logger)
 	attachmentService := service.NewAttachmentService(logger, attachmentRepo)
-	grpcServer := server.NewGRPCServer(bootstrap, logger, commentService, postService, linkService, categoryService, tagService, userService, attachmentService)
+	minIOClient := data.NewMinIoClient(bootstrap, logger)
+	fileService := service.NewFileService(logger, minIOClient)
+	grpcServer := server.NewGRPCServer(bootstrap, logger, commentService, postService, linkService, categoryService, tagService, userService, attachmentService, fileService)
 	app := newApp(logger, registrar, grpcServer)
 	return app, func() {
 		cleanup()

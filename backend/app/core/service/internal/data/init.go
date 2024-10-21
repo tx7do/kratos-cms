@@ -11,6 +11,7 @@ var ProviderSet = wire.NewSet(
 
 	NewEntClient,
 	NewRedisClient,
+	NewMinIoClient,
 
 	NewAttachmentRepo,
 	NewCategoryRepo,

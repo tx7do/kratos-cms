@@ -10,11 +10,11 @@ import (
 	"kratos-cms/app/core/service/internal/data"
 
 	pagination "github.com/tx7do/kratos-bootstrap/api/gen/go/pagination/v1"
-	v1 "kratos-cms/api/gen/go/user/service/v1"
+	userV1 "kratos-cms/api/gen/go/user/service/v1"
 )
 
 type UserService struct {
-	v1.UnimplementedUserServiceServer
+	userV1.UnimplementedUserServiceServer
 
 	uc  *data.UserRepo
 	log *log.Helper
@@ -28,7 +28,7 @@ func NewUserService(logger log.Logger, uc *data.UserRepo) *UserService {
 	}
 }
 
-func (s *UserService) ListUser(ctx context.Context, req *pagination.PagingRequest) (*v1.ListUserResponse, error) {
+func (s *UserService) ListUser(ctx context.Context, req *pagination.PagingRequest) (*userV1.ListUserResponse, error) {
 	resp, err := s.uc.List(ctx, req)
 	if err != nil {
 		return nil, err
@@ -41,7 +41,7 @@ func (s *UserService) ListUser(ctx context.Context, req *pagination.PagingReques
 	return resp, nil
 }
 
-func (s *UserService) GetUser(ctx context.Context, req *v1.GetUserRequest) (*v1.User, error) {
+func (s *UserService) GetUser(ctx context.Context, req *userV1.GetUserRequest) (*userV1.User, error) {
 	resp, err := s.uc.Get(ctx, req)
 	if err != nil {
 		return nil, err
@@ -52,7 +52,7 @@ func (s *UserService) GetUser(ctx context.Context, req *v1.GetUserRequest) (*v1.
 	return resp, nil
 }
 
-func (s *UserService) CreateUser(ctx context.Context, req *v1.CreateUserRequest) (*v1.User, error) {
+func (s *UserService) CreateUser(ctx context.Context, req *userV1.CreateUserRequest) (*userV1.User, error) {
 	resp, err := s.uc.Create(ctx, req)
 	if err != nil {
 		// s.log.Info(err)
@@ -64,7 +64,7 @@ func (s *UserService) CreateUser(ctx context.Context, req *v1.CreateUserRequest)
 	return resp, nil
 }
 
-func (s *UserService) UpdateUser(ctx context.Context, req *v1.UpdateUserRequest) (*v1.User, error) {
+func (s *UserService) UpdateUser(ctx context.Context, req *userV1.UpdateUserRequest) (*userV1.User, error) {
 	resp, err := s.uc.Update(ctx, req)
 	if err != nil {
 		// s.log.Info(err)
@@ -76,7 +76,7 @@ func (s *UserService) UpdateUser(ctx context.Context, req *v1.UpdateUserRequest)
 	return resp, nil
 }
 
-func (s *UserService) DeleteUser(ctx context.Context, req *v1.DeleteUserRequest) (*emptypb.Empty, error) {
+func (s *UserService) DeleteUser(ctx context.Context, req *userV1.DeleteUserRequest) (*emptypb.Empty, error) {
 	_, err := s.uc.Delete(ctx, req)
 	if err != nil {
 		return nil, err

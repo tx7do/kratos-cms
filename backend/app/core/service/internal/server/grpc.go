@@ -28,6 +28,7 @@ func NewGRPCServer(cfg *conf.Bootstrap, logger log.Logger,
 	userSvc *service.UserService,
 
 	attachmentSvc *service.AttachmentService,
+	fileSvc *service.FileService,
 ) *grpc.Server {
 	srv := rpc.CreateGrpcServer(cfg, logging.Server(logger))
 
@@ -39,6 +40,7 @@ func NewGRPCServer(cfg *conf.Bootstrap, logger log.Logger,
 	contentV1.RegisterTagServiceServer(srv, tagSvc)
 
 	fileV1.RegisterAttachmentServiceServer(srv, attachmentSvc)
+	fileV1.RegisterFileServiceServer(srv, fileSvc)
 
 	userV1.RegisterUserServiceServer(srv, userSvc)
 
