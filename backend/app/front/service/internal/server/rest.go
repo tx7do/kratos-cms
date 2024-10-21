@@ -23,8 +23,10 @@ import (
 	"kratos-cms/app/front/service/cmd/server/assets"
 	"kratos-cms/app/front/service/internal/service"
 
-	frontV1 "kratos-cms/api/gen/go/front/service/v1"
+	"kratos-cms/pkg/cache"
 	"kratos-cms/pkg/middleware/auth"
+
+	frontV1 "kratos-cms/api/gen/go/front/service/v1"
 )
 
 // NewWhiteListMatcher 创建jwt白名单
@@ -39,12 +41,17 @@ func newRestWhiteListMatcher() selector.MatchFunc {
 }
 
 // NewMiddleware 创建中间件
-func newRestMiddleware(authenticator authnEngine.Authenticator, authorizer authzEngine.Engine, logger log.Logger) []middleware.Middleware {
+func newRestMiddleware(
+	logger log.Logger,
+	authenticator authnEngine.Authenticator,
+	authorizer authzEngine.Engine,
+	userToken *cache.UserToken,
+) []middleware.Middleware {
 	var ms []middleware.Middleware
 	ms = append(ms, logging.Server(logger))
 	ms = append(ms, selector.Server(
 		authn.Server(authenticator),
-		auth.Server(),
+		auth.Server(userToken),
 		authz.Server(authorizer),
 	).Match(newRestWhiteListMatcher()).Build())
 	return ms
@@ -54,6 +61,7 @@ func newRestMiddleware(authenticator authnEngine.Authenticator, authorizer authz
 func NewHTTPServer(
 	cfg *conf.Bootstrap, logger log.Logger,
 	authenticator authnEngine.Authenticator, authorizer authzEngine.Engine,
+	userToken *cache.UserToken,
 	authnSvc *service.AuthenticationService,
 	postSvc *service.PostService,
 	linkSvc *service.LinkService,
@@ -62,7 +70,7 @@ func NewHTTPServer(
 	tagSvc *service.TagService,
 	attachmentSvc *service.AttachmentService,
 ) *http.Server {
-	srv := rpc.CreateRestServer(cfg, newRestMiddleware(authenticator, authorizer, logger)...)
+	srv := rpc.CreateRestServer(cfg, newRestMiddleware(logger, authenticator, authorizer, userToken)...)
 
 	frontV1.RegisterAuthenticationServiceHTTPServer(srv, authnSvc)
 	frontV1.RegisterPostServiceHTTPServer(srv, postSvc)

@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"kratos-cms/pkg/cache"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware"
@@ -40,12 +41,17 @@ func newRestWhiteListMatcher() selector.MatchFunc {
 }
 
 // NewMiddleware 创建中间件
-func newRestMiddleware(authenticator authnEngine.Authenticator, authorizer authzEngine.Engine, logger log.Logger) []middleware.Middleware {
+func newRestMiddleware(
+	logger log.Logger,
+	authenticator authnEngine.Authenticator,
+	authorizer authzEngine.Engine,
+	userToken *cache.UserToken,
+) []middleware.Middleware {
 	var ms []middleware.Middleware
 	ms = append(ms, logging.Server(logger))
 	ms = append(ms, selector.Server(
 		authn.Server(authenticator),
-		auth.Server(),
+		auth.Server(userToken),
 		authz.Server(authorizer),
 	).Match(newRestWhiteListMatcher()).Build())
 	return ms
@@ -55,6 +61,7 @@ func newRestMiddleware(authenticator authnEngine.Authenticator, authorizer authz
 func NewHTTPServer(
 	cfg *conf.Bootstrap, logger log.Logger,
 	authenticator authnEngine.Authenticator, authorizer authzEngine.Engine,
+	userToken *cache.UserToken,
 	authnSvc *service.AuthenticationService,
 	userSvc *service.UserService,
 	postSvc *service.PostService,
@@ -64,7 +71,7 @@ func NewHTTPServer(
 	tagSvc *service.TagService,
 	attachmentSvc *service.AttachmentService,
 ) *http.Server {
-	srv := rpc.CreateRestServer(cfg, newRestMiddleware(authenticator, authorizer, logger)...)
+	srv := rpc.CreateRestServer(cfg, newRestMiddleware(logger, authenticator, authorizer, userToken)...)
 
 	adminV1.RegisterAuthenticationServiceHTTPServer(srv, authnSvc)
 	adminV1.RegisterPostServiceHTTPServer(srv, postSvc)

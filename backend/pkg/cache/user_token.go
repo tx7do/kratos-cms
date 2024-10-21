@@ -139,6 +139,26 @@ func (r *UserToken) GetRefreshToken(ctx context.Context, userId uint32) string {
 	return r.getRefreshTokenFromRedis(ctx, userId)
 }
 
+// IsExistAccessToken 访问令牌是否存在
+func (r *UserToken) IsExistAccessToken(ctx context.Context, userId uint32) bool {
+	key := fmt.Sprintf("%s%d", r.accessTokenKeyPrefix, userId)
+	n, err := r.rdb.Exists(ctx, key).Result()
+	if err != nil {
+		return false
+	}
+	return n > 0
+}
+
+// IsExistRefreshToken 刷新令牌是否存在
+func (r *UserToken) IsExistRefreshToken(ctx context.Context, userId uint32) bool {
+	key := fmt.Sprintf("%s%d", r.refreshTokenKeyPrefix, userId)
+	n, err := r.rdb.Exists(ctx, key).Result()
+	if err != nil {
+		return false
+	}
+	return n > 0
+}
+
 func (r *UserToken) setAccessTokenToRedis(ctx context.Context, userId uint32, token string, expires int32) error {
 	key := fmt.Sprintf("%s%d", r.accessTokenKeyPrefix, userId)
 	return r.rdb.Set(ctx, key, token, time.Duration(expires)).Err()
