@@ -22,14 +22,14 @@ import (
 func initApp(logger log.Logger, registrar registry.Registrar, bootstrap *v1.Bootstrap) (*kratos.App, func(), error) {
 	authenticator := data.NewAuthenticator(bootstrap)
 	engine := data.NewAuthorizer()
-	discovery := data.NewDiscovery(bootstrap)
-	userServiceClient := data.NewUserServiceClient(discovery, bootstrap)
 	client := data.NewRedisClient(bootstrap, logger)
 	dataData, cleanup, err := data.NewData(client, authenticator, engine, logger)
 	if err != nil {
 		return nil, nil, err
 	}
 	userToken := data.NewUserTokenRepo(dataData, authenticator, logger)
+	discovery := data.NewDiscovery(bootstrap)
+	userServiceClient := data.NewUserServiceClient(discovery, bootstrap)
 	authenticationService := service.NewAuthenticationService(logger, userServiceClient, userToken)
 	userService := service.NewUserService(logger, userServiceClient)
 	postServiceClient := data.NewPostServiceClient(discovery, bootstrap)
@@ -44,7 +44,7 @@ func initApp(logger log.Logger, registrar registry.Registrar, bootstrap *v1.Boot
 	tagService := service.NewTagService(logger, tagServiceClient)
 	attachmentServiceClient := data.NewAttachmentServiceClient(discovery, bootstrap)
 	attachmentService := service.NewAttachmentService(logger, attachmentServiceClient)
-	httpServer := server.NewHTTPServer(bootstrap, logger, authenticator, engine, authenticationService, userService, postService, linkService, categoryService, commentService, tagService, attachmentService)
+	httpServer := server.NewHTTPServer(bootstrap, logger, authenticator, engine, userToken, authenticationService, userService, postService, linkService, categoryService, commentService, tagService, attachmentService)
 	app := newApp(logger, registrar, httpServer)
 	return app, func() {
 		cleanup()
