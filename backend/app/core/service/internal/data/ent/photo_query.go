@@ -9,6 +9,8 @@ import (
 	"kratos-cms/app/core/service/internal/data/ent/predicate"
 	"math"
 
+	"entgo.io/ent"
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
@@ -61,7 +63,7 @@ func (pq *PhotoQuery) Order(o ...photo.OrderOption) *PhotoQuery {
 // First returns the first Photo entity from the query.
 // Returns a *NotFoundError when no Photo was found.
 func (pq *PhotoQuery) First(ctx context.Context) (*Photo, error) {
-	nodes, err := pq.Limit(1).All(setContextOp(ctx, pq.ctx, "First"))
+	nodes, err := pq.Limit(1).All(setContextOp(ctx, pq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +86,7 @@ func (pq *PhotoQuery) FirstX(ctx context.Context) *Photo {
 // Returns a *NotFoundError when no Photo ID was found.
 func (pq *PhotoQuery) FirstID(ctx context.Context) (id uint32, err error) {
 	var ids []uint32
-	if ids, err = pq.Limit(1).IDs(setContextOp(ctx, pq.ctx, "FirstID")); err != nil {
+	if ids, err = pq.Limit(1).IDs(setContextOp(ctx, pq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -107,7 +109,7 @@ func (pq *PhotoQuery) FirstIDX(ctx context.Context) uint32 {
 // Returns a *NotSingularError when more than one Photo entity is found.
 // Returns a *NotFoundError when no Photo entities are found.
 func (pq *PhotoQuery) Only(ctx context.Context) (*Photo, error) {
-	nodes, err := pq.Limit(2).All(setContextOp(ctx, pq.ctx, "Only"))
+	nodes, err := pq.Limit(2).All(setContextOp(ctx, pq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +137,7 @@ func (pq *PhotoQuery) OnlyX(ctx context.Context) *Photo {
 // Returns a *NotFoundError when no entities are found.
 func (pq *PhotoQuery) OnlyID(ctx context.Context) (id uint32, err error) {
 	var ids []uint32
-	if ids, err = pq.Limit(2).IDs(setContextOp(ctx, pq.ctx, "OnlyID")); err != nil {
+	if ids, err = pq.Limit(2).IDs(setContextOp(ctx, pq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -160,7 +162,7 @@ func (pq *PhotoQuery) OnlyIDX(ctx context.Context) uint32 {
 
 // All executes the query and returns a list of Photos.
 func (pq *PhotoQuery) All(ctx context.Context) ([]*Photo, error) {
-	ctx = setContextOp(ctx, pq.ctx, "All")
+	ctx = setContextOp(ctx, pq.ctx, ent.OpQueryAll)
 	if err := pq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
@@ -182,7 +184,7 @@ func (pq *PhotoQuery) IDs(ctx context.Context) (ids []uint32, err error) {
 	if pq.ctx.Unique == nil && pq.path != nil {
 		pq.Unique(true)
 	}
-	ctx = setContextOp(ctx, pq.ctx, "IDs")
+	ctx = setContextOp(ctx, pq.ctx, ent.OpQueryIDs)
 	if err = pq.Select(photo.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -200,7 +202,7 @@ func (pq *PhotoQuery) IDsX(ctx context.Context) []uint32 {
 
 // Count returns the count of the given query.
 func (pq *PhotoQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, pq.ctx, "Count")
+	ctx = setContextOp(ctx, pq.ctx, ent.OpQueryCount)
 	if err := pq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
@@ -218,7 +220,7 @@ func (pq *PhotoQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (pq *PhotoQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, pq.ctx, "Exist")
+	ctx = setContextOp(ctx, pq.ctx, ent.OpQueryExist)
 	switch _, err := pq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
@@ -251,8 +253,9 @@ func (pq *PhotoQuery) Clone() *PhotoQuery {
 		inters:     append([]Interceptor{}, pq.inters...),
 		predicates: append([]predicate.Photo{}, pq.predicates...),
 		// clone intermediate query.
-		sql:  pq.sql.Clone(),
-		path: pq.path,
+		sql:       pq.sql.Clone(),
+		path:      pq.path,
+		modifiers: append([]func(*sql.Selector){}, pq.modifiers...),
 	}
 }
 
@@ -445,6 +448,32 @@ func (pq *PhotoQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	return selector
 }
 
+// ForUpdate locks the selected rows against concurrent updates, and prevent them from being
+// updated, deleted or "selected ... for update" by other sessions, until the transaction is
+// either committed or rolled-back.
+func (pq *PhotoQuery) ForUpdate(opts ...sql.LockOption) *PhotoQuery {
+	if pq.driver.Dialect() == dialect.Postgres {
+		pq.Unique(false)
+	}
+	pq.modifiers = append(pq.modifiers, func(s *sql.Selector) {
+		s.ForUpdate(opts...)
+	})
+	return pq
+}
+
+// ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
+// on any rows that are read. Other sessions can read the rows, but cannot modify them
+// until your transaction commits.
+func (pq *PhotoQuery) ForShare(opts ...sql.LockOption) *PhotoQuery {
+	if pq.driver.Dialect() == dialect.Postgres {
+		pq.Unique(false)
+	}
+	pq.modifiers = append(pq.modifiers, func(s *sql.Selector) {
+		s.ForShare(opts...)
+	})
+	return pq
+}
+
 // Modify adds a query modifier for attaching custom logic to queries.
 func (pq *PhotoQuery) Modify(modifiers ...func(s *sql.Selector)) *PhotoSelect {
 	pq.modifiers = append(pq.modifiers, modifiers...)
@@ -465,7 +494,7 @@ func (pgb *PhotoGroupBy) Aggregate(fns ...AggregateFunc) *PhotoGroupBy {
 
 // Scan applies the selector query and scans the result into the given value.
 func (pgb *PhotoGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, pgb.build.ctx, "GroupBy")
+	ctx = setContextOp(ctx, pgb.build.ctx, ent.OpQueryGroupBy)
 	if err := pgb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
@@ -513,7 +542,7 @@ func (ps *PhotoSelect) Aggregate(fns ...AggregateFunc) *PhotoSelect {
 
 // Scan applies the selector query and scans the result into the given value.
 func (ps *PhotoSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, ps.ctx, "Select")
+	ctx = setContextOp(ctx, ps.ctx, ent.OpQuerySelect)
 	if err := ps.prepareQuery(ctx); err != nil {
 		return err
 	}

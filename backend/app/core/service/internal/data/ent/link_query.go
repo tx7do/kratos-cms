@@ -9,6 +9,8 @@ import (
 	"kratos-cms/app/core/service/internal/data/ent/predicate"
 	"math"
 
+	"entgo.io/ent"
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
@@ -61,7 +63,7 @@ func (lq *LinkQuery) Order(o ...link.OrderOption) *LinkQuery {
 // First returns the first Link entity from the query.
 // Returns a *NotFoundError when no Link was found.
 func (lq *LinkQuery) First(ctx context.Context) (*Link, error) {
-	nodes, err := lq.Limit(1).All(setContextOp(ctx, lq.ctx, "First"))
+	nodes, err := lq.Limit(1).All(setContextOp(ctx, lq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +86,7 @@ func (lq *LinkQuery) FirstX(ctx context.Context) *Link {
 // Returns a *NotFoundError when no Link ID was found.
 func (lq *LinkQuery) FirstID(ctx context.Context) (id uint32, err error) {
 	var ids []uint32
-	if ids, err = lq.Limit(1).IDs(setContextOp(ctx, lq.ctx, "FirstID")); err != nil {
+	if ids, err = lq.Limit(1).IDs(setContextOp(ctx, lq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -107,7 +109,7 @@ func (lq *LinkQuery) FirstIDX(ctx context.Context) uint32 {
 // Returns a *NotSingularError when more than one Link entity is found.
 // Returns a *NotFoundError when no Link entities are found.
 func (lq *LinkQuery) Only(ctx context.Context) (*Link, error) {
-	nodes, err := lq.Limit(2).All(setContextOp(ctx, lq.ctx, "Only"))
+	nodes, err := lq.Limit(2).All(setContextOp(ctx, lq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +137,7 @@ func (lq *LinkQuery) OnlyX(ctx context.Context) *Link {
 // Returns a *NotFoundError when no entities are found.
 func (lq *LinkQuery) OnlyID(ctx context.Context) (id uint32, err error) {
 	var ids []uint32
-	if ids, err = lq.Limit(2).IDs(setContextOp(ctx, lq.ctx, "OnlyID")); err != nil {
+	if ids, err = lq.Limit(2).IDs(setContextOp(ctx, lq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -160,7 +162,7 @@ func (lq *LinkQuery) OnlyIDX(ctx context.Context) uint32 {
 
 // All executes the query and returns a list of Links.
 func (lq *LinkQuery) All(ctx context.Context) ([]*Link, error) {
-	ctx = setContextOp(ctx, lq.ctx, "All")
+	ctx = setContextOp(ctx, lq.ctx, ent.OpQueryAll)
 	if err := lq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
@@ -182,7 +184,7 @@ func (lq *LinkQuery) IDs(ctx context.Context) (ids []uint32, err error) {
 	if lq.ctx.Unique == nil && lq.path != nil {
 		lq.Unique(true)
 	}
-	ctx = setContextOp(ctx, lq.ctx, "IDs")
+	ctx = setContextOp(ctx, lq.ctx, ent.OpQueryIDs)
 	if err = lq.Select(link.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -200,7 +202,7 @@ func (lq *LinkQuery) IDsX(ctx context.Context) []uint32 {
 
 // Count returns the count of the given query.
 func (lq *LinkQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, lq.ctx, "Count")
+	ctx = setContextOp(ctx, lq.ctx, ent.OpQueryCount)
 	if err := lq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
@@ -218,7 +220,7 @@ func (lq *LinkQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (lq *LinkQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, lq.ctx, "Exist")
+	ctx = setContextOp(ctx, lq.ctx, ent.OpQueryExist)
 	switch _, err := lq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
@@ -251,8 +253,9 @@ func (lq *LinkQuery) Clone() *LinkQuery {
 		inters:     append([]Interceptor{}, lq.inters...),
 		predicates: append([]predicate.Link{}, lq.predicates...),
 		// clone intermediate query.
-		sql:  lq.sql.Clone(),
-		path: lq.path,
+		sql:       lq.sql.Clone(),
+		path:      lq.path,
+		modifiers: append([]func(*sql.Selector){}, lq.modifiers...),
 	}
 }
 
@@ -445,6 +448,32 @@ func (lq *LinkQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	return selector
 }
 
+// ForUpdate locks the selected rows against concurrent updates, and prevent them from being
+// updated, deleted or "selected ... for update" by other sessions, until the transaction is
+// either committed or rolled-back.
+func (lq *LinkQuery) ForUpdate(opts ...sql.LockOption) *LinkQuery {
+	if lq.driver.Dialect() == dialect.Postgres {
+		lq.Unique(false)
+	}
+	lq.modifiers = append(lq.modifiers, func(s *sql.Selector) {
+		s.ForUpdate(opts...)
+	})
+	return lq
+}
+
+// ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
+// on any rows that are read. Other sessions can read the rows, but cannot modify them
+// until your transaction commits.
+func (lq *LinkQuery) ForShare(opts ...sql.LockOption) *LinkQuery {
+	if lq.driver.Dialect() == dialect.Postgres {
+		lq.Unique(false)
+	}
+	lq.modifiers = append(lq.modifiers, func(s *sql.Selector) {
+		s.ForShare(opts...)
+	})
+	return lq
+}
+
 // Modify adds a query modifier for attaching custom logic to queries.
 func (lq *LinkQuery) Modify(modifiers ...func(s *sql.Selector)) *LinkSelect {
 	lq.modifiers = append(lq.modifiers, modifiers...)
@@ -465,7 +494,7 @@ func (lgb *LinkGroupBy) Aggregate(fns ...AggregateFunc) *LinkGroupBy {
 
 // Scan applies the selector query and scans the result into the given value.
 func (lgb *LinkGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, lgb.build.ctx, "GroupBy")
+	ctx = setContextOp(ctx, lgb.build.ctx, ent.OpQueryGroupBy)
 	if err := lgb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
@@ -513,7 +542,7 @@ func (ls *LinkSelect) Aggregate(fns ...AggregateFunc) *LinkSelect {
 
 // Scan applies the selector query and scans the result into the given value.
 func (ls *LinkSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, ls.ctx, "Select")
+	ctx = setContextOp(ctx, ls.ctx, ent.OpQuerySelect)
 	if err := ls.prepareQuery(ctx); err != nil {
 		return err
 	}

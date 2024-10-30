@@ -9,6 +9,8 @@ import (
 	"kratos-cms/app/core/service/internal/data/ent/predicate"
 	"math"
 
+	"entgo.io/ent"
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
@@ -61,7 +63,7 @@ func (aq *AttachmentQuery) Order(o ...attachment.OrderOption) *AttachmentQuery {
 // First returns the first Attachment entity from the query.
 // Returns a *NotFoundError when no Attachment was found.
 func (aq *AttachmentQuery) First(ctx context.Context) (*Attachment, error) {
-	nodes, err := aq.Limit(1).All(setContextOp(ctx, aq.ctx, "First"))
+	nodes, err := aq.Limit(1).All(setContextOp(ctx, aq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +86,7 @@ func (aq *AttachmentQuery) FirstX(ctx context.Context) *Attachment {
 // Returns a *NotFoundError when no Attachment ID was found.
 func (aq *AttachmentQuery) FirstID(ctx context.Context) (id uint32, err error) {
 	var ids []uint32
-	if ids, err = aq.Limit(1).IDs(setContextOp(ctx, aq.ctx, "FirstID")); err != nil {
+	if ids, err = aq.Limit(1).IDs(setContextOp(ctx, aq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -107,7 +109,7 @@ func (aq *AttachmentQuery) FirstIDX(ctx context.Context) uint32 {
 // Returns a *NotSingularError when more than one Attachment entity is found.
 // Returns a *NotFoundError when no Attachment entities are found.
 func (aq *AttachmentQuery) Only(ctx context.Context) (*Attachment, error) {
-	nodes, err := aq.Limit(2).All(setContextOp(ctx, aq.ctx, "Only"))
+	nodes, err := aq.Limit(2).All(setContextOp(ctx, aq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +137,7 @@ func (aq *AttachmentQuery) OnlyX(ctx context.Context) *Attachment {
 // Returns a *NotFoundError when no entities are found.
 func (aq *AttachmentQuery) OnlyID(ctx context.Context) (id uint32, err error) {
 	var ids []uint32
-	if ids, err = aq.Limit(2).IDs(setContextOp(ctx, aq.ctx, "OnlyID")); err != nil {
+	if ids, err = aq.Limit(2).IDs(setContextOp(ctx, aq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -160,7 +162,7 @@ func (aq *AttachmentQuery) OnlyIDX(ctx context.Context) uint32 {
 
 // All executes the query and returns a list of Attachments.
 func (aq *AttachmentQuery) All(ctx context.Context) ([]*Attachment, error) {
-	ctx = setContextOp(ctx, aq.ctx, "All")
+	ctx = setContextOp(ctx, aq.ctx, ent.OpQueryAll)
 	if err := aq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
@@ -182,7 +184,7 @@ func (aq *AttachmentQuery) IDs(ctx context.Context) (ids []uint32, err error) {
 	if aq.ctx.Unique == nil && aq.path != nil {
 		aq.Unique(true)
 	}
-	ctx = setContextOp(ctx, aq.ctx, "IDs")
+	ctx = setContextOp(ctx, aq.ctx, ent.OpQueryIDs)
 	if err = aq.Select(attachment.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -200,7 +202,7 @@ func (aq *AttachmentQuery) IDsX(ctx context.Context) []uint32 {
 
 // Count returns the count of the given query.
 func (aq *AttachmentQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, aq.ctx, "Count")
+	ctx = setContextOp(ctx, aq.ctx, ent.OpQueryCount)
 	if err := aq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
@@ -218,7 +220,7 @@ func (aq *AttachmentQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (aq *AttachmentQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, aq.ctx, "Exist")
+	ctx = setContextOp(ctx, aq.ctx, ent.OpQueryExist)
 	switch _, err := aq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
@@ -251,8 +253,9 @@ func (aq *AttachmentQuery) Clone() *AttachmentQuery {
 		inters:     append([]Interceptor{}, aq.inters...),
 		predicates: append([]predicate.Attachment{}, aq.predicates...),
 		// clone intermediate query.
-		sql:  aq.sql.Clone(),
-		path: aq.path,
+		sql:       aq.sql.Clone(),
+		path:      aq.path,
+		modifiers: append([]func(*sql.Selector){}, aq.modifiers...),
 	}
 }
 
@@ -445,6 +448,32 @@ func (aq *AttachmentQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	return selector
 }
 
+// ForUpdate locks the selected rows against concurrent updates, and prevent them from being
+// updated, deleted or "selected ... for update" by other sessions, until the transaction is
+// either committed or rolled-back.
+func (aq *AttachmentQuery) ForUpdate(opts ...sql.LockOption) *AttachmentQuery {
+	if aq.driver.Dialect() == dialect.Postgres {
+		aq.Unique(false)
+	}
+	aq.modifiers = append(aq.modifiers, func(s *sql.Selector) {
+		s.ForUpdate(opts...)
+	})
+	return aq
+}
+
+// ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
+// on any rows that are read. Other sessions can read the rows, but cannot modify them
+// until your transaction commits.
+func (aq *AttachmentQuery) ForShare(opts ...sql.LockOption) *AttachmentQuery {
+	if aq.driver.Dialect() == dialect.Postgres {
+		aq.Unique(false)
+	}
+	aq.modifiers = append(aq.modifiers, func(s *sql.Selector) {
+		s.ForShare(opts...)
+	})
+	return aq
+}
+
 // Modify adds a query modifier for attaching custom logic to queries.
 func (aq *AttachmentQuery) Modify(modifiers ...func(s *sql.Selector)) *AttachmentSelect {
 	aq.modifiers = append(aq.modifiers, modifiers...)
@@ -465,7 +494,7 @@ func (agb *AttachmentGroupBy) Aggregate(fns ...AggregateFunc) *AttachmentGroupBy
 
 // Scan applies the selector query and scans the result into the given value.
 func (agb *AttachmentGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, agb.build.ctx, "GroupBy")
+	ctx = setContextOp(ctx, agb.build.ctx, ent.OpQueryGroupBy)
 	if err := agb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
@@ -513,7 +542,7 @@ func (as *AttachmentSelect) Aggregate(fns ...AggregateFunc) *AttachmentSelect {
 
 // Scan applies the selector query and scans the result into the given value.
 func (as *AttachmentSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, as.ctx, "Select")
+	ctx = setContextOp(ctx, as.ctx, ent.OpQuerySelect)
 	if err := as.prepareQuery(ctx); err != nil {
 		return err
 	}

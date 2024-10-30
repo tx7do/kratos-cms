@@ -9,6 +9,8 @@ import (
 	"kratos-cms/app/core/service/internal/data/ent/predicate"
 	"math"
 
+	"entgo.io/ent"
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
@@ -61,7 +63,7 @@ func (cq *CommentQuery) Order(o ...comment.OrderOption) *CommentQuery {
 // First returns the first Comment entity from the query.
 // Returns a *NotFoundError when no Comment was found.
 func (cq *CommentQuery) First(ctx context.Context) (*Comment, error) {
-	nodes, err := cq.Limit(1).All(setContextOp(ctx, cq.ctx, "First"))
+	nodes, err := cq.Limit(1).All(setContextOp(ctx, cq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +86,7 @@ func (cq *CommentQuery) FirstX(ctx context.Context) *Comment {
 // Returns a *NotFoundError when no Comment ID was found.
 func (cq *CommentQuery) FirstID(ctx context.Context) (id uint32, err error) {
 	var ids []uint32
-	if ids, err = cq.Limit(1).IDs(setContextOp(ctx, cq.ctx, "FirstID")); err != nil {
+	if ids, err = cq.Limit(1).IDs(setContextOp(ctx, cq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -107,7 +109,7 @@ func (cq *CommentQuery) FirstIDX(ctx context.Context) uint32 {
 // Returns a *NotSingularError when more than one Comment entity is found.
 // Returns a *NotFoundError when no Comment entities are found.
 func (cq *CommentQuery) Only(ctx context.Context) (*Comment, error) {
-	nodes, err := cq.Limit(2).All(setContextOp(ctx, cq.ctx, "Only"))
+	nodes, err := cq.Limit(2).All(setContextOp(ctx, cq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +137,7 @@ func (cq *CommentQuery) OnlyX(ctx context.Context) *Comment {
 // Returns a *NotFoundError when no entities are found.
 func (cq *CommentQuery) OnlyID(ctx context.Context) (id uint32, err error) {
 	var ids []uint32
-	if ids, err = cq.Limit(2).IDs(setContextOp(ctx, cq.ctx, "OnlyID")); err != nil {
+	if ids, err = cq.Limit(2).IDs(setContextOp(ctx, cq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -160,7 +162,7 @@ func (cq *CommentQuery) OnlyIDX(ctx context.Context) uint32 {
 
 // All executes the query and returns a list of Comments.
 func (cq *CommentQuery) All(ctx context.Context) ([]*Comment, error) {
-	ctx = setContextOp(ctx, cq.ctx, "All")
+	ctx = setContextOp(ctx, cq.ctx, ent.OpQueryAll)
 	if err := cq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
@@ -182,7 +184,7 @@ func (cq *CommentQuery) IDs(ctx context.Context) (ids []uint32, err error) {
 	if cq.ctx.Unique == nil && cq.path != nil {
 		cq.Unique(true)
 	}
-	ctx = setContextOp(ctx, cq.ctx, "IDs")
+	ctx = setContextOp(ctx, cq.ctx, ent.OpQueryIDs)
 	if err = cq.Select(comment.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -200,7 +202,7 @@ func (cq *CommentQuery) IDsX(ctx context.Context) []uint32 {
 
 // Count returns the count of the given query.
 func (cq *CommentQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, cq.ctx, "Count")
+	ctx = setContextOp(ctx, cq.ctx, ent.OpQueryCount)
 	if err := cq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
@@ -218,7 +220,7 @@ func (cq *CommentQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (cq *CommentQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, cq.ctx, "Exist")
+	ctx = setContextOp(ctx, cq.ctx, ent.OpQueryExist)
 	switch _, err := cq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
@@ -251,8 +253,9 @@ func (cq *CommentQuery) Clone() *CommentQuery {
 		inters:     append([]Interceptor{}, cq.inters...),
 		predicates: append([]predicate.Comment{}, cq.predicates...),
 		// clone intermediate query.
-		sql:  cq.sql.Clone(),
-		path: cq.path,
+		sql:       cq.sql.Clone(),
+		path:      cq.path,
+		modifiers: append([]func(*sql.Selector){}, cq.modifiers...),
 	}
 }
 
@@ -445,6 +448,32 @@ func (cq *CommentQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	return selector
 }
 
+// ForUpdate locks the selected rows against concurrent updates, and prevent them from being
+// updated, deleted or "selected ... for update" by other sessions, until the transaction is
+// either committed or rolled-back.
+func (cq *CommentQuery) ForUpdate(opts ...sql.LockOption) *CommentQuery {
+	if cq.driver.Dialect() == dialect.Postgres {
+		cq.Unique(false)
+	}
+	cq.modifiers = append(cq.modifiers, func(s *sql.Selector) {
+		s.ForUpdate(opts...)
+	})
+	return cq
+}
+
+// ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
+// on any rows that are read. Other sessions can read the rows, but cannot modify them
+// until your transaction commits.
+func (cq *CommentQuery) ForShare(opts ...sql.LockOption) *CommentQuery {
+	if cq.driver.Dialect() == dialect.Postgres {
+		cq.Unique(false)
+	}
+	cq.modifiers = append(cq.modifiers, func(s *sql.Selector) {
+		s.ForShare(opts...)
+	})
+	return cq
+}
+
 // Modify adds a query modifier for attaching custom logic to queries.
 func (cq *CommentQuery) Modify(modifiers ...func(s *sql.Selector)) *CommentSelect {
 	cq.modifiers = append(cq.modifiers, modifiers...)
@@ -465,7 +494,7 @@ func (cgb *CommentGroupBy) Aggregate(fns ...AggregateFunc) *CommentGroupBy {
 
 // Scan applies the selector query and scans the result into the given value.
 func (cgb *CommentGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, cgb.build.ctx, "GroupBy")
+	ctx = setContextOp(ctx, cgb.build.ctx, ent.OpQueryGroupBy)
 	if err := cgb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
@@ -513,7 +542,7 @@ func (cs *CommentSelect) Aggregate(fns ...AggregateFunc) *CommentSelect {
 
 // Scan applies the selector query and scans the result into the given value.
 func (cs *CommentSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, cs.ctx, "Select")
+	ctx = setContextOp(ctx, cs.ctx, ent.OpQuerySelect)
 	if err := cs.prepareQuery(ctx); err != nil {
 		return err
 	}
