@@ -27,12 +27,12 @@ require (
 	github.com/tx7do/kratos-authn/middleware v1.1.1
 	github.com/tx7do/kratos-authz v1.0.1
 	github.com/tx7do/kratos-authz/middleware v1.0.1
-	github.com/tx7do/kratos-bootstrap v0.3.13
+	github.com/tx7do/kratos-bootstrap v0.3.14
 	github.com/tx7do/kratos-bootstrap/api v0.0.5
 	github.com/tx7do/kratos-bootstrap/cache/redis v0.0.5
 	github.com/tx7do/kratos-bootstrap/oss/minio v0.0.5
 	github.com/tx7do/kratos-swagger-ui v0.0.0-20240514132937-bdf9b35be16c
-	google.golang.org/genproto/googleapis/api v0.0.0-20241104194629-dd2ea8efbc28
+	google.golang.org/genproto/googleapis/api v0.0.0-20241113154021-e0fbfb71d213
 	google.golang.org/grpc v1.68.0
 	google.golang.org/protobuf v1.35.1
 )
@@ -230,7 +230,7 @@ require (
 	golang.org/x/text v0.20.0 // indirect
 	golang.org/x/time v0.8.0 // indirect
 	golang.org/x/tools v0.27.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20241104194629-dd2ea8efbc28 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20241113154021-e0fbfb71d213 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
