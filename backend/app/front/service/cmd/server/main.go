@@ -7,7 +7,7 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/http"
 
 	"github.com/tx7do/go-utils/trans"
-	bootstrap "github.com/tx7do/kratos-bootstrap"
+	bootstrap "github.com/tx7do/kratos-bootstrap/bootstrap"
 
 	"kratos-cms/pkg/service"
 )
