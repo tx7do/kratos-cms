@@ -82,7 +82,7 @@ func verifyAccessToken(ctx context.Context, userToken *cache.UserToken, authnCla
 	}
 
 	// 校验访问令牌是否存在
-	if userToken.IsExistAccessToken(ctx, uint32(userId)) {
+	if !userToken.IsExistAccessToken(ctx, uint32(userId)) {
 		return ErrAccessTokenExpired
 	}
 
