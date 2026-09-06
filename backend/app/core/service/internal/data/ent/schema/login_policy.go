@@ -47,11 +47,12 @@ func (LoginPolicy) Fields() []ent.Field {
 
 		field.Enum("type").
 			Comment("限制类型").
+			// 取值须与 authentication.service.v1.LoginPolicy.Type 枚举名一致
 			NamedValues(
-				"Blacklist", "BLACK_LIST",
-				"Whitelist", "WHITE_LIST",
+				"Blacklist", "BLACKLIST",
+				"Whitelist", "WHITELIST",
 			).
-			Default("BLACK_LIST").
+			Default("BLACKLIST").
 			Optional().
 			Nillable(),
 

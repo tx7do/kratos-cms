@@ -182,6 +182,10 @@ function openDrawer(row?: any) {
   drawerApi.open();
 }
 
+function handleCreate() {
+  openDrawer();
+}
+
 function handleEdit(row: any) {
   openDrawer(row);
 }
@@ -202,6 +206,15 @@ function handleDelete(row: any) {
 <template>
   <Page auto-content-height>
     <Grid :table-title="$t('page.contentModel.moduleName')">
+      <template #toolbar-tools>
+        <a-button
+          type="primary"
+          class="mr-2"
+          @click="handleCreate"
+        >
+          {{ $t('ui.button.create', { moduleName: $t('page.contentModel.moduleName') }) }}
+        </a-button>
+      </template>
       <template #action="{ row }">
         <a-button
           type="link"

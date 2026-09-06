@@ -374,6 +374,11 @@ func (r *PageTranslationRepo) ListAvailedLanguages(ctx context.Context, pageId u
 }
 
 func (r *PageTranslationRepo) PrepareTranslation(ctx context.Context, pt *ent.PageTranslationClient, data *contentV1.PageTranslation) error {
+	// 调用方已显式提供 slug 时不覆盖，尊重用户输入
+	if data.GetSlug() != "" {
+		return nil
+	}
+
 	baseSlug := slug.Generate(data.GetTitle())
 	slugCount, err := r.countByBaseSlug(ctx, pt, baseSlug)
 	if err != nil {

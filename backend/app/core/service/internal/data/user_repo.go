@@ -14,6 +14,7 @@ import (
 	entCrud "github.com/tx7do/go-crud/entgo"
 	"github.com/tx7do/go-crud/pagination"
 	paginationFilter "github.com/tx7do/go-crud/pagination/filter"
+	"github.com/tx7do/go-crud/viewer"
 
 	"github.com/tx7do/go-utils/copierutil"
 	"github.com/tx7do/go-utils/mapper"
@@ -860,9 +861,14 @@ func (r *userRepo) UserExists(ctx context.Context, req *identityV1.UserExistsReq
 	case *identityV1.UserExistsRequest_Id:
 		builder.Where(user.IDEQ(req.GetId()))
 	case *identityV1.UserExistsRequest_Username:
-		// username 仅在 (tenant_id, username) 维度唯一，平台上下文(tid=0)下按 username 查存在性
-		// 会跨租户泄露（任意租户有同名即 true）。仅允许在具名租户上下文(tid>0)下查询。
-		if _, hasTenant := maybeTenantFromViewer(ctx); !hasTenant {
+		// username 仅在 (tenant_id, username) 维度唯一：
+		// - 具名租户上下文(tid>0)：限定本租户内查询；
+		// - 平台管理员(tid=0)：跨租户全局查询——创建新租户时没有租户上下文可用，
+		//   需要校验管理员用户名全局占用情况；平台管理员本身受信，无探测泄露问题；
+		// - 未认证上下文：拒绝，防止匿名探测。
+		if tid, hasTenant := maybeTenantFromViewer(ctx); hasTenant {
+			builder.Where(user.TenantIDEQ(tid))
+		} else if _, authed := viewer.FromContext(ctx); !authed {
 			return &identityV1.UserExistsResponse{Exist: false}, identityV1.ErrorBadRequest("tenant scope required to check user exists by username")
 		}
 		builder.Where(user.UsernameEQ(req.GetUsername()))

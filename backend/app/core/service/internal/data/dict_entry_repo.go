@@ -230,7 +230,8 @@ func (r *DictEntryRepo) Create(ctx context.Context, req *dictV1.CreateDictEntryR
 		SetNillableCreatedBy(req.Data.CreatedBy).
 		SetCreatedAt(time.Now())
 
-	if req.Data.TypeId == nil {
+	// 条件不能写反：仅在携带 type_id 时才设置，否则关联类型丢失
+	if req.Data.TypeId != nil {
 		builder.SetDictTypeID(req.Data.GetTypeId())
 	}
 

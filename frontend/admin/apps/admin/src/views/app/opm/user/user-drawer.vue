@@ -74,6 +74,8 @@ const [BaseForm, baseFormApi] = useVbenForm({
       component: 'ApiTreeSelect',
       fieldName: 'roleIds',
       label: $t('page.user.form.role'),
+      // 后端创建用户时 role_ids 必填，前端校验需保持一致，否则 400 后表单数据全部丢失
+      rules: 'selectRequired',
       componentProps: {
         placeholder: $t('ui.placeholder.select'),
         showSearch: true,

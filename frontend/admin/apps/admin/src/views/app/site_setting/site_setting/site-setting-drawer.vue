@@ -53,10 +53,13 @@ const [BaseForm, baseFormApi] = useVbenForm({
       component: 'InputNumber',
       fieldName: 'siteId',
       label: $t('page.siteSetting.siteId'),
+      // 字段级 defaultValue 才会写入表单 model；
+      // 放在 componentProps 里只影响显示，校验仍视为空
+      defaultValue: 1,
       componentProps: {
         placeholder: $t('ui.placeholder.input'),
         allowClear: true,
-        defaultValue: 1,
+        min: 1,
       },
       rules: 'required',
     },

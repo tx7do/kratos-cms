@@ -273,7 +273,8 @@ export const useCategoryEditViewStore = defineStore('category-edit-view', {
           icon: this.formData.icon,
           isNav: this.formData.isNav,
           sortOrder: this.formData.sortOrder,
-          status: this.formData.status,
+          // “发布”语义：未显式选择状态时默认启用，避免落库为空状态
+          status: this.formData.status || 'CATEGORY_STATUS_ACTIVE',
           contentModelId: this.formData.contentModelId,
           customFields: this.formData.customFields,
           translations: [

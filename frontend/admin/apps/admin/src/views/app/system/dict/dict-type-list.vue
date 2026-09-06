@@ -156,7 +156,7 @@ async function handleDelete(row: any) {
   console.log('删除', row);
 
   try {
-    await apiClient.dictTypeService.Delete({ id: row.id } as any);
+    await apiClient.dictTypeService.Delete({ ids: [row.id] });
 
     notification.success({
       message: $t('ui.notification.delete_success'),

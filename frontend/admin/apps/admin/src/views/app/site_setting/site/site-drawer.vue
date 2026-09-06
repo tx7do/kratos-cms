@@ -160,23 +160,35 @@ const [Drawer, drawerApi] = useVbenDrawer({
     const values = await baseFormApi.getValues();
     const isCreate = data.value?.create;
 
-    // 桥接：alternateDomainsText（换行分隔文本）↔ alternateDomains（string[]）
+    // 桥接：alternateDomainsText（换行分隔文本）→ alternateDomains（string[]）
     const rawText = (values as any).alternateDomainsText ?? '';
-    const alternateDomains = (rawText as string)
+    const alternateDomains = String(rawText)
       .split('\n')
       .map((s) => s.trim())
       .filter(Boolean);
-    (values as any).alternateDomains = alternateDomains;
-    delete (values as any).alternateDomainsText;
+
+    // 显式白名单构造 payload：row 回填残留（id/updatedBy/createdAt 等）或
+    // 表单辅助字段（alternateDomainsText）一旦混入 updateMask，proto 校验会整体拒绝
+    const payload: Record<string, any> = {
+      name: values.name,
+      slug: values.slug,
+      domain: values.domain,
+      status: values.status,
+      isDefault: values.isDefault,
+      defaultLocale: values.defaultLocale,
+      template: values.template,
+      theme: values.theme,
+      alternateDomains,
+    };
 
     (async () => {
       try {
         await (isCreate
-          ? apiClient.siteService.Create({ data: { ...values } as any })
+          ? apiClient.siteService.Create({ data: { ...payload } as any })
           : apiClient.siteService.Update({
               id: data.value.row.id,
-              data: { ...values } as any,
-              updateMask: makeUpdateMask(Object.keys(values)),
+              data: payload,
+              updateMask: makeUpdateMask(Object.keys(payload)),
             }));
 
         notification.success({

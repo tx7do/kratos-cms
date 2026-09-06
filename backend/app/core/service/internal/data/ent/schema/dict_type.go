@@ -62,7 +62,8 @@ func (DictType) Mixin() []ent.Mixin {
 func (DictType) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.To("entries", DictEntry.Type).
-			Required().
+			// 不允许 Required：创建字典类型时不强制内联字典项，
+			// 否则单独创建类型会因缺少子实体直接失败
 			Annotations(entsql.Annotation{
 				OnDelete: entsql.Cascade,
 			}).

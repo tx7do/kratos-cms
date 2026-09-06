@@ -193,6 +193,21 @@ export const usePageEditViewStore = defineStore('page-edit-view', {
           })),
         }));
 
+        // 区块重构后页面正文持久化在 sections 中，而主编辑器绑定 formData.content。
+        // 从首个正文区块（markdown/rich text）回填当前语言内容，保证编辑器
+        // 能看到已保存正文、发布校验有据可依。
+        const bodySection = (this.formData.sections ?? []).find(
+          (s) =>
+            s.type === 'SECTION_TYPE_MARKDOWN' ||
+            s.type === 'SECTION_TYPE_RICH_TEXT',
+        );
+        this.formData.content =
+          bodySection?.translations?.find(
+            (t) => t.languageCode === this.formData.lang,
+          )?.content ??
+          bodySection?.translations?.[0]?.content ??
+          '';
+
         // Try to load draft after fetching backend data
         // Draft will override backend data if exists
         this.loadPageDraft();
@@ -288,7 +303,51 @@ export const usePageEditViewStore = defineStore('page-edit-view', {
       if (!this.formData.slug) {
         return $t('page.page.validation.slugRequired');
       }
-      if (!this.formData.content) {
+
+      // 区块重构后正文持久化在 sections 中：发布前把主编辑器内容合并进
+      // 首个正文区块（无则创建），否则编辑器内容会被后端静默丢弃
+      const bodyType = String(this.formData.editorType || '').includes('RICH')
+        ? 'SECTION_TYPE_RICH_TEXT'
+        : 'SECTION_TYPE_MARKDOWN';
+      const sections = (this.formData.sections ?? []).map((s: any) => ({
+        ...s,
+        translations: [...(s.translations ?? [])],
+      }));
+      if ((this.formData.content ?? '').trim() !== '') {
+        let body = sections.find(
+          (s: any) =>
+            s.type === 'SECTION_TYPE_MARKDOWN' ||
+            s.type === 'SECTION_TYPE_RICH_TEXT',
+        );
+        if (!body) {
+          body = {
+            type: bodyType,
+            name: '',
+            sortOrder: 0,
+            config: {},
+            translations: [],
+          };
+          sections.unshift(body);
+        }
+        const tr = (body.translations as any[]).find(
+          (t) => t.languageCode === this.formData.lang,
+        );
+        if (tr) {
+          tr.content = this.formData.content;
+        } else {
+          body.translations.push({
+            languageCode: this.formData.lang,
+            content: this.formData.content,
+          });
+        }
+      }
+      const hasSectionContent = sections.some((s: any) =>
+        (s.translations ?? []).some((t) => (t.content ?? '').trim() !== ''),
+      );
+      if (
+        (this.formData.content ?? '').trim() === '' &&
+        !hasSectionContent
+      ) {
         return $t('page.page.validation.contentRequired');
       }
 
@@ -307,12 +366,11 @@ export const usePageEditViewStore = defineStore('page-edit-view', {
           sortOrder: this.formData.sortOrder,
           contentModelId: this.formData.contentModelId,
           customFields: this.formData.customFields,
-          sections: this.formData.sections,
+          sections,
           translations: [
             {
               title: this.formData.title,
               slug: this.formData.slug,
-              content: this.formData.content,
               languageCode: this.formData.lang,
             },
           ],

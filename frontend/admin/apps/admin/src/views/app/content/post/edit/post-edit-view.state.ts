@@ -299,6 +299,8 @@ export const usePostEditViewStore = defineStore('post-edit-view', {
 
       try {
         const data = {
+          // “发布”语义：无论新增还是编辑，落库状态必须是已发布
+          status: 'POST_STATUS_PUBLISHED',
           editorType: convertToEditorType(this.formData.editorType),
           categoryIds: this.formData.categoryIds || [],
           translations: [

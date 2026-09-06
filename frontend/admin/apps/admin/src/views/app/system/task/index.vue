@@ -144,13 +144,14 @@ const gridOptions: VxeGridProps<Task> = {
       formatter: 'formatDateTime',
       width: 140,
     },
-    { title: $t('ui.table.remark'), field: 'remark' },
+    { title: $t('ui.table.remark'), field: 'remark', minWidth: 120 },
     {
       title: $t('ui.table.action'),
       field: 'action',
       fixed: 'right',
       slots: { default: 'action' },
-      width: 190,
+      // 操作列需容纳 执行记录+5 个图标按钮，过窄会导致按钮溢出且点击被单元格遮挡
+      width: 300,
     },
   ],
 };

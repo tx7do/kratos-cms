@@ -301,17 +301,20 @@ func (r *PostTranslationRepo) UpsertTranslations(ctx context.Context, tx *ent.Tx
 // pt 必须传与调用方一致的事务/非事务客户端：事务内用非事务连接读同一张表，
 // 在 sqlite 内存库下会死锁，MySQL 下也会读到事务外快照。
 func (r *PostTranslationRepo) PrepareTranslation(ctx context.Context, pt *ent.PostTranslationClient, data *contentV1.PostTranslation) error {
-	baseSlug := slug.Generate(data.GetTitle())
-	slugCount, err := r.countByBaseSlug(ctx, pt, baseSlug)
-	if err != nil {
-		r.log.Errorf("count slug failed: %s", err.Error())
-		return contentV1.ErrorInternalServerError("count slug failed")
-	}
+	// 调用方已显式提供 slug 时不覆盖，尊重用户输入
+	if data.GetSlug() == "" {
+		baseSlug := slug.Generate(data.GetTitle())
+		slugCount, err := r.countByBaseSlug(ctx, pt, baseSlug)
+		if err != nil {
+			r.log.Errorf("count slug failed: %s", err.Error())
+			return contentV1.ErrorInternalServerError("count slug failed")
+		}
 
-	if slugCount > 0 {
-		baseSlug = slug.Generate(data.GetTitle()) + "-" + strconv.Itoa(int(slugCount))
+		if slugCount > 0 {
+			baseSlug = slug.Generate(data.GetTitle()) + "-" + strconv.Itoa(int(slugCount))
+		}
+		data.Slug = trans.Ptr(baseSlug)
 	}
-	data.Slug = trans.Ptr(baseSlug)
 
 	if len(data.GetSummary()) == 0 {
 		sm := summary.GenerateSummaryByRule(data.GetContent(), 100, true)

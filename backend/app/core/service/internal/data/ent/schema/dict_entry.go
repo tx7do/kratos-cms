@@ -63,7 +63,8 @@ func (DictEntry) Edges() []ent.Edge {
 			Unique(),
 
 		edge.To("i18ns", DictEntryI18n.Type).
-			Required().
+			// 不允许 Required：创建字典项时不强制内联多语言，
+			// 否则单独创建字典项会因缺少子实体直接失败
 			Annotations(entsql.Annotation{
 				OnDelete: entsql.Cascade,
 			}).

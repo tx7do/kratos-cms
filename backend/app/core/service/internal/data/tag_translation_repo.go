@@ -453,6 +453,11 @@ func (r *TagTranslationRepo) DeleteTranslation(ctx context.Context, req *content
 
 // tt 必须传与调用方一致的事务/非事务客户端（见 PostTranslationRepo.PrepareTranslation 注释）。
 func (r *TagTranslationRepo) PrepareTranslation(ctx context.Context, tt *ent.TagTranslationClient, data *contentV1.TagTranslation) error {
+	// 调用方已显式提供 slug 时不覆盖，尊重用户输入
+	if data.GetSlug() != "" {
+		return nil
+	}
+
 	baseSlug := slug.Generate(data.GetName())
 	slugCount, err := r.countByBaseSlug(ctx, tt, baseSlug)
 	if err != nil {

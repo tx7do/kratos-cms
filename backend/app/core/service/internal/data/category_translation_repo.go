@@ -442,6 +442,11 @@ func (r *CategoryTranslationRepo) DeleteTranslation(ctx context.Context, req *co
 }
 
 func (r *CategoryTranslationRepo) PrepareTranslation(ctx context.Context, ct *ent.CategoryTranslationClient, data *contentV1.CategoryTranslation) error {
+	// 调用方已显式提供 slug 时不覆盖，尊重用户输入
+	if data.GetSlug() != "" {
+		return nil
+	}
+
 	baseSlug := slug.Generate(data.GetName())
 	slugCount, err := r.countByBaseSlug(ctx, ct, baseSlug)
 	if err != nil {
