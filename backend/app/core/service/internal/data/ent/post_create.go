@@ -260,6 +260,20 @@ func (_c *PostCreate) SetNillableAuthorName(v *string) *PostCreate {
 	return _c
 }
 
+// SetThumbnail sets the "thumbnail" field.
+func (_c *PostCreate) SetThumbnail(v string) *PostCreate {
+	_c.mutation.SetThumbnail(v)
+	return _c
+}
+
+// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
+func (_c *PostCreate) SetNillableThumbnail(v *string) *PostCreate {
+	if v != nil {
+		_c.SetThumbnail(*v)
+	}
+	return _c
+}
+
 // SetPasswordHash sets the "password_hash" field.
 func (_c *PostCreate) SetPasswordHash(v string) *PostCreate {
 	_c.mutation.SetPasswordHash(v)
@@ -493,6 +507,10 @@ func (_c *PostCreate) createSpec() (*Post, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.AuthorName(); ok {
 		_spec.SetField(post.FieldAuthorName, field.TypeString, value)
 		_node.AuthorName = &value
+	}
+	if value, ok := _c.mutation.Thumbnail(); ok {
+		_spec.SetField(post.FieldThumbnail, field.TypeString, value)
+		_node.Thumbnail = &value
 	}
 	if value, ok := _c.mutation.PasswordHash(); ok {
 		_spec.SetField(post.FieldPasswordHash, field.TypeString, value)
@@ -855,6 +873,24 @@ func (u *PostUpsert) UpdateAuthorName() *PostUpsert {
 // ClearAuthorName clears the value of the "author_name" field.
 func (u *PostUpsert) ClearAuthorName() *PostUpsert {
 	u.SetNull(post.FieldAuthorName)
+	return u
+}
+
+// SetThumbnail sets the "thumbnail" field.
+func (u *PostUpsert) SetThumbnail(v string) *PostUpsert {
+	u.Set(post.FieldThumbnail, v)
+	return u
+}
+
+// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
+func (u *PostUpsert) UpdateThumbnail() *PostUpsert {
+	u.SetExcluded(post.FieldThumbnail)
+	return u
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (u *PostUpsert) ClearThumbnail() *PostUpsert {
+	u.SetNull(post.FieldThumbnail)
 	return u
 }
 
@@ -1313,6 +1349,27 @@ func (u *PostUpsertOne) UpdateAuthorName() *PostUpsertOne {
 func (u *PostUpsertOne) ClearAuthorName() *PostUpsertOne {
 	return u.Update(func(s *PostUpsert) {
 		s.ClearAuthorName()
+	})
+}
+
+// SetThumbnail sets the "thumbnail" field.
+func (u *PostUpsertOne) SetThumbnail(v string) *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.SetThumbnail(v)
+	})
+}
+
+// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
+func (u *PostUpsertOne) UpdateThumbnail() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateThumbnail()
+	})
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (u *PostUpsertOne) ClearThumbnail() *PostUpsertOne {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearThumbnail()
 	})
 }
 
@@ -1946,6 +2003,27 @@ func (u *PostUpsertBulk) UpdateAuthorName() *PostUpsertBulk {
 func (u *PostUpsertBulk) ClearAuthorName() *PostUpsertBulk {
 	return u.Update(func(s *PostUpsert) {
 		s.ClearAuthorName()
+	})
+}
+
+// SetThumbnail sets the "thumbnail" field.
+func (u *PostUpsertBulk) SetThumbnail(v string) *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.SetThumbnail(v)
+	})
+}
+
+// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
+func (u *PostUpsertBulk) UpdateThumbnail() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.UpdateThumbnail()
+	})
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (u *PostUpsertBulk) ClearThumbnail() *PostUpsertBulk {
+	return u.Update(func(s *PostUpsert) {
+		s.ClearThumbnail()
 	})
 }
 

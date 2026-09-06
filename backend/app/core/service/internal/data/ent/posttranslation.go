@@ -50,8 +50,6 @@ type PostTranslation struct {
 	Content *string `json:"content,omitempty"`
 	// 原始内容
 	OriginalContent *string `json:"original_content,omitempty"`
-	// 缩略图
-	Thumbnail *string `json:"thumbnail,omitempty"`
 	// 完整路径
 	FullPath *string `json:"full_path,omitempty"`
 	// 当前语言版本的字数
@@ -68,7 +66,7 @@ func (*PostTranslation) scanValues(columns []string) ([]any, error) {
 			values[i] = new([]byte)
 		case posttranslation.FieldID, posttranslation.FieldCreatedBy, posttranslation.FieldUpdatedBy, posttranslation.FieldDeletedBy, posttranslation.FieldTenantID, posttranslation.FieldPostID, posttranslation.FieldWordCount:
 			values[i] = new(sql.NullInt64)
-		case posttranslation.FieldLanguageCode, posttranslation.FieldTitle, posttranslation.FieldSlug, posttranslation.FieldSummary, posttranslation.FieldContent, posttranslation.FieldOriginalContent, posttranslation.FieldThumbnail, posttranslation.FieldFullPath:
+		case posttranslation.FieldLanguageCode, posttranslation.FieldTitle, posttranslation.FieldSlug, posttranslation.FieldSummary, posttranslation.FieldContent, posttranslation.FieldOriginalContent, posttranslation.FieldFullPath:
 			values[i] = new(sql.NullString)
 		case posttranslation.FieldCreatedAt, posttranslation.FieldUpdatedAt, posttranslation.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -199,13 +197,6 @@ func (_m *PostTranslation) assignValues(columns []string, values []any) error {
 				_m.OriginalContent = new(string)
 				*_m.OriginalContent = value.String
 			}
-		case posttranslation.FieldThumbnail:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field thumbnail", values[i])
-			} else if value.Valid {
-				_m.Thumbnail = new(string)
-				*_m.Thumbnail = value.String
-			}
 		case posttranslation.FieldFullPath:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field full_path", values[i])
@@ -326,11 +317,6 @@ func (_m *PostTranslation) String() string {
 	builder.WriteString(", ")
 	if v := _m.OriginalContent; v != nil {
 		builder.WriteString("original_content=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := _m.Thumbnail; v != nil {
-		builder.WriteString("thumbnail=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

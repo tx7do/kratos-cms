@@ -85,6 +85,10 @@ message Category {
     (gnostic.openapi.v3.property) = {description: "唯一代码（如 slug、编码等，便于唯一标识分类）"}
   ]; // 唯一代码（如 slug、编码等，便于唯一标识分类）
 
+  optional string thumbnail = 7 [
+    json_name = "thumbnail",
+    (gnostic.openapi.v3.property) = {description: "缩略图（全语言共用，存主表）"}
+  ]; // 缩略图（全语言共用，存主表）
 
   optional uint32 post_count = 10 [
     json_name = "postCount",
@@ -180,10 +184,8 @@ message CategoryTranslation {
     (gnostic.openapi.v3.property) = {description: "分类描述"}
   ]; // 分类描述
 
-  optional string thumbnail = 13 [
-    json_name = "thumbnail",
-    (gnostic.openapi.v3.property) = {description: "缩略图"}
-  ]; // 缩略图
+  reserved 13;
+  reserved "thumbnail"; // 缩略图已上移到主表 Category，全语言共用
 
   optional string cover_image = 14 [
     json_name = "coverImage",

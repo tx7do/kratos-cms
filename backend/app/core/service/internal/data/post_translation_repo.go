@@ -169,7 +169,6 @@ func (r *PostTranslationRepo) newCreateBuilder(pt *ent.PostTranslationClient, da
 		SetNillableSummary(data.Summary).
 		SetNillableContent(data.Content).
 		SetNillableOriginalContent(data.OriginalContent).
-		SetNillableThumbnail(data.Thumbnail).
 		SetNillableWordCount(data.WordCount).
 		SetNillableFullPath(data.FullPath).
 		SetNillableCreatedBy(data.CreatedBy).
@@ -269,7 +268,6 @@ func (r *PostTranslationRepo) UpsertTranslations(ctx context.Context, tx *ent.Tx
 			SetNillableSummary(data.Summary).
 			SetNillableContent(data.Content).
 			SetNillableOriginalContent(data.OriginalContent).
-			SetNillableThumbnail(data.Thumbnail).
 			SetNillableWordCount(data.WordCount).
 			SetNillableFullPath(data.FullPath).
 			SetUpdatedAt(time.Now())
@@ -371,7 +369,6 @@ func (r *PostTranslationRepo) UpdateTranslation(ctx context.Context, id uint32, 
 				SetNillableSummary(data.Summary).
 				SetNillableContent(data.Content).
 				SetNillableOriginalContent(data.OriginalContent).
-				SetNillableThumbnail(data.Thumbnail).
 				SetNillableWordCount(data.WordCount).
 				SetNillableFullPath(data.FullPath).
 				SetUpdatedAt(time.Now())

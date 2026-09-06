@@ -120,6 +120,11 @@ func Code(v string) predicate.Category {
 	return predicate.Category(sql.FieldEQ(FieldCode, v))
 }
 
+// Thumbnail applies equality check predicate on the "thumbnail" field. It's identical to ThumbnailEQ.
+func Thumbnail(v string) predicate.Category {
+	return predicate.Category(sql.FieldEQ(FieldThumbnail, v))
+}
+
 // PostCount applies equality check predicate on the "post_count" field. It's identical to PostCountEQ.
 func PostCount(v uint32) predicate.Category {
 	return predicate.Category(sql.FieldEQ(FieldPostCount, v))
@@ -843,6 +848,81 @@ func CodeEqualFold(v string) predicate.Category {
 // CodeContainsFold applies the ContainsFold predicate on the "code" field.
 func CodeContainsFold(v string) predicate.Category {
 	return predicate.Category(sql.FieldContainsFold(FieldCode, v))
+}
+
+// ThumbnailEQ applies the EQ predicate on the "thumbnail" field.
+func ThumbnailEQ(v string) predicate.Category {
+	return predicate.Category(sql.FieldEQ(FieldThumbnail, v))
+}
+
+// ThumbnailNEQ applies the NEQ predicate on the "thumbnail" field.
+func ThumbnailNEQ(v string) predicate.Category {
+	return predicate.Category(sql.FieldNEQ(FieldThumbnail, v))
+}
+
+// ThumbnailIn applies the In predicate on the "thumbnail" field.
+func ThumbnailIn(vs ...string) predicate.Category {
+	return predicate.Category(sql.FieldIn(FieldThumbnail, vs...))
+}
+
+// ThumbnailNotIn applies the NotIn predicate on the "thumbnail" field.
+func ThumbnailNotIn(vs ...string) predicate.Category {
+	return predicate.Category(sql.FieldNotIn(FieldThumbnail, vs...))
+}
+
+// ThumbnailGT applies the GT predicate on the "thumbnail" field.
+func ThumbnailGT(v string) predicate.Category {
+	return predicate.Category(sql.FieldGT(FieldThumbnail, v))
+}
+
+// ThumbnailGTE applies the GTE predicate on the "thumbnail" field.
+func ThumbnailGTE(v string) predicate.Category {
+	return predicate.Category(sql.FieldGTE(FieldThumbnail, v))
+}
+
+// ThumbnailLT applies the LT predicate on the "thumbnail" field.
+func ThumbnailLT(v string) predicate.Category {
+	return predicate.Category(sql.FieldLT(FieldThumbnail, v))
+}
+
+// ThumbnailLTE applies the LTE predicate on the "thumbnail" field.
+func ThumbnailLTE(v string) predicate.Category {
+	return predicate.Category(sql.FieldLTE(FieldThumbnail, v))
+}
+
+// ThumbnailContains applies the Contains predicate on the "thumbnail" field.
+func ThumbnailContains(v string) predicate.Category {
+	return predicate.Category(sql.FieldContains(FieldThumbnail, v))
+}
+
+// ThumbnailHasPrefix applies the HasPrefix predicate on the "thumbnail" field.
+func ThumbnailHasPrefix(v string) predicate.Category {
+	return predicate.Category(sql.FieldHasPrefix(FieldThumbnail, v))
+}
+
+// ThumbnailHasSuffix applies the HasSuffix predicate on the "thumbnail" field.
+func ThumbnailHasSuffix(v string) predicate.Category {
+	return predicate.Category(sql.FieldHasSuffix(FieldThumbnail, v))
+}
+
+// ThumbnailIsNil applies the IsNil predicate on the "thumbnail" field.
+func ThumbnailIsNil() predicate.Category {
+	return predicate.Category(sql.FieldIsNull(FieldThumbnail))
+}
+
+// ThumbnailNotNil applies the NotNil predicate on the "thumbnail" field.
+func ThumbnailNotNil() predicate.Category {
+	return predicate.Category(sql.FieldNotNull(FieldThumbnail))
+}
+
+// ThumbnailEqualFold applies the EqualFold predicate on the "thumbnail" field.
+func ThumbnailEqualFold(v string) predicate.Category {
+	return predicate.Category(sql.FieldEqualFold(FieldThumbnail, v))
+}
+
+// ThumbnailContainsFold applies the ContainsFold predicate on the "thumbnail" field.
+func ThumbnailContainsFold(v string) predicate.Category {
+	return predicate.Category(sql.FieldContainsFold(FieldThumbnail, v))
 }
 
 // PostCountEQ applies the EQ predicate on the "post_count" field.

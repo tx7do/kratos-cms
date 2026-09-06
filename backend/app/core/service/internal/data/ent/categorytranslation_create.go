@@ -197,20 +197,6 @@ func (_c *CategoryTranslationCreate) SetNillableDescription(v *string) *Category
 	return _c
 }
 
-// SetThumbnail sets the "thumbnail" field.
-func (_c *CategoryTranslationCreate) SetThumbnail(v string) *CategoryTranslationCreate {
-	_c.mutation.SetThumbnail(v)
-	return _c
-}
-
-// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
-func (_c *CategoryTranslationCreate) SetNillableThumbnail(v *string) *CategoryTranslationCreate {
-	if v != nil {
-		_c.SetThumbnail(*v)
-	}
-	return _c
-}
-
 // SetCoverImage sets the "cover_image" field.
 func (_c *CategoryTranslationCreate) SetCoverImage(v string) *CategoryTranslationCreate {
 	_c.mutation.SetCoverImage(v)
@@ -385,10 +371,6 @@ func (_c *CategoryTranslationCreate) createSpec() (*CategoryTranslation, *sqlgra
 	if value, ok := _c.mutation.Description(); ok {
 		_spec.SetField(categorytranslation.FieldDescription, field.TypeString, value)
 		_node.Description = &value
-	}
-	if value, ok := _c.mutation.Thumbnail(); ok {
-		_spec.SetField(categorytranslation.FieldThumbnail, field.TypeString, value)
-		_node.Thumbnail = &value
 	}
 	if value, ok := _c.mutation.CoverImage(); ok {
 		_spec.SetField(categorytranslation.FieldCoverImage, field.TypeString, value)
@@ -669,24 +651,6 @@ func (u *CategoryTranslationUpsert) UpdateDescription() *CategoryTranslationUpse
 // ClearDescription clears the value of the "description" field.
 func (u *CategoryTranslationUpsert) ClearDescription() *CategoryTranslationUpsert {
 	u.SetNull(categorytranslation.FieldDescription)
-	return u
-}
-
-// SetThumbnail sets the "thumbnail" field.
-func (u *CategoryTranslationUpsert) SetThumbnail(v string) *CategoryTranslationUpsert {
-	u.Set(categorytranslation.FieldThumbnail, v)
-	return u
-}
-
-// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
-func (u *CategoryTranslationUpsert) UpdateThumbnail() *CategoryTranslationUpsert {
-	u.SetExcluded(categorytranslation.FieldThumbnail)
-	return u
-}
-
-// ClearThumbnail clears the value of the "thumbnail" field.
-func (u *CategoryTranslationUpsert) ClearThumbnail() *CategoryTranslationUpsert {
-	u.SetNull(categorytranslation.FieldThumbnail)
 	return u
 }
 
@@ -1036,27 +1000,6 @@ func (u *CategoryTranslationUpsertOne) UpdateDescription() *CategoryTranslationU
 func (u *CategoryTranslationUpsertOne) ClearDescription() *CategoryTranslationUpsertOne {
 	return u.Update(func(s *CategoryTranslationUpsert) {
 		s.ClearDescription()
-	})
-}
-
-// SetThumbnail sets the "thumbnail" field.
-func (u *CategoryTranslationUpsertOne) SetThumbnail(v string) *CategoryTranslationUpsertOne {
-	return u.Update(func(s *CategoryTranslationUpsert) {
-		s.SetThumbnail(v)
-	})
-}
-
-// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
-func (u *CategoryTranslationUpsertOne) UpdateThumbnail() *CategoryTranslationUpsertOne {
-	return u.Update(func(s *CategoryTranslationUpsert) {
-		s.UpdateThumbnail()
-	})
-}
-
-// ClearThumbnail clears the value of the "thumbnail" field.
-func (u *CategoryTranslationUpsertOne) ClearThumbnail() *CategoryTranslationUpsertOne {
-	return u.Update(func(s *CategoryTranslationUpsert) {
-		s.ClearThumbnail()
 	})
 }
 
@@ -1578,27 +1521,6 @@ func (u *CategoryTranslationUpsertBulk) UpdateDescription() *CategoryTranslation
 func (u *CategoryTranslationUpsertBulk) ClearDescription() *CategoryTranslationUpsertBulk {
 	return u.Update(func(s *CategoryTranslationUpsert) {
 		s.ClearDescription()
-	})
-}
-
-// SetThumbnail sets the "thumbnail" field.
-func (u *CategoryTranslationUpsertBulk) SetThumbnail(v string) *CategoryTranslationUpsertBulk {
-	return u.Update(func(s *CategoryTranslationUpsert) {
-		s.SetThumbnail(v)
-	})
-}
-
-// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
-func (u *CategoryTranslationUpsertBulk) UpdateThumbnail() *CategoryTranslationUpsertBulk {
-	return u.Update(func(s *CategoryTranslationUpsert) {
-		s.UpdateThumbnail()
-	})
-}
-
-// ClearThumbnail clears the value of the "thumbnail" field.
-func (u *CategoryTranslationUpsertBulk) ClearThumbnail() *CategoryTranslationUpsertBulk {
-	return u.Update(func(s *CategoryTranslationUpsert) {
-		s.ClearThumbnail()
 	})
 }
 

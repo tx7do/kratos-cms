@@ -51,7 +51,7 @@ export default function CategoryDetailPage() {
     try {
       const loadedCategory = await fetchCategory({
         id: categoryId,
-        fieldMask: 'id,status,sort_order,icon,code,post_count,direct_post_count,parent_id,created_at,children,translations.id,translations.category_id,translations.name,translations.language_code,translations.description,translations.thumbnail,translations.cover_image'
+        fieldMask: 'id,status,sort_order,icon,code,thumbnail,post_count,direct_post_count,parent_id,created_at,children,translations.id,translations.category_id,translations.name,translations.language_code,translations.description,translations.cover_image'
       });
       setDetail(loadedCategory);
       if (loadedCategory?.children && loadedCategory.children.length > 0) {

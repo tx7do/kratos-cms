@@ -250,26 +250,6 @@ func (_u *PageTranslationUpdate) ClearSlug() *PageTranslationUpdate {
 	return _u
 }
 
-// SetThumbnail sets the "thumbnail" field.
-func (_u *PageTranslationUpdate) SetThumbnail(v string) *PageTranslationUpdate {
-	_u.mutation.SetThumbnail(v)
-	return _u
-}
-
-// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
-func (_u *PageTranslationUpdate) SetNillableThumbnail(v *string) *PageTranslationUpdate {
-	if v != nil {
-		_u.SetThumbnail(*v)
-	}
-	return _u
-}
-
-// ClearThumbnail clears the value of the "thumbnail" field.
-func (_u *PageTranslationUpdate) ClearThumbnail() *PageTranslationUpdate {
-	_u.mutation.ClearThumbnail()
-	return _u
-}
-
 // SetCoverImage sets the "cover_image" field.
 func (_u *PageTranslationUpdate) SetCoverImage(v string) *PageTranslationUpdate {
 	_u.mutation.SetCoverImage(v)
@@ -434,12 +414,6 @@ func (_u *PageTranslationUpdate) sqlSave(ctx context.Context) (_node int, err er
 	}
 	if _u.mutation.SlugCleared() {
 		_spec.ClearField(pagetranslation.FieldSlug, field.TypeString)
-	}
-	if value, ok := _u.mutation.Thumbnail(); ok {
-		_spec.SetField(pagetranslation.FieldThumbnail, field.TypeString, value)
-	}
-	if _u.mutation.ThumbnailCleared() {
-		_spec.ClearField(pagetranslation.FieldThumbnail, field.TypeString)
 	}
 	if value, ok := _u.mutation.CoverImage(); ok {
 		_spec.SetField(pagetranslation.FieldCoverImage, field.TypeString, value)
@@ -695,26 +669,6 @@ func (_u *PageTranslationUpdateOne) ClearSlug() *PageTranslationUpdateOne {
 	return _u
 }
 
-// SetThumbnail sets the "thumbnail" field.
-func (_u *PageTranslationUpdateOne) SetThumbnail(v string) *PageTranslationUpdateOne {
-	_u.mutation.SetThumbnail(v)
-	return _u
-}
-
-// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
-func (_u *PageTranslationUpdateOne) SetNillableThumbnail(v *string) *PageTranslationUpdateOne {
-	if v != nil {
-		_u.SetThumbnail(*v)
-	}
-	return _u
-}
-
-// ClearThumbnail clears the value of the "thumbnail" field.
-func (_u *PageTranslationUpdateOne) ClearThumbnail() *PageTranslationUpdateOne {
-	_u.mutation.ClearThumbnail()
-	return _u
-}
-
 // SetCoverImage sets the "cover_image" field.
 func (_u *PageTranslationUpdateOne) SetCoverImage(v string) *PageTranslationUpdateOne {
 	_u.mutation.SetCoverImage(v)
@@ -909,12 +863,6 @@ func (_u *PageTranslationUpdateOne) sqlSave(ctx context.Context) (_node *PageTra
 	}
 	if _u.mutation.SlugCleared() {
 		_spec.ClearField(pagetranslation.FieldSlug, field.TypeString)
-	}
-	if value, ok := _u.mutation.Thumbnail(); ok {
-		_spec.SetField(pagetranslation.FieldThumbnail, field.TypeString, value)
-	}
-	if _u.mutation.ThumbnailCleared() {
-		_spec.ClearField(pagetranslation.FieldThumbnail, field.TypeString)
 	}
 	if value, ok := _u.mutation.CoverImage(); ok {
 		_spec.SetField(pagetranslation.FieldCoverImage, field.TypeString, value)

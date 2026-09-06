@@ -44,8 +44,6 @@ type PageTranslation struct {
 	Title *string `json:"title,omitempty"`
 	// 语言特定 slug
 	Slug *string `json:"slug,omitempty"`
-	// 缩略图
-	Thumbnail *string `json:"thumbnail,omitempty"`
 	// 封面图
 	CoverImage *string `json:"cover_image,omitempty"`
 	// 完整路径
@@ -62,7 +60,7 @@ func (*PageTranslation) scanValues(columns []string) ([]any, error) {
 			values[i] = new([]byte)
 		case pagetranslation.FieldID, pagetranslation.FieldCreatedBy, pagetranslation.FieldUpdatedBy, pagetranslation.FieldDeletedBy, pagetranslation.FieldTenantID, pagetranslation.FieldPageID:
 			values[i] = new(sql.NullInt64)
-		case pagetranslation.FieldLanguageCode, pagetranslation.FieldTitle, pagetranslation.FieldSlug, pagetranslation.FieldThumbnail, pagetranslation.FieldCoverImage, pagetranslation.FieldFullPath:
+		case pagetranslation.FieldLanguageCode, pagetranslation.FieldTitle, pagetranslation.FieldSlug, pagetranslation.FieldCoverImage, pagetranslation.FieldFullPath:
 			values[i] = new(sql.NullString)
 		case pagetranslation.FieldCreatedAt, pagetranslation.FieldUpdatedAt, pagetranslation.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -172,13 +170,6 @@ func (_m *PageTranslation) assignValues(columns []string, values []any) error {
 				_m.Slug = new(string)
 				*_m.Slug = value.String
 			}
-		case pagetranslation.FieldThumbnail:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field thumbnail", values[i])
-			} else if value.Valid {
-				_m.Thumbnail = new(string)
-				*_m.Thumbnail = value.String
-			}
 		case pagetranslation.FieldCoverImage:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field cover_image", values[i])
@@ -284,11 +275,6 @@ func (_m *PageTranslation) String() string {
 	builder.WriteString(", ")
 	if v := _m.Slug; v != nil {
 		builder.WriteString("slug=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := _m.Thumbnail; v != nil {
-		builder.WriteString("thumbnail=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

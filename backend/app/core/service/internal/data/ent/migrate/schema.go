@@ -178,6 +178,7 @@ var (
 		{Name: "is_nav", Type: field.TypeBool, Nullable: true, Comment: "是否显示在导航菜单", Default: false},
 		{Name: "icon", Type: field.TypeString, Nullable: true, Comment: "分类图标"},
 		{Name: "code", Type: field.TypeString, Nullable: true, Comment: "唯一编码"},
+		{Name: "thumbnail", Type: field.TypeString, Nullable: true, Comment: "缩略图（全语言共用）"},
 		{Name: "post_count", Type: field.TypeUint32, Nullable: true, Comment: "该分类下的文章总数", Default: 0},
 		{Name: "direct_post_count", Type: field.TypeUint32, Nullable: true, Comment: "该分类下的直接文章数", Default: 0},
 		{Name: "depth", Type: field.TypeInt32, Nullable: true, Comment: "分类层级深度", Default: 0},
@@ -194,7 +195,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "categories_categories_children",
-				Columns:    []*schema.Column{CategoriesColumns[19]},
+				Columns:    []*schema.Column{CategoriesColumns[20]},
 				RefColumns: []*schema.Column{CategoriesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -213,7 +214,7 @@ var (
 			{
 				Name:    "category_parent_id",
 				Unique:  false,
-				Columns: []*schema.Column{CategoriesColumns[19]},
+				Columns: []*schema.Column{CategoriesColumns[20]},
 			},
 		},
 	}
@@ -233,7 +234,6 @@ var (
 		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "分类名称"},
 		{Name: "slug", Type: field.TypeString, Nullable: true, Comment: "分类别名"},
 		{Name: "description", Type: field.TypeString, Nullable: true, Comment: "分类描述"},
-		{Name: "thumbnail", Type: field.TypeString, Nullable: true, Comment: "缩略图"},
 		{Name: "cover_image", Type: field.TypeString, Nullable: true, Comment: "封面图"},
 		{Name: "full_path", Type: field.TypeString, Nullable: true, Comment: "完整路径"},
 	}
@@ -2201,6 +2201,7 @@ var (
 		{Name: "show_in_navigation", Type: field.TypeBool, Nullable: true, Comment: "是否在主导航中显示", Default: false},
 		{Name: "template", Type: field.TypeString, Nullable: true, Comment: "页面模板名称"},
 		{Name: "is_custom_template", Type: field.TypeBool, Nullable: true, Comment: "是否使用自定义模板代码", Default: false},
+		{Name: "thumbnail", Type: field.TypeString, Nullable: true, Comment: "缩略图（全语言共用）"},
 		{Name: "custom_fields", Type: field.TypeJSON, Nullable: true, Comment: "自定义字段"},
 		{Name: "content_model_id", Type: field.TypeUint32, Nullable: true, Comment: "绑定的内容模型ID（该页面继承模型字段，0/null=无绑定）"},
 		{Name: "depth", Type: field.TypeInt32, Nullable: true, Comment: "页面层级深度", Default: 0},
@@ -2215,7 +2216,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "pages_pages_children",
-				Columns:    []*schema.Column{PagesColumns[24]},
+				Columns:    []*schema.Column{PagesColumns[25]},
 				RefColumns: []*schema.Column{PagesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -2249,7 +2250,7 @@ var (
 			{
 				Name:    "page_parent_id",
 				Unique:  false,
-				Columns: []*schema.Column{PagesColumns[24]},
+				Columns: []*schema.Column{PagesColumns[25]},
 			},
 			{
 				Name:    "page_disallow_comment",
@@ -2283,7 +2284,6 @@ var (
 		{Name: "language_code", Type: field.TypeString, Nullable: true, Comment: "语言代码"},
 		{Name: "title", Type: field.TypeString, Nullable: true, Comment: "页面标题"},
 		{Name: "slug", Type: field.TypeString, Nullable: true, Comment: "语言特定 slug"},
-		{Name: "thumbnail", Type: field.TypeString, Nullable: true, Comment: "缩略图"},
 		{Name: "cover_image", Type: field.TypeString, Nullable: true, Comment: "封面图"},
 		{Name: "full_path", Type: field.TypeString, Nullable: true, Comment: "完整路径"},
 	}
@@ -2823,6 +2823,7 @@ var (
 		{Name: "is_featured", Type: field.TypeBool, Nullable: true, Comment: "是否推荐", Default: false},
 		{Name: "author_id", Type: field.TypeUint32, Nullable: true, Comment: "评论作者ID，0表示游客", Default: 0},
 		{Name: "author_name", Type: field.TypeString, Nullable: true, Comment: "评论作者名称"},
+		{Name: "thumbnail", Type: field.TypeString, Nullable: true, Comment: "缩略图（全语言共用）"},
 		{Name: "password_hash", Type: field.TypeString, Nullable: true, Comment: "密码哈希"},
 		{Name: "custom_fields", Type: field.TypeJSON, Nullable: true, Comment: "自定义字段"},
 		{Name: "publish_time", Type: field.TypeTime, Nullable: true, Comment: "发布时间"},
@@ -2992,7 +2993,6 @@ var (
 		{Name: "summary", Type: field.TypeString, Nullable: true, Comment: "帖子摘要"},
 		{Name: "content", Type: field.TypeString, Nullable: true, Comment: "帖子内容"},
 		{Name: "original_content", Type: field.TypeString, Nullable: true, Comment: "原始内容"},
-		{Name: "thumbnail", Type: field.TypeString, Nullable: true, Comment: "缩略图"},
 		{Name: "full_path", Type: field.TypeString, Nullable: true, Comment: "完整路径"},
 		{Name: "word_count", Type: field.TypeUint32, Nullable: true, Comment: "当前语言版本的字数", Default: 0},
 	}
@@ -3021,7 +3021,7 @@ var (
 			{
 				Name:    "posttranslation_full_path",
 				Unique:  false,
-				Columns: []*schema.Column{PostTranslationsColumns[17]},
+				Columns: []*schema.Column{PostTranslationsColumns[16]},
 			},
 			{
 				Name:    "posttranslation_post_id_language_code_slug",

@@ -48,6 +48,8 @@ const (
 	FieldAuthorID = "author_id"
 	// FieldAuthorName holds the string denoting the author_name field in the database.
 	FieldAuthorName = "author_name"
+	// FieldThumbnail holds the string denoting the thumbnail field in the database.
+	FieldThumbnail = "thumbnail"
 	// FieldPasswordHash holds the string denoting the password_hash field in the database.
 	FieldPasswordHash = "password_hash"
 	// FieldCustomFields holds the string denoting the custom_fields field in the database.
@@ -78,6 +80,7 @@ var Columns = []string{
 	FieldIsFeatured,
 	FieldAuthorID,
 	FieldAuthorName,
+	FieldThumbnail,
 	FieldPasswordHash,
 	FieldCustomFields,
 	FieldPublishTime,
@@ -268,6 +271,11 @@ func ByAuthorID(opts ...sql.OrderTermOption) OrderOption {
 // ByAuthorName orders the results by the author_name field.
 func ByAuthorName(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldAuthorName, opts...).ToFunc()
+}
+
+// ByThumbnail orders the results by the thumbnail field.
+func ByThumbnail(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldThumbnail, opts...).ToFunc()
 }
 
 // ByPasswordHash orders the results by the password_hash field.

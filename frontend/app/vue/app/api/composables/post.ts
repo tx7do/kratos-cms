@@ -254,8 +254,8 @@ export function getPostSummary(post: contentservicev1_Post) {
 }
 
 export function getPostThumbnail(post: contentservicev1_Post, fallback = '/placeholder.png') {
-  const translation = getPostTranslation(post);
-  return translation?.thumbnail || fallback;
+  // thumbnail 已上移到主表，全语言共用，不再按语言取翻译
+  return post?.thumbnail || fallback;
 }
 
 export function getPostContent(post: contentservicev1_Post) {

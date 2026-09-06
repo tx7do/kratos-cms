@@ -52,11 +52,6 @@ func (PageTranslation) Fields() []ent.Field {
 			Optional().
 			Nillable(),
 
-		field.String("thumbnail").
-			Comment("缩略图").
-			Optional().
-			Nillable(),
-
 		field.String("cover_image").
 			Comment("封面图").
 			Optional().

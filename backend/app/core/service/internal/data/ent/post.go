@@ -53,6 +53,8 @@ type Post struct {
 	AuthorID *uint32 `json:"author_id,omitempty"`
 	// 评论作者名称
 	AuthorName *string `json:"author_name,omitempty"`
+	// 缩略图（全语言共用）
+	Thumbnail *string `json:"thumbnail,omitempty"`
 	// 密码哈希
 	PasswordHash *string `json:"password_hash,omitempty"`
 	// 自定义字段
@@ -73,7 +75,7 @@ func (*Post) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case post.FieldID, post.FieldCreatedBy, post.FieldUpdatedBy, post.FieldDeletedBy, post.FieldSortOrder, post.FieldTenantID, post.FieldAuthorID:
 			values[i] = new(sql.NullInt64)
-		case post.FieldEditorType, post.FieldStatus, post.FieldCode, post.FieldAuthorName, post.FieldPasswordHash:
+		case post.FieldEditorType, post.FieldStatus, post.FieldCode, post.FieldAuthorName, post.FieldThumbnail, post.FieldPasswordHash:
 			values[i] = new(sql.NullString)
 		case post.FieldCreatedAt, post.FieldUpdatedAt, post.FieldDeletedAt, post.FieldPublishTime:
 			values[i] = new(sql.NullTime)
@@ -217,6 +219,13 @@ func (_m *Post) assignValues(columns []string, values []any) error {
 				_m.AuthorName = new(string)
 				*_m.AuthorName = value.String
 			}
+		case post.FieldThumbnail:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field thumbnail", values[i])
+			} else if value.Valid {
+				_m.Thumbnail = new(string)
+				*_m.Thumbnail = value.String
+			}
 		case post.FieldPasswordHash:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field password_hash", values[i])
@@ -357,6 +366,11 @@ func (_m *Post) String() string {
 	builder.WriteString(", ")
 	if v := _m.AuthorName; v != nil {
 		builder.WriteString("author_name=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.Thumbnail; v != nil {
+		builder.WriteString("thumbnail=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

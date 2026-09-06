@@ -124,11 +124,6 @@ func OriginalContent(v string) predicate.PostTranslation {
 	return predicate.PostTranslation(sql.FieldEQ(FieldOriginalContent, v))
 }
 
-// Thumbnail applies equality check predicate on the "thumbnail" field. It's identical to ThumbnailEQ.
-func Thumbnail(v string) predicate.PostTranslation {
-	return predicate.PostTranslation(sql.FieldEQ(FieldThumbnail, v))
-}
-
 // FullPath applies equality check predicate on the "full_path" field. It's identical to FullPathEQ.
 func FullPath(v string) predicate.PostTranslation {
 	return predicate.PostTranslation(sql.FieldEQ(FieldFullPath, v))
@@ -997,81 +992,6 @@ func OriginalContentEqualFold(v string) predicate.PostTranslation {
 // OriginalContentContainsFold applies the ContainsFold predicate on the "original_content" field.
 func OriginalContentContainsFold(v string) predicate.PostTranslation {
 	return predicate.PostTranslation(sql.FieldContainsFold(FieldOriginalContent, v))
-}
-
-// ThumbnailEQ applies the EQ predicate on the "thumbnail" field.
-func ThumbnailEQ(v string) predicate.PostTranslation {
-	return predicate.PostTranslation(sql.FieldEQ(FieldThumbnail, v))
-}
-
-// ThumbnailNEQ applies the NEQ predicate on the "thumbnail" field.
-func ThumbnailNEQ(v string) predicate.PostTranslation {
-	return predicate.PostTranslation(sql.FieldNEQ(FieldThumbnail, v))
-}
-
-// ThumbnailIn applies the In predicate on the "thumbnail" field.
-func ThumbnailIn(vs ...string) predicate.PostTranslation {
-	return predicate.PostTranslation(sql.FieldIn(FieldThumbnail, vs...))
-}
-
-// ThumbnailNotIn applies the NotIn predicate on the "thumbnail" field.
-func ThumbnailNotIn(vs ...string) predicate.PostTranslation {
-	return predicate.PostTranslation(sql.FieldNotIn(FieldThumbnail, vs...))
-}
-
-// ThumbnailGT applies the GT predicate on the "thumbnail" field.
-func ThumbnailGT(v string) predicate.PostTranslation {
-	return predicate.PostTranslation(sql.FieldGT(FieldThumbnail, v))
-}
-
-// ThumbnailGTE applies the GTE predicate on the "thumbnail" field.
-func ThumbnailGTE(v string) predicate.PostTranslation {
-	return predicate.PostTranslation(sql.FieldGTE(FieldThumbnail, v))
-}
-
-// ThumbnailLT applies the LT predicate on the "thumbnail" field.
-func ThumbnailLT(v string) predicate.PostTranslation {
-	return predicate.PostTranslation(sql.FieldLT(FieldThumbnail, v))
-}
-
-// ThumbnailLTE applies the LTE predicate on the "thumbnail" field.
-func ThumbnailLTE(v string) predicate.PostTranslation {
-	return predicate.PostTranslation(sql.FieldLTE(FieldThumbnail, v))
-}
-
-// ThumbnailContains applies the Contains predicate on the "thumbnail" field.
-func ThumbnailContains(v string) predicate.PostTranslation {
-	return predicate.PostTranslation(sql.FieldContains(FieldThumbnail, v))
-}
-
-// ThumbnailHasPrefix applies the HasPrefix predicate on the "thumbnail" field.
-func ThumbnailHasPrefix(v string) predicate.PostTranslation {
-	return predicate.PostTranslation(sql.FieldHasPrefix(FieldThumbnail, v))
-}
-
-// ThumbnailHasSuffix applies the HasSuffix predicate on the "thumbnail" field.
-func ThumbnailHasSuffix(v string) predicate.PostTranslation {
-	return predicate.PostTranslation(sql.FieldHasSuffix(FieldThumbnail, v))
-}
-
-// ThumbnailIsNil applies the IsNil predicate on the "thumbnail" field.
-func ThumbnailIsNil() predicate.PostTranslation {
-	return predicate.PostTranslation(sql.FieldIsNull(FieldThumbnail))
-}
-
-// ThumbnailNotNil applies the NotNil predicate on the "thumbnail" field.
-func ThumbnailNotNil() predicate.PostTranslation {
-	return predicate.PostTranslation(sql.FieldNotNull(FieldThumbnail))
-}
-
-// ThumbnailEqualFold applies the EqualFold predicate on the "thumbnail" field.
-func ThumbnailEqualFold(v string) predicate.PostTranslation {
-	return predicate.PostTranslation(sql.FieldEqualFold(FieldThumbnail, v))
-}
-
-// ThumbnailContainsFold applies the ContainsFold predicate on the "thumbnail" field.
-func ThumbnailContainsFold(v string) predicate.PostTranslation {
-	return predicate.PostTranslation(sql.FieldContainsFold(FieldThumbnail, v))
 }
 
 // FullPathEQ applies the EQ predicate on the "full_path" field.

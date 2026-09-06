@@ -84,6 +84,11 @@ func (Post) Fields() []ent.Field {
 			Optional().
 			Nillable(),
 
+		field.String("thumbnail").
+			Comment("缩略图（全语言共用）").
+			Optional().
+			Nillable(),
+
 		field.String("password_hash").
 			Comment("密码哈希").
 			Optional().

@@ -233,6 +233,6 @@ export function getCategoryDescription(category: contentservicev1_Category | nul
  * 获取分类缩略图
  */
 export function getCategoryThumbnail(category: contentservicev1_Category | null) {
-  const translation = getTranslation(category);
-  return translation?.thumbnail || placeholderImage;
+  // thumbnail 已上移到主表，全语言共用，不再按语言取翻译
+  return category?.thumbnail || placeholderImage;
 }

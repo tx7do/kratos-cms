@@ -316,6 +316,20 @@ func (_c *PageCreate) SetNillableIsCustomTemplate(v *bool) *PageCreate {
 	return _c
 }
 
+// SetThumbnail sets the "thumbnail" field.
+func (_c *PageCreate) SetThumbnail(v string) *PageCreate {
+	_c.mutation.SetThumbnail(v)
+	return _c
+}
+
+// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
+func (_c *PageCreate) SetNillableThumbnail(v *string) *PageCreate {
+	if v != nil {
+		_c.SetThumbnail(*v)
+	}
+	return _c
+}
+
 // SetCustomFields sets the "custom_fields" field.
 func (_c *PageCreate) SetCustomFields(v *map[string]string) *PageCreate {
 	_c.mutation.SetCustomFields(v)
@@ -595,6 +609,10 @@ func (_c *PageCreate) createSpec() (*Page, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.IsCustomTemplate(); ok {
 		_spec.SetField(page.FieldIsCustomTemplate, field.TypeBool, value)
 		_node.IsCustomTemplate = &value
+	}
+	if value, ok := _c.mutation.Thumbnail(); ok {
+		_spec.SetField(page.FieldThumbnail, field.TypeString, value)
+		_node.Thumbnail = &value
 	}
 	if value, ok := _c.mutation.CustomFields(); ok {
 		_spec.SetField(page.FieldCustomFields, field.TypeJSON, value)
@@ -1062,6 +1080,24 @@ func (u *PageUpsert) UpdateIsCustomTemplate() *PageUpsert {
 // ClearIsCustomTemplate clears the value of the "is_custom_template" field.
 func (u *PageUpsert) ClearIsCustomTemplate() *PageUpsert {
 	u.SetNull(page.FieldIsCustomTemplate)
+	return u
+}
+
+// SetThumbnail sets the "thumbnail" field.
+func (u *PageUpsert) SetThumbnail(v string) *PageUpsert {
+	u.Set(page.FieldThumbnail, v)
+	return u
+}
+
+// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
+func (u *PageUpsert) UpdateThumbnail() *PageUpsert {
+	u.SetExcluded(page.FieldThumbnail)
+	return u
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (u *PageUpsert) ClearThumbnail() *PageUpsert {
+	u.SetNull(page.FieldThumbnail)
 	return u
 }
 
@@ -1616,6 +1652,27 @@ func (u *PageUpsertOne) UpdateIsCustomTemplate() *PageUpsertOne {
 func (u *PageUpsertOne) ClearIsCustomTemplate() *PageUpsertOne {
 	return u.Update(func(s *PageUpsert) {
 		s.ClearIsCustomTemplate()
+	})
+}
+
+// SetThumbnail sets the "thumbnail" field.
+func (u *PageUpsertOne) SetThumbnail(v string) *PageUpsertOne {
+	return u.Update(func(s *PageUpsert) {
+		s.SetThumbnail(v)
+	})
+}
+
+// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
+func (u *PageUpsertOne) UpdateThumbnail() *PageUpsertOne {
+	return u.Update(func(s *PageUpsert) {
+		s.UpdateThumbnail()
+	})
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (u *PageUpsertOne) ClearThumbnail() *PageUpsertOne {
+	return u.Update(func(s *PageUpsert) {
+		s.ClearThumbnail()
 	})
 }
 
@@ -2347,6 +2404,27 @@ func (u *PageUpsertBulk) UpdateIsCustomTemplate() *PageUpsertBulk {
 func (u *PageUpsertBulk) ClearIsCustomTemplate() *PageUpsertBulk {
 	return u.Update(func(s *PageUpsert) {
 		s.ClearIsCustomTemplate()
+	})
+}
+
+// SetThumbnail sets the "thumbnail" field.
+func (u *PageUpsertBulk) SetThumbnail(v string) *PageUpsertBulk {
+	return u.Update(func(s *PageUpsert) {
+		s.SetThumbnail(v)
+	})
+}
+
+// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
+func (u *PageUpsertBulk) UpdateThumbnail() *PageUpsertBulk {
+	return u.Update(func(s *PageUpsert) {
+		s.UpdateThumbnail()
+	})
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (u *PageUpsertBulk) ClearThumbnail() *PageUpsertBulk {
+	return u.Update(func(s *PageUpsert) {
+		s.ClearThumbnail()
 	})
 }
 

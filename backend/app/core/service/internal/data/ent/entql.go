@@ -172,6 +172,7 @@ var schemaGraph = func() *sqlgraph.Schema {
 			category.FieldIsNav:           {Type: field.TypeBool, Column: category.FieldIsNav},
 			category.FieldIcon:            {Type: field.TypeString, Column: category.FieldIcon},
 			category.FieldCode:            {Type: field.TypeString, Column: category.FieldCode},
+			category.FieldThumbnail:       {Type: field.TypeString, Column: category.FieldThumbnail},
 			category.FieldPostCount:       {Type: field.TypeUint32, Column: category.FieldPostCount},
 			category.FieldDirectPostCount: {Type: field.TypeUint32, Column: category.FieldDirectPostCount},
 			category.FieldDepth:           {Type: field.TypeInt32, Column: category.FieldDepth},
@@ -203,7 +204,6 @@ var schemaGraph = func() *sqlgraph.Schema {
 			categorytranslation.FieldName:         {Type: field.TypeString, Column: categorytranslation.FieldName},
 			categorytranslation.FieldSlug:         {Type: field.TypeString, Column: categorytranslation.FieldSlug},
 			categorytranslation.FieldDescription:  {Type: field.TypeString, Column: categorytranslation.FieldDescription},
-			categorytranslation.FieldThumbnail:    {Type: field.TypeString, Column: categorytranslation.FieldThumbnail},
 			categorytranslation.FieldCoverImage:   {Type: field.TypeString, Column: categorytranslation.FieldCoverImage},
 			categorytranslation.FieldFullPath:     {Type: field.TypeString, Column: categorytranslation.FieldFullPath},
 		},
@@ -1064,6 +1064,7 @@ var schemaGraph = func() *sqlgraph.Schema {
 			page.FieldShowInNavigation: {Type: field.TypeBool, Column: page.FieldShowInNavigation},
 			page.FieldTemplate:         {Type: field.TypeString, Column: page.FieldTemplate},
 			page.FieldIsCustomTemplate: {Type: field.TypeBool, Column: page.FieldIsCustomTemplate},
+			page.FieldThumbnail:        {Type: field.TypeString, Column: page.FieldThumbnail},
 			page.FieldCustomFields:     {Type: field.TypeJSON, Column: page.FieldCustomFields},
 			page.FieldContentModelID:   {Type: field.TypeUint32, Column: page.FieldContentModelID},
 			page.FieldDepth:            {Type: field.TypeInt32, Column: page.FieldDepth},
@@ -1092,7 +1093,6 @@ var schemaGraph = func() *sqlgraph.Schema {
 			pagetranslation.FieldLanguageCode: {Type: field.TypeString, Column: pagetranslation.FieldLanguageCode},
 			pagetranslation.FieldTitle:        {Type: field.TypeString, Column: pagetranslation.FieldTitle},
 			pagetranslation.FieldSlug:         {Type: field.TypeString, Column: pagetranslation.FieldSlug},
-			pagetranslation.FieldThumbnail:    {Type: field.TypeString, Column: pagetranslation.FieldThumbnail},
 			pagetranslation.FieldCoverImage:   {Type: field.TypeString, Column: pagetranslation.FieldCoverImage},
 			pagetranslation.FieldFullPath:     {Type: field.TypeString, Column: pagetranslation.FieldFullPath},
 		},
@@ -1339,6 +1339,7 @@ var schemaGraph = func() *sqlgraph.Schema {
 			post.FieldIsFeatured:      {Type: field.TypeBool, Column: post.FieldIsFeatured},
 			post.FieldAuthorID:        {Type: field.TypeUint32, Column: post.FieldAuthorID},
 			post.FieldAuthorName:      {Type: field.TypeString, Column: post.FieldAuthorName},
+			post.FieldThumbnail:       {Type: field.TypeString, Column: post.FieldThumbnail},
 			post.FieldPasswordHash:    {Type: field.TypeString, Column: post.FieldPasswordHash},
 			post.FieldCustomFields:    {Type: field.TypeJSON, Column: post.FieldCustomFields},
 			post.FieldPublishTime:     {Type: field.TypeTime, Column: post.FieldPublishTime},
@@ -1423,7 +1424,6 @@ var schemaGraph = func() *sqlgraph.Schema {
 			posttranslation.FieldSummary:         {Type: field.TypeString, Column: posttranslation.FieldSummary},
 			posttranslation.FieldContent:         {Type: field.TypeString, Column: posttranslation.FieldContent},
 			posttranslation.FieldOriginalContent: {Type: field.TypeString, Column: posttranslation.FieldOriginalContent},
-			posttranslation.FieldThumbnail:       {Type: field.TypeString, Column: posttranslation.FieldThumbnail},
 			posttranslation.FieldFullPath:        {Type: field.TypeString, Column: posttranslation.FieldFullPath},
 			posttranslation.FieldWordCount:       {Type: field.TypeUint32, Column: posttranslation.FieldWordCount},
 		},
@@ -2559,6 +2559,11 @@ func (f *CategoryFilter) WhereCode(p entql.StringP) {
 	f.Where(p.Field(category.FieldCode))
 }
 
+// WhereThumbnail applies the entql string predicate on the thumbnail field.
+func (f *CategoryFilter) WhereThumbnail(p entql.StringP) {
+	f.Where(p.Field(category.FieldThumbnail))
+}
+
 // WherePostCount applies the entql uint32 predicate on the post_count field.
 func (f *CategoryFilter) WherePostCount(p entql.Uint32P) {
 	f.Where(p.Field(category.FieldPostCount))
@@ -2715,11 +2720,6 @@ func (f *CategoryTranslationFilter) WhereSlug(p entql.StringP) {
 // WhereDescription applies the entql string predicate on the description field.
 func (f *CategoryTranslationFilter) WhereDescription(p entql.StringP) {
 	f.Where(p.Field(categorytranslation.FieldDescription))
-}
-
-// WhereThumbnail applies the entql string predicate on the thumbnail field.
-func (f *CategoryTranslationFilter) WhereThumbnail(p entql.StringP) {
-	f.Where(p.Field(categorytranslation.FieldThumbnail))
 }
 
 // WhereCoverImage applies the entql string predicate on the cover_image field.
@@ -6468,6 +6468,11 @@ func (f *PageFilter) WhereIsCustomTemplate(p entql.BoolP) {
 	f.Where(p.Field(page.FieldIsCustomTemplate))
 }
 
+// WhereThumbnail applies the entql string predicate on the thumbnail field.
+func (f *PageFilter) WhereThumbnail(p entql.StringP) {
+	f.Where(p.Field(page.FieldThumbnail))
+}
+
 // WhereCustomFields applies the entql json.RawMessage predicate on the custom_fields field.
 func (f *PageFilter) WhereCustomFields(p entql.BytesP) {
 	f.Where(p.Field(page.FieldCustomFields))
@@ -6609,11 +6614,6 @@ func (f *PageTranslationFilter) WhereTitle(p entql.StringP) {
 // WhereSlug applies the entql string predicate on the slug field.
 func (f *PageTranslationFilter) WhereSlug(p entql.StringP) {
 	f.Where(p.Field(pagetranslation.FieldSlug))
-}
-
-// WhereThumbnail applies the entql string predicate on the thumbnail field.
-func (f *PageTranslationFilter) WhereThumbnail(p entql.StringP) {
-	f.Where(p.Field(pagetranslation.FieldThumbnail))
 }
 
 // WhereCoverImage applies the entql string predicate on the cover_image field.
@@ -7649,6 +7649,11 @@ func (f *PostFilter) WhereAuthorName(p entql.StringP) {
 	f.Where(p.Field(post.FieldAuthorName))
 }
 
+// WhereThumbnail applies the entql string predicate on the thumbnail field.
+func (f *PostFilter) WhereThumbnail(p entql.StringP) {
+	f.Where(p.Field(post.FieldThumbnail))
+}
+
 // WherePasswordHash applies the entql string predicate on the password_hash field.
 func (f *PostFilter) WherePasswordHash(p entql.StringP) {
 	f.Where(p.Field(post.FieldPasswordHash))
@@ -7967,11 +7972,6 @@ func (f *PostTranslationFilter) WhereContent(p entql.StringP) {
 // WhereOriginalContent applies the entql string predicate on the original_content field.
 func (f *PostTranslationFilter) WhereOriginalContent(p entql.StringP) {
 	f.Where(p.Field(posttranslation.FieldOriginalContent))
-}
-
-// WhereThumbnail applies the entql string predicate on the thumbnail field.
-func (f *PostTranslationFilter) WhereThumbnail(p entql.StringP) {
-	f.Where(p.Field(posttranslation.FieldThumbnail))
 }
 
 // WhereFullPath applies the entql string predicate on the full_path field.

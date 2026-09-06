@@ -297,6 +297,26 @@ func (_u *CategoryUpdate) ClearCode() *CategoryUpdate {
 	return _u
 }
 
+// SetThumbnail sets the "thumbnail" field.
+func (_u *CategoryUpdate) SetThumbnail(v string) *CategoryUpdate {
+	_u.mutation.SetThumbnail(v)
+	return _u
+}
+
+// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
+func (_u *CategoryUpdate) SetNillableThumbnail(v *string) *CategoryUpdate {
+	if v != nil {
+		_u.SetThumbnail(*v)
+	}
+	return _u
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (_u *CategoryUpdate) ClearThumbnail() *CategoryUpdate {
+	_u.mutation.ClearThumbnail()
+	return _u
+}
+
 // SetPostCount sets the "post_count" field.
 func (_u *CategoryUpdate) SetPostCount(v uint32) *CategoryUpdate {
 	_u.mutation.ResetPostCount()
@@ -612,6 +632,12 @@ func (_u *CategoryUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.CodeCleared() {
 		_spec.ClearField(category.FieldCode, field.TypeString)
+	}
+	if value, ok := _u.mutation.Thumbnail(); ok {
+		_spec.SetField(category.FieldThumbnail, field.TypeString, value)
+	}
+	if _u.mutation.ThumbnailCleared() {
+		_spec.ClearField(category.FieldThumbnail, field.TypeString)
 	}
 	if value, ok := _u.mutation.PostCount(); ok {
 		_spec.SetField(category.FieldPostCount, field.TypeUint32, value)
@@ -1019,6 +1045,26 @@ func (_u *CategoryUpdateOne) ClearCode() *CategoryUpdateOne {
 	return _u
 }
 
+// SetThumbnail sets the "thumbnail" field.
+func (_u *CategoryUpdateOne) SetThumbnail(v string) *CategoryUpdateOne {
+	_u.mutation.SetThumbnail(v)
+	return _u
+}
+
+// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
+func (_u *CategoryUpdateOne) SetNillableThumbnail(v *string) *CategoryUpdateOne {
+	if v != nil {
+		_u.SetThumbnail(*v)
+	}
+	return _u
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (_u *CategoryUpdateOne) ClearThumbnail() *CategoryUpdateOne {
+	_u.mutation.ClearThumbnail()
+	return _u
+}
+
 // SetPostCount sets the "post_count" field.
 func (_u *CategoryUpdateOne) SetPostCount(v uint32) *CategoryUpdateOne {
 	_u.mutation.ResetPostCount()
@@ -1364,6 +1410,12 @@ func (_u *CategoryUpdateOne) sqlSave(ctx context.Context) (_node *Category, err 
 	}
 	if _u.mutation.CodeCleared() {
 		_spec.ClearField(category.FieldCode, field.TypeString)
+	}
+	if value, ok := _u.mutation.Thumbnail(); ok {
+		_spec.SetField(category.FieldThumbnail, field.TypeString, value)
+	}
+	if _u.mutation.ThumbnailCleared() {
+		_spec.ClearField(category.FieldThumbnail, field.TypeString)
 	}
 	if value, ok := _u.mutation.PostCount(); ok {
 		_spec.SetField(category.FieldPostCount, field.TypeUint32, value)

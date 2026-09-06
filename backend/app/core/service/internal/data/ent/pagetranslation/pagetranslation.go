@@ -36,8 +36,6 @@ const (
 	FieldTitle = "title"
 	// FieldSlug holds the string denoting the slug field in the database.
 	FieldSlug = "slug"
-	// FieldThumbnail holds the string denoting the thumbnail field in the database.
-	FieldThumbnail = "thumbnail"
 	// FieldCoverImage holds the string denoting the cover_image field in the database.
 	FieldCoverImage = "cover_image"
 	// FieldFullPath holds the string denoting the full_path field in the database.
@@ -61,7 +59,6 @@ var Columns = []string{
 	FieldLanguageCode,
 	FieldTitle,
 	FieldSlug,
-	FieldThumbnail,
 	FieldCoverImage,
 	FieldFullPath,
 }
@@ -151,11 +148,6 @@ func ByTitle(opts ...sql.OrderTermOption) OrderOption {
 // BySlug orders the results by the slug field.
 func BySlug(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldSlug, opts...).ToFunc()
-}
-
-// ByThumbnail orders the results by the thumbnail field.
-func ByThumbnail(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldThumbnail, opts...).ToFunc()
 }
 
 // ByCoverImage orders the results by the cover_image field.

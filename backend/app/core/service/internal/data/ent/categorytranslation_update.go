@@ -270,26 +270,6 @@ func (_u *CategoryTranslationUpdate) ClearDescription() *CategoryTranslationUpda
 	return _u
 }
 
-// SetThumbnail sets the "thumbnail" field.
-func (_u *CategoryTranslationUpdate) SetThumbnail(v string) *CategoryTranslationUpdate {
-	_u.mutation.SetThumbnail(v)
-	return _u
-}
-
-// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
-func (_u *CategoryTranslationUpdate) SetNillableThumbnail(v *string) *CategoryTranslationUpdate {
-	if v != nil {
-		_u.SetThumbnail(*v)
-	}
-	return _u
-}
-
-// ClearThumbnail clears the value of the "thumbnail" field.
-func (_u *CategoryTranslationUpdate) ClearThumbnail() *CategoryTranslationUpdate {
-	_u.mutation.ClearThumbnail()
-	return _u
-}
-
 // SetCoverImage sets the "cover_image" field.
 func (_u *CategoryTranslationUpdate) SetCoverImage(v string) *CategoryTranslationUpdate {
 	_u.mutation.SetCoverImage(v)
@@ -460,12 +440,6 @@ func (_u *CategoryTranslationUpdate) sqlSave(ctx context.Context) (_node int, er
 	}
 	if _u.mutation.DescriptionCleared() {
 		_spec.ClearField(categorytranslation.FieldDescription, field.TypeString)
-	}
-	if value, ok := _u.mutation.Thumbnail(); ok {
-		_spec.SetField(categorytranslation.FieldThumbnail, field.TypeString, value)
-	}
-	if _u.mutation.ThumbnailCleared() {
-		_spec.ClearField(categorytranslation.FieldThumbnail, field.TypeString)
 	}
 	if value, ok := _u.mutation.CoverImage(); ok {
 		_spec.SetField(categorytranslation.FieldCoverImage, field.TypeString, value)
@@ -741,26 +715,6 @@ func (_u *CategoryTranslationUpdateOne) ClearDescription() *CategoryTranslationU
 	return _u
 }
 
-// SetThumbnail sets the "thumbnail" field.
-func (_u *CategoryTranslationUpdateOne) SetThumbnail(v string) *CategoryTranslationUpdateOne {
-	_u.mutation.SetThumbnail(v)
-	return _u
-}
-
-// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
-func (_u *CategoryTranslationUpdateOne) SetNillableThumbnail(v *string) *CategoryTranslationUpdateOne {
-	if v != nil {
-		_u.SetThumbnail(*v)
-	}
-	return _u
-}
-
-// ClearThumbnail clears the value of the "thumbnail" field.
-func (_u *CategoryTranslationUpdateOne) ClearThumbnail() *CategoryTranslationUpdateOne {
-	_u.mutation.ClearThumbnail()
-	return _u
-}
-
 // SetCoverImage sets the "cover_image" field.
 func (_u *CategoryTranslationUpdateOne) SetCoverImage(v string) *CategoryTranslationUpdateOne {
 	_u.mutation.SetCoverImage(v)
@@ -961,12 +915,6 @@ func (_u *CategoryTranslationUpdateOne) sqlSave(ctx context.Context) (_node *Cat
 	}
 	if _u.mutation.DescriptionCleared() {
 		_spec.ClearField(categorytranslation.FieldDescription, field.TypeString)
-	}
-	if value, ok := _u.mutation.Thumbnail(); ok {
-		_spec.SetField(categorytranslation.FieldThumbnail, field.TypeString, value)
-	}
-	if _u.mutation.ThumbnailCleared() {
-		_spec.ClearField(categorytranslation.FieldThumbnail, field.TypeString)
 	}
 	if value, ok := _u.mutation.CoverImage(); ok {
 		_spec.SetField(categorytranslation.FieldCoverImage, field.TypeString, value)

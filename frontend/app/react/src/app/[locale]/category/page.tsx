@@ -26,7 +26,7 @@ export default function CategoryListPage() {
             const res = (await fetchListCategories({
                 paging: undefined,
                 formValues: {status: 'CATEGORY_STATUS_ACTIVE'},
-                fieldMask: 'id,status,sort_order,icon,code,post_count,direct_post_count,parent_id,created_at,children,translations.id,translations.category_id,translations.name,translations.language_code,translations.description,translations.thumbnail,translations.cover_image',
+                fieldMask: 'id,status,sort_order,icon,code,thumbnail,post_count,direct_post_count,parent_id,created_at,children,translations.id,translations.category_id,translations.name,translations.language_code,translations.description,translations.cover_image',
                 orderBy: ['-sortOrder']
             })) as unknown as contentservicev1_ListCategoryResponse;
             setCategories(res.items || []);

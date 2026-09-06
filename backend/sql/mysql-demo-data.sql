@@ -1501,9 +1501,10 @@ INSERT INTO pages (
     created_at, updated_at, sort_order, path,
     editor_type, status, type, slug,
     author_id, author_name, disallow_comment, redirect_url,
-    show_in_navigation, template, is_custom_template, custom_fields,
-    depth, parent_id
+    show_in_navigation, template, is_custom_template, thumbnail,
+    custom_fields, depth, parent_id
 ) VALUES
+
 (
     NOW() - INTERVAL 30 DAY,
     NOW(),
@@ -1520,10 +1521,13 @@ INSERT INTO pages (
     true,
     'default-home',
     false,
+    '/images/thumbnails/home-zh.jpg',
     '{"banner_show": "true", "banner_delay": "3000", "show_hot_articles": "true"}',
     0,
     NULL
+)
 ),
+,
 (
     NOW() - INTERVAL 25 DAY,
     NOW(),
@@ -1540,10 +1544,13 @@ INSERT INTO pages (
     true,
     'default-static',
     false,
+    '/images/thumbnails/about-zh.jpg',
     '{"show_team_avatar": "true", "team_size": "15", "founded_year": "2024"}',
     0,
     NULL
+)
 ),
+,
 (
     NOW() - INTERVAL 20 DAY,
     NOW(),
@@ -1560,10 +1567,13 @@ INSERT INTO pages (
     true,
     'default-docs',
     false,
+    NULL,
     '{"sidebar_collapse": "false", "edit_on_github": "true", "github_repo": "gowind/cms-docs"}',
     0,
     NULL
+)
 ),
+,
 (
     NOW() - INTERVAL 18 DAY,
     NOW(),
@@ -1580,10 +1590,13 @@ INSERT INTO pages (
     true,
     'default-docs',
     false,
+    NULL,
     '{"difficulty": "beginner", "estimated_time": "5分钟"}',
     1,
     3
+)
 ),
+,
 (
     NOW() - INTERVAL 15 DAY,
     NOW(),
@@ -1600,10 +1613,13 @@ INSERT INTO pages (
     false,
     'default-error',
     false,
+    '/images/thumbnails/404-zh.jpg',
     '{"show_search": "true", "show_home_button": "true", "custom_message": "您访问的页面不存在～"}',
     0,
     NULL
+)
 ),
+,
 (
     NOW() - INTERVAL 15 DAY,
     NOW(),
@@ -1620,10 +1636,13 @@ INSERT INTO pages (
     false,
     'default-error',
     false,
+    NULL,
     '{"show_contact_button": "true", "maintenance_phone": "400-123-4567"}',
     0,
     NULL
+)
 ),
+,
 (
     NOW() - INTERVAL 12 DAY,
     NOW(),
@@ -1640,10 +1659,13 @@ INSERT INTO pages (
     false,
     'custom-login',
     true,
+    '/images/thumbnails/login-zh.jpg',
     '{"show_captcha": "true", "remember_me_days": "7", "oauth_github": "true", "oauth_google": "false"}',
     0,
     NULL
+)
 ),
+,
 (
     NOW() - INTERVAL 12 DAY,
     NOW(),
@@ -1660,10 +1682,13 @@ INSERT INTO pages (
     true,
     'default-static',
     false,
+    NULL,
     '{"last_updated": "2024-03-01", "version": "1.0"}',
     0,
     NULL
+)
 ),
+,
 (
     NOW() - INTERVAL 10 DAY,
     NOW(),
@@ -1680,10 +1705,14 @@ INSERT INTO pages (
     false,
     'custom-register',
     true,
+    NULL,
     '{"need_email_verify": "true", "default_role": "user", "invite_code_required": "false"}',
     0,
     NULL
-);
+)
+)
+;
+
 ALTER TABLE pages AUTO_INCREMENT = (SELECT COALESCE(MAX(id) + 1, 1) FROM pages);
 
 -- ----------------------------
@@ -1691,9 +1720,9 @@ ALTER TABLE pages AUTO_INCREMENT = (SELECT COALESCE(MAX(id) + 1, 1) FROM pages);
 -- ----------------------------
 INSERT INTO page_translations (
     created_at, updated_at, page_id, language_code,
-    title, slug, thumbnail, cover_image,
-    full_path
+    title, slug, cover_image, full_path
 ) VALUES
+
 (
     NOW() - INTERVAL 30 DAY,
     NOW(),
@@ -1701,10 +1730,11 @@ INSERT INTO page_translations (
     'zh-CN',
     '风行内容中台 - 高性能Go语言多站点多语言Content Hub系统',
     'home',
-    '/images/thumbnails/home-zh.jpg',
     '/images/covers/home-zh.jpg',
     '/'
+)
 ),
+,
 (
     NOW() - INTERVAL 30 DAY,
     NOW(),
@@ -1712,10 +1742,11 @@ INSERT INTO page_translations (
     'en-US',
     'GoWind Content Hub - High Performance Go Content Hub for Multi-site & Multi-language',
     'home',
-    '/images/thumbnails/home-en.jpg',
     '/images/covers/home-en.jpg',
     '/en'
+)
 ),
+,
 (
     NOW() - INTERVAL 15 DAY,
     NOW(),
@@ -1723,10 +1754,11 @@ INSERT INTO page_translations (
     'zh-CN',
     '404 - 页面不存在',
     '404',
-    '/images/thumbnails/404-zh.jpg',
     '/images/covers/404-zh.jpg',
     '/404'
+)
 ),
+,
 (
     NOW() - INTERVAL 15 DAY,
     NOW(),
@@ -1734,10 +1766,11 @@ INSERT INTO page_translations (
     'en-US',
     '404 - Page Not Found',
     '404',
-    '/images/thumbnails/404-en.jpg',
     '/images/covers/404-en.jpg',
     '/en/404'
+)
 ),
+,
 (
     NOW() - INTERVAL 12 DAY,
     NOW(),
@@ -1745,10 +1778,11 @@ INSERT INTO page_translations (
     'zh-CN',
     '登录 - 风行内容中台',
     'login',
-    '/images/thumbnails/login-zh.jpg',
     '/images/covers/login-zh.jpg',
     '/login'
+)
 ),
+,
 (
     NOW() - INTERVAL 25 DAY,
     NOW(),
@@ -1756,10 +1790,12 @@ INSERT INTO page_translations (
     'zh-CN',
     '关于我们 - 风行内容中台',
     'about',
-    '/images/thumbnails/about-zh.jpg',
     '/images/covers/about-zh.jpg',
     '/about'
-);
+)
+)
+;
+
 ALTER TABLE page_translations AUTO_INCREMENT = (SELECT COALESCE(MAX(id) + 1, 1) FROM page_translations);
 
 -- ----------------------------
@@ -1767,41 +1803,278 @@ ALTER TABLE page_translations AUTO_INCREMENT = (SELECT COALESCE(MAX(id) + 1, 1) 
 -- ----------------------------
 -- 注意：按 parentId 顺序插入（先父后子），确保外键约束有效
 INSERT INTO categories (
-    id, created_at, updated_at, sort_order, path, status,
-    depth, is_nav, icon, post_count, direct_post_count,
+    id, created_at, updated_at, sort_order,
+    path, status, depth, is_nav,
+    icon, thumbnail, post_count, direct_post_count,
     custom_fields, parent_id, created_by, updated_by
 ) VALUES
+
 -- ========== 一级分类 ==========
 -- 技术分享
-(1, NOW() - INTERVAL 30 DAY, NOW() - INTERVAL 15 DAY, 1, '/tech', 'CATEGORY_STATUS_ACTIVE', 0, true, 'carbon:document', 45, 15, '{}', NULL, 1, 1),
+(
+    1,
+    NOW() - INTERVAL 30 DAY,
+    NOW() - INTERVAL 15 DAY,
+    1,
+    '/tech',
+    'CATEGORY_STATUS_ACTIVE',
+    0,
+    true,
+    'carbon:document',
+    'https://picsum.photos/400/300?random=1',
+    45,
+    15,
+    '{}',
+    NULL,
+    1,
+    1)
+),
+,
 -- 生活随笔
-(2, NOW() - INTERVAL 25 DAY, NOW() - INTERVAL 12 DAY, 2, '/life', 'CATEGORY_STATUS_ACTIVE', 0, true, 'carbon:blog', 30, 12, '{}', NULL, 1, 1),
+(
+    2,
+    NOW() - INTERVAL 25 DAY,
+    NOW() - INTERVAL 12 DAY,
+    2,
+    '/life',
+    'CATEGORY_STATUS_ACTIVE',
+    0,
+    true,
+    'carbon:blog',
+    'https://picsum.photos/400/300?random=2',
+    30,
+    12,
+    '{}',
+    NULL,
+    1,
+    1)
+),
+,
 -- 产品设计
-(3, NOW() - INTERVAL 20 DAY, NOW() - INTERVAL 10 DAY, 3, '/design', 'CATEGORY_STATUS_ACTIVE', 0, true, 'carbon:chart-line', 25, 8, '{}', NULL, 1, 1),
+(
+    3,
+    NOW() - INTERVAL 20 DAY,
+    NOW() - INTERVAL 10 DAY,
+    3,
+    '/design',
+    'CATEGORY_STATUS_ACTIVE',
+    0,
+    true,
+    'carbon:chart-line',
+    'https://picsum.photos/400/300?random=3',
+    25,
+    8,
+    '{}',
+    NULL,
+    1,
+    1)
+),
+,
 -- 创业思考
-(4, NOW() - INTERVAL 15 DAY, NOW() - INTERVAL 8 DAY, 4, '/startup', 'CATEGORY_STATUS_ACTIVE', 0, true, 'carbon:idea', 18, 10, '{}', NULL, 1, 1),
+(
+    4,
+    NOW() - INTERVAL 15 DAY,
+    NOW() - INTERVAL 8 DAY,
+    4,
+    '/startup',
+    'CATEGORY_STATUS_ACTIVE',
+    0,
+    true,
+    'carbon:idea',
+    'https://picsum.photos/400/300?random=4',
+    18,
+    10,
+    '{}',
+    NULL,
+    1,
+    1)
+),
+,
 -- ========== 二级分类（父ID=1：技术分享） ==========
 -- 前端开发
-(11, NOW() - INTERVAL 25 DAY, NOW() - INTERVAL 10 DAY, 1, '/tech/frontend', 'CATEGORY_STATUS_ACTIVE', 1, false, 'carbon:code', 20, 20, '{}', 1, 1, 1),
+(
+    11,
+    NOW() - INTERVAL 25 DAY,
+    NOW() - INTERVAL 10 DAY,
+    1,
+    '/tech/frontend',
+    'CATEGORY_STATUS_ACTIVE',
+    1,
+    false,
+    'carbon:code',
+    'https://picsum.photos/400/300?random=11',
+    20,
+    20,
+    '{}',
+    1,
+    1,
+    1)
+),
+,
 -- 后端开发
-(12, NOW() - INTERVAL 24 DAY, NOW() - INTERVAL 9 DAY, 2, '/tech/backend', 'CATEGORY_STATUS_ACTIVE', 1, false, 'carbon:cloud', 15, 15, '{}', 1, 1, 1),
+(
+    12,
+    NOW() - INTERVAL 24 DAY,
+    NOW() - INTERVAL 9 DAY,
+    2,
+    '/tech/backend',
+    'CATEGORY_STATUS_ACTIVE',
+    1,
+    false,
+    'carbon:cloud',
+    'https://picsum.photos/400/300?random=12',
+    15,
+    15,
+    '{}',
+    1,
+    1,
+    1)
+),
+,
 -- 移动开发
-(13, NOW() - INTERVAL 23 DAY, NOW() - INTERVAL 8 DAY, 3, '/tech/mobile', 'CATEGORY_STATUS_ACTIVE', 1, false, 'carbon:mobile', 10, 10, '{}', 1, 1, 1),
+(
+    13,
+    NOW() - INTERVAL 23 DAY,
+    NOW() - INTERVAL 8 DAY,
+    3,
+    '/tech/mobile',
+    'CATEGORY_STATUS_ACTIVE',
+    1,
+    false,
+    'carbon:mobile',
+    'https://picsum.photos/400/300?random=13',
+    10,
+    10,
+    '{}',
+    1,
+    1,
+    1)
+),
+,
 -- ========== 二级分类（父ID=2：生活随笔） ==========
 -- 旅行游记
-(21, NOW() - INTERVAL 20 DAY, NOW() - INTERVAL 7 DAY, 1, '/life/travel', 'CATEGORY_STATUS_ACTIVE', 1, false, 'carbon:map', 10, 10, '{}', 2, 1, 1),
+(
+    21,
+    NOW() - INTERVAL 20 DAY,
+    NOW() - INTERVAL 7 DAY,
+    1,
+    '/life/travel',
+    'CATEGORY_STATUS_ACTIVE',
+    1,
+    false,
+    'carbon:map',
+    'https://picsum.photos/400/300?random=21',
+    10,
+    10,
+    '{}',
+    2,
+    1,
+    1)
+),
+,
 -- 美食探店
-(22, NOW() - INTERVAL 19 DAY, NOW() - INTERVAL 6 DAY, 2, '/life/food', 'CATEGORY_STATUS_ACTIVE', 1, false, 'carbon:favorite', 8, 8, '{}', 2, 1, 1),
+(
+    22,
+    NOW() - INTERVAL 19 DAY,
+    NOW() - INTERVAL 6 DAY,
+    2,
+    '/life/food',
+    'CATEGORY_STATUS_ACTIVE',
+    1,
+    false,
+    'carbon:favorite',
+    'https://picsum.photos/400/300?random=22',
+    8,
+    8,
+    '{}',
+    2,
+    1,
+    1)
+),
+,
 -- ========== 二级分类（父ID=3：产品设计） ==========
 -- UI 设计
-(31, NOW() - INTERVAL 18 DAY, NOW() - INTERVAL 5 DAY, 1, '/design/ui-design', 'CATEGORY_STATUS_ACTIVE', 1, false, 'carbon:color-switch', 10, 10, '{}', 3, 1, 1),
+(
+    31,
+    NOW() - INTERVAL 18 DAY,
+    NOW() - INTERVAL 5 DAY,
+    1,
+    '/design/ui-design',
+    'CATEGORY_STATUS_ACTIVE',
+    1,
+    false,
+    'carbon:color-switch',
+    'https://picsum.photos/400/300?random=31',
+    10,
+    10,
+    '{}',
+    3,
+    1,
+    1)
+),
+,
 -- UX 设计
-(32, NOW() - INTERVAL 17 DAY, NOW() - INTERVAL 4 DAY, 2, '/design/ux-design', 'CATEGORY_STATUS_ACTIVE', 1, false, 'carbon:user-profile', 7, 7, '{}', 3, 1, 1),
+(
+    32,
+    NOW() - INTERVAL 17 DAY,
+    NOW() - INTERVAL 4 DAY,
+    2,
+    '/design/ux-design',
+    'CATEGORY_STATUS_ACTIVE',
+    1,
+    false,
+    'carbon:user-profile',
+    'https://picsum.photos/400/300?random=32',
+    7,
+    7,
+    '{}',
+    3,
+    1,
+    1)
+),
+,
 -- ========== 二级分类（父ID=4：创业思考） ==========
 -- 团队管理
-(41, NOW() - INTERVAL 14 DAY, NOW() - INTERVAL 3 DAY, 1, '/startup/team-management', 'CATEGORY_STATUS_ACTIVE', 1, false, 'carbon:group', 5, 5, '{}', 4, 1, 1),
+(
+    41,
+    NOW() - INTERVAL 14 DAY,
+    NOW() - INTERVAL 3 DAY,
+    1,
+    '/startup/team-management',
+    'CATEGORY_STATUS_ACTIVE',
+    1,
+    false,
+    'carbon:group',
+    'https://picsum.photos/400/300?random=41',
+    5,
+    5,
+    '{}',
+    4,
+    1,
+    1)
+),
+,
 -- 产品思考
-(42, NOW() - INTERVAL 13 DAY, NOW() - INTERVAL 2 DAY, 2, '/startup/product-thinking', 'CATEGORY_STATUS_ACTIVE', 1, false, 'carbon:product', 3, 3, '{}', 4, 1, 1);
+(
+    42,
+    NOW() - INTERVAL 13 DAY,
+    NOW() - INTERVAL 2 DAY,
+    2,
+    '/startup/product-thinking',
+    'CATEGORY_STATUS_ACTIVE',
+    1,
+    false,
+    'carbon:product',
+    'https://picsum.photos/400/300?random=42',
+    3,
+    3,
+    '{}',
+    4,
+    1,
+    1)
+)
+;
+
 ALTER TABLE categories AUTO_INCREMENT = (SELECT COALESCE(MAX(id) + 1, 1) FROM categories);
 
 -- ----------------------------
@@ -1810,9 +2083,9 @@ ALTER TABLE categories AUTO_INCREMENT = (SELECT COALESCE(MAX(id) + 1, 1) FROM ca
 INSERT INTO category_translations (
     id, created_at, updated_at, category_id,
     language_code, name, slug, description,
-    thumbnail, cover_image, full_path, created_by,
-    updated_by
+    cover_image, full_path, created_by, updated_by
 ) VALUES
+
 (
     1,
     NOW() - INTERVAL 30 DAY,
@@ -1822,12 +2095,13 @@ INSERT INTO category_translations (
     '技术分享',
     'tech',
     '分享最新的技术文章和教程',
-    'https://picsum.photos/400/300?random=1',
     'https://picsum.photos/1200/400?random=1',
     '/tech',
     1,
     1
+)
 ),
+,
 (
     101,
     NOW() - INTERVAL 30 DAY,
@@ -1837,12 +2111,13 @@ INSERT INTO category_translations (
     'Tech Sharing',
     'tech',
     'Share the latest technical articles and tutorials',
-    'https://picsum.photos/400/300?random=1',
     'https://picsum.photos/1200/400?random=1',
     '/en/tech',
     1,
     1
+)
 ),
+,
 (
     2,
     NOW() - INTERVAL 25 DAY,
@@ -1852,12 +2127,13 @@ INSERT INTO category_translations (
     '生活随笔',
     'life',
     '记录生活中的点点滴滴',
-    'https://picsum.photos/400/300?random=2',
     'https://picsum.photos/1200/400?random=2',
     '/life',
     1,
     1
+)
 ),
+,
 (
     102,
     NOW() - INTERVAL 25 DAY,
@@ -1867,12 +2143,13 @@ INSERT INTO category_translations (
     'Life Notes',
     'life',
     'Record moments and thoughts from daily life',
-    'https://picsum.photos/400/300?random=2',
     'https://picsum.photos/1200/400?random=2',
     '/en/life',
     1,
     1
+)
 ),
+,
 (
     3,
     NOW() - INTERVAL 20 DAY,
@@ -1882,12 +2159,13 @@ INSERT INTO category_translations (
     '产品设计',
     'design',
     '产品设计理念与实践',
-    'https://picsum.photos/400/300?random=3',
     'https://picsum.photos/1200/400?random=3',
     '/design',
     1,
     1
+)
 ),
+,
 (
     103,
     NOW() - INTERVAL 20 DAY,
@@ -1897,12 +2175,13 @@ INSERT INTO category_translations (
     'Product Design',
     'design',
     'Product design concepts and practices',
-    'https://picsum.photos/400/300?random=3',
     'https://picsum.photos/1200/400?random=3',
     '/en/design',
     1,
     1
+)
 ),
+,
 (
     4,
     NOW() - INTERVAL 15 DAY,
@@ -1912,12 +2191,13 @@ INSERT INTO category_translations (
     '创业思考',
     'startup',
     '创业路上的思考与总结',
-    'https://picsum.photos/400/300?random=4',
     'https://picsum.photos/1200/400?random=4',
     '/startup',
     1,
     1
+)
 ),
+,
 (
     104,
     NOW() - INTERVAL 15 DAY,
@@ -1927,12 +2207,13 @@ INSERT INTO category_translations (
     'Startup Insights',
     'startup',
     'Reflections and summaries from startup journey',
-    'https://picsum.photos/400/300?random=4',
     'https://picsum.photos/1200/400?random=4',
     '/en/startup',
     1,
     1
+)
 ),
+,
 (
     11,
     NOW() - INTERVAL 25 DAY,
@@ -1942,12 +2223,13 @@ INSERT INTO category_translations (
     '前端开发',
     'frontend',
     '前端开发技术和框架',
-    'https://picsum.photos/400/300?random=11',
     'https://picsum.photos/1200/400?random=11',
     '/tech/frontend',
     1,
     1
+)
 ),
+,
 (
     111,
     NOW() - INTERVAL 25 DAY,
@@ -1957,12 +2239,13 @@ INSERT INTO category_translations (
     'Frontend Development',
     'frontend',
     'Frontend development technologies and frameworks',
-    'https://picsum.photos/400/300?random=11',
     'https://picsum.photos/1200/400?random=11',
     '/en/tech/frontend',
     1,
     1
+)
 ),
+,
 (
     12,
     NOW() - INTERVAL 24 DAY,
@@ -1972,12 +2255,13 @@ INSERT INTO category_translations (
     '后端开发',
     'backend',
     '后端开发技术和架构',
-    'https://picsum.photos/400/300?random=12',
     'https://picsum.photos/1200/400?random=12',
     '/tech/backend',
     1,
     1
+)
 ),
+,
 (
     112,
     NOW() - INTERVAL 24 DAY,
@@ -1987,12 +2271,13 @@ INSERT INTO category_translations (
     'Backend Development',
     'backend',
     'Backend development technologies and architecture',
-    'https://picsum.photos/400/300?random=12',
     'https://picsum.photos/1200/400?random=12',
     '/en/tech/backend',
     1,
     1
+)
 ),
+,
 (
     13,
     NOW() - INTERVAL 23 DAY,
@@ -2002,12 +2287,13 @@ INSERT INTO category_translations (
     '移动开发',
     'mobile',
     '移动端开发技术',
-    'https://picsum.photos/400/300?random=13',
     'https://picsum.photos/1200/400?random=13',
     '/tech/mobile',
     1,
     1
+)
 ),
+,
 (
     113,
     NOW() - INTERVAL 23 DAY,
@@ -2017,12 +2303,13 @@ INSERT INTO category_translations (
     'Mobile Development',
     'mobile',
     'Mobile development technologies',
-    'https://picsum.photos/400/300?random=13',
     'https://picsum.photos/1200/400?random=13',
     '/en/tech/mobile',
     1,
     1
+)
 ),
+,
 (
     21,
     NOW() - INTERVAL 20 DAY,
@@ -2032,12 +2319,13 @@ INSERT INTO category_translations (
     '旅行游记',
     'travel',
     '旅行见闻和游记',
-    'https://picsum.photos/400/300?random=21',
     'https://picsum.photos/1200/400?random=21',
     '/life/travel',
     1,
     1
+)
 ),
+,
 (
     121,
     NOW() - INTERVAL 20 DAY,
@@ -2047,12 +2335,13 @@ INSERT INTO category_translations (
     'Travel',
     'travel',
     'Travel experiences and journals',
-    'https://picsum.photos/400/300?random=21',
     'https://picsum.photos/1200/400?random=21',
     '/en/life/travel',
     1,
     1
+)
 ),
+,
 (
     22,
     NOW() - INTERVAL 19 DAY,
@@ -2062,12 +2351,13 @@ INSERT INTO category_translations (
     '美食探店',
     'food',
     '探索城市美食',
-    'https://picsum.photos/400/300?random=22',
     'https://picsum.photos/1200/400?random=22',
     '/life/food',
     1,
     1
+)
 ),
+,
 (
     122,
     NOW() - INTERVAL 19 DAY,
@@ -2077,12 +2367,13 @@ INSERT INTO category_translations (
     'Food Exploration',
     'food',
     'Explore city delicacies',
-    'https://picsum.photos/400/300?random=22',
     'https://picsum.photos/1200/400?random=22',
     '/en/life/food',
     1,
     1
+)
 ),
+,
 (
     31,
     NOW() - INTERVAL 18 DAY,
@@ -2092,12 +2383,13 @@ INSERT INTO category_translations (
     'UI 设计',
     'ui-design',
     '用户界面设计',
-    'https://picsum.photos/400/300?random=31',
     'https://picsum.photos/1200/400?random=31',
     '/design/ui-design',
     1,
     1
+)
 ),
+,
 (
     131,
     NOW() - INTERVAL 18 DAY,
@@ -2107,12 +2399,13 @@ INSERT INTO category_translations (
     'UI Design',
     'ui-design',
     'User Interface Design',
-    'https://picsum.photos/400/300?random=31',
     'https://picsum.photos/1200/400?random=31',
     '/en/design/ui-design',
     1,
     1
+)
 ),
+,
 (
     32,
     NOW() - INTERVAL 17 DAY,
@@ -2122,12 +2415,13 @@ INSERT INTO category_translations (
     'UX 设计',
     'ux-design',
     '用户体验设计',
-    'https://picsum.photos/400/300?random=32',
     'https://picsum.photos/1200/400?random=32',
     '/design/ux-design',
     1,
     1
+)
 ),
+,
 (
     132,
     NOW() - INTERVAL 17 DAY,
@@ -2137,12 +2431,13 @@ INSERT INTO category_translations (
     'UX Design',
     'ux-design',
     'User Experience Design',
-    'https://picsum.photos/400/300?random=32',
     'https://picsum.photos/1200/400?random=32',
     '/en/design/ux-design',
     1,
     1
+)
 ),
+,
 (
     41,
     NOW() - INTERVAL 14 DAY,
@@ -2152,12 +2447,13 @@ INSERT INTO category_translations (
     '团队管理',
     'team-management',
     '团队建设和管理经验',
-    'https://picsum.photos/400/300?random=41',
     'https://picsum.photos/1200/400?random=41',
     '/startup/team-management',
     1,
     1
+)
 ),
+,
 (
     141,
     NOW() - INTERVAL 14 DAY,
@@ -2167,12 +2463,13 @@ INSERT INTO category_translations (
     'Team Management',
     'team-management',
     'Team building and management experience',
-    'https://picsum.photos/400/300?random=41',
     'https://picsum.photos/1200/400?random=41',
     '/en/startup/team-management',
     1,
     1
+)
 ),
+,
 (
     42,
     NOW() - INTERVAL 13 DAY,
@@ -2182,12 +2479,13 @@ INSERT INTO category_translations (
     '产品思考',
     'product-thinking',
     '产品规划和思考',
-    'https://picsum.photos/400/300?random=42',
     'https://picsum.photos/1200/400?random=42',
     '/startup/product-thinking',
     1,
     1
+)
 ),
+,
 (
     142,
     NOW() - INTERVAL 13 DAY,
@@ -2197,12 +2495,14 @@ INSERT INTO category_translations (
     'Product Thinking',
     'product-thinking',
     'Product planning and thinking',
-    'https://picsum.photos/400/300?random=42',
     'https://picsum.photos/1200/400?random=42',
     '/en/startup/product-thinking',
     1,
     1
-);
+)
+)
+;
+
 ALTER TABLE category_translations AUTO_INCREMENT = (SELECT COALESCE(MAX(id) + 1, 1) FROM category_translations);
 
 -- ----------------------------
@@ -2791,82 +3091,171 @@ ALTER TABLE tag_translations AUTO_INCREMENT = (SELECT COALESCE(MAX(id) + 1, 1) F
 INSERT INTO posts (
     created_at, updated_at, sort_order, editor_type,
     status, code, disallow_comment, in_progress,
-    auto_summary, is_featured,
-    author_id, author_name, password_hash,
-    custom_fields
+    auto_summary, is_featured, author_id, author_name,
+    thumbnail, password_hash, custom_fields
 ) VALUES
+
 -- 文章1：风行内容中台 快速上手（已发布、精选）
 (
-    NOW() - INTERVAL 30 DAY, NOW(),
-    1, 'EDITOR_TYPE_MARKDOWN',
-    'POST_STATUS_PUBLISHED', 'gowind-cms-quick-start',
-    false, false, true, true,
-    1, 'GoWind 官方', '',
+    NOW() - INTERVAL 30 DAY,
+    NOW(),
+    1,
+    'EDITOR_TYPE_MARKDOWN',
+    'POST_STATUS_PUBLISHED',
+    'gowind-cms-quick-start',
+    false,
+    false,
+    true,
+    true,
+    1,
+    'GoWind 官方',
+    'https://picsum.photos/800/450?random=1',
+    '',
     '{"show_toc": "true", "toc_depth": "3", "allow_copy": "true", "copyright_notice": "GoWind 官方原创"}'
+)
 ),
+,
 -- 文章2：GoWind v2.0 版本发布公告（已发布、精选）
 (
-    NOW() - INTERVAL 25 DAY, NOW(),
-    2, 'EDITOR_TYPE_MARKDOWN',
-    'POST_STATUS_PUBLISHED', 'gowind-v2-0-release',
-    false, false, true, true,
-    1, 'GoWind 官方', '',
+    NOW() - INTERVAL 25 DAY,
+    NOW(),
+    2,
+    'EDITOR_TYPE_MARKDOWN',
+    'POST_STATUS_PUBLISHED',
+    'gowind-v2-0-release',
+    false,
+    false,
+    true,
+    true,
+    1,
+    'GoWind 官方',
+    'https://picsum.photos/800/450?random=2',
+    '',
     '{"show_changelog": "true", "release_date": "2024-03-01", "upgrade_guide_url": "/docs/upgrade/v2.0"}'
+)
 ),
+,
 -- 文章3：Linux 环境下部署 风行内容中台（已发布）
 (
-    NOW() - INTERVAL 22 DAY, NOW(),
-    3, 'EDITOR_TYPE_MARKDOWN',
-    'POST_STATUS_PUBLISHED', 'deploy-gowind-on-linux',
-    false, false, true, false,
-    1001, '张三', '',
+    NOW() - INTERVAL 22 DAY,
+    NOW(),
+    3,
+    'EDITOR_TYPE_MARKDOWN',
+    'POST_STATUS_PUBLISHED',
+    'deploy-gowind-on-linux',
+    false,
+    false,
+    true,
+    false,
+    1001,
+    '张三',
+    'https://picsum.photos/800/450?random=3',
+    '',
     '{"os_type": "Linux", "distro": "Ubuntu, CentOS", "tested_version": "v1.9.0"}'
+)
 ),
+,
 -- 文章4：2024 Content Hub 行业发展趋势分析（已发布）
 (
-    NOW() - INTERVAL 20 DAY, NOW(),
-    4, 'EDITOR_TYPE_MARKDOWN',
-    'POST_STATUS_PUBLISHED', '2024-cms-industry-trends',
-    false, false, true, false,
-    1002, '李四', '',
+    NOW() - INTERVAL 20 DAY,
+    NOW(),
+    4,
+    'EDITOR_TYPE_MARKDOWN',
+    'POST_STATUS_PUBLISHED',
+    '2024-cms-industry-trends',
+    false,
+    false,
+    true,
+    false,
+    1002,
+    '李四',
+    'https://picsum.photos/800/450?random=4',
+    '',
     '{"data_source": "IDC 2024 行业报告", "chart_support": "true", "downloadable": "true"}'
+)
 ),
+,
 -- 文章5：风行内容中台 自定义模板开发（草稿、未完成）
 (
-    NOW() - INTERVAL 15 DAY, NOW(),
-    5, 'EDITOR_TYPE_MARKDOWN',
-    'POST_STATUS_DRAFT', 'gowind-custom-template-dev',
-    true, true, false, false,
-    1001, '张三', '',
+    NOW() - INTERVAL 15 DAY,
+    NOW(),
+    5,
+    'EDITOR_TYPE_MARKDOWN',
+    'POST_STATUS_DRAFT',
+    'gowind-custom-template-dev',
+    true,
+    true,
+    false,
+    false,
+    1001,
+    '张三',
+    'https://picsum.photos/800/450?random=5',
+    '',
     '{"dev_status": "50%", "expected_release": "2024-04-01", "required_skills": "Go, Vue3, HTML/CSS"}'
+)
 ),
+,
 -- 文章6：GoWind 企业版功能详解（加密、已发布）
 (
-    NOW() - INTERVAL 12 DAY, NOW(),
-    6, 'EDITOR_TYPE_MARKDOWN',
-    'POST_STATUS_PUBLISHED', 'gowind-enterprise-features',
-    true, false, true, false,
-    1, 'GoWind 官方', '$2a$10$89jZk54G89sdkf89sdf89sd89sdf89sdf89sdf',
+    NOW() - INTERVAL 12 DAY,
+    NOW(),
+    6,
+    'EDITOR_TYPE_MARKDOWN',
+    'POST_STATUS_PUBLISHED',
+    'gowind-enterprise-features',
+    true,
+    false,
+    true,
+    false,
+    1,
+    'GoWind 官方',
+    'https://picsum.photos/800/450?random=6',
+    '$2a$10$89jZk54G89sdkf89sdf89sd89sdf89sdf89sdf',
     '{"is_enterprise": "true", "price_range": "¥9999-¥19999", "trial_available": "true"}'
+)
 ),
+,
 -- 文章7：常见问题解答（草稿）
 (
-    NOW() - INTERVAL 10 DAY, NOW(),
-    7, 'EDITOR_TYPE_MARKDOWN',
-    'POST_STATUS_DRAFT', 'gowind-faq',
-    true, false, true, false,
-    1, 'GoWind 官方', '',
+    NOW() - INTERVAL 10 DAY,
+    NOW(),
+    7,
+    'EDITOR_TYPE_MARKDOWN',
+    'POST_STATUS_DRAFT',
+    'gowind-faq',
+    true,
+    false,
+    true,
+    false,
+    1,
+    'GoWind 官方',
+    'https://picsum.photos/800/450?random=7',
+    '',
     '{"faq_category": "installation, configuration, performance", "update_frequency": "monthly"}'
+)
 ),
+,
 -- 文章8：风行内容中台 性能优化指南（已发布、精选）
 (
-    NOW() - INTERVAL 8 DAY, NOW(),
-    8, 'EDITOR_TYPE_MARKDOWN',
-    'POST_STATUS_PUBLISHED', 'gowind-cms-performance-optimization',
-    false, false, true, true,
-    1003, '王五', '',
+    NOW() - INTERVAL 8 DAY,
+    NOW(),
+    8,
+    'EDITOR_TYPE_MARKDOWN',
+    'POST_STATUS_PUBLISHED',
+    'gowind-cms-performance-optimization',
+    false,
+    false,
+    true,
+    true,
+    1003,
+    '王五',
+    'https://picsum.photos/800/450?random=8',
+    '',
     '{"benchmark_data": "true", "qps_before": "50000", "qps_after": "100000", "optimization_points": "DB, Cache, Code"}'
-);
+)
+)
+;
+
 ALTER TABLE posts AUTO_INCREMENT = (SELECT COALESCE(MAX(id) + 1, 1) FROM posts);
 
 -- ----------------------------
@@ -2875,8 +3264,9 @@ ALTER TABLE posts AUTO_INCREMENT = (SELECT COALESCE(MAX(id) + 1, 1) FROM posts);
 INSERT INTO post_translations (
     created_at, updated_at, post_id, language_code,
     title, slug, summary, content,
-    original_content, thumbnail, full_path, word_count
+    original_content, full_path, word_count
 ) VALUES
+
 (
     NOW() - INTERVAL 30 DAY,
     NOW(),
@@ -2917,10 +3307,11 @@ INSERT INTO post_translations (
 4. 初始登录：http://localhost:8080，默认账号admin/admin
 
 > 首次登录请立即修改密码！',
-    'https://picsum.photos/800/450?random=1',
     '/blog/gowind-content-hub-quick-start',
     2580
+)
 ),
+,
 (
     NOW() - INTERVAL 25 DAY,
     NOW(),
@@ -2955,10 +3346,11 @@ GoWind Content Hub v2.0于2024年3月1日发布，是开源以来的重大版本
 ## 升级指南
 - 从v1.9升级：备份数据库后执行go run scripts/upgrade/v2.0.go
 - 全新安装：直接克隆v2.0分支代码部署',
-    'https://picsum.photos/800/450?random=2',
     '/blog/gowind-v2-0-release',
     3200
+)
 ),
+,
 (
     NOW() - INTERVAL 22 DAY,
     NOW(),
@@ -3007,10 +3399,11 @@ yum install -y golang postgresql git
 
 ## 开机自启
 创建systemd服务文件：/etc/systemd/system/gowind.service',
-    'https://picsum.photos/800/450?random=3',
     '/blog/deploy-gowind-on-linux',
     2800
+)
 ),
+,
 (
     NOW() - INTERVAL 20 DAY,
     NOW(),
@@ -3049,10 +3442,11 @@ IDC 2024年全球Content Hub市场研究报告
 
 ## 国内趋势
 国产化替代加速，Go/Java语言开发的Content Hub占比提升。',
-    'https://picsum.photos/800/450?random=4',
     '/blog/2024-cms-industry-trends',
     2600
+)
 ),
+,
 (
     NOW() - INTERVAL 15 DAY,
     NOW(),
@@ -3101,10 +3495,11 @@ IDC 2024年全球Content Hub市场研究报告
 1. 模板语法详解
 2. 数据调用示例
 3. 自定义组件开发',
-    'https://picsum.photos/800/450?random=5',
     '/blog/gowind-custom-template-dev',
     1800
+)
 ),
+,
 (
     NOW() - INTERVAL 12 DAY,
     NOW(),
@@ -3145,10 +3540,11 @@ IDC 2024年全球Content Hub市场研究报告
 
 ## 试用申请
 联系客服：400-123-4567，可申请15天免费试用。',
-    'https://picsum.photos/800/450?random=6',
     '/blog/gowind-enterprise-features',
     2200
+)
 ),
+,
 (
     NOW() - INTERVAL 10 DAY,
     NOW(),
@@ -3189,10 +3585,11 @@ A3：在后台设置-多语言中启用，上传翻译文件。
 ## 待补充
 - 性能优化相关问题
 - 升级相关问题',
-    'https://picsum.photos/800/450?random=7',
     '/blog/gowind-faq',
     1500
+)
 ),
+,
 (
     NOW() - INTERVAL 8 DAY,
     NOW(),
@@ -3233,10 +3630,11 @@ v1.9版本QPS仅5万，响应时间200ms，无法满足高并发需求。
 1. 数据库：新增索引、慢查询优化、读写分离
 2. 缓存：Redis缓存分类/文章，动态过期策略
 3. 代码：优化Goroutine、JSON序列化、静态资源压缩',
-    'https://picsum.photos/800/450?random=8',
     '/blog/gowind-cms-performance-optimization',
     3000
+)
 ),
+,
 (
     NOW() - INTERVAL 30 DAY,
     NOW(),
@@ -3277,10 +3675,11 @@ v1.9版本QPS仅5万，响应时间200ms，无法满足高并发需求。
 4. Initial login: http://localhost:8080, default account admin/admin
 
 > Please change password immediately after first login!',
-    'https://picsum.photos/800/450?random=9',
     '/en/blog/gowind-cms-quick-start',
     2580
+)
 ),
+,
 (
     NOW() - INTERVAL 25 DAY,
     NOW(),
@@ -3315,10 +3714,11 @@ GoWind Content Hub v2.0 was released on March 1, 2024, marking the most signific
 ## Upgrade Guide
 - Upgrade from v1.9: Backup database and execute go run scripts/upgrade/v2.0.go
 - Fresh installation: Clone v2.0 branch code directly for deployment',
-    'https://picsum.photos/800/450?random=10',
     '/en/blog/gowind-v2-0-release',
     3200
+)
 ),
+,
 (
     NOW() - INTERVAL 22 DAY,
     NOW(),
@@ -3367,10 +3767,11 @@ yum install -y golang postgresql git
 
 ## Auto-start on Boot
 Create systemd service file: /etc/systemd/system/gowind.service',
-    'https://picsum.photos/800/450?random=11',
     '/en/blog/deploy-gowind-on-linux',
     2800
+)
 ),
+,
 (
     NOW() - INTERVAL 20 DAY,
     NOW(),
@@ -3409,10 +3810,11 @@ Global Content Hub market size expected to reach $8.9 billion in 2024, with 18% 
 
 ## Domestic Trends
 Accelerated domestic substitution, Content Hub developed with Go/Java languages gaining market share.',
-    'https://picsum.photos/800/450?random=12',
     '/en/blog/2024-cms-industry-trends',
     2600
+)
 ),
+,
 (
     NOW() - INTERVAL 15 DAY,
     NOW(),
@@ -3461,10 +3863,11 @@ Accelerated domestic substitution, Content Hub developed with Go/Java languages 
 1. Template syntax detailed explanation
 2. Data binding examples
 3. Custom component development',
-    'https://picsum.photos/800/450?random=13',
     '/en/blog/gowind-custom-template-dev',
     1800
+)
 ),
+,
 (
     NOW() - INTERVAL 12 DAY,
     NOW(),
@@ -3505,10 +3908,11 @@ Contact support: 400-123-4567, 15-day free trial available.',
 
 ## Trial Application
 Contact support: 400-123-4567, 15-day free trial available.',
-    'https://picsum.photos/800/450?random=14',
     '/en/blog/gowind-enterprise-features',
     2200
+)
 ),
+,
 (
     NOW() - INTERVAL 10 DAY,
     NOW(),
@@ -3549,10 +3953,11 @@ A3: Enable in backend Settings > Multi-language, upload translation files.
 ## To Be Added
 - Performance optimization questions
 - Upgrade related questions',
-    'https://picsum.photos/800/450?random=15',
     '/en/blog/gowind-faq',
     1500
+)
 ),
+,
 (
     NOW() - INTERVAL 8 DAY,
     NOW(),
@@ -3593,10 +3998,12 @@ v1.9 version had only 50K QPS with 200ms response time, unable to meet high-conc
 1. Database: New indexes, slow query optimization, read-write separation
 2. Caching: Redis cache for categories/articles with dynamic expiration strategy
 3. Code: Goroutine optimization, JSON serialization improvement, static resource compression',
-    'https://picsum.photos/800/450?random=16',
     '/en/blog/gowind-cms-performance-optimization',
     3000
-);
+)
+)
+;
+
 ALTER TABLE post_translations AUTO_INCREMENT = (SELECT COALESCE(MAX(id) + 1, 1) FROM post_translations);
 
 -- ----------------------------

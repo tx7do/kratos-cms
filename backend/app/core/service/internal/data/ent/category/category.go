@@ -43,6 +43,8 @@ const (
 	FieldIcon = "icon"
 	// FieldCode holds the string denoting the code field in the database.
 	FieldCode = "code"
+	// FieldThumbnail holds the string denoting the thumbnail field in the database.
+	FieldThumbnail = "thumbnail"
 	// FieldPostCount holds the string denoting the post_count field in the database.
 	FieldPostCount = "post_count"
 	// FieldDirectPostCount holds the string denoting the direct_post_count field in the database.
@@ -86,6 +88,7 @@ var Columns = []string{
 	FieldIsNav,
 	FieldIcon,
 	FieldCode,
+	FieldThumbnail,
 	FieldPostCount,
 	FieldDirectPostCount,
 	FieldDepth,
@@ -229,6 +232,11 @@ func ByIcon(opts ...sql.OrderTermOption) OrderOption {
 // ByCode orders the results by the code field.
 func ByCode(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCode, opts...).ToFunc()
+}
+
+// ByThumbnail orders the results by the thumbnail field.
+func ByThumbnail(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldThumbnail, opts...).ToFunc()
 }
 
 // ByPostCount orders the results by the post_count field.

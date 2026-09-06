@@ -151,6 +151,10 @@ func (m *Category) validate(all bool) error {
 		// no validation rules for Code
 	}
 
+	if m.Thumbnail != nil {
+		// no validation rules for Thumbnail
+	}
+
 	if m.PostCount != nil {
 		// no validation rules for PostCount
 	}
@@ -407,10 +411,6 @@ func (m *CategoryTranslation) validate(all bool) error {
 
 	if m.Description != nil {
 		// no validation rules for Description
-	}
-
-	if m.Thumbnail != nil {
-		// no validation rules for Thumbnail
 	}
 
 	if m.CoverImage != nil {

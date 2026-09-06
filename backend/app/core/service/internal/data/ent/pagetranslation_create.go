@@ -183,20 +183,6 @@ func (_c *PageTranslationCreate) SetNillableSlug(v *string) *PageTranslationCrea
 	return _c
 }
 
-// SetThumbnail sets the "thumbnail" field.
-func (_c *PageTranslationCreate) SetThumbnail(v string) *PageTranslationCreate {
-	_c.mutation.SetThumbnail(v)
-	return _c
-}
-
-// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
-func (_c *PageTranslationCreate) SetNillableThumbnail(v *string) *PageTranslationCreate {
-	if v != nil {
-		_c.SetThumbnail(*v)
-	}
-	return _c
-}
-
 // SetCoverImage sets the "cover_image" field.
 func (_c *PageTranslationCreate) SetCoverImage(v string) *PageTranslationCreate {
 	_c.mutation.SetCoverImage(v)
@@ -367,10 +353,6 @@ func (_c *PageTranslationCreate) createSpec() (*PageTranslation, *sqlgraph.Creat
 	if value, ok := _c.mutation.Slug(); ok {
 		_spec.SetField(pagetranslation.FieldSlug, field.TypeString, value)
 		_node.Slug = &value
-	}
-	if value, ok := _c.mutation.Thumbnail(); ok {
-		_spec.SetField(pagetranslation.FieldThumbnail, field.TypeString, value)
-		_node.Thumbnail = &value
 	}
 	if value, ok := _c.mutation.CoverImage(); ok {
 		_spec.SetField(pagetranslation.FieldCoverImage, field.TypeString, value)
@@ -633,24 +615,6 @@ func (u *PageTranslationUpsert) UpdateSlug() *PageTranslationUpsert {
 // ClearSlug clears the value of the "slug" field.
 func (u *PageTranslationUpsert) ClearSlug() *PageTranslationUpsert {
 	u.SetNull(pagetranslation.FieldSlug)
-	return u
-}
-
-// SetThumbnail sets the "thumbnail" field.
-func (u *PageTranslationUpsert) SetThumbnail(v string) *PageTranslationUpsert {
-	u.Set(pagetranslation.FieldThumbnail, v)
-	return u
-}
-
-// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
-func (u *PageTranslationUpsert) UpdateThumbnail() *PageTranslationUpsert {
-	u.SetExcluded(pagetranslation.FieldThumbnail)
-	return u
-}
-
-// ClearThumbnail clears the value of the "thumbnail" field.
-func (u *PageTranslationUpsert) ClearThumbnail() *PageTranslationUpsert {
-	u.SetNull(pagetranslation.FieldThumbnail)
 	return u
 }
 
@@ -979,27 +943,6 @@ func (u *PageTranslationUpsertOne) UpdateSlug() *PageTranslationUpsertOne {
 func (u *PageTranslationUpsertOne) ClearSlug() *PageTranslationUpsertOne {
 	return u.Update(func(s *PageTranslationUpsert) {
 		s.ClearSlug()
-	})
-}
-
-// SetThumbnail sets the "thumbnail" field.
-func (u *PageTranslationUpsertOne) SetThumbnail(v string) *PageTranslationUpsertOne {
-	return u.Update(func(s *PageTranslationUpsert) {
-		s.SetThumbnail(v)
-	})
-}
-
-// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
-func (u *PageTranslationUpsertOne) UpdateThumbnail() *PageTranslationUpsertOne {
-	return u.Update(func(s *PageTranslationUpsert) {
-		s.UpdateThumbnail()
-	})
-}
-
-// ClearThumbnail clears the value of the "thumbnail" field.
-func (u *PageTranslationUpsertOne) ClearThumbnail() *PageTranslationUpsertOne {
-	return u.Update(func(s *PageTranslationUpsert) {
-		s.ClearThumbnail()
 	})
 }
 
@@ -1500,27 +1443,6 @@ func (u *PageTranslationUpsertBulk) UpdateSlug() *PageTranslationUpsertBulk {
 func (u *PageTranslationUpsertBulk) ClearSlug() *PageTranslationUpsertBulk {
 	return u.Update(func(s *PageTranslationUpsert) {
 		s.ClearSlug()
-	})
-}
-
-// SetThumbnail sets the "thumbnail" field.
-func (u *PageTranslationUpsertBulk) SetThumbnail(v string) *PageTranslationUpsertBulk {
-	return u.Update(func(s *PageTranslationUpsert) {
-		s.SetThumbnail(v)
-	})
-}
-
-// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
-func (u *PageTranslationUpsertBulk) UpdateThumbnail() *PageTranslationUpsertBulk {
-	return u.Update(func(s *PageTranslationUpsert) {
-		s.UpdateThumbnail()
-	})
-}
-
-// ClearThumbnail clears the value of the "thumbnail" field.
-func (u *PageTranslationUpsertBulk) ClearThumbnail() *PageTranslationUpsertBulk {
-	return u.Update(func(s *PageTranslationUpsert) {
-		s.ClearThumbnail()
 	})
 }
 

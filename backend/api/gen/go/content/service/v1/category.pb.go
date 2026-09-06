@@ -88,6 +88,7 @@ type Category struct {
 	IsNav              *bool                    `protobuf:"varint,4,opt,name=is_nav,json=isNav,proto3,oneof" json:"is_nav,omitempty"`                                      // 是否显示在导航菜单（可选，默认 false）
 	Icon               *string                  `protobuf:"bytes,5,opt,name=icon,proto3,oneof" json:"icon,omitempty"`                                                      // 分类图标（可选，支持图标名称如 'fas fa-folder' 或 SVG URL）
 	Code               *string                  `protobuf:"bytes,6,opt,name=code,proto3,oneof" json:"code,omitempty"`                                                      // 唯一代码（如 slug、编码等，便于唯一标识分类）
+	Thumbnail          *string                  `protobuf:"bytes,7,opt,name=thumbnail,proto3,oneof" json:"thumbnail,omitempty"`                                            // 缩略图（全语言共用，存主表）
 	PostCount          *uint32                  `protobuf:"varint,10,opt,name=post_count,json=postCount,proto3,oneof" json:"post_count,omitempty"`                         // 该分类下的文章总数（含子分类，可选）
 	DirectPostCount    *uint32                  `protobuf:"varint,11,opt,name=direct_post_count,json=directPostCount,proto3,oneof" json:"direct_post_count,omitempty"`     // 该分类下的直接文章数（不含子分类）
 	Translations       []*CategoryTranslation   `protobuf:"bytes,20,rep,name=translations,proto3" json:"translations,omitempty"`
@@ -176,6 +177,13 @@ func (x *Category) GetIcon() string {
 func (x *Category) GetCode() string {
 	if x != nil && x.Code != nil {
 		return *x.Code
+	}
+	return ""
+}
+
+func (x *Category) GetThumbnail() string {
+	if x != nil && x.Thumbnail != nil {
+		return *x.Thumbnail
 	}
 	return ""
 }
@@ -301,7 +309,6 @@ type CategoryTranslation struct {
 	Name          *string                `protobuf:"bytes,10,opt,name=name,proto3,oneof" json:"name,omitempty"`                                    // 分类名称
 	Slug          *string                `protobuf:"bytes,11,opt,name=slug,proto3,oneof" json:"slug,omitempty"`                                    // 分类别名
 	Description   *string                `protobuf:"bytes,12,opt,name=description,proto3,oneof" json:"description,omitempty"`                      // 分类描述
-	Thumbnail     *string                `protobuf:"bytes,13,opt,name=thumbnail,proto3,oneof" json:"thumbnail,omitempty"`                          // 缩略图
 	CoverImage    *string                `protobuf:"bytes,14,opt,name=cover_image,json=coverImage,proto3,oneof" json:"cover_image,omitempty"`      // 封面图
 	FullPath      *string                `protobuf:"bytes,20,opt,name=full_path,json=fullPath,proto3,oneof" json:"full_path,omitempty"`            // 完整路径
 	Seo           *SeoMeta               `protobuf:"bytes,30,opt,name=seo,proto3,oneof" json:"seo,omitempty"`
@@ -383,13 +390,6 @@ func (x *CategoryTranslation) GetSlug() string {
 func (x *CategoryTranslation) GetDescription() string {
 	if x != nil && x.Description != nil {
 		return *x.Description
-	}
-	return ""
-}
-
-func (x *CategoryTranslation) GetThumbnail() string {
-	if x != nil && x.Thumbnail != nil {
-		return *x.Thumbnail
 	}
 	return ""
 }
@@ -1144,7 +1144,7 @@ var File_content_service_v1_category_proto protoreflect.FileDescriptor
 
 const file_content_service_v1_category_proto_rawDesc = "" +
 	"\n" +
-	"!content/service/v1/category.proto\x12\x12content.service.v1\x1a$gnostic/openapi/v3/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a google/protobuf/field_mask.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1econtent/service/v1/types.proto\"\xfc\x12\n" +
+	"!content/service/v1/category.proto\x12\x12content.service.v1\x1a$gnostic/openapi/v3/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a google/protobuf/field_mask.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1econtent/service/v1/types.proto\"\xdf\x13\n" +
 	"\bCategory\x12#\n" +
 	"\x02id\x18\x01 \x01(\rB\x0e\xbaG\v\x92\x02\b类别IDH\x00R\x02id\x88\x01\x01\x12\\\n" +
 	"\x06status\x18\x02 \x01(\x0e2+.content.service.v1.Category.CategoryStatusB\x12\xbaG\x0f\x92\x02\f分类状态H\x01R\x06status\x88\x01\x01\x12l\n" +
@@ -1152,32 +1152,33 @@ const file_content_service_v1_category_proto_rawDesc = "" +
 	"sort_order\x18\x03 \x01(\rBH\xbaGE\x92\x02B排序优先级（数值越小越靠前，同级分类间排序）H\x02R\tsortOrder\x88\x01\x01\x12=\n" +
 	"\x06is_nav\x18\x04 \x01(\bB!\xbaG\x1e\x92\x02\x1b是否显示在导航菜单H\x03R\x05isNav\x88\x01\x01\x12+\n" +
 	"\x04icon\x18\x05 \x01(\tB\x12\xbaG\x0f\x92\x02\f分类图标H\x04R\x04icon\x88\x01\x01\x12`\n" +
-	"\x04code\x18\x06 \x01(\tBG\xbaGD\x92\x02A唯一代码（如 slug、编码等，便于唯一标识分类）H\x05R\x04code\x88\x01\x01\x12`\n" +
+	"\x04code\x18\x06 \x01(\tBG\xbaGD\x92\x02A唯一代码（如 slug、编码等，便于唯一标识分类）H\x05R\x04code\x88\x01\x01\x12S\n" +
+	"\tthumbnail\x18\a \x01(\tB0\xbaG-\x92\x02*缩略图（全语言共用，存主表）H\x06R\tthumbnail\x88\x01\x01\x12`\n" +
 	"\n" +
 	"post_count\x18\n" +
-	" \x01(\rB<\xbaG9\x92\x026该分类下的文章总数（含子分类，可选）H\x06R\tpostCount\x88\x01\x01\x12j\n" +
-	"\x11direct_post_count\x18\v \x01(\rB9\xbaG6\x92\x023该分类下的直接文章数（不含子分类）H\aR\x0fdirectPostCount\x88\x01\x01\x12h\n" +
+	" \x01(\rB<\xbaG9\x92\x026该分类下的文章总数（含子分类，可选）H\aR\tpostCount\x88\x01\x01\x12j\n" +
+	"\x11direct_post_count\x18\v \x01(\rB9\xbaG6\x92\x023该分类下的直接文章数（不含子分类）H\bR\x0fdirectPostCount\x88\x01\x01\x12h\n" +
 	"\ftranslations\x18\x14 \x03(\v2'.content.service.v1.CategoryTranslationB\x1b\xbaG\x18\x92\x02\x15多语言翻译列表R\ftranslations\x12\x9f\x01\n" +
 	"\x13available_languages\x18\x15 \x03(\tBn\xbaGk:\x1d\x12\x1b[\"zh-CN\", \"en-US\", \"ja-JP\"]\x92\x02I可用的语言代码列表（快速查询，避免遍历 translations）R\x12availableLanguages\x12\x8b\x01\n" +
 	"\rcustom_fields\x18\x1e \x03(\v2..content.service.v1.Category.CustomFieldsEntryB6\xbaG3\x92\x020自定义字段，键值对形式，便于扩展R\fcustomFields\x12\x8c\x01\n" +
-	"\x10content_model_id\x18\x1f \x01(\rB]\xbaGZ\x92\x02W绑定的内容模型ID（该分类下的内容继承模型字段，0/null=无绑定）H\bR\x0econtentModelId\x88\x01\x01\x123\n" +
-	"\tparent_id\x18< \x01(\rB\x11\xbaG\x0e\x92\x02\v父节点IDH\tR\bparentId\x88\x01\x01\x12L\n" +
+	"\x10content_model_id\x18\x1f \x01(\rB]\xbaGZ\x92\x02W绑定的内容模型ID（该分类下的内容继承模型字段，0/null=无绑定）H\tR\x0econtentModelId\x88\x01\x01\x123\n" +
+	"\tparent_id\x18< \x01(\rB\x11\xbaG\x0e\x92\x02\v父节点IDH\n" +
+	"R\bparentId\x88\x01\x01\x12L\n" +
 	"\bchildren\x18= \x03(\v2\x1c.content.service.v1.CategoryB\x12\xbaG\x0f\x92\x02\f子节点树R\bchildren\x12[\n" +
-	"\x05depth\x18> \x01(\x05B@\xbaG=\x92\x02:分类层级深度（0=顶级，1=二级，以此类推）H\n" +
-	"R\x05depth\x88\x01\x01\x12f\n" +
-	"\x04path\x18? \x01(\tBM\xbaGJ\x92\x02G物化路径（Materialized Path），如 '1/5/23'，便于层级查询H\vR\x04path\x88\x01\x01\x12;\n" +
+	"\x05depth\x18> \x01(\x05B@\xbaG=\x92\x02:分类层级深度（0=顶级，1=二级，以此类推）H\vR\x05depth\x88\x01\x01\x12f\n" +
+	"\x04path\x18? \x01(\tBM\xbaGJ\x92\x02G物化路径（Materialized Path），如 '1/5/23'，便于层级查询H\fR\x04path\x88\x01\x01\x12;\n" +
 	"\n" +
-	"created_by\x18d \x01(\rB\x17\xbaG\x14\x92\x02\x11创建者用户IDH\fR\tcreatedBy\x88\x01\x01\x12;\n" +
+	"created_by\x18d \x01(\rB\x17\xbaG\x14\x92\x02\x11创建者用户IDH\rR\tcreatedBy\x88\x01\x01\x12;\n" +
 	"\n" +
-	"updated_by\x18e \x01(\rB\x17\xbaG\x14\x92\x02\x11更新者用户IDH\rR\tupdatedBy\x88\x01\x01\x12;\n" +
+	"updated_by\x18e \x01(\rB\x17\xbaG\x14\x92\x02\x11更新者用户IDH\x0eR\tupdatedBy\x88\x01\x01\x12;\n" +
 	"\n" +
-	"deleted_by\x18f \x01(\rB\x17\xbaG\x14\x92\x02\x11删除者用户IDH\x0eR\tdeletedBy\x88\x01\x01\x12S\n" +
+	"deleted_by\x18f \x01(\rB\x17\xbaG\x14\x92\x02\x11删除者用户IDH\x0fR\tdeletedBy\x88\x01\x01\x12S\n" +
 	"\n" +
-	"created_at\x18\xc8\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f创建时间H\x0fR\tcreatedAt\x88\x01\x01\x12S\n" +
+	"created_at\x18\xc8\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f创建时间H\x10R\tcreatedAt\x88\x01\x01\x12S\n" +
 	"\n" +
-	"updated_at\x18\xc9\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f更新时间H\x10R\tupdatedAt\x88\x01\x01\x12S\n" +
+	"updated_at\x18\xc9\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f更新时间H\x11R\tupdatedAt\x88\x01\x01\x12S\n" +
 	"\n" +
-	"deleted_at\x18\xca\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f删除时间H\x11R\tdeletedAt\x88\x01\x01\x1a?\n" +
+	"deleted_at\x18\xca\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f删除时间H\x12R\tdeletedAt\x88\x01\x01\x1a?\n" +
 	"\x11CustomFieldsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x87\x01\n" +
@@ -1191,7 +1192,9 @@ const file_content_service_v1_category_proto_rawDesc = "" +
 	"\v_sort_orderB\t\n" +
 	"\a_is_navB\a\n" +
 	"\x05_iconB\a\n" +
-	"\x05_codeB\r\n" +
+	"\x05_codeB\f\n" +
+	"\n" +
+	"_thumbnailB\r\n" +
 	"\v_post_countB\x14\n" +
 	"\x12_direct_post_countB\x13\n" +
 	"\x11_content_model_idB\f\n" +
@@ -1204,7 +1207,7 @@ const file_content_service_v1_category_proto_rawDesc = "" +
 	"\v_deleted_byB\r\n" +
 	"\v_created_atB\r\n" +
 	"\v_updated_atB\r\n" +
-	"\v_deleted_at\"\xf2\t\n" +
+	"\v_deleted_at\"\xc1\t\n" +
 	"\x13CategoryTranslation\x12)\n" +
 	"\x02id\x18\x01 \x01(\rB\x14\xbaG\x11\x92\x02\x0e翻译记录IDH\x00R\x02id\x88\x01\x01\x12=\n" +
 	"\vcategory_id\x18\x02 \x01(\rB\x17\xbaG\x14\x92\x02\x11关联的分类IDH\x01R\n" +
@@ -1213,33 +1216,30 @@ const file_content_service_v1_category_proto_rawDesc = "" +
 	"\x04name\x18\n" +
 	" \x01(\tB\x12\xbaG\x0f\x92\x02\f分类名称H\x03R\x04name\x88\x01\x01\x12+\n" +
 	"\x04slug\x18\v \x01(\tB\x12\xbaG\x0f\x92\x02\f分类别名H\x04R\x04slug\x88\x01\x01\x129\n" +
-	"\vdescription\x18\f \x01(\tB\x12\xbaG\x0f\x92\x02\f分类描述H\x05R\vdescription\x88\x01\x01\x122\n" +
-	"\tthumbnail\x18\r \x01(\tB\x0f\xbaG\f\x92\x02\t缩略图H\x06R\tthumbnail\x88\x01\x01\x125\n" +
-	"\vcover_image\x18\x0e \x01(\tB\x0f\xbaG\f\x92\x02\t封面图H\aR\n" +
+	"\vdescription\x18\f \x01(\tB\x12\xbaG\x0f\x92\x02\f分类描述H\x05R\vdescription\x88\x01\x01\x125\n" +
+	"\vcover_image\x18\x0e \x01(\tB\x0f\xbaG\f\x92\x02\t封面图H\x06R\n" +
 	"coverImage\x88\x01\x01\x12R\n" +
-	"\tfull_path\x18\x14 \x01(\tB0\xbaG-\x92\x02*完整路径（如 /zh-CN/category/tech）H\bR\bfullPath\x88\x01\x01\x12P\n" +
-	"\x03seo\x18\x1e \x01(\v2\x1b.content.service.v1.SeoMetaB\x1c\xbaG\x19\x92\x02\x16SEO 结构化元数据H\tR\x03seo\x88\x01\x01\x12;\n" +
+	"\tfull_path\x18\x14 \x01(\tB0\xbaG-\x92\x02*完整路径（如 /zh-CN/category/tech）H\aR\bfullPath\x88\x01\x01\x12P\n" +
+	"\x03seo\x18\x1e \x01(\v2\x1b.content.service.v1.SeoMetaB\x1c\xbaG\x19\x92\x02\x16SEO 结构化元数据H\bR\x03seo\x88\x01\x01\x12;\n" +
 	"\n" +
-	"created_by\x18d \x01(\rB\x17\xbaG\x14\x92\x02\x11创建者用户IDH\n" +
-	"R\tcreatedBy\x88\x01\x01\x12;\n" +
+	"created_by\x18d \x01(\rB\x17\xbaG\x14\x92\x02\x11创建者用户IDH\tR\tcreatedBy\x88\x01\x01\x12;\n" +
 	"\n" +
-	"updated_by\x18e \x01(\rB\x17\xbaG\x14\x92\x02\x11更新者用户IDH\vR\tupdatedBy\x88\x01\x01\x12;\n" +
+	"updated_by\x18e \x01(\rB\x17\xbaG\x14\x92\x02\x11更新者用户IDH\n" +
+	"R\tupdatedBy\x88\x01\x01\x12;\n" +
 	"\n" +
-	"deleted_by\x18f \x01(\rB\x17\xbaG\x14\x92\x02\x11删除者用户IDH\fR\tdeletedBy\x88\x01\x01\x12S\n" +
+	"deleted_by\x18f \x01(\rB\x17\xbaG\x14\x92\x02\x11删除者用户IDH\vR\tdeletedBy\x88\x01\x01\x12S\n" +
 	"\n" +
-	"created_at\x18\xc8\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f创建时间H\rR\tcreatedAt\x88\x01\x01\x12S\n" +
+	"created_at\x18\xc8\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f创建时间H\fR\tcreatedAt\x88\x01\x01\x12S\n" +
 	"\n" +
-	"updated_at\x18\xc9\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f更新时间H\x0eR\tupdatedAt\x88\x01\x01\x12S\n" +
+	"updated_at\x18\xc9\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f更新时间H\rR\tupdatedAt\x88\x01\x01\x12S\n" +
 	"\n" +
-	"deleted_at\x18\xca\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f删除时间H\x0fR\tdeletedAt\x88\x01\x01B\x05\n" +
+	"deleted_at\x18\xca\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f删除时间H\x0eR\tdeletedAt\x88\x01\x01B\x05\n" +
 	"\x03_idB\x0e\n" +
 	"\f_category_idB\x10\n" +
 	"\x0e_language_codeB\a\n" +
 	"\x05_nameB\a\n" +
 	"\x05_slugB\x0e\n" +
-	"\f_descriptionB\f\n" +
-	"\n" +
-	"_thumbnailB\x0e\n" +
+	"\f_descriptionB\x0e\n" +
 	"\f_cover_imageB\f\n" +
 	"\n" +
 	"_full_pathB\x06\n" +
@@ -1249,7 +1249,7 @@ const file_content_service_v1_category_proto_rawDesc = "" +
 	"\v_deleted_byB\r\n" +
 	"\v_created_atB\r\n" +
 	"\v_updated_atB\r\n" +
-	"\v_deleted_at\"`\n" +
+	"\v_deleted_atJ\x04\b\r\x10\x0eR\tthumbnail\"`\n" +
 	"\x14ListCategoryResponse\x122\n" +
 	"\x05items\x18\x01 \x03(\v2\x1c.content.service.v1.CategoryR\x05items\x12\x14\n" +
 	"\x05total\x18\x02 \x01(\x04R\x05total\"\x99\x03\n" +

@@ -67,11 +67,6 @@ func (PostTranslation) Fields() []ent.Field {
 			Optional().
 			Nillable(),
 
-		field.String("thumbnail").
-			Comment("缩略图").
-			Optional().
-			Nillable(),
-
 		field.String("full_path").
 			Comment("完整路径").
 			Optional().

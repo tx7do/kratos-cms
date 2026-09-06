@@ -145,6 +145,11 @@ func IsCustomTemplate(v bool) predicate.Page {
 	return predicate.Page(sql.FieldEQ(FieldIsCustomTemplate, v))
 }
 
+// Thumbnail applies equality check predicate on the "thumbnail" field. It's identical to ThumbnailEQ.
+func Thumbnail(v string) predicate.Page {
+	return predicate.Page(sql.FieldEQ(FieldThumbnail, v))
+}
+
 // ContentModelID applies equality check predicate on the "content_model_id" field. It's identical to ContentModelIDEQ.
 func ContentModelID(v uint32) predicate.Page {
 	return predicate.Page(sql.FieldEQ(FieldContentModelID, v))
@@ -1158,6 +1163,81 @@ func IsCustomTemplateIsNil() predicate.Page {
 // IsCustomTemplateNotNil applies the NotNil predicate on the "is_custom_template" field.
 func IsCustomTemplateNotNil() predicate.Page {
 	return predicate.Page(sql.FieldNotNull(FieldIsCustomTemplate))
+}
+
+// ThumbnailEQ applies the EQ predicate on the "thumbnail" field.
+func ThumbnailEQ(v string) predicate.Page {
+	return predicate.Page(sql.FieldEQ(FieldThumbnail, v))
+}
+
+// ThumbnailNEQ applies the NEQ predicate on the "thumbnail" field.
+func ThumbnailNEQ(v string) predicate.Page {
+	return predicate.Page(sql.FieldNEQ(FieldThumbnail, v))
+}
+
+// ThumbnailIn applies the In predicate on the "thumbnail" field.
+func ThumbnailIn(vs ...string) predicate.Page {
+	return predicate.Page(sql.FieldIn(FieldThumbnail, vs...))
+}
+
+// ThumbnailNotIn applies the NotIn predicate on the "thumbnail" field.
+func ThumbnailNotIn(vs ...string) predicate.Page {
+	return predicate.Page(sql.FieldNotIn(FieldThumbnail, vs...))
+}
+
+// ThumbnailGT applies the GT predicate on the "thumbnail" field.
+func ThumbnailGT(v string) predicate.Page {
+	return predicate.Page(sql.FieldGT(FieldThumbnail, v))
+}
+
+// ThumbnailGTE applies the GTE predicate on the "thumbnail" field.
+func ThumbnailGTE(v string) predicate.Page {
+	return predicate.Page(sql.FieldGTE(FieldThumbnail, v))
+}
+
+// ThumbnailLT applies the LT predicate on the "thumbnail" field.
+func ThumbnailLT(v string) predicate.Page {
+	return predicate.Page(sql.FieldLT(FieldThumbnail, v))
+}
+
+// ThumbnailLTE applies the LTE predicate on the "thumbnail" field.
+func ThumbnailLTE(v string) predicate.Page {
+	return predicate.Page(sql.FieldLTE(FieldThumbnail, v))
+}
+
+// ThumbnailContains applies the Contains predicate on the "thumbnail" field.
+func ThumbnailContains(v string) predicate.Page {
+	return predicate.Page(sql.FieldContains(FieldThumbnail, v))
+}
+
+// ThumbnailHasPrefix applies the HasPrefix predicate on the "thumbnail" field.
+func ThumbnailHasPrefix(v string) predicate.Page {
+	return predicate.Page(sql.FieldHasPrefix(FieldThumbnail, v))
+}
+
+// ThumbnailHasSuffix applies the HasSuffix predicate on the "thumbnail" field.
+func ThumbnailHasSuffix(v string) predicate.Page {
+	return predicate.Page(sql.FieldHasSuffix(FieldThumbnail, v))
+}
+
+// ThumbnailIsNil applies the IsNil predicate on the "thumbnail" field.
+func ThumbnailIsNil() predicate.Page {
+	return predicate.Page(sql.FieldIsNull(FieldThumbnail))
+}
+
+// ThumbnailNotNil applies the NotNil predicate on the "thumbnail" field.
+func ThumbnailNotNil() predicate.Page {
+	return predicate.Page(sql.FieldNotNull(FieldThumbnail))
+}
+
+// ThumbnailEqualFold applies the EqualFold predicate on the "thumbnail" field.
+func ThumbnailEqualFold(v string) predicate.Page {
+	return predicate.Page(sql.FieldEqualFold(FieldThumbnail, v))
+}
+
+// ThumbnailContainsFold applies the ContainsFold predicate on the "thumbnail" field.
+func ThumbnailContainsFold(v string) predicate.Page {
+	return predicate.Page(sql.FieldContainsFold(FieldThumbnail, v))
 }
 
 // CustomFieldsIsNil applies the IsNil predicate on the "custom_fields" field.

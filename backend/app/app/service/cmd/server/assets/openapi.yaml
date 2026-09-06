@@ -2061,6 +2061,9 @@ components:
                 code:
                     type: string
                     description: 唯一代码（如 slug、编码等，便于唯一标识分类）
+                thumbnail:
+                    type: string
+                    description: 缩略图（全语言共用，存主表）
                 postCount:
                     type: integer
                     description: 该分类下的文章总数（含子分类，可选）
@@ -2153,9 +2156,6 @@ components:
                 description:
                     type: string
                     description: 分类描述
-                thumbnail:
-                    type: string
-                    description: 缩略图
                 coverImage:
                     type: string
                     description: 封面图
@@ -2321,6 +2321,9 @@ components:
                 isCustomTemplate:
                     type: boolean
                     description: 是否使用自定义模板代码（而非预设模板）
+                thumbnail:
+                    type: string
+                    description: 缩略图（全语言共用，存主表）
                 customFields:
                     type: object
                     additionalProperties:
@@ -2407,9 +2410,6 @@ components:
                 slug:
                     type: string
                     description: 语言特定的 slug（覆盖主表 slug，用于多语言路由，如中文用拼音）
-                thumbnail:
-                    type: string
-                    description: 缩略图
                 coverImage:
                     type: string
                     description: 封面图
@@ -2498,6 +2498,9 @@ components:
                 authorName:
                     type: string
                     description: 帖子作者名称（游客填写）
+                thumbnail:
+                    type: string
+                    description: 缩略图（全语言共用，存主表）
                 customFields:
                     type: object
                     additionalProperties:
@@ -2587,9 +2590,6 @@ components:
                 originalContent:
                     type: string
                     description: 原始内容
-                thumbnail:
-                    type: string
-                    description: 缩略图（某些语言可能需要不同图片）
                 fullPath:
                     type: string
                     description: 完整路径（如 /zh-CN/blog/post-slug）

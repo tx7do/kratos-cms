@@ -145,7 +145,6 @@ func (r *PageTranslationRepo) newCreateBuilder(pt *ent.PageTranslationClient, da
 		SetNillableLanguageCode(data.LanguageCode).
 		SetNillableTitle(data.Title).
 		SetNillableSlug(data.Slug).
-		SetNillableThumbnail(data.Thumbnail).
 		SetNillableCoverImage(data.CoverImage).
 		SetNillableFullPath(data.FullPath).
 		SetNillableCreatedBy(data.CreatedBy).
@@ -236,7 +235,6 @@ func (r *PageTranslationRepo) UpsertTranslations(ctx context.Context, tx *ent.Tx
 		upd.
 			SetNillableTitle(data.Title).
 			SetNillableSlug(data.Slug).
-			SetNillableThumbnail(data.Thumbnail).
 			SetNillableCoverImage(data.CoverImage).
 			SetNillableFullPath(data.FullPath).
 			SetUpdatedAt(time.Now())
@@ -300,7 +298,6 @@ func (r *PageTranslationRepo) UpdateTranslation(ctx context.Context, id uint32, 
 		func(dto *contentV1.PageTranslation) {
 			builder.
 				SetNillableTitle(data.Title).
-				SetNillableThumbnail(data.Thumbnail).
 				SetNillableCoverImage(data.CoverImage).
 				SetNillableFullPath(data.FullPath).
 				SetUpdatedAt(time.Now())

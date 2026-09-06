@@ -96,6 +96,7 @@ type Post struct {
 	SortOrder          *uint32                `protobuf:"varint,9,opt,name=sort_order,json=sortOrder,proto3,oneof" json:"sort_order,omitempty"`                                                                              // 排序优先级（数值越小越靠前，同组内排序）
 	AuthorId           *uint32                `protobuf:"varint,20,opt,name=author_id,json=authorId,proto3,oneof" json:"author_id,omitempty"`                                                                                // 帖子作者ID，0表示游客
 	AuthorName         *string                `protobuf:"bytes,21,opt,name=author_name,json=authorName,proto3,oneof" json:"author_name,omitempty"`                                                                           // 帖子作者名称（游客填写）
+	Thumbnail          *string                `protobuf:"bytes,13,opt,name=thumbnail,proto3,oneof" json:"thumbnail,omitempty"`                                                                                               // 缩略图（全语言共用，存主表）
 	CustomFields       map[string]string      `protobuf:"bytes,30,rep,name=custom_fields,json=customFields,proto3" json:"custom_fields,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // 自定义字段，键值对形式，便于扩展
 	Translations       []*PostTranslation     `protobuf:"bytes,40,rep,name=translations,proto3" json:"translations,omitempty"`                                                                                               // 多语言翻译列表
 	AvailableLanguages []string               `protobuf:"bytes,41,rep,name=available_languages,json=availableLanguages,proto3" json:"available_languages,omitempty"`                                                         // 可用的语言代码列表
@@ -220,6 +221,13 @@ func (x *Post) GetAuthorName() string {
 	return ""
 }
 
+func (x *Post) GetThumbnail() string {
+	if x != nil && x.Thumbnail != nil {
+		return *x.Thumbnail
+	}
+	return ""
+}
+
 func (x *Post) GetCustomFields() map[string]string {
 	if x != nil {
 		return x.CustomFields
@@ -322,7 +330,6 @@ type PostTranslation struct {
 	Summary         *string                `protobuf:"bytes,12,opt,name=summary,proto3,oneof" json:"summary,omitempty"`                                        // 帖子摘要
 	Content         *string                `protobuf:"bytes,13,opt,name=content,proto3,oneof" json:"content,omitempty"`                                        // 帖子内容
 	OriginalContent *string                `protobuf:"bytes,14,opt,name=original_content,json=originalContent,proto3,oneof" json:"original_content,omitempty"` // 原始内容
-	Thumbnail       *string                `protobuf:"bytes,15,opt,name=thumbnail,proto3,oneof" json:"thumbnail,omitempty"`                                    // 缩略图
 	FullPath        *string                `protobuf:"bytes,17,opt,name=full_path,json=fullPath,proto3,oneof" json:"full_path,omitempty"`                      // 完整路径（如 /zh-CN/blog/post-slug）
 	WordCount       *uint32                `protobuf:"varint,18,opt,name=word_count,json=wordCount,proto3,oneof" json:"word_count,omitempty"`                  // 当前语言版本的字数（中文按字符数，英文按单词数）
 	Seo             *SeoMeta               `protobuf:"bytes,20,opt,name=seo,proto3,oneof" json:"seo,omitempty"`
@@ -418,13 +425,6 @@ func (x *PostTranslation) GetContent() string {
 func (x *PostTranslation) GetOriginalContent() string {
 	if x != nil && x.OriginalContent != nil {
 		return *x.OriginalContent
-	}
-	return ""
-}
-
-func (x *PostTranslation) GetThumbnail() string {
-	if x != nil && x.Thumbnail != nil {
-		return *x.Thumbnail
 	}
 	return ""
 }
@@ -1375,7 +1375,7 @@ var File_content_service_v1_post_proto protoreflect.FileDescriptor
 
 const file_content_service_v1_post_proto_rawDesc = "" +
 	"\n" +
-	"\x1dcontent/service/v1/post.proto\x12\x12content.service.v1\x1a$gnostic/openapi/v3/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a google/protobuf/field_mask.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1econtent/service/v1/types.proto\"\x9e\x14\n" +
+	"\x1dcontent/service/v1/post.proto\x12\x12content.service.v1\x1a$gnostic/openapi/v3/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a google/protobuf/field_mask.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1econtent/service/v1/types.proto\"\x81\x15\n" +
 	"\x04Post\x12#\n" +
 	"\x02id\x18\x01 \x01(\rB\x0e\xbaG\v\x92\x02\b帖子IDH\x00R\x02id\x88\x01\x01\x12T\n" +
 	"\x06status\x18\x02 \x01(\x0e2#.content.service.v1.Post.PostStatusB\x12\xbaG\x0f\x92\x02\f帖子状态H\x01R\x06status\x88\x01\x01\x12[\n" +
@@ -1393,26 +1393,27 @@ const file_content_service_v1_post_proto_rawDesc = "" +
 	"\tauthor_id\x18\x14 \x01(\rB$\xbaG!\x92\x02\x1e评论作者ID，0表示游客H\tR\bauthorId\x88\x01\x01\x12P\n" +
 	"\vauthor_name\x18\x15 \x01(\tB*\xbaG'\x92\x02$帖子作者名称（游客填写）H\n" +
 	"R\n" +
-	"authorName\x88\x01\x01\x12\x87\x01\n" +
+	"authorName\x88\x01\x01\x12S\n" +
+	"\tthumbnail\x18\r \x01(\tB0\xbaG-\x92\x02*缩略图（全语言共用，存主表）H\vR\tthumbnail\x88\x01\x01\x12\x87\x01\n" +
 	"\rcustom_fields\x18\x1e \x03(\v2*.content.service.v1.Post.CustomFieldsEntryB6\xbaG3\x92\x020自定义字段，键值对形式，便于扩展R\fcustomFields\x12d\n" +
 	"\ftranslations\x18( \x03(\v2#.content.service.v1.PostTranslationB\x1b\xbaG\x18\x92\x02\x15多语言翻译列表R\ftranslations\x12\x9f\x01\n" +
 	"\x13available_languages\x18) \x03(\tBn\xbaGk:\x1d\x12\x1b[\"zh-CN\", \"en-US\", \"ja-JP\"]\x92\x02I可用的语言代码列表（快速查询，避免遍历 translations）R\x12availableLanguages\x12L\n" +
 	"\fcategory_ids\x182 \x03(\rB)\xbaG&\x92\x02#关联的分类ID列表（多选）R\vcategoryIds\x12B\n" +
 	"\atag_ids\x183 \x03(\rB)\xbaG&\x92\x02#关联的标签ID列表（多选）R\x06tagIds\x12<\n" +
-	"\rpassword_hash\x18< \x01(\tB\x12\xbaG\x0f\x92\x02\f密码哈希H\vR\fpasswordHash\x88\x01\x01\x12;\n" +
+	"\rpassword_hash\x18< \x01(\tB\x12\xbaG\x0f\x92\x02\f密码哈希H\fR\fpasswordHash\x88\x01\x01\x12;\n" +
 	"\n" +
-	"created_by\x18d \x01(\rB\x17\xbaG\x14\x92\x02\x11创建者用户IDH\fR\tcreatedBy\x88\x01\x01\x12;\n" +
+	"created_by\x18d \x01(\rB\x17\xbaG\x14\x92\x02\x11创建者用户IDH\rR\tcreatedBy\x88\x01\x01\x12;\n" +
 	"\n" +
-	"updated_by\x18e \x01(\rB\x17\xbaG\x14\x92\x02\x11更新者用户IDH\rR\tupdatedBy\x88\x01\x01\x12;\n" +
+	"updated_by\x18e \x01(\rB\x17\xbaG\x14\x92\x02\x11更新者用户IDH\x0eR\tupdatedBy\x88\x01\x01\x12;\n" +
 	"\n" +
-	"deleted_by\x18f \x01(\rB\x17\xbaG\x14\x92\x02\x11删除者用户IDH\x0eR\tdeletedBy\x88\x01\x01\x12S\n" +
+	"deleted_by\x18f \x01(\rB\x17\xbaG\x14\x92\x02\x11删除者用户IDH\x0fR\tdeletedBy\x88\x01\x01\x12S\n" +
 	"\n" +
-	"created_at\x18\xc8\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f创建时间H\x0fR\tcreatedAt\x88\x01\x01\x12S\n" +
+	"created_at\x18\xc8\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f创建时间H\x10R\tcreatedAt\x88\x01\x01\x12S\n" +
 	"\n" +
-	"updated_at\x18\xc9\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f更新时间H\x10R\tupdatedAt\x88\x01\x01\x12S\n" +
+	"updated_at\x18\xc9\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f更新时间H\x11R\tupdatedAt\x88\x01\x01\x12S\n" +
 	"\n" +
-	"deleted_at\x18\xca\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f删除时间H\x11R\tdeletedAt\x88\x01\x01\x12W\n" +
-	"\fpublish_time\x18\xcb\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f发布时间H\x12R\vpublishTime\x88\x01\x01\x1a?\n" +
+	"deleted_at\x18\xca\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f删除时间H\x12R\tdeletedAt\x88\x01\x01\x12W\n" +
+	"\fpublish_time\x18\xcb\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f发布时间H\x13R\vpublishTime\x88\x01\x01\x1a?\n" +
 	"\x11CustomFieldsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x8f\x01\n" +
@@ -1434,7 +1435,9 @@ const file_content_service_v1_post_proto_rawDesc = "" +
 	"\v_sort_orderB\f\n" +
 	"\n" +
 	"_author_idB\x0e\n" +
-	"\f_author_nameB\x10\n" +
+	"\f_author_nameB\f\n" +
+	"\n" +
+	"_thumbnailB\x10\n" +
 	"\x0e_password_hashB\r\n" +
 	"\v_created_byB\r\n" +
 	"\v_updated_byB\r\n" +
@@ -1443,7 +1446,7 @@ const file_content_service_v1_post_proto_rawDesc = "" +
 	"\v_updated_atB\r\n" +
 	"\v_deleted_atB\x0f\n" +
 	"\r_publish_timeJ\x04\b\n" +
-	"\x10\vJ\x04\b\v\x10\fJ\x04\b\f\x10\rR\x06visitsR\x05likesR\rcomment_count\"\x98\f\n" +
+	"\x10\vJ\x04\b\v\x10\fJ\x04\b\f\x10\rR\x06visitsR\x05likesR\rcomment_count\"\xbd\v\n" +
 	"\x0fPostTranslation\x12)\n" +
 	"\x02id\x18\x01 \x01(\rB\x14\xbaG\x11\x92\x02\x0e帖子翻译IDH\x00R\x02id\x88\x01\x01\x125\n" +
 	"\apost_id\x18\x02 \x01(\rB\x17\xbaG\x14\x92\x02\x11关联的帖子IDH\x01R\x06postId\x88\x01\x01\x12<\n" +
@@ -1453,25 +1456,24 @@ const file_content_service_v1_post_proto_rawDesc = "" +
 	"\x04slug\x18\v \x01(\tBR\xbaGO\x92\x02L语言特定 slug（覆盖主表 slug，如中文用拼音 /post/hou-duan）H\x04R\x04slug\x88\x01\x01\x121\n" +
 	"\asummary\x18\f \x01(\tB\x12\xbaG\x0f\x92\x02\f帖子摘要H\x05R\asummary\x88\x01\x01\x121\n" +
 	"\acontent\x18\r \x01(\tB\x12\xbaG\x0f\x92\x02\f帖子内容H\x06R\acontent\x88\x01\x01\x12B\n" +
-	"\x10original_content\x18\x0e \x01(\tB\x12\xbaG\x0f\x92\x02\f原始内容H\aR\x0foriginalContent\x88\x01\x01\x12\\\n" +
-	"\tthumbnail\x18\x0f \x01(\tB9\xbaG6\x92\x023缩略图（某些语言可能需要不同图片）H\bR\tthumbnail\x88\x01\x01\x12S\n" +
-	"\tfull_path\x18\x11 \x01(\tB1\xbaG.\x92\x02+完整路径（如 /zh-CN/blog/post-slug）H\tR\bfullPath\x88\x01\x01\x12r\n" +
+	"\x10original_content\x18\x0e \x01(\tB\x12\xbaG\x0f\x92\x02\f原始内容H\aR\x0foriginalContent\x88\x01\x01\x12S\n" +
+	"\tfull_path\x18\x11 \x01(\tB1\xbaG.\x92\x02+完整路径（如 /zh-CN/blog/post-slug）H\bR\bfullPath\x88\x01\x01\x12r\n" +
 	"\n" +
-	"word_count\x18\x12 \x01(\rBN\xbaGK\x92\x02H当前语言版本的字数（中文按字符数，英文按单词数）H\n" +
-	"R\twordCount\x88\x01\x01\x12P\n" +
-	"\x03seo\x18\x14 \x01(\v2\x1b.content.service.v1.SeoMetaB\x1c\xbaG\x19\x92\x02\x16SEO 结构化元数据H\vR\x03seo\x88\x01\x01\x12;\n" +
+	"word_count\x18\x12 \x01(\rBN\xbaGK\x92\x02H当前语言版本的字数（中文按字符数，英文按单词数）H\tR\twordCount\x88\x01\x01\x12P\n" +
+	"\x03seo\x18\x14 \x01(\v2\x1b.content.service.v1.SeoMetaB\x1c\xbaG\x19\x92\x02\x16SEO 结构化元数据H\n" +
+	"R\x03seo\x88\x01\x01\x12;\n" +
 	"\n" +
-	"created_by\x18d \x01(\rB\x17\xbaG\x14\x92\x02\x11创建者用户IDH\fR\tcreatedBy\x88\x01\x01\x12;\n" +
+	"created_by\x18d \x01(\rB\x17\xbaG\x14\x92\x02\x11创建者用户IDH\vR\tcreatedBy\x88\x01\x01\x12;\n" +
 	"\n" +
-	"updated_by\x18e \x01(\rB\x17\xbaG\x14\x92\x02\x11更新者用户IDH\rR\tupdatedBy\x88\x01\x01\x12;\n" +
+	"updated_by\x18e \x01(\rB\x17\xbaG\x14\x92\x02\x11更新者用户IDH\fR\tupdatedBy\x88\x01\x01\x12;\n" +
 	"\n" +
-	"deleted_by\x18f \x01(\rB\x17\xbaG\x14\x92\x02\x11删除者用户IDH\x0eR\tdeletedBy\x88\x01\x01\x12S\n" +
+	"deleted_by\x18f \x01(\rB\x17\xbaG\x14\x92\x02\x11删除者用户IDH\rR\tdeletedBy\x88\x01\x01\x12S\n" +
 	"\n" +
-	"created_at\x18\xc8\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f创建时间H\x0fR\tcreatedAt\x88\x01\x01\x12S\n" +
+	"created_at\x18\xc8\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f创建时间H\x0eR\tcreatedAt\x88\x01\x01\x12S\n" +
 	"\n" +
-	"updated_at\x18\xc9\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f更新时间H\x10R\tupdatedAt\x88\x01\x01\x12S\n" +
+	"updated_at\x18\xc9\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f更新时间H\x0fR\tupdatedAt\x88\x01\x01\x12S\n" +
 	"\n" +
-	"deleted_at\x18\xca\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f删除时间H\x11R\tdeletedAt\x88\x01\x01B\x05\n" +
+	"deleted_at\x18\xca\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f删除时间H\x10R\tdeletedAt\x88\x01\x01B\x05\n" +
 	"\x03_idB\n" +
 	"\n" +
 	"\b_post_idB\x10\n" +
@@ -1484,8 +1486,6 @@ const file_content_service_v1_post_proto_rawDesc = "" +
 	"\b_contentB\x13\n" +
 	"\x11_original_contentB\f\n" +
 	"\n" +
-	"_thumbnailB\f\n" +
-	"\n" +
 	"_full_pathB\r\n" +
 	"\v_word_countB\x06\n" +
 	"\x04_seoB\r\n" +
@@ -1494,7 +1494,7 @@ const file_content_service_v1_post_proto_rawDesc = "" +
 	"\v_deleted_byB\r\n" +
 	"\v_created_atB\r\n" +
 	"\v_updated_atB\r\n" +
-	"\v_deleted_at\"X\n" +
+	"\v_deleted_atJ\x04\b\x0f\x10\x10R\tthumbnail\"X\n" +
 	"\x10ListPostResponse\x12.\n" +
 	"\x05items\x18\x01 \x03(\v2\x18.content.service.v1.PostR\x05items\x12\x14\n" +
 	"\x05total\x18\x02 \x01(\x04R\x05total\"\xd9\x02\n" +

@@ -335,6 +335,7 @@ func (r *PageRepo) Create(ctx context.Context, req *contentV1.CreatePageRequest)
 		SetNillableSortOrder(req.Data.SortOrder).
 		SetNillableTemplate(req.Data.Template).
 		SetNillableIsCustomTemplate(req.Data.IsCustomTemplate).
+		SetNillableThumbnail(req.Data.Thumbnail).
 		SetNillableParentID(req.Data.ParentId).
 		SetNillableDepth(req.Data.Depth).
 		SetNillablePath(req.Data.Path).
@@ -452,6 +453,7 @@ func (r *PageRepo) Update(ctx context.Context, req *contentV1.UpdatePageRequest)
 				SetNillableSortOrder(req.Data.SortOrder).
 			SetNillableTemplate(req.Data.Template).
 			SetNillableIsCustomTemplate(req.Data.IsCustomTemplate).
+			SetNillableThumbnail(req.Data.Thumbnail).
 			SetNillableParentID(req.Data.ParentId).
 				SetNillableDepth(req.Data.Depth).
 				SetNillablePath(req.Data.Path).

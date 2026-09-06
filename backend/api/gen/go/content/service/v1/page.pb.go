@@ -154,6 +154,7 @@ type Page struct {
 	SortOrder          *uint32                `protobuf:"varint,11,opt,name=sort_order,json=sortOrder,proto3,oneof" json:"sort_order,omitempty"`                                                                             // 导航排序
 	Template           *string                `protobuf:"bytes,12,opt,name=template,proto3,oneof" json:"template,omitempty"`                                                                                                 // 页面模板名称
 	IsCustomTemplate   *bool                  `protobuf:"varint,13,opt,name=is_custom_template,json=isCustomTemplate,proto3,oneof" json:"is_custom_template,omitempty"`                                                      // 是否使用自定义模板代码
+	Thumbnail          *string                `protobuf:"bytes,14,opt,name=thumbnail,proto3,oneof" json:"thumbnail,omitempty"`                                                                                               // 缩略图（全语言共用，存主表）
 	CustomFields       map[string]string      `protobuf:"bytes,21,rep,name=custom_fields,json=customFields,proto3" json:"custom_fields,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // 自定义字段，键值对形式，便于扩展
 	ContentModelId     *uint32                `protobuf:"varint,22,opt,name=content_model_id,json=contentModelId,proto3,oneof" json:"content_model_id,omitempty"`                                                            // 绑定的内容模型ID
 	Translations       []*PageTranslation     `protobuf:"bytes,30,rep,name=translations,proto3" json:"translations,omitempty"`                                                                                               // 多语言翻译列表
@@ -295,6 +296,13 @@ func (x *Page) GetIsCustomTemplate() bool {
 	return false
 }
 
+func (x *Page) GetThumbnail() string {
+	if x != nil && x.Thumbnail != nil {
+		return *x.Thumbnail
+	}
+	return ""
+}
+
 func (x *Page) GetCustomFields() map[string]string {
 	if x != nil {
 		return x.CustomFields
@@ -408,7 +416,6 @@ type PageTranslation struct {
 	LanguageCode  *string                `protobuf:"bytes,3,opt,name=language_code,json=languageCode,proto3,oneof" json:"language_code,omitempty"` // 语言代码
 	Title         *string                `protobuf:"bytes,10,opt,name=title,proto3,oneof" json:"title,omitempty"`                                  // 页面标题
 	Slug          *string                `protobuf:"bytes,11,opt,name=slug,proto3,oneof" json:"slug,omitempty"`                                    // 语言特定的 slug
-	Thumbnail     *string                `protobuf:"bytes,13,opt,name=thumbnail,proto3,oneof" json:"thumbnail,omitempty"`                          // 缩略图
 	CoverImage    *string                `protobuf:"bytes,14,opt,name=cover_image,json=coverImage,proto3,oneof" json:"cover_image,omitempty"`      // 封面图
 	FullPath      *string                `protobuf:"bytes,20,opt,name=full_path,json=fullPath,proto3,oneof" json:"full_path,omitempty"`            // 完整路径
 	Seo           *SeoMeta               `protobuf:"bytes,30,opt,name=seo,proto3,oneof" json:"seo,omitempty"`                                      // SEO 结构化元数据
@@ -483,13 +490,6 @@ func (x *PageTranslation) GetTitle() string {
 func (x *PageTranslation) GetSlug() string {
 	if x != nil && x.Slug != nil {
 		return *x.Slug
-	}
-	return ""
-}
-
-func (x *PageTranslation) GetThumbnail() string {
-	if x != nil && x.Thumbnail != nil {
-		return *x.Thumbnail
 	}
 	return ""
 }
@@ -1244,7 +1244,7 @@ var File_content_service_v1_page_proto protoreflect.FileDescriptor
 
 const file_content_service_v1_page_proto_rawDesc = "" +
 	"\n" +
-	"\x1dcontent/service/v1/page.proto\x12\x12content.service.v1\x1a$gnostic/openapi/v3/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a google/protobuf/field_mask.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1econtent/service/v1/types.proto\x1a content/service/v1/section.proto\"\x9e\x1a\n" +
+	"\x1dcontent/service/v1/page.proto\x12\x12content.service.v1\x1a$gnostic/openapi/v3/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a google/protobuf/field_mask.proto\x1a\x1epagination/v1/pagination.proto\x1a\x1econtent/service/v1/types.proto\x1a content/service/v1/section.proto\"\x81\x1b\n" +
 	"\x04Page\x12#\n" +
 	"\x02id\x18\x01 \x01(\rB\x0e\xbaG\v\x92\x02\b页面IDH\x00R\x02id\x88\x01\x01\x12T\n" +
 	"\x06status\x18\x02 \x01(\x0e2#.content.service.v1.Page.PageStatusB\x12\xbaG\x0f\x92\x02\f页面状态H\x01R\x06status\x88\x01\x01\x12\x8c\x01\n" +
@@ -1263,28 +1263,29 @@ const file_content_service_v1_page_proto_rawDesc = "" +
 	"sort_order\x18\v \x01(\rB-\xbaG*\x92\x02'导航排序（数值越小越靠前）H\n" +
 	"R\tsortOrder\x88\x01\x01\x12s\n" +
 	"\btemplate\x18\f \x01(\tBR\xbaGO\x92\x02L页面模板名称（如 'about-us', 'contact'，覆盖全局默认模板）H\vR\btemplate\x88\x01\x01\x12r\n" +
-	"\x12is_custom_template\x18\r \x01(\bB?\xbaG<\x92\x029是否使用自定义模板代码（而非预设模板）H\fR\x10isCustomTemplate\x88\x01\x01\x12\x87\x01\n" +
+	"\x12is_custom_template\x18\r \x01(\bB?\xbaG<\x92\x029是否使用自定义模板代码（而非预设模板）H\fR\x10isCustomTemplate\x88\x01\x01\x12S\n" +
+	"\tthumbnail\x18\x0e \x01(\tB0\xbaG-\x92\x02*缩略图（全语言共用，存主表）H\rR\tthumbnail\x88\x01\x01\x12\x87\x01\n" +
 	"\rcustom_fields\x18\x15 \x03(\v2*.content.service.v1.Page.CustomFieldsEntryB6\xbaG3\x92\x020自定义字段，键值对形式，便于扩展R\fcustomFields\x12\x80\x01\n" +
-	"\x10content_model_id\x18\x16 \x01(\rBQ\xbaGN\x92\x02K绑定的内容模型ID（该页面继承模型字段，0/null=无绑定）H\rR\x0econtentModelId\x88\x01\x01\x12d\n" +
+	"\x10content_model_id\x18\x16 \x01(\rBQ\xbaGN\x92\x02K绑定的内容模型ID（该页面继承模型字段，0/null=无绑定）H\x0eR\x0econtentModelId\x88\x01\x01\x12d\n" +
 	"\ftranslations\x18\x1e \x03(\v2#.content.service.v1.PageTranslationB\x1b\xbaG\x18\x92\x02\x15多语言翻译列表R\ftranslations\x12\x9f\x01\n" +
 	"\x13available_languages\x18\x1f \x03(\tBn\xbaGk:\x1d\x12\x1b[\"zh-CN\", \"en-US\", \"ja-JP\"]\x92\x02I可用的语言代码列表（快速查询，避免遍历 translations）R\x12availableLanguages\x12~\n" +
 	"\bsections\x18( \x03(\v2\x1b.content.service.v1.SectionBE\xbaGB\x92\x02?页面区块列表（嵌套子部件，随页面整体读写）R\bsections\x12n\n" +
-	"\tparent_id\x182 \x01(\rBL\xbaGI\x92\x02F父页面ID（0 表示顶级页面，用于构建站点树形结构）H\x0eR\bparentId\x88\x01\x01\x12H\n" +
+	"\tparent_id\x182 \x01(\rBL\xbaGI\x92\x02F父页面ID（0 表示顶级页面，用于构建站点树形结构）H\x0fR\bparentId\x88\x01\x01\x12H\n" +
 	"\bchildren\x18= \x03(\v2\x18.content.service.v1.PageB\x12\xbaG\x0f\x92\x02\f子节点树R\bchildren\x12d\n" +
-	"\x05depth\x184 \x01(\x05BI\xbaGF\x92\x02C页面层级深度（0=顶级，1=二级，用于面包屑导航）H\x0fR\x05depth\x88\x01\x01\x12R\n" +
-	"\x04path\x185 \x01(\tB9\xbaG6\x92\x023物化路径（如 '1/5/23'，便于层级查询）H\x10R\x04path\x88\x01\x01\x12;\n" +
+	"\x05depth\x184 \x01(\x05BI\xbaGF\x92\x02C页面层级深度（0=顶级，1=二级，用于面包屑导航）H\x10R\x05depth\x88\x01\x01\x12R\n" +
+	"\x04path\x185 \x01(\tB9\xbaG6\x92\x023物化路径（如 '1/5/23'，便于层级查询）H\x11R\x04path\x88\x01\x01\x12;\n" +
 	"\n" +
-	"created_by\x18d \x01(\rB\x17\xbaG\x14\x92\x02\x11创建者用户IDH\x11R\tcreatedBy\x88\x01\x01\x12;\n" +
+	"created_by\x18d \x01(\rB\x17\xbaG\x14\x92\x02\x11创建者用户IDH\x12R\tcreatedBy\x88\x01\x01\x12;\n" +
 	"\n" +
-	"updated_by\x18e \x01(\rB\x17\xbaG\x14\x92\x02\x11更新者用户IDH\x12R\tupdatedBy\x88\x01\x01\x12;\n" +
+	"updated_by\x18e \x01(\rB\x17\xbaG\x14\x92\x02\x11更新者用户IDH\x13R\tupdatedBy\x88\x01\x01\x12;\n" +
 	"\n" +
-	"deleted_by\x18f \x01(\rB\x17\xbaG\x14\x92\x02\x11删除者用户IDH\x13R\tdeletedBy\x88\x01\x01\x12S\n" +
+	"deleted_by\x18f \x01(\rB\x17\xbaG\x14\x92\x02\x11删除者用户IDH\x14R\tdeletedBy\x88\x01\x01\x12S\n" +
 	"\n" +
-	"created_at\x18\xc8\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f创建时间H\x14R\tcreatedAt\x88\x01\x01\x12S\n" +
+	"created_at\x18\xc8\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f创建时间H\x15R\tcreatedAt\x88\x01\x01\x12S\n" +
 	"\n" +
-	"updated_at\x18\xc9\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f更新时间H\x15R\tupdatedAt\x88\x01\x01\x12S\n" +
+	"updated_at\x18\xc9\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f更新时间H\x16R\tupdatedAt\x88\x01\x01\x12S\n" +
 	"\n" +
-	"deleted_at\x18\xca\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f删除时间H\x16R\tdeletedAt\x88\x01\x01\x1a?\n" +
+	"deleted_at\x18\xca\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f删除时间H\x17R\tdeletedAt\x88\x01\x01\x1a?\n" +
 	"\x11CustomFieldsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"u\n" +
@@ -1314,7 +1315,9 @@ const file_content_service_v1_page_proto_rawDesc = "" +
 	"\x13_show_in_navigationB\r\n" +
 	"\v_sort_orderB\v\n" +
 	"\t_templateB\x15\n" +
-	"\x13_is_custom_templateB\x13\n" +
+	"\x13_is_custom_templateB\f\n" +
+	"\n" +
+	"_thumbnailB\x13\n" +
 	"\x11_content_model_idB\f\n" +
 	"\n" +
 	"_parent_idB\b\n" +
@@ -1325,41 +1328,37 @@ const file_content_service_v1_page_proto_rawDesc = "" +
 	"\v_deleted_byB\r\n" +
 	"\v_created_atB\r\n" +
 	"\v_updated_atB\r\n" +
-	"\v_deleted_atJ\x04\b\x14\x10\x15R\x06visits\"\x98\n" +
-	"\n" +
+	"\v_deleted_atJ\x04\b\x14\x10\x15R\x06visits\"\xe7\t\n" +
 	"\x0fPageTranslation\x12)\n" +
 	"\x02id\x18\x01 \x01(\rB\x14\xbaG\x11\x92\x02\x0e翻译记录IDH\x00R\x02id\x88\x01\x01\x125\n" +
 	"\apage_id\x18\x02 \x01(\rB\x17\xbaG\x14\x92\x02\x11关联的页面IDH\x01R\x06pageId\x88\x01\x01\x12R\n" +
 	"\rlanguage_code\x18\x03 \x01(\tB(\xbaG%\x92\x02\"语言代码（ISO 639-1 标准）H\x02R\flanguageCode\x88\x01\x01\x12-\n" +
 	"\x05title\x18\n" +
 	" \x01(\tB\x12\xbaG\x0f\x92\x02\f页面标题H\x03R\x05title\x88\x01\x01\x12w\n" +
-	"\x04slug\x18\v \x01(\tB^\xbaG[\x92\x02X语言特定的 slug（覆盖主表 slug，用于多语言路由，如中文用拼音）H\x04R\x04slug\x88\x01\x01\x122\n" +
-	"\tthumbnail\x18\r \x01(\tB\x0f\xbaG\f\x92\x02\t缩略图H\x05R\tthumbnail\x88\x01\x01\x125\n" +
-	"\vcover_image\x18\x0e \x01(\tB\x0f\xbaG\f\x92\x02\t封面图H\x06R\n" +
+	"\x04slug\x18\v \x01(\tB^\xbaG[\x92\x02X语言特定的 slug（覆盖主表 slug，用于多语言路由，如中文用拼音）H\x04R\x04slug\x88\x01\x01\x125\n" +
+	"\vcover_image\x18\x0e \x01(\tB\x0f\xbaG\f\x92\x02\t封面图H\x05R\n" +
 	"coverImage\x88\x01\x01\x12n\n" +
-	"\tfull_path\x18\x14 \x01(\tBL\xbaGI\x92\x02F完整路径（如 /zh-CN/about-us），首页应为 '/' 或 '/zh-CN/'H\aR\bfullPath\x88\x01\x01\x12P\n" +
-	"\x03seo\x18\x1e \x01(\v2\x1b.content.service.v1.SeoMetaB\x1c\xbaG\x19\x92\x02\x16SEO 结构化元数据H\bR\x03seo\x88\x01\x01\x12;\n" +
+	"\tfull_path\x18\x14 \x01(\tBL\xbaGI\x92\x02F完整路径（如 /zh-CN/about-us），首页应为 '/' 或 '/zh-CN/'H\x06R\bfullPath\x88\x01\x01\x12P\n" +
+	"\x03seo\x18\x1e \x01(\v2\x1b.content.service.v1.SeoMetaB\x1c\xbaG\x19\x92\x02\x16SEO 结构化元数据H\aR\x03seo\x88\x01\x01\x12;\n" +
 	"\n" +
-	"created_by\x18d \x01(\rB\x17\xbaG\x14\x92\x02\x11创建者用户IDH\tR\tcreatedBy\x88\x01\x01\x12;\n" +
+	"created_by\x18d \x01(\rB\x17\xbaG\x14\x92\x02\x11创建者用户IDH\bR\tcreatedBy\x88\x01\x01\x12;\n" +
 	"\n" +
-	"updated_by\x18e \x01(\rB\x17\xbaG\x14\x92\x02\x11更新者用户IDH\n" +
-	"R\tupdatedBy\x88\x01\x01\x12;\n" +
+	"updated_by\x18e \x01(\rB\x17\xbaG\x14\x92\x02\x11更新者用户IDH\tR\tupdatedBy\x88\x01\x01\x12;\n" +
 	"\n" +
-	"deleted_by\x18f \x01(\rB\x17\xbaG\x14\x92\x02\x11删除者用户IDH\vR\tdeletedBy\x88\x01\x01\x12S\n" +
+	"deleted_by\x18f \x01(\rB\x17\xbaG\x14\x92\x02\x11删除者用户IDH\n" +
+	"R\tdeletedBy\x88\x01\x01\x12S\n" +
 	"\n" +
-	"created_at\x18\xc8\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f创建时间H\fR\tcreatedAt\x88\x01\x01\x12S\n" +
+	"created_at\x18\xc8\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f创建时间H\vR\tcreatedAt\x88\x01\x01\x12S\n" +
 	"\n" +
-	"updated_at\x18\xc9\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f更新时间H\rR\tupdatedAt\x88\x01\x01\x12S\n" +
+	"updated_at\x18\xc9\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f更新时间H\fR\tupdatedAt\x88\x01\x01\x12S\n" +
 	"\n" +
-	"deleted_at\x18\xca\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f删除时间H\x0eR\tdeletedAt\x88\x01\x01B\x05\n" +
+	"deleted_at\x18\xca\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x12\xbaG\x0f\x92\x02\f删除时间H\rR\tdeletedAt\x88\x01\x01B\x05\n" +
 	"\x03_idB\n" +
 	"\n" +
 	"\b_page_idB\x10\n" +
 	"\x0e_language_codeB\b\n" +
 	"\x06_titleB\a\n" +
-	"\x05_slugB\f\n" +
-	"\n" +
-	"_thumbnailB\x0e\n" +
+	"\x05_slugB\x0e\n" +
 	"\f_cover_imageB\f\n" +
 	"\n" +
 	"_full_pathB\x06\n" +
@@ -1369,7 +1368,7 @@ const file_content_service_v1_page_proto_rawDesc = "" +
 	"\v_deleted_byB\r\n" +
 	"\v_created_atB\r\n" +
 	"\v_updated_atB\r\n" +
-	"\v_deleted_at\"X\n" +
+	"\v_deleted_atJ\x04\b\r\x10\x0eR\tthumbnail\"X\n" +
 	"\x10ListPageResponse\x12.\n" +
 	"\x05items\x18\x01 \x03(\v2\x18.content.service.v1.PageR\x05items\x12\x14\n" +
 	"\x05total\x18\x02 \x01(\x04R\x05total\"\xdf\x02\n" +

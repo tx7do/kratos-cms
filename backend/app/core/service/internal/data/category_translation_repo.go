@@ -143,7 +143,6 @@ func (r *CategoryTranslationRepo) newCreateBuilder(ct *ent.CategoryTranslationCl
 		SetNillableName(data.Name).
 		SetNillableSlug(data.Slug).
 		SetNillableDescription(data.Description).
-		SetNillableThumbnail(data.Thumbnail).
 		SetNillableCoverImage(data.CoverImage).
 		SetNillableFullPath(data.FullPath).
 		SetNillableCreatedBy(data.CreatedBy).
@@ -235,7 +234,6 @@ func (r *CategoryTranslationRepo) UpsertTranslations(ctx context.Context, tx *en
 			SetNillableName(data.Name).
 			SetNillableSlug(data.Slug).
 			SetNillableDescription(data.Description).
-			SetNillableThumbnail(data.Thumbnail).
 			SetNillableCoverImage(data.CoverImage).
 			SetNillableFullPath(data.FullPath).
 			SetUpdatedAt(time.Now())
@@ -299,7 +297,6 @@ func (r *CategoryTranslationRepo) UpdateTranslation(ctx context.Context, id uint
 				SetNillableName(dto.Name).
 				SetNillableSlug(dto.Slug).
 				SetNillableDescription(dto.Description).
-				SetNillableThumbnail(dto.Thumbnail).
 				SetNillableCoverImage(dto.CoverImage).
 				SetNillableFullPath(dto.FullPath).
 				SetUpdatedAt(time.Now())

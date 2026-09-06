@@ -364,6 +364,26 @@ func (_u *PostUpdate) ClearAuthorName() *PostUpdate {
 	return _u
 }
 
+// SetThumbnail sets the "thumbnail" field.
+func (_u *PostUpdate) SetThumbnail(v string) *PostUpdate {
+	_u.mutation.SetThumbnail(v)
+	return _u
+}
+
+// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
+func (_u *PostUpdate) SetNillableThumbnail(v *string) *PostUpdate {
+	if v != nil {
+		_u.SetThumbnail(*v)
+	}
+	return _u
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (_u *PostUpdate) ClearThumbnail() *PostUpdate {
+	_u.mutation.ClearThumbnail()
+	return _u
+}
+
 // SetPasswordHash sets the "password_hash" field.
 func (_u *PostUpdate) SetPasswordHash(v string) *PostUpdate {
 	_u.mutation.SetPasswordHash(v)
@@ -591,6 +611,12 @@ func (_u *PostUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.AuthorNameCleared() {
 		_spec.ClearField(post.FieldAuthorName, field.TypeString)
+	}
+	if value, ok := _u.mutation.Thumbnail(); ok {
+		_spec.SetField(post.FieldThumbnail, field.TypeString, value)
+	}
+	if _u.mutation.ThumbnailCleared() {
+		_spec.ClearField(post.FieldThumbnail, field.TypeString)
 	}
 	if value, ok := _u.mutation.PasswordHash(); ok {
 		_spec.SetField(post.FieldPasswordHash, field.TypeString, value)
@@ -967,6 +993,26 @@ func (_u *PostUpdateOne) ClearAuthorName() *PostUpdateOne {
 	return _u
 }
 
+// SetThumbnail sets the "thumbnail" field.
+func (_u *PostUpdateOne) SetThumbnail(v string) *PostUpdateOne {
+	_u.mutation.SetThumbnail(v)
+	return _u
+}
+
+// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
+func (_u *PostUpdateOne) SetNillableThumbnail(v *string) *PostUpdateOne {
+	if v != nil {
+		_u.SetThumbnail(*v)
+	}
+	return _u
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (_u *PostUpdateOne) ClearThumbnail() *PostUpdateOne {
+	_u.mutation.ClearThumbnail()
+	return _u
+}
+
 // SetPasswordHash sets the "password_hash" field.
 func (_u *PostUpdateOne) SetPasswordHash(v string) *PostUpdateOne {
 	_u.mutation.SetPasswordHash(v)
@@ -1224,6 +1270,12 @@ func (_u *PostUpdateOne) sqlSave(ctx context.Context) (_node *Post, err error) {
 	}
 	if _u.mutation.AuthorNameCleared() {
 		_spec.ClearField(post.FieldAuthorName, field.TypeString)
+	}
+	if value, ok := _u.mutation.Thumbnail(); ok {
+		_spec.SetField(post.FieldThumbnail, field.TypeString, value)
+	}
+	if _u.mutation.ThumbnailCleared() {
+		_spec.ClearField(post.FieldThumbnail, field.TypeString)
 	}
 	if value, ok := _u.mutation.PasswordHash(); ok {
 		_spec.SetField(post.FieldPasswordHash, field.TypeString, value)

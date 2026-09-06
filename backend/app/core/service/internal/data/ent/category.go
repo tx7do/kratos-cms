@@ -47,6 +47,8 @@ type Category struct {
 	Icon *string `json:"icon,omitempty"`
 	// 唯一编码
 	Code *string `json:"code,omitempty"`
+	// 缩略图（全语言共用）
+	Thumbnail *string `json:"thumbnail,omitempty"`
 	// 该分类下的文章总数
 	PostCount *uint32 `json:"post_count,omitempty"`
 	// 该分类下的直接文章数
@@ -105,7 +107,7 @@ func (*Category) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case category.FieldID, category.FieldCreatedBy, category.FieldUpdatedBy, category.FieldDeletedBy, category.FieldSortOrder, category.FieldParentID, category.FieldTenantID, category.FieldPostCount, category.FieldDirectPostCount, category.FieldDepth, category.FieldContentModelID:
 			values[i] = new(sql.NullInt64)
-		case category.FieldPath, category.FieldStatus, category.FieldIcon, category.FieldCode:
+		case category.FieldPath, category.FieldStatus, category.FieldIcon, category.FieldCode, category.FieldThumbnail:
 			values[i] = new(sql.NullString)
 		case category.FieldCreatedAt, category.FieldUpdatedAt, category.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -227,6 +229,13 @@ func (_m *Category) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Code = new(string)
 				*_m.Code = value.String
+			}
+		case category.FieldThumbnail:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field thumbnail", values[i])
+			} else if value.Valid {
+				_m.Thumbnail = new(string)
+				*_m.Thumbnail = value.String
 			}
 		case category.FieldPostCount:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -377,6 +386,11 @@ func (_m *Category) String() string {
 	builder.WriteString(", ")
 	if v := _m.Code; v != nil {
 		builder.WriteString("code=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.Thumbnail; v != nil {
+		builder.WriteString("thumbnail=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

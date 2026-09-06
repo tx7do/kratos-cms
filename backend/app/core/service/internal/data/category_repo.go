@@ -445,6 +445,7 @@ func (r *CategoryRepo) Create(ctx context.Context, req *contentV1.CreateCategory
 		SetNillableIsNav(req.Data.IsNav).
 		SetNillableIcon(req.Data.Icon).
 		SetNillableCode(req.Data.Code).
+		SetNillableThumbnail(req.Data.Thumbnail).
 		SetPostCount(0).
 		SetDirectPostCount(0).
 		SetNillableParentID(req.Data.ParentId).
@@ -554,6 +555,7 @@ func (r *CategoryRepo) Update(ctx context.Context, req *contentV1.UpdateCategory
 				SetNillableIsNav(req.Data.IsNav).
 				SetNillableIcon(req.Data.Icon).
 				SetNillableCode(req.Data.Code).
+				SetNillableThumbnail(req.Data.Thumbnail).
 				SetNillableParentID(req.Data.ParentId).
 				SetNillableDepth(req.Data.Depth).
 				SetNillablePath(req.Data.Path).

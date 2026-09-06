@@ -444,6 +444,26 @@ func (_u *PageUpdate) ClearIsCustomTemplate() *PageUpdate {
 	return _u
 }
 
+// SetThumbnail sets the "thumbnail" field.
+func (_u *PageUpdate) SetThumbnail(v string) *PageUpdate {
+	_u.mutation.SetThumbnail(v)
+	return _u
+}
+
+// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
+func (_u *PageUpdate) SetNillableThumbnail(v *string) *PageUpdate {
+	if v != nil {
+		_u.SetThumbnail(*v)
+	}
+	return _u
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (_u *PageUpdate) ClearThumbnail() *PageUpdate {
+	_u.mutation.ClearThumbnail()
+	return _u
+}
+
 // SetCustomFields sets the "custom_fields" field.
 func (_u *PageUpdate) SetCustomFields(v *map[string]string) *PageUpdate {
 	_u.mutation.SetCustomFields(v)
@@ -760,6 +780,12 @@ func (_u *PageUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.IsCustomTemplateCleared() {
 		_spec.ClearField(page.FieldIsCustomTemplate, field.TypeBool)
+	}
+	if value, ok := _u.mutation.Thumbnail(); ok {
+		_spec.SetField(page.FieldThumbnail, field.TypeString, value)
+	}
+	if _u.mutation.ThumbnailCleared() {
+		_spec.ClearField(page.FieldThumbnail, field.TypeString)
 	}
 	if value, ok := _u.mutation.CustomFields(); ok {
 		_spec.SetField(page.FieldCustomFields, field.TypeJSON, value)
@@ -1296,6 +1322,26 @@ func (_u *PageUpdateOne) ClearIsCustomTemplate() *PageUpdateOne {
 	return _u
 }
 
+// SetThumbnail sets the "thumbnail" field.
+func (_u *PageUpdateOne) SetThumbnail(v string) *PageUpdateOne {
+	_u.mutation.SetThumbnail(v)
+	return _u
+}
+
+// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
+func (_u *PageUpdateOne) SetNillableThumbnail(v *string) *PageUpdateOne {
+	if v != nil {
+		_u.SetThumbnail(*v)
+	}
+	return _u
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (_u *PageUpdateOne) ClearThumbnail() *PageUpdateOne {
+	_u.mutation.ClearThumbnail()
+	return _u
+}
+
 // SetCustomFields sets the "custom_fields" field.
 func (_u *PageUpdateOne) SetCustomFields(v *map[string]string) *PageUpdateOne {
 	_u.mutation.SetCustomFields(v)
@@ -1642,6 +1688,12 @@ func (_u *PageUpdateOne) sqlSave(ctx context.Context) (_node *Page, err error) {
 	}
 	if _u.mutation.IsCustomTemplateCleared() {
 		_spec.ClearField(page.FieldIsCustomTemplate, field.TypeBool)
+	}
+	if value, ok := _u.mutation.Thumbnail(); ok {
+		_spec.SetField(page.FieldThumbnail, field.TypeString, value)
+	}
+	if _u.mutation.ThumbnailCleared() {
+		_spec.ClearField(page.FieldThumbnail, field.TypeString)
 	}
 	if value, ok := _u.mutation.CustomFields(); ok {
 		_spec.SetField(page.FieldCustomFields, field.TypeJSON, value)

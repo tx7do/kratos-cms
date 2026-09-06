@@ -76,7 +76,7 @@ const gridOptions: VxeGridProps<Category> = {
             },
             formValues,
             fieldMask:
-              'id,status,sort_order,is_nav,icon,code,post_count,direct_post_count,available_languages,parent_id,children,created_by,created_at,translations,translations.id,translations.language_code,translations.name,translations.slug,translations.description,translations.thumbnail,translations.cover_image',
+              'id,status,sort_order,is_nav,icon,code,thumbnail,post_count,direct_post_count,available_languages,parent_id,children,created_by,created_at,translations,translations.id,translations.language_code,translations.name,translations.slug,translations.description,translations.cover_image',
           }),
         );
       },
@@ -215,8 +215,8 @@ function getCategoryDescription(row: any) {
 }
 
 function getCategoryThumbnail(row: any) {
-  const translation = getCategoryTranslation(row);
-  return translation?.thumbnail || row.translations?.[0]?.thumbnail || '';
+  // thumbnail 已上移到主表，全语言共用
+  return row?.thumbnail || '';
 }
 
 function getCategoryCoverImage(row: any) {

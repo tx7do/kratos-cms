@@ -100,6 +100,11 @@ func (Page) Fields() []ent.Field {
 			Optional().
 			Nillable(),
 
+		field.String("thumbnail").
+			Comment("缩略图（全语言共用）").
+			Optional().
+			Nillable(),
+
 		field.JSON("custom_fields", &map[string]string{}).
 			Comment("自定义字段").
 			Optional(),

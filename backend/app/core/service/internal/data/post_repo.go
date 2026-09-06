@@ -445,6 +445,7 @@ func (r *PostRepo) Create(ctx context.Context, req *contentV1.CreatePostRequest)
 		// 由 InteractionService 独占递增，Create 路径不再显式设置。
 		SetNillableAuthorID(req.Data.AuthorId).
 		SetNillableAuthorName(req.Data.AuthorName).
+		SetNillableThumbnail(req.Data.Thumbnail).
 		SetNillablePasswordHash(req.Data.PasswordHash).
 		SetNillableCreatedBy(req.Data.CreatedBy).
 		SetNillablePublishTime(timeutil.TimestamppbToTime(req.Data.PublishTime)).
@@ -598,6 +599,7 @@ func (r *PostRepo) Update(ctx context.Context, req *contentV1.UpdatePostRequest)
 				SetNillableIsFeatured(req.Data.IsFeatured).
 				SetNillableSortOrder(req.Data.SortOrder).
 				SetNillableAuthorName(req.Data.AuthorName).
+				SetNillableThumbnail(req.Data.Thumbnail).
 				SetNillablePublishTime(timeutil.TimestamppbToTime(req.Data.PublishTime)).
 				SetUpdatedAt(time.Now())
 

@@ -4071,6 +4071,7 @@ type CategoryMutation struct {
 	is_nav               *bool
 	icon                 *string
 	code                 *string
+	thumbnail            *string
 	post_count           *uint32
 	addpost_count        *int32
 	direct_post_count    *uint32
@@ -4986,6 +4987,55 @@ func (m *CategoryMutation) ResetCode() {
 	delete(m.clearedFields, category.FieldCode)
 }
 
+// SetThumbnail sets the "thumbnail" field.
+func (m *CategoryMutation) SetThumbnail(s string) {
+	m.thumbnail = &s
+}
+
+// Thumbnail returns the value of the "thumbnail" field in the mutation.
+func (m *CategoryMutation) Thumbnail() (r string, exists bool) {
+	v := m.thumbnail
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldThumbnail returns the old "thumbnail" field's value of the Category entity.
+// If the Category object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *CategoryMutation) OldThumbnail(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldThumbnail is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldThumbnail requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldThumbnail: %w", err)
+	}
+	return oldValue.Thumbnail, nil
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (m *CategoryMutation) ClearThumbnail() {
+	m.thumbnail = nil
+	m.clearedFields[category.FieldThumbnail] = struct{}{}
+}
+
+// ThumbnailCleared returns if the "thumbnail" field was cleared in this mutation.
+func (m *CategoryMutation) ThumbnailCleared() bool {
+	_, ok := m.clearedFields[category.FieldThumbnail]
+	return ok
+}
+
+// ResetThumbnail resets all changes to the "thumbnail" field.
+func (m *CategoryMutation) ResetThumbnail() {
+	m.thumbnail = nil
+	delete(m.clearedFields, category.FieldThumbnail)
+}
+
 // SetPostCount sets the "post_count" field.
 func (m *CategoryMutation) SetPostCount(u uint32) {
 	m.post_count = &u
@@ -5430,7 +5480,7 @@ func (m *CategoryMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *CategoryMutation) Fields() []string {
-	fields := make([]string, 0, 19)
+	fields := make([]string, 0, 20)
 	if m.created_at != nil {
 		fields = append(fields, category.FieldCreatedAt)
 	}
@@ -5472,6 +5522,9 @@ func (m *CategoryMutation) Fields() []string {
 	}
 	if m.code != nil {
 		fields = append(fields, category.FieldCode)
+	}
+	if m.thumbnail != nil {
+		fields = append(fields, category.FieldThumbnail)
 	}
 	if m.post_count != nil {
 		fields = append(fields, category.FieldPostCount)
@@ -5524,6 +5577,8 @@ func (m *CategoryMutation) Field(name string) (ent.Value, bool) {
 		return m.Icon()
 	case category.FieldCode:
 		return m.Code()
+	case category.FieldThumbnail:
+		return m.Thumbnail()
 	case category.FieldPostCount:
 		return m.PostCount()
 	case category.FieldDirectPostCount:
@@ -5571,6 +5626,8 @@ func (m *CategoryMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldIcon(ctx)
 	case category.FieldCode:
 		return m.OldCode(ctx)
+	case category.FieldThumbnail:
+		return m.OldThumbnail(ctx)
 	case category.FieldPostCount:
 		return m.OldPostCount(ctx)
 	case category.FieldDirectPostCount:
@@ -5687,6 +5744,13 @@ func (m *CategoryMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetCode(v)
+		return nil
+	case category.FieldThumbnail:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetThumbnail(v)
 		return nil
 	case category.FieldPostCount:
 		v, ok := value.(uint32)
@@ -5906,6 +5970,9 @@ func (m *CategoryMutation) ClearedFields() []string {
 	if m.FieldCleared(category.FieldCode) {
 		fields = append(fields, category.FieldCode)
 	}
+	if m.FieldCleared(category.FieldThumbnail) {
+		fields = append(fields, category.FieldThumbnail)
+	}
 	if m.FieldCleared(category.FieldPostCount) {
 		fields = append(fields, category.FieldPostCount)
 	}
@@ -5977,6 +6044,9 @@ func (m *CategoryMutation) ClearField(name string) error {
 	case category.FieldCode:
 		m.ClearCode()
 		return nil
+	case category.FieldThumbnail:
+		m.ClearThumbnail()
+		return nil
 	case category.FieldPostCount:
 		m.ClearPostCount()
 		return nil
@@ -6041,6 +6111,9 @@ func (m *CategoryMutation) ResetField(name string) error {
 		return nil
 	case category.FieldCode:
 		m.ResetCode()
+		return nil
+	case category.FieldThumbnail:
+		m.ResetThumbnail()
 		return nil
 	case category.FieldPostCount:
 		m.ResetPostCount()
@@ -6187,7 +6260,6 @@ type CategoryTranslationMutation struct {
 	name           *string
 	slug           *string
 	description    *string
-	thumbnail      *string
 	cover_image    *string
 	full_path      *string
 	clearedFields  map[string]struct{}
@@ -7042,55 +7114,6 @@ func (m *CategoryTranslationMutation) ResetDescription() {
 	delete(m.clearedFields, categorytranslation.FieldDescription)
 }
 
-// SetThumbnail sets the "thumbnail" field.
-func (m *CategoryTranslationMutation) SetThumbnail(s string) {
-	m.thumbnail = &s
-}
-
-// Thumbnail returns the value of the "thumbnail" field in the mutation.
-func (m *CategoryTranslationMutation) Thumbnail() (r string, exists bool) {
-	v := m.thumbnail
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldThumbnail returns the old "thumbnail" field's value of the CategoryTranslation entity.
-// If the CategoryTranslation object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *CategoryTranslationMutation) OldThumbnail(ctx context.Context) (v *string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldThumbnail is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldThumbnail requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldThumbnail: %w", err)
-	}
-	return oldValue.Thumbnail, nil
-}
-
-// ClearThumbnail clears the value of the "thumbnail" field.
-func (m *CategoryTranslationMutation) ClearThumbnail() {
-	m.thumbnail = nil
-	m.clearedFields[categorytranslation.FieldThumbnail] = struct{}{}
-}
-
-// ThumbnailCleared returns if the "thumbnail" field was cleared in this mutation.
-func (m *CategoryTranslationMutation) ThumbnailCleared() bool {
-	_, ok := m.clearedFields[categorytranslation.FieldThumbnail]
-	return ok
-}
-
-// ResetThumbnail resets all changes to the "thumbnail" field.
-func (m *CategoryTranslationMutation) ResetThumbnail() {
-	m.thumbnail = nil
-	delete(m.clearedFields, categorytranslation.FieldThumbnail)
-}
-
 // SetCoverImage sets the "cover_image" field.
 func (m *CategoryTranslationMutation) SetCoverImage(s string) {
 	m.cover_image = &s
@@ -7223,7 +7246,7 @@ func (m *CategoryTranslationMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *CategoryTranslationMutation) Fields() []string {
-	fields := make([]string, 0, 16)
+	fields := make([]string, 0, 15)
 	if m.created_at != nil {
 		fields = append(fields, categorytranslation.FieldCreatedAt)
 	}
@@ -7262,9 +7285,6 @@ func (m *CategoryTranslationMutation) Fields() []string {
 	}
 	if m.description != nil {
 		fields = append(fields, categorytranslation.FieldDescription)
-	}
-	if m.thumbnail != nil {
-		fields = append(fields, categorytranslation.FieldThumbnail)
 	}
 	if m.cover_image != nil {
 		fields = append(fields, categorytranslation.FieldCoverImage)
@@ -7306,8 +7326,6 @@ func (m *CategoryTranslationMutation) Field(name string) (ent.Value, bool) {
 		return m.Slug()
 	case categorytranslation.FieldDescription:
 		return m.Description()
-	case categorytranslation.FieldThumbnail:
-		return m.Thumbnail()
 	case categorytranslation.FieldCoverImage:
 		return m.CoverImage()
 	case categorytranslation.FieldFullPath:
@@ -7347,8 +7365,6 @@ func (m *CategoryTranslationMutation) OldField(ctx context.Context, name string)
 		return m.OldSlug(ctx)
 	case categorytranslation.FieldDescription:
 		return m.OldDescription(ctx)
-	case categorytranslation.FieldThumbnail:
-		return m.OldThumbnail(ctx)
 	case categorytranslation.FieldCoverImage:
 		return m.OldCoverImage(ctx)
 	case categorytranslation.FieldFullPath:
@@ -7452,13 +7468,6 @@ func (m *CategoryTranslationMutation) SetField(name string, value ent.Value) err
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetDescription(v)
-		return nil
-	case categorytranslation.FieldThumbnail:
-		v, ok := value.(string)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetThumbnail(v)
 		return nil
 	case categorytranslation.FieldCoverImage:
 		v, ok := value.(string)
@@ -7606,9 +7615,6 @@ func (m *CategoryTranslationMutation) ClearedFields() []string {
 	if m.FieldCleared(categorytranslation.FieldDescription) {
 		fields = append(fields, categorytranslation.FieldDescription)
 	}
-	if m.FieldCleared(categorytranslation.FieldThumbnail) {
-		fields = append(fields, categorytranslation.FieldThumbnail)
-	}
 	if m.FieldCleared(categorytranslation.FieldCoverImage) {
 		fields = append(fields, categorytranslation.FieldCoverImage)
 	}
@@ -7668,9 +7674,6 @@ func (m *CategoryTranslationMutation) ClearField(name string) error {
 	case categorytranslation.FieldDescription:
 		m.ClearDescription()
 		return nil
-	case categorytranslation.FieldThumbnail:
-		m.ClearThumbnail()
-		return nil
 	case categorytranslation.FieldCoverImage:
 		m.ClearCoverImage()
 		return nil
@@ -7723,9 +7726,6 @@ func (m *CategoryTranslationMutation) ResetField(name string) error {
 		return nil
 	case categorytranslation.FieldDescription:
 		m.ResetDescription()
-		return nil
-	case categorytranslation.FieldThumbnail:
-		m.ResetThumbnail()
 		return nil
 	case categorytranslation.FieldCoverImage:
 		m.ResetCoverImage()
@@ -54792,6 +54792,7 @@ type PageMutation struct {
 	show_in_navigation  *bool
 	template            *string
 	is_custom_template  *bool
+	thumbnail           *string
 	custom_fields       **map[string]string
 	content_model_id    *uint32
 	addcontent_model_id *int32
@@ -56067,6 +56068,55 @@ func (m *PageMutation) ResetIsCustomTemplate() {
 	delete(m.clearedFields, page.FieldIsCustomTemplate)
 }
 
+// SetThumbnail sets the "thumbnail" field.
+func (m *PageMutation) SetThumbnail(s string) {
+	m.thumbnail = &s
+}
+
+// Thumbnail returns the value of the "thumbnail" field in the mutation.
+func (m *PageMutation) Thumbnail() (r string, exists bool) {
+	v := m.thumbnail
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldThumbnail returns the old "thumbnail" field's value of the Page entity.
+// If the Page object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *PageMutation) OldThumbnail(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldThumbnail is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldThumbnail requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldThumbnail: %w", err)
+	}
+	return oldValue.Thumbnail, nil
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (m *PageMutation) ClearThumbnail() {
+	m.thumbnail = nil
+	m.clearedFields[page.FieldThumbnail] = struct{}{}
+}
+
+// ThumbnailCleared returns if the "thumbnail" field was cleared in this mutation.
+func (m *PageMutation) ThumbnailCleared() bool {
+	_, ok := m.clearedFields[page.FieldThumbnail]
+	return ok
+}
+
+// ResetThumbnail resets all changes to the "thumbnail" field.
+func (m *PageMutation) ResetThumbnail() {
+	m.thumbnail = nil
+	delete(m.clearedFields, page.FieldThumbnail)
+}
+
 // SetCustomFields sets the "custom_fields" field.
 func (m *PageMutation) SetCustomFields(value *map[string]string) {
 	m.custom_fields = &value
@@ -56371,7 +56421,7 @@ func (m *PageMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *PageMutation) Fields() []string {
-	fields := make([]string, 0, 24)
+	fields := make([]string, 0, 25)
 	if m.created_at != nil {
 		fields = append(fields, page.FieldCreatedAt)
 	}
@@ -56435,6 +56485,9 @@ func (m *PageMutation) Fields() []string {
 	if m.is_custom_template != nil {
 		fields = append(fields, page.FieldIsCustomTemplate)
 	}
+	if m.thumbnail != nil {
+		fields = append(fields, page.FieldThumbnail)
+	}
 	if m.custom_fields != nil {
 		fields = append(fields, page.FieldCustomFields)
 	}
@@ -56494,6 +56547,8 @@ func (m *PageMutation) Field(name string) (ent.Value, bool) {
 		return m.Template()
 	case page.FieldIsCustomTemplate:
 		return m.IsCustomTemplate()
+	case page.FieldThumbnail:
+		return m.Thumbnail()
 	case page.FieldCustomFields:
 		return m.CustomFields()
 	case page.FieldContentModelID:
@@ -56551,6 +56606,8 @@ func (m *PageMutation) OldField(ctx context.Context, name string) (ent.Value, er
 		return m.OldTemplate(ctx)
 	case page.FieldIsCustomTemplate:
 		return m.OldIsCustomTemplate(ctx)
+	case page.FieldThumbnail:
+		return m.OldThumbnail(ctx)
 	case page.FieldCustomFields:
 		return m.OldCustomFields(ctx)
 	case page.FieldContentModelID:
@@ -56712,6 +56769,13 @@ func (m *PageMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetIsCustomTemplate(v)
+		return nil
+	case page.FieldThumbnail:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetThumbnail(v)
 		return nil
 	case page.FieldCustomFields:
 		v, ok := value.(*map[string]string)
@@ -56926,6 +56990,9 @@ func (m *PageMutation) ClearedFields() []string {
 	if m.FieldCleared(page.FieldIsCustomTemplate) {
 		fields = append(fields, page.FieldIsCustomTemplate)
 	}
+	if m.FieldCleared(page.FieldThumbnail) {
+		fields = append(fields, page.FieldThumbnail)
+	}
 	if m.FieldCleared(page.FieldCustomFields) {
 		fields = append(fields, page.FieldCustomFields)
 	}
@@ -57012,6 +57079,9 @@ func (m *PageMutation) ClearField(name string) error {
 	case page.FieldIsCustomTemplate:
 		m.ClearIsCustomTemplate()
 		return nil
+	case page.FieldThumbnail:
+		m.ClearThumbnail()
+		return nil
 	case page.FieldCustomFields:
 		m.ClearCustomFields()
 		return nil
@@ -57091,6 +57161,9 @@ func (m *PageMutation) ResetField(name string) error {
 		return nil
 	case page.FieldIsCustomTemplate:
 		m.ResetIsCustomTemplate()
+		return nil
+	case page.FieldThumbnail:
+		m.ResetThumbnail()
 		return nil
 	case page.FieldCustomFields:
 		m.ResetCustomFields()
@@ -57230,7 +57303,6 @@ type PageTranslationMutation struct {
 	language_code *string
 	title         *string
 	slug          *string
-	thumbnail     *string
 	cover_image   *string
 	full_path     *string
 	clearedFields map[string]struct{}
@@ -58036,55 +58108,6 @@ func (m *PageTranslationMutation) ResetSlug() {
 	delete(m.clearedFields, pagetranslation.FieldSlug)
 }
 
-// SetThumbnail sets the "thumbnail" field.
-func (m *PageTranslationMutation) SetThumbnail(s string) {
-	m.thumbnail = &s
-}
-
-// Thumbnail returns the value of the "thumbnail" field in the mutation.
-func (m *PageTranslationMutation) Thumbnail() (r string, exists bool) {
-	v := m.thumbnail
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldThumbnail returns the old "thumbnail" field's value of the PageTranslation entity.
-// If the PageTranslation object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *PageTranslationMutation) OldThumbnail(ctx context.Context) (v *string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldThumbnail is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldThumbnail requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldThumbnail: %w", err)
-	}
-	return oldValue.Thumbnail, nil
-}
-
-// ClearThumbnail clears the value of the "thumbnail" field.
-func (m *PageTranslationMutation) ClearThumbnail() {
-	m.thumbnail = nil
-	m.clearedFields[pagetranslation.FieldThumbnail] = struct{}{}
-}
-
-// ThumbnailCleared returns if the "thumbnail" field was cleared in this mutation.
-func (m *PageTranslationMutation) ThumbnailCleared() bool {
-	_, ok := m.clearedFields[pagetranslation.FieldThumbnail]
-	return ok
-}
-
-// ResetThumbnail resets all changes to the "thumbnail" field.
-func (m *PageTranslationMutation) ResetThumbnail() {
-	m.thumbnail = nil
-	delete(m.clearedFields, pagetranslation.FieldThumbnail)
-}
-
 // SetCoverImage sets the "cover_image" field.
 func (m *PageTranslationMutation) SetCoverImage(s string) {
 	m.cover_image = &s
@@ -58217,7 +58240,7 @@ func (m *PageTranslationMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *PageTranslationMutation) Fields() []string {
-	fields := make([]string, 0, 15)
+	fields := make([]string, 0, 14)
 	if m.created_at != nil {
 		fields = append(fields, pagetranslation.FieldCreatedAt)
 	}
@@ -58253,9 +58276,6 @@ func (m *PageTranslationMutation) Fields() []string {
 	}
 	if m.slug != nil {
 		fields = append(fields, pagetranslation.FieldSlug)
-	}
-	if m.thumbnail != nil {
-		fields = append(fields, pagetranslation.FieldThumbnail)
 	}
 	if m.cover_image != nil {
 		fields = append(fields, pagetranslation.FieldCoverImage)
@@ -58295,8 +58315,6 @@ func (m *PageTranslationMutation) Field(name string) (ent.Value, bool) {
 		return m.Title()
 	case pagetranslation.FieldSlug:
 		return m.Slug()
-	case pagetranslation.FieldThumbnail:
-		return m.Thumbnail()
 	case pagetranslation.FieldCoverImage:
 		return m.CoverImage()
 	case pagetranslation.FieldFullPath:
@@ -58334,8 +58352,6 @@ func (m *PageTranslationMutation) OldField(ctx context.Context, name string) (en
 		return m.OldTitle(ctx)
 	case pagetranslation.FieldSlug:
 		return m.OldSlug(ctx)
-	case pagetranslation.FieldThumbnail:
-		return m.OldThumbnail(ctx)
 	case pagetranslation.FieldCoverImage:
 		return m.OldCoverImage(ctx)
 	case pagetranslation.FieldFullPath:
@@ -58432,13 +58448,6 @@ func (m *PageTranslationMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetSlug(v)
-		return nil
-	case pagetranslation.FieldThumbnail:
-		v, ok := value.(string)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetThumbnail(v)
 		return nil
 	case pagetranslation.FieldCoverImage:
 		v, ok := value.(string)
@@ -58583,9 +58592,6 @@ func (m *PageTranslationMutation) ClearedFields() []string {
 	if m.FieldCleared(pagetranslation.FieldSlug) {
 		fields = append(fields, pagetranslation.FieldSlug)
 	}
-	if m.FieldCleared(pagetranslation.FieldThumbnail) {
-		fields = append(fields, pagetranslation.FieldThumbnail)
-	}
 	if m.FieldCleared(pagetranslation.FieldCoverImage) {
 		fields = append(fields, pagetranslation.FieldCoverImage)
 	}
@@ -58642,9 +58648,6 @@ func (m *PageTranslationMutation) ClearField(name string) error {
 	case pagetranslation.FieldSlug:
 		m.ClearSlug()
 		return nil
-	case pagetranslation.FieldThumbnail:
-		m.ClearThumbnail()
-		return nil
 	case pagetranslation.FieldCoverImage:
 		m.ClearCoverImage()
 		return nil
@@ -58694,9 +58697,6 @@ func (m *PageTranslationMutation) ResetField(name string) error {
 		return nil
 	case pagetranslation.FieldSlug:
 		m.ResetSlug()
-		return nil
-	case pagetranslation.FieldThumbnail:
-		m.ResetThumbnail()
 		return nil
 	case pagetranslation.FieldCoverImage:
 		m.ResetCoverImage()
@@ -70226,6 +70226,7 @@ type PostMutation struct {
 	author_id        *uint32
 	addauthor_id     *int32
 	author_name      *string
+	thumbnail        *string
 	password_hash    *string
 	custom_fields    **map[string]string
 	publish_time     *time.Time
@@ -71298,6 +71299,55 @@ func (m *PostMutation) ResetAuthorName() {
 	delete(m.clearedFields, post.FieldAuthorName)
 }
 
+// SetThumbnail sets the "thumbnail" field.
+func (m *PostMutation) SetThumbnail(s string) {
+	m.thumbnail = &s
+}
+
+// Thumbnail returns the value of the "thumbnail" field in the mutation.
+func (m *PostMutation) Thumbnail() (r string, exists bool) {
+	v := m.thumbnail
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldThumbnail returns the old "thumbnail" field's value of the Post entity.
+// If the Post object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *PostMutation) OldThumbnail(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldThumbnail is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldThumbnail requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldThumbnail: %w", err)
+	}
+	return oldValue.Thumbnail, nil
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (m *PostMutation) ClearThumbnail() {
+	m.thumbnail = nil
+	m.clearedFields[post.FieldThumbnail] = struct{}{}
+}
+
+// ThumbnailCleared returns if the "thumbnail" field was cleared in this mutation.
+func (m *PostMutation) ThumbnailCleared() bool {
+	_, ok := m.clearedFields[post.FieldThumbnail]
+	return ok
+}
+
+// ResetThumbnail resets all changes to the "thumbnail" field.
+func (m *PostMutation) ResetThumbnail() {
+	m.thumbnail = nil
+	delete(m.clearedFields, post.FieldThumbnail)
+}
+
 // SetPasswordHash sets the "password_hash" field.
 func (m *PostMutation) SetPasswordHash(s string) {
 	m.password_hash = &s
@@ -71479,7 +71529,7 @@ func (m *PostMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *PostMutation) Fields() []string {
-	fields := make([]string, 0, 20)
+	fields := make([]string, 0, 21)
 	if m.created_at != nil {
 		fields = append(fields, post.FieldCreatedAt)
 	}
@@ -71530,6 +71580,9 @@ func (m *PostMutation) Fields() []string {
 	}
 	if m.author_name != nil {
 		fields = append(fields, post.FieldAuthorName)
+	}
+	if m.thumbnail != nil {
+		fields = append(fields, post.FieldThumbnail)
 	}
 	if m.password_hash != nil {
 		fields = append(fields, post.FieldPasswordHash)
@@ -71582,6 +71635,8 @@ func (m *PostMutation) Field(name string) (ent.Value, bool) {
 		return m.AuthorID()
 	case post.FieldAuthorName:
 		return m.AuthorName()
+	case post.FieldThumbnail:
+		return m.Thumbnail()
 	case post.FieldPasswordHash:
 		return m.PasswordHash()
 	case post.FieldCustomFields:
@@ -71631,6 +71686,8 @@ func (m *PostMutation) OldField(ctx context.Context, name string) (ent.Value, er
 		return m.OldAuthorID(ctx)
 	case post.FieldAuthorName:
 		return m.OldAuthorName(ctx)
+	case post.FieldThumbnail:
+		return m.OldThumbnail(ctx)
 	case post.FieldPasswordHash:
 		return m.OldPasswordHash(ctx)
 	case post.FieldCustomFields:
@@ -71764,6 +71821,13 @@ func (m *PostMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetAuthorName(v)
+		return nil
+	case post.FieldThumbnail:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetThumbnail(v)
 		return nil
 	case post.FieldPasswordHash:
 		v, ok := value.(string)
@@ -71942,6 +72006,9 @@ func (m *PostMutation) ClearedFields() []string {
 	if m.FieldCleared(post.FieldAuthorName) {
 		fields = append(fields, post.FieldAuthorName)
 	}
+	if m.FieldCleared(post.FieldThumbnail) {
+		fields = append(fields, post.FieldThumbnail)
+	}
 	if m.FieldCleared(post.FieldPasswordHash) {
 		fields = append(fields, post.FieldPasswordHash)
 	}
@@ -72016,6 +72083,9 @@ func (m *PostMutation) ClearField(name string) error {
 	case post.FieldAuthorName:
 		m.ClearAuthorName()
 		return nil
+	case post.FieldThumbnail:
+		m.ClearThumbnail()
+		return nil
 	case post.FieldPasswordHash:
 		m.ClearPasswordHash()
 		return nil
@@ -72083,6 +72153,9 @@ func (m *PostMutation) ResetField(name string) error {
 		return nil
 	case post.FieldAuthorName:
 		m.ResetAuthorName()
+		return nil
+	case post.FieldThumbnail:
+		m.ResetThumbnail()
 		return nil
 	case post.FieldPasswordHash:
 		m.ResetPasswordHash()
@@ -74271,7 +74344,6 @@ type PostTranslationMutation struct {
 	summary          *string
 	content          *string
 	original_content *string
-	thumbnail        *string
 	full_path        *string
 	word_count       *uint32
 	addword_count    *int32
@@ -75225,55 +75297,6 @@ func (m *PostTranslationMutation) ResetOriginalContent() {
 	delete(m.clearedFields, posttranslation.FieldOriginalContent)
 }
 
-// SetThumbnail sets the "thumbnail" field.
-func (m *PostTranslationMutation) SetThumbnail(s string) {
-	m.thumbnail = &s
-}
-
-// Thumbnail returns the value of the "thumbnail" field in the mutation.
-func (m *PostTranslationMutation) Thumbnail() (r string, exists bool) {
-	v := m.thumbnail
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldThumbnail returns the old "thumbnail" field's value of the PostTranslation entity.
-// If the PostTranslation object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *PostTranslationMutation) OldThumbnail(ctx context.Context) (v *string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldThumbnail is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldThumbnail requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldThumbnail: %w", err)
-	}
-	return oldValue.Thumbnail, nil
-}
-
-// ClearThumbnail clears the value of the "thumbnail" field.
-func (m *PostTranslationMutation) ClearThumbnail() {
-	m.thumbnail = nil
-	m.clearedFields[posttranslation.FieldThumbnail] = struct{}{}
-}
-
-// ThumbnailCleared returns if the "thumbnail" field was cleared in this mutation.
-func (m *PostTranslationMutation) ThumbnailCleared() bool {
-	_, ok := m.clearedFields[posttranslation.FieldThumbnail]
-	return ok
-}
-
-// ResetThumbnail resets all changes to the "thumbnail" field.
-func (m *PostTranslationMutation) ResetThumbnail() {
-	m.thumbnail = nil
-	delete(m.clearedFields, posttranslation.FieldThumbnail)
-}
-
 // SetFullPath sets the "full_path" field.
 func (m *PostTranslationMutation) SetFullPath(s string) {
 	m.full_path = &s
@@ -75427,7 +75450,7 @@ func (m *PostTranslationMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *PostTranslationMutation) Fields() []string {
-	fields := make([]string, 0, 18)
+	fields := make([]string, 0, 17)
 	if m.created_at != nil {
 		fields = append(fields, posttranslation.FieldCreatedAt)
 	}
@@ -75473,9 +75496,6 @@ func (m *PostTranslationMutation) Fields() []string {
 	if m.original_content != nil {
 		fields = append(fields, posttranslation.FieldOriginalContent)
 	}
-	if m.thumbnail != nil {
-		fields = append(fields, posttranslation.FieldThumbnail)
-	}
 	if m.full_path != nil {
 		fields = append(fields, posttranslation.FieldFullPath)
 	}
@@ -75520,8 +75540,6 @@ func (m *PostTranslationMutation) Field(name string) (ent.Value, bool) {
 		return m.Content()
 	case posttranslation.FieldOriginalContent:
 		return m.OriginalContent()
-	case posttranslation.FieldThumbnail:
-		return m.Thumbnail()
 	case posttranslation.FieldFullPath:
 		return m.FullPath()
 	case posttranslation.FieldWordCount:
@@ -75565,8 +75583,6 @@ func (m *PostTranslationMutation) OldField(ctx context.Context, name string) (en
 		return m.OldContent(ctx)
 	case posttranslation.FieldOriginalContent:
 		return m.OldOriginalContent(ctx)
-	case posttranslation.FieldThumbnail:
-		return m.OldThumbnail(ctx)
 	case posttranslation.FieldFullPath:
 		return m.OldFullPath(ctx)
 	case posttranslation.FieldWordCount:
@@ -75684,13 +75700,6 @@ func (m *PostTranslationMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetOriginalContent(v)
-		return nil
-	case posttranslation.FieldThumbnail:
-		v, ok := value.(string)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetThumbnail(v)
 		return nil
 	case posttranslation.FieldFullPath:
 		v, ok := value.(string)
@@ -75856,9 +75865,6 @@ func (m *PostTranslationMutation) ClearedFields() []string {
 	if m.FieldCleared(posttranslation.FieldOriginalContent) {
 		fields = append(fields, posttranslation.FieldOriginalContent)
 	}
-	if m.FieldCleared(posttranslation.FieldThumbnail) {
-		fields = append(fields, posttranslation.FieldThumbnail)
-	}
 	if m.FieldCleared(posttranslation.FieldFullPath) {
 		fields = append(fields, posttranslation.FieldFullPath)
 	}
@@ -75924,9 +75930,6 @@ func (m *PostTranslationMutation) ClearField(name string) error {
 	case posttranslation.FieldOriginalContent:
 		m.ClearOriginalContent()
 		return nil
-	case posttranslation.FieldThumbnail:
-		m.ClearThumbnail()
-		return nil
 	case posttranslation.FieldFullPath:
 		m.ClearFullPath()
 		return nil
@@ -75985,9 +75988,6 @@ func (m *PostTranslationMutation) ResetField(name string) error {
 		return nil
 	case posttranslation.FieldOriginalContent:
 		m.ResetOriginalContent()
-		return nil
-	case posttranslation.FieldThumbnail:
-		m.ResetThumbnail()
 		return nil
 	case posttranslation.FieldFullPath:
 		m.ResetFullPath()

@@ -245,8 +245,8 @@ export function getPostSummary(post: contentservicev1_Post): string {
  * 获取帖子缩略图
  */
 export function getPostThumbnail(post: contentservicev1_Post): string {
-  const translation = getTranslation(post);
-  return translation?.thumbnail || placeholderImage;
+  // thumbnail 已上移到主表，全语言共用，不再按语言取翻译
+  return post?.thumbnail || placeholderImage;
 }
 
 /**

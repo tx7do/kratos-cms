@@ -212,6 +212,10 @@ func (m *Page) validate(all bool) error {
 		// no validation rules for IsCustomTemplate
 	}
 
+	if m.Thumbnail != nil {
+		// no validation rules for Thumbnail
+	}
+
 	if m.ContentModelId != nil {
 		// no validation rules for ContentModelId
 	}
@@ -456,10 +460,6 @@ func (m *PageTranslation) validate(all bool) error {
 
 	if m.Slug != nil {
 		// no validation rules for Slug
-	}
-
-	if m.Thumbnail != nil {
-		// no validation rules for Thumbnail
 	}
 
 	if m.CoverImage != nil {

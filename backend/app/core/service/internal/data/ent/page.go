@@ -61,6 +61,8 @@ type Page struct {
 	Template *string `json:"template,omitempty"`
 	// 是否使用自定义模板代码
 	IsCustomTemplate *bool `json:"is_custom_template,omitempty"`
+	// 缩略图（全语言共用）
+	Thumbnail *string `json:"thumbnail,omitempty"`
 	// 自定义字段
 	CustomFields *map[string]string `json:"custom_fields,omitempty"`
 	// 绑定的内容模型ID（该页面继承模型字段，0/null=无绑定）
@@ -115,7 +117,7 @@ func (*Page) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case page.FieldID, page.FieldCreatedBy, page.FieldUpdatedBy, page.FieldDeletedBy, page.FieldSortOrder, page.FieldParentID, page.FieldTenantID, page.FieldAuthorID, page.FieldContentModelID, page.FieldDepth:
 			values[i] = new(sql.NullInt64)
-		case page.FieldPath, page.FieldEditorType, page.FieldStatus, page.FieldType, page.FieldSlug, page.FieldAuthorName, page.FieldRedirectURL, page.FieldTemplate:
+		case page.FieldPath, page.FieldEditorType, page.FieldStatus, page.FieldType, page.FieldSlug, page.FieldAuthorName, page.FieldRedirectURL, page.FieldTemplate, page.FieldThumbnail:
 			values[i] = new(sql.NullString)
 		case page.FieldCreatedAt, page.FieldUpdatedAt, page.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -286,6 +288,13 @@ func (_m *Page) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.IsCustomTemplate = new(bool)
 				*_m.IsCustomTemplate = value.Bool
+			}
+		case page.FieldThumbnail:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field thumbnail", values[i])
+			} else if value.Valid {
+				_m.Thumbnail = new(string)
+				*_m.Thumbnail = value.String
 			}
 		case page.FieldCustomFields:
 			if value, ok := values[i].(*[]byte); !ok {
@@ -458,6 +467,11 @@ func (_m *Page) String() string {
 	if v := _m.IsCustomTemplate; v != nil {
 		builder.WriteString("is_custom_template=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.Thumbnail; v != nil {
+		builder.WriteString("thumbnail=")
+		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
 	builder.WriteString("custom_fields=")

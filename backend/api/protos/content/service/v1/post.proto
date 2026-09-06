@@ -119,6 +119,10 @@ message Post {
     (gnostic.openapi.v3.property) = {description: "帖子作者名称（游客填写）"}
   ]; // 帖子作者名称（游客填写）
 
+  optional string thumbnail = 13 [
+    json_name = "thumbnail",
+    (gnostic.openapi.v3.property) = {description: "缩略图（全语言共用，存主表）"}
+  ]; // 缩略图（全语言共用，存主表）
 
   map<string, string> custom_fields = 30 [
     json_name = "customFields",
@@ -209,12 +213,8 @@ message PostTranslation {
     (gnostic.openapi.v3.property) = {description: "原始内容"}
   ]; // 原始内容
 
-  optional string thumbnail = 15 [
-    json_name = "thumbnail",
-    (gnostic.openapi.v3.property) = {
-      description: "缩略图（某些语言可能需要不同图片）"
-    }
-  ]; // 缩略图
+  reserved 15;
+  reserved "thumbnail"; // 缩略图已上移到主表 Post，全语言共用
 
   optional string full_path = 17 [
     json_name = "fullPath",

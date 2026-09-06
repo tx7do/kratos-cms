@@ -218,6 +218,20 @@ func (_c *CategoryCreate) SetNillableCode(v *string) *CategoryCreate {
 	return _c
 }
 
+// SetThumbnail sets the "thumbnail" field.
+func (_c *CategoryCreate) SetThumbnail(v string) *CategoryCreate {
+	_c.mutation.SetThumbnail(v)
+	return _c
+}
+
+// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
+func (_c *CategoryCreate) SetNillableThumbnail(v *string) *CategoryCreate {
+	if v != nil {
+		_c.SetThumbnail(*v)
+	}
+	return _c
+}
+
 // SetPostCount sets the "post_count" field.
 func (_c *CategoryCreate) SetPostCount(v uint32) *CategoryCreate {
 	_c.mutation.SetPostCount(v)
@@ -471,6 +485,10 @@ func (_c *CategoryCreate) createSpec() (*Category, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.Code(); ok {
 		_spec.SetField(category.FieldCode, field.TypeString, value)
 		_node.Code = &value
+	}
+	if value, ok := _c.mutation.Thumbnail(); ok {
+		_spec.SetField(category.FieldThumbnail, field.TypeString, value)
+		_node.Thumbnail = &value
 	}
 	if value, ok := _c.mutation.PostCount(); ok {
 		_spec.SetField(category.FieldPostCount, field.TypeUint32, value)
@@ -814,6 +832,24 @@ func (u *CategoryUpsert) UpdateCode() *CategoryUpsert {
 // ClearCode clears the value of the "code" field.
 func (u *CategoryUpsert) ClearCode() *CategoryUpsert {
 	u.SetNull(category.FieldCode)
+	return u
+}
+
+// SetThumbnail sets the "thumbnail" field.
+func (u *CategoryUpsert) SetThumbnail(v string) *CategoryUpsert {
+	u.Set(category.FieldThumbnail, v)
+	return u
+}
+
+// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
+func (u *CategoryUpsert) UpdateThumbnail() *CategoryUpsert {
+	u.SetExcluded(category.FieldThumbnail)
+	return u
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (u *CategoryUpsert) ClearThumbnail() *CategoryUpsert {
+	u.SetNull(category.FieldThumbnail)
 	return u
 }
 
@@ -1262,6 +1298,27 @@ func (u *CategoryUpsertOne) UpdateCode() *CategoryUpsertOne {
 func (u *CategoryUpsertOne) ClearCode() *CategoryUpsertOne {
 	return u.Update(func(s *CategoryUpsert) {
 		s.ClearCode()
+	})
+}
+
+// SetThumbnail sets the "thumbnail" field.
+func (u *CategoryUpsertOne) SetThumbnail(v string) *CategoryUpsertOne {
+	return u.Update(func(s *CategoryUpsert) {
+		s.SetThumbnail(v)
+	})
+}
+
+// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
+func (u *CategoryUpsertOne) UpdateThumbnail() *CategoryUpsertOne {
+	return u.Update(func(s *CategoryUpsert) {
+		s.UpdateThumbnail()
+	})
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (u *CategoryUpsertOne) ClearThumbnail() *CategoryUpsertOne {
+	return u.Update(func(s *CategoryUpsert) {
+		s.ClearThumbnail()
 	})
 }
 
@@ -1895,6 +1952,27 @@ func (u *CategoryUpsertBulk) UpdateCode() *CategoryUpsertBulk {
 func (u *CategoryUpsertBulk) ClearCode() *CategoryUpsertBulk {
 	return u.Update(func(s *CategoryUpsert) {
 		s.ClearCode()
+	})
+}
+
+// SetThumbnail sets the "thumbnail" field.
+func (u *CategoryUpsertBulk) SetThumbnail(v string) *CategoryUpsertBulk {
+	return u.Update(func(s *CategoryUpsert) {
+		s.SetThumbnail(v)
+	})
+}
+
+// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
+func (u *CategoryUpsertBulk) UpdateThumbnail() *CategoryUpsertBulk {
+	return u.Update(func(s *CategoryUpsert) {
+		s.UpdateThumbnail()
+	})
+}
+
+// ClearThumbnail clears the value of the "thumbnail" field.
+func (u *CategoryUpsertBulk) ClearThumbnail() *CategoryUpsertBulk {
+	return u.Update(func(s *CategoryUpsert) {
+		s.ClearThumbnail()
 	})
 }
 

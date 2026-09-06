@@ -653,6 +653,7 @@ export type contentservicev1_Category = {
   postCount?: number;
   sortOrder?: number;
   status?: contentservicev1_Category_CategoryStatus;
+  thumbnail?: string;
   translations: contentservicev1_CategoryTranslation[] | undefined;
   updatedAt?: wellKnownTimestamp;
   updatedBy?: number;
@@ -679,7 +680,6 @@ export type contentservicev1_CategoryTranslation = {
   name?: string;
   seo?: contentservicev1_SeoMeta;
   slug?: string;
-  thumbnail?: string;
   updatedAt?: wellKnownTimestamp;
   updatedBy?: number;
 };
@@ -1431,6 +1431,7 @@ export type contentservicev1_Post = {
   sortOrder?: number;
   status?: contentservicev1_Post_PostStatus;
   tagIds: number[] | undefined;
+  thumbnail?: string;
   translations: contentservicev1_PostTranslation[] | undefined;
   updatedAt?: wellKnownTimestamp;
   updatedBy?: number;
@@ -1468,7 +1469,6 @@ export type contentservicev1_PostTranslation = {
   seo?: contentservicev1_SeoMeta;
   slug?: string;
   summary?: string;
-  thumbnail?: string;
   title?: string;
   updatedAt?: wellKnownTimestamp;
   updatedBy?: number;
@@ -2070,6 +2070,7 @@ export type contentservicev1_Page = {
   sortOrder?: number;
   status?: contentservicev1_Page_PageStatus;
   template?: string;
+  thumbnail?: string;
   translations: contentservicev1_PageTranslation[] | undefined;
   type?: contentservicev1_Page_PageType;
   updatedAt?: wellKnownTimestamp;
@@ -2103,7 +2104,6 @@ export type contentservicev1_PageTranslation = {
   pageId?: number;
   seo?: contentservicev1_SeoMeta;
   slug?: string;
-  thumbnail?: string;
   title?: string;
   updatedAt?: wellKnownTimestamp;
   updatedBy?: number;

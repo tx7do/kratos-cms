@@ -136,6 +136,10 @@ func (m *Post) validate(all bool) error {
 		// no validation rules for AuthorName
 	}
 
+	if m.Thumbnail != nil {
+		// no validation rules for Thumbnail
+	}
+
 	if m.PasswordHash != nil {
 		// no validation rules for PasswordHash
 	}
@@ -413,10 +417,6 @@ func (m *PostTranslation) validate(all bool) error {
 
 	if m.OriginalContent != nil {
 		// no validation rules for OriginalContent
-	}
-
-	if m.Thumbnail != nil {
-		// no validation rules for Thumbnail
 	}
 
 	if m.FullPath != nil {

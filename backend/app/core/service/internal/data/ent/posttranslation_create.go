@@ -225,20 +225,6 @@ func (_c *PostTranslationCreate) SetNillableOriginalContent(v *string) *PostTran
 	return _c
 }
 
-// SetThumbnail sets the "thumbnail" field.
-func (_c *PostTranslationCreate) SetThumbnail(v string) *PostTranslationCreate {
-	_c.mutation.SetThumbnail(v)
-	return _c
-}
-
-// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
-func (_c *PostTranslationCreate) SetNillableThumbnail(v *string) *PostTranslationCreate {
-	if v != nil {
-		_c.SetThumbnail(*v)
-	}
-	return _c
-}
-
 // SetFullPath sets the "full_path" field.
 func (_c *PostTranslationCreate) SetFullPath(v string) *PostTranslationCreate {
 	_c.mutation.SetFullPath(v)
@@ -425,10 +411,6 @@ func (_c *PostTranslationCreate) createSpec() (*PostTranslation, *sqlgraph.Creat
 	if value, ok := _c.mutation.OriginalContent(); ok {
 		_spec.SetField(posttranslation.FieldOriginalContent, field.TypeString, value)
 		_node.OriginalContent = &value
-	}
-	if value, ok := _c.mutation.Thumbnail(); ok {
-		_spec.SetField(posttranslation.FieldThumbnail, field.TypeString, value)
-		_node.Thumbnail = &value
 	}
 	if value, ok := _c.mutation.FullPath(); ok {
 		_spec.SetField(posttranslation.FieldFullPath, field.TypeString, value)
@@ -745,24 +727,6 @@ func (u *PostTranslationUpsert) UpdateOriginalContent() *PostTranslationUpsert {
 // ClearOriginalContent clears the value of the "original_content" field.
 func (u *PostTranslationUpsert) ClearOriginalContent() *PostTranslationUpsert {
 	u.SetNull(posttranslation.FieldOriginalContent)
-	return u
-}
-
-// SetThumbnail sets the "thumbnail" field.
-func (u *PostTranslationUpsert) SetThumbnail(v string) *PostTranslationUpsert {
-	u.Set(posttranslation.FieldThumbnail, v)
-	return u
-}
-
-// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
-func (u *PostTranslationUpsert) UpdateThumbnail() *PostTranslationUpsert {
-	u.SetExcluded(posttranslation.FieldThumbnail)
-	return u
-}
-
-// ClearThumbnail clears the value of the "thumbnail" field.
-func (u *PostTranslationUpsert) ClearThumbnail() *PostTranslationUpsert {
-	u.SetNull(posttranslation.FieldThumbnail)
 	return u
 }
 
@@ -1160,27 +1124,6 @@ func (u *PostTranslationUpsertOne) UpdateOriginalContent() *PostTranslationUpser
 func (u *PostTranslationUpsertOne) ClearOriginalContent() *PostTranslationUpsertOne {
 	return u.Update(func(s *PostTranslationUpsert) {
 		s.ClearOriginalContent()
-	})
-}
-
-// SetThumbnail sets the "thumbnail" field.
-func (u *PostTranslationUpsertOne) SetThumbnail(v string) *PostTranslationUpsertOne {
-	return u.Update(func(s *PostTranslationUpsert) {
-		s.SetThumbnail(v)
-	})
-}
-
-// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
-func (u *PostTranslationUpsertOne) UpdateThumbnail() *PostTranslationUpsertOne {
-	return u.Update(func(s *PostTranslationUpsert) {
-		s.UpdateThumbnail()
-	})
-}
-
-// ClearThumbnail clears the value of the "thumbnail" field.
-func (u *PostTranslationUpsertOne) ClearThumbnail() *PostTranslationUpsertOne {
-	return u.Update(func(s *PostTranslationUpsert) {
-		s.ClearThumbnail()
 	})
 }
 
@@ -1751,27 +1694,6 @@ func (u *PostTranslationUpsertBulk) UpdateOriginalContent() *PostTranslationUpse
 func (u *PostTranslationUpsertBulk) ClearOriginalContent() *PostTranslationUpsertBulk {
 	return u.Update(func(s *PostTranslationUpsert) {
 		s.ClearOriginalContent()
-	})
-}
-
-// SetThumbnail sets the "thumbnail" field.
-func (u *PostTranslationUpsertBulk) SetThumbnail(v string) *PostTranslationUpsertBulk {
-	return u.Update(func(s *PostTranslationUpsert) {
-		s.SetThumbnail(v)
-	})
-}
-
-// UpdateThumbnail sets the "thumbnail" field to the value that was provided on create.
-func (u *PostTranslationUpsertBulk) UpdateThumbnail() *PostTranslationUpsertBulk {
-	return u.Update(func(s *PostTranslationUpsert) {
-		s.UpdateThumbnail()
-	})
-}
-
-// ClearThumbnail clears the value of the "thumbnail" field.
-func (u *PostTranslationUpsertBulk) ClearThumbnail() *PostTranslationUpsertBulk {
-	return u.Update(func(s *PostTranslationUpsert) {
-		s.ClearThumbnail()
 	})
 }
 

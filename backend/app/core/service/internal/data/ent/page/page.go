@@ -57,6 +57,8 @@ const (
 	FieldTemplate = "template"
 	// FieldIsCustomTemplate holds the string denoting the is_custom_template field in the database.
 	FieldIsCustomTemplate = "is_custom_template"
+	// FieldThumbnail holds the string denoting the thumbnail field in the database.
+	FieldThumbnail = "thumbnail"
 	// FieldCustomFields holds the string denoting the custom_fields field in the database.
 	FieldCustomFields = "custom_fields"
 	// FieldContentModelID holds the string denoting the content_model_id field in the database.
@@ -103,6 +105,7 @@ var Columns = []string{
 	FieldShowInNavigation,
 	FieldTemplate,
 	FieldIsCustomTemplate,
+	FieldThumbnail,
 	FieldCustomFields,
 	FieldContentModelID,
 	FieldDepth,
@@ -343,6 +346,11 @@ func ByTemplate(opts ...sql.OrderTermOption) OrderOption {
 // ByIsCustomTemplate orders the results by the is_custom_template field.
 func ByIsCustomTemplate(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIsCustomTemplate, opts...).ToFunc()
+}
+
+// ByThumbnail orders the results by the thumbnail field.
+func ByThumbnail(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldThumbnail, opts...).ToFunc()
 }
 
 // ByContentModelID orders the results by the content_model_id field.

@@ -46,8 +46,6 @@ type CategoryTranslation struct {
 	Slug *string `json:"slug,omitempty"`
 	// 分类描述
 	Description *string `json:"description,omitempty"`
-	// 缩略图
-	Thumbnail *string `json:"thumbnail,omitempty"`
 	// 封面图
 	CoverImage *string `json:"cover_image,omitempty"`
 	// 完整路径
@@ -64,7 +62,7 @@ func (*CategoryTranslation) scanValues(columns []string) ([]any, error) {
 			values[i] = new([]byte)
 		case categorytranslation.FieldID, categorytranslation.FieldCreatedBy, categorytranslation.FieldUpdatedBy, categorytranslation.FieldDeletedBy, categorytranslation.FieldTenantID, categorytranslation.FieldCategoryID:
 			values[i] = new(sql.NullInt64)
-		case categorytranslation.FieldLanguageCode, categorytranslation.FieldName, categorytranslation.FieldSlug, categorytranslation.FieldDescription, categorytranslation.FieldThumbnail, categorytranslation.FieldCoverImage, categorytranslation.FieldFullPath:
+		case categorytranslation.FieldLanguageCode, categorytranslation.FieldName, categorytranslation.FieldSlug, categorytranslation.FieldDescription, categorytranslation.FieldCoverImage, categorytranslation.FieldFullPath:
 			values[i] = new(sql.NullString)
 		case categorytranslation.FieldCreatedAt, categorytranslation.FieldUpdatedAt, categorytranslation.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -181,13 +179,6 @@ func (_m *CategoryTranslation) assignValues(columns []string, values []any) erro
 				_m.Description = new(string)
 				*_m.Description = value.String
 			}
-		case categorytranslation.FieldThumbnail:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field thumbnail", values[i])
-			} else if value.Valid {
-				_m.Thumbnail = new(string)
-				*_m.Thumbnail = value.String
-			}
 		case categorytranslation.FieldCoverImage:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field cover_image", values[i])
@@ -298,11 +289,6 @@ func (_m *CategoryTranslation) String() string {
 	builder.WriteString(", ")
 	if v := _m.Description; v != nil {
 		builder.WriteString("description=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := _m.Thumbnail; v != nil {
-		builder.WriteString("thumbnail=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

@@ -296,7 +296,7 @@ onMounted(() => {
         <PostList
             v-if="relatedPostsQuery"
             :query-params="relatedPostsQuery"
-            field-mask="id,status,sort_order,is_featured,author_name,available_languages,created_at,translations.id,translations.post_id,translations.language_code,translations.title,translations.summary,translations.thumbnail"
+            field-mask="id,status,sort_order,is_featured,author_name,available_languages,created_at,translations.id,translations.post_id,translations.language_code,translations.title,translations.summary,thumbnail"
             :order-by="['-sortOrder']"
             :page="1"
             :page-size="3"

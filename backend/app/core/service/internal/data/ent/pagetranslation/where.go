@@ -109,11 +109,6 @@ func Slug(v string) predicate.PageTranslation {
 	return predicate.PageTranslation(sql.FieldEQ(FieldSlug, v))
 }
 
-// Thumbnail applies equality check predicate on the "thumbnail" field. It's identical to ThumbnailEQ.
-func Thumbnail(v string) predicate.PageTranslation {
-	return predicate.PageTranslation(sql.FieldEQ(FieldThumbnail, v))
-}
-
 // CoverImage applies equality check predicate on the "cover_image" field. It's identical to CoverImageEQ.
 func CoverImage(v string) predicate.PageTranslation {
 	return predicate.PageTranslation(sql.FieldEQ(FieldCoverImage, v))
@@ -757,81 +752,6 @@ func SlugEqualFold(v string) predicate.PageTranslation {
 // SlugContainsFold applies the ContainsFold predicate on the "slug" field.
 func SlugContainsFold(v string) predicate.PageTranslation {
 	return predicate.PageTranslation(sql.FieldContainsFold(FieldSlug, v))
-}
-
-// ThumbnailEQ applies the EQ predicate on the "thumbnail" field.
-func ThumbnailEQ(v string) predicate.PageTranslation {
-	return predicate.PageTranslation(sql.FieldEQ(FieldThumbnail, v))
-}
-
-// ThumbnailNEQ applies the NEQ predicate on the "thumbnail" field.
-func ThumbnailNEQ(v string) predicate.PageTranslation {
-	return predicate.PageTranslation(sql.FieldNEQ(FieldThumbnail, v))
-}
-
-// ThumbnailIn applies the In predicate on the "thumbnail" field.
-func ThumbnailIn(vs ...string) predicate.PageTranslation {
-	return predicate.PageTranslation(sql.FieldIn(FieldThumbnail, vs...))
-}
-
-// ThumbnailNotIn applies the NotIn predicate on the "thumbnail" field.
-func ThumbnailNotIn(vs ...string) predicate.PageTranslation {
-	return predicate.PageTranslation(sql.FieldNotIn(FieldThumbnail, vs...))
-}
-
-// ThumbnailGT applies the GT predicate on the "thumbnail" field.
-func ThumbnailGT(v string) predicate.PageTranslation {
-	return predicate.PageTranslation(sql.FieldGT(FieldThumbnail, v))
-}
-
-// ThumbnailGTE applies the GTE predicate on the "thumbnail" field.
-func ThumbnailGTE(v string) predicate.PageTranslation {
-	return predicate.PageTranslation(sql.FieldGTE(FieldThumbnail, v))
-}
-
-// ThumbnailLT applies the LT predicate on the "thumbnail" field.
-func ThumbnailLT(v string) predicate.PageTranslation {
-	return predicate.PageTranslation(sql.FieldLT(FieldThumbnail, v))
-}
-
-// ThumbnailLTE applies the LTE predicate on the "thumbnail" field.
-func ThumbnailLTE(v string) predicate.PageTranslation {
-	return predicate.PageTranslation(sql.FieldLTE(FieldThumbnail, v))
-}
-
-// ThumbnailContains applies the Contains predicate on the "thumbnail" field.
-func ThumbnailContains(v string) predicate.PageTranslation {
-	return predicate.PageTranslation(sql.FieldContains(FieldThumbnail, v))
-}
-
-// ThumbnailHasPrefix applies the HasPrefix predicate on the "thumbnail" field.
-func ThumbnailHasPrefix(v string) predicate.PageTranslation {
-	return predicate.PageTranslation(sql.FieldHasPrefix(FieldThumbnail, v))
-}
-
-// ThumbnailHasSuffix applies the HasSuffix predicate on the "thumbnail" field.
-func ThumbnailHasSuffix(v string) predicate.PageTranslation {
-	return predicate.PageTranslation(sql.FieldHasSuffix(FieldThumbnail, v))
-}
-
-// ThumbnailIsNil applies the IsNil predicate on the "thumbnail" field.
-func ThumbnailIsNil() predicate.PageTranslation {
-	return predicate.PageTranslation(sql.FieldIsNull(FieldThumbnail))
-}
-
-// ThumbnailNotNil applies the NotNil predicate on the "thumbnail" field.
-func ThumbnailNotNil() predicate.PageTranslation {
-	return predicate.PageTranslation(sql.FieldNotNull(FieldThumbnail))
-}
-
-// ThumbnailEqualFold applies the EqualFold predicate on the "thumbnail" field.
-func ThumbnailEqualFold(v string) predicate.PageTranslation {
-	return predicate.PageTranslation(sql.FieldEqualFold(FieldThumbnail, v))
-}
-
-// ThumbnailContainsFold applies the ContainsFold predicate on the "thumbnail" field.
-func ThumbnailContainsFold(v string) predicate.PageTranslation {
-	return predicate.PageTranslation(sql.FieldContainsFold(FieldThumbnail, v))
 }
 
 // CoverImageEQ applies the EQ predicate on the "cover_image" field.

@@ -266,7 +266,7 @@ export default function PostDetailPage() {
                     <View className='px-[32rpx] py-[16rpx]'>
                         <PostList
                           queryParams={relatedPostsQuery}
-                          fieldMask='id,status,sort_order,is_featured,author_name,available_languages,created_at,translations.id,translations.post_id,translations.language_code,translations.title,translations.summary,translations.thumbnail'
+                          fieldMask='id,status,sort_order,is_featured,author_name,available_languages,created_at,translations.id,translations.post_id,translations.language_code,translations.title,translations.summary,thumbnail'
                           orderBy={['-sortOrder']}
                           page={1}
                           pageSize={4}

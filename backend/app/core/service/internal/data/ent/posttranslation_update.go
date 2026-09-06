@@ -310,26 +310,6 @@ func (_u *PostTranslationUpdate) ClearOriginalContent() *PostTranslationUpdate {
 	return _u
 }
 
-// SetThumbnail sets the "thumbnail" field.
-func (_u *PostTranslationUpdate) SetThumbnail(v string) *PostTranslationUpdate {
-	_u.mutation.SetThumbnail(v)
-	return _u
-}
-
-// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
-func (_u *PostTranslationUpdate) SetNillableThumbnail(v *string) *PostTranslationUpdate {
-	if v != nil {
-		_u.SetThumbnail(*v)
-	}
-	return _u
-}
-
-// ClearThumbnail clears the value of the "thumbnail" field.
-func (_u *PostTranslationUpdate) ClearThumbnail() *PostTranslationUpdate {
-	_u.mutation.ClearThumbnail()
-	return _u
-}
-
 // SetFullPath sets the "full_path" field.
 func (_u *PostTranslationUpdate) SetFullPath(v string) *PostTranslationUpdate {
 	_u.mutation.SetFullPath(v)
@@ -519,12 +499,6 @@ func (_u *PostTranslationUpdate) sqlSave(ctx context.Context) (_node int, err er
 	}
 	if _u.mutation.OriginalContentCleared() {
 		_spec.ClearField(posttranslation.FieldOriginalContent, field.TypeString)
-	}
-	if value, ok := _u.mutation.Thumbnail(); ok {
-		_spec.SetField(posttranslation.FieldThumbnail, field.TypeString, value)
-	}
-	if _u.mutation.ThumbnailCleared() {
-		_spec.ClearField(posttranslation.FieldThumbnail, field.TypeString)
 	}
 	if value, ok := _u.mutation.FullPath(); ok {
 		_spec.SetField(posttranslation.FieldFullPath, field.TypeString, value)
@@ -843,26 +817,6 @@ func (_u *PostTranslationUpdateOne) ClearOriginalContent() *PostTranslationUpdat
 	return _u
 }
 
-// SetThumbnail sets the "thumbnail" field.
-func (_u *PostTranslationUpdateOne) SetThumbnail(v string) *PostTranslationUpdateOne {
-	_u.mutation.SetThumbnail(v)
-	return _u
-}
-
-// SetNillableThumbnail sets the "thumbnail" field if the given value is not nil.
-func (_u *PostTranslationUpdateOne) SetNillableThumbnail(v *string) *PostTranslationUpdateOne {
-	if v != nil {
-		_u.SetThumbnail(*v)
-	}
-	return _u
-}
-
-// ClearThumbnail clears the value of the "thumbnail" field.
-func (_u *PostTranslationUpdateOne) ClearThumbnail() *PostTranslationUpdateOne {
-	_u.mutation.ClearThumbnail()
-	return _u
-}
-
 // SetFullPath sets the "full_path" field.
 func (_u *PostTranslationUpdateOne) SetFullPath(v string) *PostTranslationUpdateOne {
 	_u.mutation.SetFullPath(v)
@@ -1082,12 +1036,6 @@ func (_u *PostTranslationUpdateOne) sqlSave(ctx context.Context) (_node *PostTra
 	}
 	if _u.mutation.OriginalContentCleared() {
 		_spec.ClearField(posttranslation.FieldOriginalContent, field.TypeString)
-	}
-	if value, ok := _u.mutation.Thumbnail(); ok {
-		_spec.SetField(posttranslation.FieldThumbnail, field.TypeString, value)
-	}
-	if _u.mutation.ThumbnailCleared() {
-		_spec.ClearField(posttranslation.FieldThumbnail, field.TypeString)
 	}
 	if value, ok := _u.mutation.FullPath(); ok {
 		_spec.SetField(posttranslation.FieldFullPath, field.TypeString, value)

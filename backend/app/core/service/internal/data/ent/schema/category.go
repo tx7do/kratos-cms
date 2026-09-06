@@ -56,6 +56,11 @@ func (Category) Fields() []ent.Field {
 			Optional().
 			Nillable(),
 
+		field.String("thumbnail").
+			Comment("缩略图（全语言共用）").
+			Optional().
+			Nillable(),
+
 		field.Uint32("post_count").
 			Comment("该分类下的文章总数").
 			Default(0).

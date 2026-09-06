@@ -42,8 +42,6 @@ const (
 	FieldContent = "content"
 	// FieldOriginalContent holds the string denoting the original_content field in the database.
 	FieldOriginalContent = "original_content"
-	// FieldThumbnail holds the string denoting the thumbnail field in the database.
-	FieldThumbnail = "thumbnail"
 	// FieldFullPath holds the string denoting the full_path field in the database.
 	FieldFullPath = "full_path"
 	// FieldWordCount holds the string denoting the word_count field in the database.
@@ -70,7 +68,6 @@ var Columns = []string{
 	FieldSummary,
 	FieldContent,
 	FieldOriginalContent,
-	FieldThumbnail,
 	FieldFullPath,
 	FieldWordCount,
 }
@@ -177,11 +174,6 @@ func ByContent(opts ...sql.OrderTermOption) OrderOption {
 // ByOriginalContent orders the results by the original_content field.
 func ByOriginalContent(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldOriginalContent, opts...).ToFunc()
-}
-
-// ByThumbnail orders the results by the thumbnail field.
-func ByThumbnail(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldThumbnail, opts...).ToFunc()
 }
 
 // ByFullPath orders the results by the full_path field.

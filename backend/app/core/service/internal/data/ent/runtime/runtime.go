@@ -167,15 +167,15 @@ func init() {
 	// category.DefaultIsNav holds the default value on creation for the is_nav field.
 	category.DefaultIsNav = categoryDescIsNav.Default.(bool)
 	// categoryDescPostCount is the schema descriptor for post_count field.
-	categoryDescPostCount := categoryFields[4].Descriptor()
+	categoryDescPostCount := categoryFields[5].Descriptor()
 	// category.DefaultPostCount holds the default value on creation for the post_count field.
 	category.DefaultPostCount = categoryDescPostCount.Default.(uint32)
 	// categoryDescDirectPostCount is the schema descriptor for direct_post_count field.
-	categoryDescDirectPostCount := categoryFields[5].Descriptor()
+	categoryDescDirectPostCount := categoryFields[6].Descriptor()
 	// category.DefaultDirectPostCount holds the default value on creation for the direct_post_count field.
 	category.DefaultDirectPostCount = categoryDescDirectPostCount.Default.(uint32)
 	// categoryDescDepth is the schema descriptor for depth field.
-	categoryDescDepth := categoryFields[6].Descriptor()
+	categoryDescDepth := categoryFields[7].Descriptor()
 	// category.DefaultDepth holds the default value on creation for the depth field.
 	category.DefaultDepth = categoryDescDepth.Default.(int32)
 	// categoryDescID is the schema descriptor for id field.
@@ -1162,7 +1162,7 @@ func init() {
 	// page.DefaultIsCustomTemplate holds the default value on creation for the is_custom_template field.
 	page.DefaultIsCustomTemplate = pageDescIsCustomTemplate.Default.(bool)
 	// pageDescDepth is the schema descriptor for depth field.
-	pageDescDepth := pageFields[12].Descriptor()
+	pageDescDepth := pageFields[13].Descriptor()
 	// page.DefaultDepth holds the default value on creation for the depth field.
 	page.DefaultDepth = pageDescDepth.Default.(int32)
 	// pageDescID is the schema descriptor for id field.
@@ -1596,7 +1596,7 @@ func init() {
 	// posttranslation.DefaultTenantID holds the default value on creation for the tenant_id field.
 	posttranslation.DefaultTenantID = posttranslationDescTenantID.Default.(uint32)
 	// posttranslationDescWordCount is the schema descriptor for word_count field.
-	posttranslationDescWordCount := posttranslationFields[9].Descriptor()
+	posttranslationDescWordCount := posttranslationFields[8].Descriptor()
 	// posttranslation.DefaultWordCount holds the default value on creation for the word_count field.
 	posttranslation.DefaultWordCount = posttranslationDescWordCount.Default.(uint32)
 	// posttranslationDescID is the schema descriptor for id field.
