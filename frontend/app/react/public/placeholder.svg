@@ -1,7 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
   <!-- 文章封面占位图：图标描边色与站点主色 primary (#16a34a) 保持一致 -->
-  <rect width="640" height="360" fill="#f4f4f3"/>
-  <g fill="none" stroke="#16a34a" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fafbfa"/>
+      <stop offset="1" stop-color="#edf1ee"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#bg)"/>
+  <circle cx="320" cy="180" r="96" fill="#ffffff" opacity="0.8"/>
+  <g fill="none" stroke="#16a34a" stroke-opacity="0.75" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
     <path d="M282 134a10 10 0 0 1 10-10h44l22 22v80a10 10 0 0 1-10 10h-56a10 10 0 0 1-10-10z"/>
     <path d="M336 124v22h22"/>
     <path d="M300 186h40"/>
