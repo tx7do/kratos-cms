@@ -92,8 +92,11 @@ const inputBase = 'w-full rounded-lg border border-border bg-background px-4 py-
         />
         <span>{{ t('authentication.login.remember_me') }}</span>
       </label>
+      <!-- 忘记密码依赖邮件重置链路(后端暂未实现),先以禁用态展示 -->
       <button
-        class="cursor-pointer border-none bg-transparent text-sm text-primary transition-colors hover:text-primary/80 hover:underline"
+        class="cursor-not-allowed border-none bg-transparent text-sm text-muted-foreground opacity-60"
+        disabled
+        :title="t('authentication.login.coming_soon')"
       >
         {{ t('authentication.login.forgot_password') }}
       </button>

@@ -45,6 +45,7 @@ export default function PostListPage() {
                 <PostList
                     key={selectedCategoryId || 'all'}  // 使用 key 强制重新渲染
                     queryParams={queryParams}
+                    orderBy={['-createdAt']}
                     initialPageSize={12}
                     pageSizes={[12, 24, 36, 48]}
                 />

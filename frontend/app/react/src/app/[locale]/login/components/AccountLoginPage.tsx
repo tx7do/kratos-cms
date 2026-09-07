@@ -24,10 +24,6 @@ export default function AccountLoginPage() {
         });
     };
 
-    const handleForgotPassword = () => {
-        console.log('忘记密码');
-    };
-
     return (
         <div className="space-y-4">
             <div className="space-y-2">
@@ -74,9 +70,11 @@ export default function AccountLoginPage() {
                     />
                     <span>{t('login.remember_me')}</span>
                 </label>
+                {/* 忘记密码依赖邮件重置链路(后端暂未实现),先以禁用态展示 */}
                 <button
-                    className="text-sm text-primary transition-colors hover:text-primary/80 hover:underline cursor-pointer bg-transparent border-none"
-                    onClick={handleForgotPassword}
+                    className="cursor-not-allowed text-sm text-muted-foreground opacity-60 bg-transparent border-none"
+                    disabled
+                    title={t('login.coming_soon')}
                 >
                     {t('login.forgot_password')}
                 </button>

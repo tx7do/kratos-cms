@@ -37,6 +37,7 @@ export default function PostListPage() {
                 <PostList
                   key={selectedCategoryId || 'all'}
                   queryParams={queryParams}
+                  orderBy={['-createdAt']}
                   initialPageSize={12}
                   showPagination
                 />
