@@ -206,7 +206,7 @@ export function getCategoryDescription(category: contentservicev1_Category) {
   return translation?.description || '';
 }
 
-export function getCategoryThumbnail(category: contentservicev1_Category, fallback = '/placeholder.png') {
+export function getCategoryThumbnail(category: contentservicev1_Category, fallback = '/placeholder.svg') {
   // thumbnail 已上移到主表，全语言共用，不再按语言取翻译
   return category?.thumbnail || fallback;
 }

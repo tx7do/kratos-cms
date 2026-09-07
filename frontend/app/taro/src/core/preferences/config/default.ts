@@ -1,10 +1,11 @@
 import type {Preferences} from '../types';
+import defaultAvatar from '@/assets/images/default-avatar.webp';
 
 const defaultPreferences: Preferences = {
     app: {
         name: 'GoWind CMS',
         title: 'GoWind Content Hub',
-        defaultAvatar: '/default-avatar.png',
+        defaultAvatar,
         locale: 'zh-CN',
         isMobile: false,
         compact: false,

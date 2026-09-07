@@ -5,7 +5,7 @@ const props = withDefaults(defineProps<{
   fallback?: string
 }>(), {
   alt: '',
-  fallback: '/placeholder.png',
+  fallback: '/placeholder.svg',
 })
 
 const imgSrc = ref(props.src || props.fallback)

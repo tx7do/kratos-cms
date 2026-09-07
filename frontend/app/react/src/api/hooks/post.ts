@@ -256,7 +256,7 @@ export function getPostSummary(post: contentservicev1_Post): string {
  */
 export function getPostThumbnail(post: contentservicev1_Post): string {
   // thumbnail 已上移到主表，全语言共用，不再按语言取翻译
-  return post?.thumbnail || '/placeholder.png';
+  return post?.thumbnail || '/placeholder.svg';
 }
 
 /**

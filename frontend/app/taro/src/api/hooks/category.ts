@@ -11,7 +11,6 @@ import {
 import { apiClient } from '@/api/client';
 import { queryClient } from '@/core';
 import { currentLocaleLanguageCode } from '@/i18n';
-import placeholderImage from '@/assets/images/placeholder.png';
 
 // ==============================
 // 分类服务封装（直接使用 apiClient）
@@ -234,5 +233,6 @@ export function getCategoryDescription(category: contentservicev1_Category | nul
  */
 export function getCategoryThumbnail(category: contentservicev1_Category | null) {
   // thumbnail 已上移到主表，全语言共用，不再按语言取翻译
-  return category?.thumbnail || placeholderImage;
+  // 无封面时返回空串，由 Image 组件渲染 CSS 占位（勿在 hook 层兜底图片）
+  return category?.thumbnail || '';
 }

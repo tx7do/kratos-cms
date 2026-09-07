@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 
-const DEFAULT_FALLBACK = '/placeholder.png';
+const DEFAULT_FALLBACK = '/placeholder.svg';
 
 export interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-    /** 图片加载失败时的回退地址，默认 /placeholder.png */
+    /** 图片加载失败时的回退地址，默认 /placeholder.svg */
     fallbackSrc?: string;
 }
 

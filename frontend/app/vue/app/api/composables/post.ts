@@ -253,7 +253,7 @@ export function getPostSummary(post: contentservicev1_Post) {
   return translation?.summary || '';
 }
 
-export function getPostThumbnail(post: contentservicev1_Post, fallback = '/placeholder.png') {
+export function getPostThumbnail(post: contentservicev1_Post, fallback = '/placeholder.svg') {
   // thumbnail 已上移到主表，全语言共用，不再按语言取翻译
   return post?.thumbnail || fallback;
 }

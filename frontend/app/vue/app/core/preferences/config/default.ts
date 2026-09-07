@@ -7,7 +7,7 @@ const defaultPreferences: Preferences = {
     version: "0.0.0",
     locale: "zh-CN",
     isMobile: false,
-    defaultAvatar: "/default-avatar.png",
+    defaultAvatar: "/default-avatar.webp",
     dynamicTitle: true,
     defaultPageSize: 10,
     compact: false,

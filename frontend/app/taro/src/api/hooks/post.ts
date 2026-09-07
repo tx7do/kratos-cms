@@ -10,7 +10,6 @@ import {
 import { apiClient } from '@/api/client';
 import { queryClient } from '@/core';
 import { currentLocaleLanguageCode } from '@/i18n';
-import placeholderImage from '@/assets/images/placeholder.png';
 
 // ==============================
 // 文章服务封装（直接使用 apiClient）
@@ -246,7 +245,8 @@ export function getPostSummary(post: contentservicev1_Post): string {
  */
 export function getPostThumbnail(post: contentservicev1_Post): string {
   // thumbnail 已上移到主表，全语言共用，不再按语言取翻译
-  return post?.thumbnail || placeholderImage;
+  // 无封面时返回空串，由卡片渲染各自的空状态（勿在 hook 层兜底图片）
+  return post?.thumbnail || '';
 }
 
 /**
