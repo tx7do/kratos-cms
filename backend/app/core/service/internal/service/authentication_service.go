@@ -215,9 +215,18 @@ func (s *AuthenticationService) doGrantTypePassword(ctx context.Context, req *au
 	}
 
 	// ===== 凭证校验：在解析出的 tenant 范围内查单条凭证并校验密码 =====
+	// 支持用户名/邮箱两种身份:登录表单的"邮箱"tab 传 email 不传 username,
+	// 此时按 EMAIL 凭证查找(同一用户可同时持有用户名与邮箱两类凭证)。
+	identityType := authenticationV1.UserCredential_USERNAME
+	identifier := req.GetUsername()
+	if strings.TrimSpace(identifier) == "" && strings.TrimSpace(req.GetEmail()) != "" {
+		identityType = authenticationV1.UserCredential_EMAIL
+		identifier = strings.TrimSpace(req.GetEmail())
+	}
+
 	var matchedUserID uint32
 	var err error
-	matchedUserID, err = s.userCredentialRepo.FindUserCredential(ctx, tenantID, authenticationV1.UserCredential_USERNAME, req.GetUsername(), req.GetPassword(), true)
+	matchedUserID, err = s.userCredentialRepo.FindUserCredential(ctx, tenantID, identityType, identifier, req.GetPassword(), true)
 	if err != nil && tenantID == 0 {
 		// 未携带 tenant_code 时（C 端登录表单没有租户输入），先按平台（tenant 0）
 		// 精确查找；UserNotFound 再跨租户回退一次——仅当标识符全局唯一命中时放行，
@@ -225,7 +234,7 @@ func (s *AuthenticationService) doGrantTypePassword(ctx context.Context, req *au
 		// 同名歧义仍要求调用方显式传 tenant_code。身份鉴别已通过后才更新 tenantID。
 		var globalUserID, globalTenantID uint32
 		if authenticationV1.IsUserNotFound(err) {
-			globalUserID, globalTenantID, err = s.userCredentialRepo.FindUserCredentialAcrossTenants(ctx, authenticationV1.UserCredential_USERNAME, req.GetUsername(), req.GetPassword(), true)
+			globalUserID, globalTenantID, err = s.userCredentialRepo.FindUserCredentialAcrossTenants(ctx, identityType, identifier, req.GetPassword(), true)
 		}
 		if err == nil {
 			matchedUserID, tenantID = globalUserID, globalTenantID
@@ -233,7 +242,7 @@ func (s *AuthenticationService) doGrantTypePassword(ctx context.Context, req *au
 	}
 	if err != nil {
 		// 服务端日志保留真实原因（USER_NOT_FOUND / USER_FREEZE / INVALID_PASSWORD），便于运维排查
-		s.log.Errorf("verify user credential failed for username [%s]: %s", req.GetUsername(), err.Error())
+		s.log.Errorf("verify user credential failed for identifier [%s]: %s", identifier, err.Error())
 
 		return nil, normalizeLoginVerifyError(err)
 	}
