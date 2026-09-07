@@ -10,6 +10,7 @@ import (
 
 	paginationV1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
 	entCrud "github.com/tx7do/go-crud/entgo"
+	"github.com/tx7do/go-crud/viewer"
 
 	"github.com/tx7do/go-utils/copierutil"
 	"github.com/tx7do/go-utils/mapper"
@@ -130,11 +131,16 @@ func (r *TaskRepo) Get(ctx context.Context, req *taskV1.GetTaskRequest) (*taskV1
 	case *taskV1.GetTaskRequest_TypeName:
 		// type_name 仅在 (tenant_id, type_name) 维度唯一，平台上下文(tid=0)下按 type_name 查询
 		// 会跨租户匹配多行导致 .Only() 报 not singular，且会跨租户操控其他租户定时任务。
-		// 仅允许在具名租户上下文(tid>0)下按 type_name 查询。
-		if _, hasTenant := maybeTenantFromViewer(ctx); !hasTenant {
+		// - 具名租户上下文(tid>0)：限定本租户；
+		// - 已认证平台管理员(tid=0)：限定平台任务(tenant_id=0)，既保住唯一性又不阻断控制台操作；
+		// - 未认证上下文：拒绝。
+		if tid, hasTenant := maybeTenantFromViewer(ctx); hasTenant {
+			whereCond = append(whereCond, task.TypeNameEQ(req.GetTypeName()), task.TenantIDEQ(tid))
+		} else if _, authed := viewer.FromContext(ctx); authed {
+			whereCond = append(whereCond, task.TypeNameEQ(req.GetTypeName()), task.TenantIDEQ(0))
+		} else {
 			return nil, taskV1.ErrorBadRequest("tenant scope required to query task by type name")
 		}
-		whereCond = append(whereCond, task.TypeNameEQ(req.GetTypeName()))
 	}
 
 	dto, err := r.repository.Get(ctx, builder, req.GetViewMask(), whereCond...)

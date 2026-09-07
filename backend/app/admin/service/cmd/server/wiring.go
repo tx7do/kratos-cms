@@ -184,7 +184,7 @@ func initApp(ctx *bootstrap.Context) (*kratos.App, func(), error) {
 
 	// ═══════════════════════ 四、传输层(internal/server) ═══════════════════════
 
-	restMiddlewares := server.NewRestMiddleware(ctx, accessTokenChecker, engine, apiAuditLogServiceClient, loginAuditLogServiceClient)
+	restMiddlewares := server.NewRestMiddleware(ctx, accessTokenChecker, engine, apiAuditLogServiceClient, loginAuditLogServiceClient, operationAuditLogServiceClient)
 
 	httpServer := server.NewRestServer(ctx, restMiddlewares,
 		userService, userProfileService, roleService, tenantService, orgUnitService, positionService,

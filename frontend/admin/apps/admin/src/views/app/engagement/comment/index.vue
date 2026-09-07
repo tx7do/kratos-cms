@@ -148,6 +148,13 @@ const gridOptions: VxeGridProps<Comment> = {
   rowConfig: {
     isHover: true,
   },
+  // 后端返回树形结构(回复挂在父评论 children 下),用树形表格展示,
+  // 否则回复永远不可见、无法管理
+  treeConfig: {
+    children: 'children',
+    indent: 20,
+    expandAll: true,
+  },
   stripe: true,
 
   proxyConfig: {

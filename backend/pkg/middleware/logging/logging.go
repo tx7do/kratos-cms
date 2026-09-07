@@ -27,6 +27,7 @@ func Server(opts ...Option) middleware.Middleware {
 
 	loginAuditLogMiddleware := NewLoginAuditLogMiddleware(&op)
 	apiAuditLogMiddleware := NewApiAuditLogMiddleware(&op)
+	operationAuditLogMiddleware := NewOperationAuditLogMiddleware(&op)
 
 	return func(handler middleware.Handler) middleware.Handler {
 		return func(ctx context.Context, req interface{}) (reply interface{}, err error) {
@@ -42,6 +43,7 @@ func Server(opts ...Option) middleware.Middleware {
 				if htr, ok = tr.(*http.Transport); ok {
 					loginAuditLogMiddleware.Handle(ctx, htr, err)
 					apiAuditLogMiddleware.Handle(ctx, htr, err, latencyMs)
+					operationAuditLogMiddleware.Handle(ctx, htr, err)
 				}
 			}
 

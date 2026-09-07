@@ -153,7 +153,7 @@ func (r *OperationAuditLogRepo) Create(ctx context.Context, req *auditV1.CreateO
 		SetNillableUserID(req.Data.UserId).
 		SetNillableUsername(req.Data.Username).
 		SetNillableResourceType(req.Data.ResourceType).
-		SetNillableResourceID(req.Data.RequestId).
+		SetNillableResourceID(req.Data.ResourceId).
 		SetNillableAction(r.actionTypeConverter.ToEntity(req.Data.Action)).
 		SetNillableBeforeData(req.Data.BeforeData).
 		SetNillableAfterData(req.Data.AfterData).
