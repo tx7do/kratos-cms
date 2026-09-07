@@ -588,6 +588,13 @@ INSERT INTO site_settings (
     '开启评论功能', '是否允许访客/用户在文章下发表评论', '',
     '{}', false, ''
 ),
+-- 4b. 允许游客评论（布尔，评论开关的子项）
+(
+    '2026-02-01 09:17:00+08', '2026-02-01 09:17:00+08', NULL, 1, 1, NULL,
+    0, 'zh-CN', 'general', 'allow_guest_comments', 'true', 'SETTING_TYPE_BOOLEAN',
+    '允许游客评论', '关闭后仅登录用户可发表评论', '',
+    '{}', false, ''
+),
 -- 5. 站点LOGO（图片，关联MediaAsset ID）
 (
     '2026-02-01 09:20:00+08', '2026-02-01 09:20:00+08', NULL, 1, 1, NULL,
@@ -4082,3 +4089,45 @@ COMMIT;
 SET FOREIGN_KEY_CHECKS = 1;
 
 SELECT '测试数据初始化完成' AS result;
+
+-- ============================================================================
+-- 内容归属测试租户(id=1):tenant_id=0 不进搜索索引且被租户过滤
+-- ============================================================================
+UPDATE posts                SET tenant_id = 1 WHERE tenant_id = 0;
+UPDATE post_translations    SET tenant_id = 1 WHERE tenant_id = 0;
+UPDATE categories           SET tenant_id = 1 WHERE tenant_id = 0;
+UPDATE category_translations SET tenant_id = 1 WHERE tenant_id = 0;
+UPDATE tags                 SET tenant_id = 1 WHERE tenant_id = 0;
+UPDATE tag_translations     SET tenant_id = 1 WHERE tenant_id = 0;
+UPDATE pages                SET tenant_id = 1 WHERE tenant_id = 0;
+UPDATE page_translations    SET tenant_id = 1 WHERE tenant_id = 0;
+UPDATE post_categories      SET tenant_id = 1 WHERE tenant_id = 0;
+UPDATE post_tags            SET tenant_id = 1 WHERE tenant_id = 0;
+UPDATE comments             SET tenant_id = 1 WHERE tenant_id = 0;
+UPDATE navigations          SET tenant_id = 1 WHERE tenant_id = 0;
+UPDATE navigation_items     SET tenant_id = 1 WHERE tenant_id = 0;
+
+-- 开发环境:匿名租户解析按 Host 匹配租户 domain(带端口会去端口回退匹配)
+UPDATE sys_tenants SET domain = 'localhost' WHERE id = 1;
+
+-- 租户管理员模板角色归属租户 1(否则新注册用户拿不到角色,无法登录)
+UPDATE sys_roles SET tenant_id = 1 WHERE code = 'template:tenant:manager' AND tenant_id = 0;
+-- 给测试账号绑定该角色(demo 未建关联时兜底)
+INSERT IGNORE INTO sys_user_roles (tenant_id, user_id, role_id)
+SELECT 1, 2, r.id FROM sys_roles r WHERE r.code = 'template:tenant:manager' AND r.tenant_id = 1;
+
+-- ============================================================================
+-- C端访问权限 + 租户普通用户角色(注册默认角色,不再授租户管理员)
+-- ============================================================================
+INSERT IGNORE INTO sys_permissions (code, name, status, tenant_id, description)
+VALUES ('sys:access_app', '访问应用端', 'ON', 0, 'C端(应用)登录访问权限');
+
+INSERT IGNORE INTO sys_roles (code, name, status, tenant_id)
+VALUES ('tenant:user', '普通用户', 'ON', 1);
+
+INSERT IGNORE INTO sys_role_permissions (role_id, permission_id, tenant_id, status)
+SELECT r.id, p.id, r.tenant_id, 'ON'
+FROM sys_roles r CROSS JOIN sys_permissions p
+WHERE p.code='sys:access_app'
+  AND r.code IN ('platform:admin','template:tenant:manager','tenant:user')
+  AND r.tenant_id IN (0,1);

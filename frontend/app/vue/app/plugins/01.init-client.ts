@@ -6,8 +6,10 @@ import {fetchMe} from '@/api/composables/user-profile'
 import {useAppConfig} from '@/hooks/use-app-config'
 
 export default defineNuxtPlugin(async (nuxtApp) => {
-    if (import.meta.server) return
-
+    // 服务端也必须初始化：useAsyncData 的 SSR 数据获取走同一 RequestClient，
+    // 若 server 端不 init，getInstance() 直接抛错，导致搜索页等 SSR 首屏失败。
+    // callbacks 中的 store/i18n 访问在 SSR 下均可用；onReAuthenticate 内部已有
+    // window 守卫，服务端不会触发导航。
     const config = useAppConfig()
     const i18n = nuxtApp.$i18n
 

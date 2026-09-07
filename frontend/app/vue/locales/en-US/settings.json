@@ -22,7 +22,22 @@
     "wechat_account": "WeChat Account",
     "custom_domain": "Custom Domain",
     "domain_desc": "Your personal homepage address, unique across the site and can be changed once",
-    "edit": "Edit"
+    "edit": "Edit",
+    "old_password": "Current password",
+    "new_password": "New password",
+    "confirm_new_password": "Confirm new password",
+    "input_old_password": "Enter current password",
+    "input_new_password": "Enter new password (min 6 characters)",
+    "input_confirm_new_password": "Re-enter new password",
+    "save": "Save",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "change_success": "Password changed successfully",
+    "password_mismatch": "New passwords do not match",
+    "password_too_short": "New password must be at least 6 characters",
+    "not_available": "Coming soon",
+    "login_required": "Please log in first",
+    "change_failed": "Failed to change password"
   },
   "message": {
     "title": "Messages & Email",
@@ -79,4 +94,3 @@
     "q7_link": "Delete Account"
   }
 }
-

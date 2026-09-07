@@ -96,15 +96,14 @@ export const useAuthStore = defineStore('auth', () => {
             resetAllStores()
             accessStore.setLoginExpired(false)
 
-            // 回登录页带上当前路由地址
-            const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/'
+            // 回登录页带上当前路由地址。navigateTo/vue-router 会对 query 值再做一次
+            // URL 编码，这里不再手动 encodeURIComponent，否则出现 %252F 双重编码
+            const currentPath = typeof window !== 'undefined'
+                ? window.location.pathname + window.location.search
+                : '/'
             await navigateTo({
                 path: LOGIN_PATH,
-                query: redirect
-                    ? {
-                        redirect: encodeURIComponent(currentPath),
-                    }
-                    : {},
+                query: redirect ? { redirect: currentPath } : {},
             })
         }
     }

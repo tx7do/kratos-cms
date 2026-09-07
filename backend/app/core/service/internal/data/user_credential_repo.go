@@ -464,6 +464,75 @@ func (r *UserCredentialRepo) FindUserCredential(ctx context.Context, tenantID ui
 	return 0, authenticationV1.ErrorInvalidPassword("incorrect password")
 }
 
+// FindUserCredentialAcrossTenants 在全部租户范围内按身份类型+标识符定位凭证并校验密码。
+// 仅当标识符在所有租户中唯一命中一条启用凭证时才成功，返回 (userID, credentialTenantID)；
+// 命中 0 条返回 UserNotFound，命中多条（同名歧义）时要求调用方改传 tenant_code 精确登录。
+// 供未携带租户上下文的 C 端登录回退使用，避免租户用户因无 tenant_code 而永远无法登录。
+func (r *UserCredentialRepo) FindUserCredentialAcrossTenants(ctx context.Context, identityType authenticationV1.UserCredential_IdentityType, identifier, plainCredential string, needDecrypt bool) (uint32, uint32, error) {
+	if needDecrypt {
+		bytesPass, err := base64.StdEncoding.DecodeString(plainCredential)
+		if err != nil {
+			r.log.Errorf("decode base64 credential failed: %s", err.Error())
+			return 0, 0, authenticationV1.ErrorBadRequest("invalid credential format")
+		}
+		decrypted, err := crypto.AesDecrypt(bytesPass, crypto.DefaultAESKey, nil)
+		if err != nil {
+			r.log.Errorf("decrypt credential failed: %s", err.Error())
+			return 0, 0, authenticationV1.ErrorBadRequest("decrypt credential failed")
+		}
+		plainCredential = string(decrypted)
+	}
+
+	entities, err := r.entClient.Client().UserCredential.Query().
+		Select(
+			usercredential.FieldTenantID,
+			usercredential.FieldUserID,
+			usercredential.FieldCredentialType,
+			usercredential.FieldCredential,
+			usercredential.FieldStatus,
+		).
+		Where(
+			usercredential.IdentityTypeEQ(*r.identityTypeConverter.ToEntity(trans.Ptr(identityType))),
+			usercredential.IdentifierEQ(identifier),
+		).
+		Limit(2).
+		All(ctx)
+	if err != nil {
+		r.performDummyVerify(plainCredential)
+		r.log.Errorf("query credential across tenants failed: %s", err.Error())
+		return 0, 0, authenticationV1.ErrorServiceUnavailable("db error")
+	}
+
+	var matched *ent.UserCredential
+	ambiguous := false
+	for i := range entities {
+		e := entities[i]
+		if e.Status == nil || *e.Status != usercredential.StatusEnabled ||
+			e.CredentialType == nil || e.Credential == nil || e.UserID == nil || e.TenantID == nil {
+			continue
+		}
+		if matched != nil {
+			ambiguous = true
+			break
+		}
+		matched = e
+	}
+	if ambiguous {
+		// 同名标识符跨租户歧义：拒绝并要求 tenant_code，不做密码校验
+		r.performDummyVerify(plainCredential)
+		return 0, 0, authenticationV1.ErrorUserNotFound("ambiguous identifier, tenant code required")
+	}
+	if matched == nil {
+		r.performDummyVerify(plainCredential)
+		return 0, 0, authenticationV1.ErrorUserNotFound("user not found")
+	}
+
+	if r.verifyCredential(matched.CredentialType, plainCredential, *matched.Credential) {
+		return *matched.UserID, *matched.TenantID, nil
+	}
+	return 0, 0, authenticationV1.ErrorInvalidPassword("incorrect password")
+}
+
 func (r *UserCredentialRepo) VerifyCredential(ctx context.Context, req *authenticationV1.VerifyCredentialRequest) (*authenticationV1.VerifyCredentialResponse, error) {
 	// 该内部 RPC 请求未携带租户信息，按平台（tenant 0）范围校验。
 	if _, err := r.FindUserCredential(ctx, 0, req.GetIdentityType(), req.GetIdentifier(), req.GetCredential(), req.GetNeedDecrypt()); err != nil {

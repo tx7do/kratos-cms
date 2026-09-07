@@ -110,7 +110,8 @@ export async function listWatchedPosts(page?: number, pageSize?: number) {
 
 /**
  * useInteractionStatus —— 批量查询当前 viewer 对指定目标的 {liked, watched} 状态。
- * 仅当 targetIds 非空时启用查询。用于渲染列表页中点赞/收藏按钮的初始态。
+ * 仅当 targetIds 非空且已登录时启用查询：该接口要求 viewer 身份，游客调用必然
+ * 401（还会触发全局"清除凭证"逻辑），游客态直接以默认状态渲染即可。
  */
 export function useInteractionStatus(
   targetType: interactionservicev1_TargetType,
@@ -120,10 +121,11 @@ export function useInteractionStatus(
     'queryKey' | 'queryFn' | 'enabled'
   >,
 ) {
+  const isLogin = useIsLogin();
   return useQuery({
     queryKey: ['interaction-status', targetType, targetIds],
     queryFn: () => getInteractionStatus(targetType, targetIds),
-    enabled: targetIds.length > 0,
+    enabled: targetIds.length > 0 && isLogin,
     staleTime: 0,
     ...options,
   });

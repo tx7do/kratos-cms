@@ -80,7 +80,7 @@ func initApp(ctx *bootstrap.Context) (*kratos.App, func(), error) {
 	// ═══════════════════════ 三、服务层(internal/service) ═══════════════════════
 
 	// 认证
-	authenticationService := service.NewAuthenticationService(ctx, authenticationServiceClient)
+	authenticationService := service.NewAuthenticationService(ctx, authenticationServiceClient, tenantServiceClient, tenantResolver)
 
 	// 文件
 	fileTransferService := service.NewFileTransferService(ctx, minIOClient, fileServiceClient)
@@ -89,9 +89,9 @@ func initApp(ctx *bootstrap.Context) (*kratos.App, func(), error) {
 	userProfileService := service.NewUserProfileService(ctx, userServiceClient, tenantServiceClient, orgUnitServiceClient, positionServiceClient, roleServiceClient, userCredentialServiceClient)
 
 	// 内容
-	postService := service.NewPostService(ctx, postServiceClient)
+	postService := service.NewPostService(ctx, postServiceClient, tenantResolver)
 	categoryService := service.NewCategoryService(ctx, categoryServiceClient)
-	commentService := service.NewCommentService(ctx, commentServiceClient)
+	commentService := service.NewCommentService(ctx, commentServiceClient, tenantResolver, accessTokenChecker)
 	interactionService := service.NewInteractionService(ctx, interactionServiceClient)
 	tagService := service.NewTagService(ctx, tagServiceClient)
 	pageService := service.NewPageService(ctx, pageServiceClient)

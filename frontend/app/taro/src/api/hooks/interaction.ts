@@ -16,6 +16,7 @@ import {
 } from '@/api/generated/app/service/v1';
 import { apiClient } from '@/api/client';
 import { queryClient } from '@/core';
+import {useAccessStore} from '@/store/core/access/store';
 
 // ==============================
 // 交互服务 API（点赞 / 收藏）
@@ -109,7 +110,9 @@ export async function listWatchedPosts(page?: number, pageSize?: number) {
 
 /**
  * useInteractionStatus —— 批量查询当前 viewer 对指定目标的 {liked, watched} 状态。
- * 仅当 targetIds 非空时启用查询。用于渲染列表页中点赞/收藏按钮的初始态。
+ * 仅当 targetIds 非空且已登录时启用查询：该接口要求 viewer 身份，游客调用必然
+ * 401，且 401 会触发全局重新认证（跳转登录页），导致游客/登录边界被意外打破。
+ * 游客态直接以默认状态渲染按钮即可。
  */
 export function useInteractionStatus(
   targetType: interactionservicev1_TargetType,
@@ -119,10 +122,11 @@ export function useInteractionStatus(
     'queryKey' | 'queryFn' | 'enabled'
   >,
 ) {
+  const accessToken = useAccessStore((s) => s.accessToken);
   return useQuery({
     queryKey: ['interaction-status', targetType, targetIds],
     queryFn: () => getInteractionStatus(targetType, targetIds),
-    enabled: targetIds.length > 0,
+    enabled: targetIds.length > 0 && !!accessToken?.value,
     staleTime: 0,
     ...options,
   });

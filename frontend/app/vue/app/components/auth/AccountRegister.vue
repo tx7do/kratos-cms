@@ -1,9 +1,18 @@
 <script setup lang="ts">
+import { requestApi } from '@/core/transport/rest/request-api'
+import { encryptByAES } from '@/utils'
+import { useAppConfig } from '@/hooks/use-app-config'
+
 const { t } = useI18n()
+const localePath = useLocalePath()
+const config = useAppConfig()
 
 const username = ref('')
 const password = ref('')
 const confirmPassword = ref('')
+const loading = ref(false)
+const errorMsg = ref('')
+const successMsg = ref('')
 
 const isValidUsername = computed(() => {
   if (!username.value) return false
@@ -20,9 +29,31 @@ const isFormValid = computed(() =>
   isValidUsername.value && isValidPassword.value && isPasswordMatch.value
 )
 
-function handleRegister() {
-  if (!isFormValid.value) return
-  console.log('注册信息：', { username: username.value, password: password.value })
+async function handleRegister() {
+  errorMsg.value = ''
+  successMsg.value = ''
+  if (!isFormValid.value || loading.value) return
+
+  loading.value = true
+  try {
+    // 密码与登录口径一致:AES 加密后提交,租户归属由服务端按 Host 解析
+    await requestApi({
+      path: '/app/v1/register',
+      method: 'POST',
+      body: JSON.stringify({
+        username: username.value,
+        password: encryptByAES(password.value, config.aesKey),
+      }),
+    })
+    successMsg.value = t('authentication.register.register_success') || 'Registration successful'
+    setTimeout(() => {
+      navigateTo(localePath('/login'))
+    }, 1200)
+  } catch (e: any) {
+    errorMsg.value = e?.message || 'Registration failed'
+  } finally {
+    loading.value = false
+  }
 }
 
 const inputBase = 'w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground transition-colors hover:border-primary focus:border-primary focus:outline-none focus:ring-[3px] focus:ring-primary/15'
@@ -91,10 +122,17 @@ const inputBase = 'w-full rounded-lg border border-border bg-background px-4 py-
     <button
       type="button"
       class="w-full cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
-      :disabled="!isFormValid"
+      :disabled="!isFormValid || loading"
       @click="handleRegister"
     >
-      {{ t('authentication.register.register') }}
+      {{ loading ? '...' : t('authentication.register.register') }}
     </button>
+
+    <p v-if="errorMsg" class="rounded-lg border border-destructive/20 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+      {{ errorMsg }}
+    </p>
+    <p v-if="successMsg" class="rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-primary">
+      {{ successMsg }}
+    </p>
   </div>
 </template>

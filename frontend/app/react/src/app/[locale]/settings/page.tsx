@@ -11,6 +11,9 @@ import XIcon from '@/plugins/xicon';
 import {usePreferences} from '@/core/preferences';
 import {useI18n} from '@/i18n';
 import type {ThemeModeType, SupportedLanguagesType} from '@/core/preferences';
+import {requestApi} from '@/core/transport/rest/request-api';
+import {encryptByAES} from '@/utils';
+import {useAccessStore} from '@/store/core/access/store';
 
 interface MenuItem {
     key: string;
@@ -33,6 +36,75 @@ export default function SettingsPage() {
     const {changeLocale} = useI18n();
 
     const [activeMenu, setActiveMenu] = useState<'account' | 'message' | 'preference'>('account');
+
+    // ── 修改密码 ──
+    const [pwdEditing, setPwdEditing] = useState(false);
+    const [pwdLoading, setPwdLoading] = useState(false);
+    const [pwdError, setPwdError] = useState('');
+    const [pwdSuccess, setPwdSuccess] = useState(false);
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+
+    const pwdFormValid = useMemo(() => (
+        oldPassword.length > 0
+        && newPassword.length >= 6
+        && newPassword === confirmPassword
+    ), [oldPassword, newPassword, confirmPassword]);
+
+    const openPwdForm = () => {
+        setPwdEditing(true);
+        setPwdError('');
+        setPwdSuccess(false);
+        setOldPassword('');
+        setNewPassword('');
+        setConfirmPassword('');
+    };
+
+    const cancelPwdForm = () => {
+        setPwdEditing(false);
+        setPwdError('');
+    };
+
+    const submitChangePassword = async () => {
+        setPwdError('');
+        setPwdSuccess(false);
+        const accessToken = useAccessStore.getState().accessToken;
+        if (!accessToken?.value) {
+            setPwdError(t('account.login_required'));
+            return;
+        }
+        if (newPassword.length < 6) {
+            setPwdError(t('account.password_too_short'));
+            return;
+        }
+        if (newPassword !== confirmPassword) {
+            setPwdError(t('account.password_mismatch'));
+            return;
+        }
+
+        setPwdLoading(true);
+        try {
+            // 与登录/注册口径一致:新旧密码均 AES 加密后提交,服务端解密校验/入库
+            await requestApi({
+                path: '/app/v1/me/password',
+                method: 'POST',
+                body: JSON.stringify({
+                    oldPassword: encryptByAES(oldPassword, process.env.NEXT_PUBLIC_AES_KEY || ''),
+                    newPassword: encryptByAES(newPassword, process.env.NEXT_PUBLIC_AES_KEY || ''),
+                }),
+            });
+            setPwdSuccess(true);
+            setPwdEditing(false);
+            setOldPassword('');
+            setNewPassword('');
+            setConfirmPassword('');
+        } catch (e: any) {
+            setPwdError(e?.message || t('account.change_failed'));
+        } finally {
+            setPwdLoading(false);
+        }
+    };
 
     const menuItems: MenuItem[] = useMemo(() => [
         {key: 'account', icon: 'carbon:user', label: t('menu.account')},
@@ -100,15 +172,61 @@ export default function SettingsPage() {
                                 <h2 className="mb-2 text-lg font-semibold text-foreground">{t('account.section_title')}</h2>
                                 <p className="mb-4 text-sm text-muted-foreground">{t('account.section_desc')}</p>
                                 <div className="space-y-3">
-                                    <SettingRow label={t('account.password')} description={t('account.password_not_set')}>
-                                        <Button variant="outline" size="sm">{t('account.edit')}</Button>
-                                    </SettingRow>
+                                    <div className="rounded-lg border border-border bg-cardBg">
+                                        <SettingRow label={t('account.password')} description={t('account.password_not_set')}>
+                                            {!pwdEditing ? (
+                                                <Button variant="outline" size="sm" onClick={openPwdForm}>{t('account.edit')}</Button>
+                                            ) : (
+                                                <Button variant="outline" size="sm" onClick={cancelPwdForm}>{t('account.cancel')}</Button>
+                                            )}
+                                        </SettingRow>
+                                        {pwdEditing && (
+                                            <div className="space-y-3 border-t border-border px-4 py-4">
+                                                <input
+                                                    type="password"
+                                                    value={oldPassword}
+                                                    onChange={(e) => setOldPassword(e.target.value)}
+                                                    placeholder={t('account.input_old_password')}
+                                                    autoComplete="current-password"
+                                                    className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground transition-colors hover:border-primary focus:border-primary focus:outline-none focus:ring-[3px] focus:ring-primary/15"
+                                                />
+                                                <input
+                                                    type="password"
+                                                    value={newPassword}
+                                                    onChange={(e) => setNewPassword(e.target.value)}
+                                                    placeholder={t('account.input_new_password')}
+                                                    autoComplete="new-password"
+                                                    className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground transition-colors hover:border-primary focus:border-primary focus:outline-none focus:ring-[3px] focus:ring-primary/15"
+                                                />
+                                                <input
+                                                    type="password"
+                                                    value={confirmPassword}
+                                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                                    placeholder={t('account.input_confirm_new_password')}
+                                                    autoComplete="new-password"
+                                                    className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground transition-colors hover:border-primary focus:border-primary focus:outline-none focus:ring-[3px] focus:ring-primary/15"
+                                                />
+                                                {pwdError && <p className="text-sm text-destructive">{pwdError}</p>}
+                                                <div className="flex justify-end gap-2">
+                                                    <Button variant="outline" size="sm" onClick={cancelPwdForm}>{t('account.cancel')}</Button>
+                                                    <Button size="sm" disabled={!pwdFormValid || pwdLoading} onClick={submitChangePassword}>
+                                                        {pwdLoading ? t('account.saving') : t('account.save')}
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
                                     <SettingRow label={t('account.bind_phone')} description={t('account.password_not_set')}>
-                                        <Button variant="outline" size="sm">{t('account.edit')}</Button>
+                                        <Button variant="outline" size="sm" disabled title={t('account.not_available')}>{t('account.not_available')}</Button>
                                     </SettingRow>
                                     <SettingRow label={t('account.bind_email')} description={t('account.email_not_bound')}>
-                                        <Button variant="outline" size="sm">{t('account.edit')}</Button>
+                                        <Button variant="outline" size="sm" disabled title={t('account.not_available')}>{t('account.not_available')}</Button>
                                     </SettingRow>
+                                    {pwdSuccess && (
+                                        <p className="rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-primary">
+                                            {t('account.change_success')}
+                                        </p>
+                                    )}
                                 </div>
                             </div>
                             <div>

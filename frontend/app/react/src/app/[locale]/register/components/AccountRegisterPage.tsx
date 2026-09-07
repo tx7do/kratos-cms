@@ -3,12 +3,19 @@
 import {useState, useMemo} from 'react';
 import {useTranslations} from 'next-intl';
 
+import {requestApi} from '@/core/transport/rest/request-api';
+import {encryptByAES} from '@/utils';
+import {useI18nRouter} from '@/i18n/helpers';
+
 export default function AccountRegisterPage() {
     const t = useTranslations('authentication');
+    const router = useI18nRouter();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [errorMsg, setErrorMsg] = useState('');
 
     // 用户名验证（3-20个字符，只能包含字母、数字、下划线）
     const isValidUsername = useMemo(() => {
@@ -32,15 +39,29 @@ export default function AccountRegisterPage() {
         return isValidUsername && isValidPassword && isPasswordMatch;
     }, [isValidUsername, isValidPassword, isPasswordMatch]);
 
-    const handleButtonRegister = () => {
-        if (!isFormValid) {
+    const handleButtonRegister = async () => {
+        setErrorMsg('');
+        if (!isFormValid || loading) {
             return;
         }
 
-        console.log('注册信息：', {
-            username: username,
-            password: password,
-        });
+        setLoading(true);
+        try {
+            // 密码与登录口径一致:AES 加密后提交,租户归属由服务端按 Host 解析
+            await requestApi({
+                path: '/app/v1/register',
+                method: 'POST',
+                body: JSON.stringify({
+                    username,
+                    password: encryptByAES(password, process.env.NEXT_PUBLIC_AES_KEY || ''),
+                }),
+            });
+            router.push('/login');
+        } catch (e: any) {
+            setErrorMsg(e?.message || 'Registration failed');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const inputBase = 'w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground transition-colors hover:border-primary focus:border-primary focus:outline-none focus:ring-[3px] focus:ring-primary/15';
@@ -111,11 +132,17 @@ export default function AccountRegisterPage() {
             <button
                 type="button"
                 className="w-full cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
-                disabled={!isFormValid}
+                disabled={!isFormValid || loading}
                 onClick={handleButtonRegister}
             >
                 {t('register.register')}
             </button>
+
+            {errorMsg && (
+                <p className="rounded-lg border border-destructive/20 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+                    {errorMsg}
+                </p>
+            )}
         </div>
     );
 }

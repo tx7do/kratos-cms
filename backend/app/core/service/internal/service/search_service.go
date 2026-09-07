@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/go-kratos/kratos/v2/log"
+	kratosMetadata "github.com/go-kratos/kratos/v2/metadata"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 	"github.com/tx7do/go-crud/viewer"
 
@@ -51,8 +52,11 @@ func NewSearchService(
 // Search 前台全文搜索。
 //
 // 安全：
-//   - tenantID 取自 viewer（maybeTenantFromViewer），调用方无法覆盖
-//   - tid==0 → 返回空（不接受 SystemViewer bypass）
+//   - tenantID 优先取自 viewer（maybeTenantFromViewerForSearch），调用方无法覆盖；
+//     viewer 无租户（如匿名 gRPC 链路，core 端拿不到 HTTP Host）时，回退读
+//     x-md-global-tenant-id 元数据——该值由 app BFF 按请求 Host 解析后注入，
+//     core 的 gRPC 端口仅在内网经注册中心暴露，外部调用方无法直接伪造该 header
+//   - 两者皆无 → 返回空（不接受 SystemViewer bypass）
 //   - 语言/状态由调用方传，但 SearchRepo 内部强制 term 过滤，不可绕过
 func (s *SearchService) Search(
 	ctx context.Context,
@@ -64,11 +68,33 @@ func (s *SearchService) Search(
 ) (*data.PostSearchResult, error) {
 	tenantID, hasTenant := maybeTenantFromViewerForSearch(ctx)
 	if !hasTenant {
+		tenantID = tenantIDFromGlobalMetadata(ctx)
+		hasTenant = tenantID > 0
+	}
+	if !hasTenant {
 		// 搜索路径不 bypass：无有效租户上下文 → 返回空
 		return &data.PostSearchResult{}, nil
 	}
 
 	return s.searchRepo.SearchPosts(ctx, query, tenantID, language, status, page, pageSize)
+}
+
+// tenantIDFromGlobalMetadata 读取 BFF 注入的租户元数据（kratos metadata 中间件
+// 透传的 x-md-global-* 键），供匿名搜索链路在 gRPC 侧恢复租户上下文。
+func tenantIDFromGlobalMetadata(ctx context.Context) uint32 {
+	md, ok := kratosMetadata.FromServerContext(ctx)
+	if !ok {
+		return 0
+	}
+	raw := md.Get("x-md-global-tenant-id")
+	if raw == "" {
+		return 0
+	}
+	tid, err := strconv.ParseUint(raw, 10, 32)
+	if err != nil {
+		return 0
+	}
+	return uint32(tid)
 }
 
 // ReindexPost 是 asynq "search.reindex" 任务的 worker handler。

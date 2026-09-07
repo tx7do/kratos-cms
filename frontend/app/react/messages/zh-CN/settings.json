@@ -22,7 +22,22 @@
     "wechat_account": "微信账号",
     "custom_domain": "个性域名",
     "domain_desc": "个人主页的地址，全站唯一可更改一次",
-    "edit": "编辑"
+    "edit": "编辑",
+    "old_password": "旧密码",
+    "new_password": "新密码",
+    "confirm_new_password": "确认新密码",
+    "input_old_password": "请输入当前密码",
+    "input_new_password": "请输入新密码（至少 6 位）",
+    "input_confirm_new_password": "请再次输入新密码",
+    "save": "保存",
+    "cancel": "取消",
+    "saving": "保存中...",
+    "change_success": "密码修改成功",
+    "password_mismatch": "两次输入的新密码不一致",
+    "password_too_short": "新密码至少 6 位",
+    "not_available": "暂未开放",
+    "login_required": "请先登录后再操作",
+    "change_failed": "密码修改失败"
   },
   "message": {
     "title": "消息与邮件",
@@ -79,4 +94,3 @@
     "q7_link": "账号注销"
   }
 }
-

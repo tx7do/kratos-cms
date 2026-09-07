@@ -674,11 +674,16 @@ class StorageManager implements IStorageCache {
     const { maxItems, maxUsageMB } = this.options;
     if (maxItems === 0 && maxUsageMB === 0) return;
 
+    // 0 表示不设该项上限；若把 0 当作字面上限（0 条/0 字节），任何写入都会
+    // 触发全量驱逐，刚写入的 token 会被立即清空导致登录态丢失。
+    const itemLimit = maxItems > 0 ? maxItems : Infinity;
+    const byteLimit = maxUsageMB > 0 ? maxUsageMB * 1024 * 1024 : Infinity;
+
     const allMeta = this.getAllMeta();
     let currentItems = allMeta.size;
     let currentUsage = Array.from(allMeta.values()).reduce((sum, m) => sum + m.s, 0);
 
-    if (currentItems <= maxItems && currentUsage <= maxUsageMB * 1024 * 1024) return;
+    if (currentItems <= itemLimit && currentUsage <= byteLimit) return;
 
     // 排序策略
     const sortedKeys = this.sortByEvictionPriority(allMeta);
@@ -686,7 +691,7 @@ class StorageManager implements IStorageCache {
     const keysToEvict: string[] = [];
 
     for (const key of sortedKeys) {
-      if (currentItems <= maxItems && currentUsage <= maxUsageMB * 1024 * 1024) break;
+      if (currentItems <= itemLimit && currentUsage <= byteLimit) break;
       keysToEvict.push(key);
       currentItems--;
       currentUsage -= allMeta.get(key)!.s;

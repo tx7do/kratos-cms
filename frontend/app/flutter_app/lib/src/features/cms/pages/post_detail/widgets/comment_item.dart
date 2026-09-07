@@ -63,7 +63,7 @@ class _CommentItemState extends State<CommentItem> {
     final resp = await _interactionService.getStatus(
         InteractionServiceV1TargetType.targetTypeComment, [cid]);
     if (!mounted || resp == null) return;
-    final st = resp.status?[cid.toString()];
+    final st = resp.statuses?[cid.toString()];
     if (st != null) {
       setState(() {
         _isLiked = st.liked ?? false;
@@ -83,9 +83,12 @@ class _CommentItemState extends State<CommentItem> {
           InteractionServiceV1TargetType.targetTypeComment, cid);
     }
     if (!mounted || resp == null) return;
+    // 在 setState 闭包外解包，规避闭包捕获导致空安全提升失效
+    final liked = resp.liked;
+    final likeCount = resp.likeCount;
     setState(() {
-      _isLiked = resp.liked ?? _isLiked;
-      _likeCount = resp.likeCount ?? _likeCount;
+      _isLiked = liked ?? _isLiked;
+      _likeCount = likeCount ?? _likeCount;
     });
   }
 

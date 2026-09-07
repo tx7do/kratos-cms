@@ -101,7 +101,7 @@ async function submitReply(comment: any) {
     cancelReply()
   } catch (error) {
     console.error('Submit reply failed:', error)
-    alert(t('comment.submit_comment_failed'))
+    alert(error?.message || t('comment.submit_comment_failed'))
   } finally {
     submitting.value = false
   }

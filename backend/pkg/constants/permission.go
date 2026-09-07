@@ -7,6 +7,9 @@ const (
 	// SystemAccessBackendPermissionCode 系统访问后台权限代码
 	SystemAccessBackendPermissionCode = SystemPermissionCodePrefix + "access_backend"
 
+	// SystemAccessAppPermissionCode 系统访问应用端(C 端)权限代码
+	SystemAccessAppPermissionCode = SystemPermissionCodePrefix + "access_app"
+
 	// SystemManageTenantsPermissionCode 系统管理租户权限代码
 	SystemManageTenantsPermissionCode = SystemPermissionCodePrefix + "manage_tenants"
 
@@ -31,6 +34,7 @@ const (
 // ProtectedPermissionCodes 受保护的权限代码列表，禁止删除
 var ProtectedPermissionCodes = []string{
 	SystemAccessBackendPermissionCode,
+	SystemAccessAppPermissionCode,
 	SystemManageTenantsPermissionCode,
 	SystemAuditLogsPermissionCode,
 	SystemPlatformAdminPermissionCode,

@@ -32,7 +32,7 @@ function handleSendCode() {
 
 function handleRegister() {
   if (!phone.value || !verificationCode.value) return
-  console.log('手机号注册/登录:', { phone: phone.value, verificationCode: verificationCode.value })
+  // TODO: 对接后端手机号注册/登录接口;验证码不可打印到控制台。
 }
 
 const inputBase = 'w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground transition-colors hover:border-primary focus:border-primary focus:outline-none focus:ring-[3px] focus:ring-primary/15'

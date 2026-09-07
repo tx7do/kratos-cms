@@ -21,11 +21,17 @@ import (
 
 	appV1 "go-wind-cms/api/gen/go/app/service/v1"
 	auditV1 "go-wind-cms/api/gen/go/audit/service/v1"
+	authenticationV1 "go-wind-cms/api/gen/go/authentication/service/v1"
 
 	"go-wind-cms/pkg/middleware/auth"
 	applogging "go-wind-cms/pkg/middleware/logging"
 	entmiddleware "go-wind-cms/pkg/middleware/ent"
 )
+
+// OperationAuthenticationServiceRegister 手工挂载的 C 端注册路由操作名。
+// core 的 RegisterUser RPC 已实现,但 app proto 尚未声明该接口,为规避 proto
+// 再生成,路由按生成代码的等价方式手工挂载;须与 AddWhiteList 保持一致。
+const OperationAuthenticationServiceRegister = "/app.v1.AuthenticationService/Register"
 
 // NewRestMiddleware 创建中间件
 func NewRestMiddleware(
@@ -42,6 +48,18 @@ func NewRestMiddleware(
 		appV1.OperationAuthenticationServiceLogin,
 
 		appV1.OperationNavigationServiceList,
+
+		// AuthenticationService.RefreshToken：access token 过期后凭 refresh_token 换新，
+		// 调用时 bearer 往往已过期，若要求有效 token 刷新将永远 401。
+		appV1.OperationAuthenticationServiceRefreshToken,
+
+		// C 端注册（手工挂载路由，见 NewRestServer；app proto 暂未声明该接口）。
+		OperationAuthenticationServiceRegister,
+
+		// CommentService.Create：游客评论策略在此操作内自行执行
+		// （可选认证 + enable_comments/allow_guest_comments 开关），
+		// 认证白名单仅为放行游客请求。
+		appV1.OperationCommentServiceCreate,
 
 		// SiteService.GetSiteByDomain：公开站点配置（template/theme/default_locale 等
 		// 渲染必需字段）。domain 由 BFF 按请求 Host 填入，调用方不可指定；core 端返回前
@@ -135,6 +153,25 @@ func NewRestServer(
 	}
 
 	appV1.RegisterAuthenticationServiceHTTPServer(srv, authenticationService)
+
+	// ── 手工挂载:C 端注册 POST /app/v1/register ──
+	// 与生成代码等价的注册方式;操作名须与 AddWhiteList 一致。
+	{
+		registerRoute := srv.Route("/")
+		registerRoute.POST("/app/v1/register", func(ctx http.Context) error {
+			http.SetOperation(ctx, OperationAuthenticationServiceRegister)
+			var in authenticationV1.RegisterUserRequest
+			if err := ctx.Bind(&in); err != nil {
+				return err
+			}
+			out, err := authenticationService.Register(ctx, &in)
+			if err != nil {
+				return err
+			}
+			return ctx.Result(200, out)
+		})
+	}
+
 	appV1.RegisterFileTransferServiceHTTPServer(srv, fileTransferService)
 	appV1.RegisterUserProfileServiceHTTPServer(srv, userProfileService)
 

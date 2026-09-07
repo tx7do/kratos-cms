@@ -103,8 +103,15 @@ func containsPermission(perms []string, target string) bool {
 }
 
 // authorizeAndEnrichUserTokenPayloadUserTenantRelationOneToOne 一对一用户-租户关系的授权与丰富
-func (s *AuthenticationService) authorizeAndEnrichUserTokenPayloadUserTenantRelationOneToOne(ctx context.Context, userID, tenantID uint32, tokenPayload *authenticationV1.UserTokenPayload) error {
-	hasBackendAccess := false
+func (s *AuthenticationService) authorizeAndEnrichUserTokenPayloadUserTenantRelationOneToOne(ctx context.Context, userID, tenantID uint32, clientType authenticationV1.ClientType, tokenPayload *authenticationV1.UserTokenPayload) error {
+	// 登录所需权限按客户端类型区分:
+	//   - admin(默认): 要求 sys:access_backend,保护管理后台
+	//   - app:        要求 sys:access_app,C 端用户无需后台权限
+	requiredPermissionCode := constants.SystemAccessBackendPermissionCode
+	if clientType == authenticationV1.ClientType_app {
+		requiredPermissionCode = constants.SystemAccessAppPermissionCode
+	}
+	hasRequiredAccess := false
 
 	if tenantID > 0 {
 		// 检查租户状态
@@ -137,14 +144,14 @@ func (s *AuthenticationService) authorizeAndEnrichUserTokenPayloadUserTenantRela
 		return authenticationV1.ErrorForbidden("insufficient authority")
 	}
 
-	// 检查是否包含系统访问后台权限
-	if containsPermission(permissionCodes, constants.SystemAccessBackendPermissionCode) {
-		hasBackendAccess = true
+	// 检查是否包含所需的访问权限
+	if containsPermission(permissionCodes, requiredPermissionCode) {
+		hasRequiredAccess = true
 	}
 
 	// 授权决策
-	if !hasBackendAccess {
-		s.log.Errorf("user [%d] has no backend access permission", userID)
+	if !hasRequiredAccess {
+		s.log.Errorf("user [%d] has no [%s] permission", userID, requiredPermissionCode)
 		return authenticationV1.ErrorForbidden("insufficient authority")
 	}
 
@@ -160,28 +167,28 @@ func (s *AuthenticationService) authorizeAndEnrichUserTokenPayloadUserTenantRela
 }
 
 // authorizeAndEnrichUserTokenPayload 授权并丰富用户令牌载荷
-func (s *AuthenticationService) authorizeAndEnrichUserTokenPayload(ctx context.Context, userID, tenantID uint32, tokenPayload *authenticationV1.UserTokenPayload) error {
+func (s *AuthenticationService) authorizeAndEnrichUserTokenPayload(ctx context.Context, userID, tenantID uint32, clientType authenticationV1.ClientType, tokenPayload *authenticationV1.UserTokenPayload) error {
 	switch constants.DefaultUserTenantRelationType {
 	default:
 		fallthrough
 	case constants.UserTenantRelationOneToOne:
-		return s.authorizeAndEnrichUserTokenPayloadUserTenantRelationOneToOne(ctx, userID, tenantID, tokenPayload)
+		return s.authorizeAndEnrichUserTokenPayloadUserTenantRelationOneToOne(ctx, userID, tenantID, clientType, tokenPayload)
 
 	// OneToMany 与 OneToOne 的授权流程一致：userRepo.ListRoleIDsByUserID 已按关系类型
 	// 分流（OneToMany 走 membershipRepo.ListMembershipRoleIDs），故复用同一实现。
 	case constants.UserTenantRelationOneToMany:
-		return s.authorizeAndEnrichUserTokenPayloadUserTenantRelationOneToOne(ctx, userID, tenantID, tokenPayload)
+		return s.authorizeAndEnrichUserTokenPayloadUserTenantRelationOneToOne(ctx, userID, tenantID, clientType, tokenPayload)
 	}
 }
 
 // resolveUserAuthority 解析用户权限信息
-func (s *AuthenticationService) resolveUserAuthority(ctx context.Context, user *identityV1.User, tokenPayload *authenticationV1.UserTokenPayload) error {
+func (s *AuthenticationService) resolveUserAuthority(ctx context.Context, user *identityV1.User, clientType authenticationV1.ClientType, tokenPayload *authenticationV1.UserTokenPayload) error {
 	if user.GetStatus() != identityV1.User_NORMAL {
 		s.log.Errorf("user [%d] is [%v]", user.GetId(), user.GetStatus())
 		return authenticationV1.ErrorForbidden("user is disabled")
 	}
 
-	if err := s.authorizeAndEnrichUserTokenPayload(ctx, user.GetId(), user.GetTenantId(), tokenPayload); err != nil {
+	if err := s.authorizeAndEnrichUserTokenPayload(ctx, user.GetId(), user.GetTenantId(), clientType, tokenPayload); err != nil {
 		return err
 	}
 
@@ -211,6 +218,19 @@ func (s *AuthenticationService) doGrantTypePassword(ctx context.Context, req *au
 	var matchedUserID uint32
 	var err error
 	matchedUserID, err = s.userCredentialRepo.FindUserCredential(ctx, tenantID, authenticationV1.UserCredential_USERNAME, req.GetUsername(), req.GetPassword(), true)
+	if err != nil && tenantID == 0 {
+		// 未携带 tenant_code 时（C 端登录表单没有租户输入），先按平台（tenant 0）
+		// 精确查找；UserNotFound 再跨租户回退一次——仅当标识符全局唯一命中时放行，
+		// 并以凭证归属租户为准，消除"租户用户在 C 端永远无法登录"的问题。
+		// 同名歧义仍要求调用方显式传 tenant_code。身份鉴别已通过后才更新 tenantID。
+		var globalUserID, globalTenantID uint32
+		if authenticationV1.IsUserNotFound(err) {
+			globalUserID, globalTenantID, err = s.userCredentialRepo.FindUserCredentialAcrossTenants(ctx, authenticationV1.UserCredential_USERNAME, req.GetUsername(), req.GetPassword(), true)
+		}
+		if err == nil {
+			matchedUserID, tenantID = globalUserID, globalTenantID
+		}
+	}
 	if err != nil {
 		// 服务端日志保留真实原因（USER_NOT_FOUND / USER_FREEZE / INVALID_PASSWORD），便于运维排查
 		s.log.Errorf("verify user credential failed for username [%s]: %s", req.GetUsername(), err.Error())
@@ -244,7 +264,7 @@ func (s *AuthenticationService) doGrantTypePassword(ctx context.Context, req *au
 	}
 
 	// 验证权限
-	if err = s.resolveUserAuthority(ctx, user, tokenPayload); err != nil {
+	if err = s.resolveUserAuthority(ctx, user, req.GetClientType(), tokenPayload); err != nil {
 		return nil, err
 	}
 
@@ -303,7 +323,7 @@ func (s *AuthenticationService) doGrantTypeRefreshToken(ctx context.Context, req
 	}
 
 	// 解析用户权限信息
-	err = s.resolveUserAuthority(ctx, user, tokenPayload)
+	err = s.resolveUserAuthority(ctx, user, req.GetClientType(), tokenPayload)
 	if err != nil {
 		s.log.Errorf("resolve user [%d] authority failed [%s]", user.GetId(), err.Error())
 		return nil, err
@@ -375,12 +395,13 @@ func (s *AuthenticationService) RegisterUser(ctx context.Context, req *authentic
 	}
 	defer func() { s.userRepo.FinishTx(tx, err) }()
 
-	// 查找租户的管理员角色，分配给新注册用户（否则用户无角色将无法登录）
+	// 查找租户的普通用户角色，分配给新注册用户（否则用户无角色将无法登录）。
+	// 注意不能授租户管理员角色:注册用户只应有 C 端访问能力。
 	var roleID *uint32
 	if tenantId != nil {
-		tenantRole, roleErr := s.roleRepo.GetTenantRoleByCode(ctx, *tenantId, constants.TenantAdminRoleCode)
+		tenantRole, roleErr := s.roleRepo.GetTenantRoleByCode(ctx, *tenantId, constants.TenantUserRoleCode)
 		if roleErr != nil {
-			s.log.Errorf("get tenant role for registration failed: %v", roleErr)
+			s.log.Errorf("get tenant user role for registration failed: %v", roleErr)
 		} else if tenantRole != nil && tenantRole.Id != nil {
 			roleID = tenantRole.Id
 		}

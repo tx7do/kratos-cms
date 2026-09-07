@@ -2,10 +2,13 @@ package data
 
 import (
 	"context"
+	"strconv"
+	"strings"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/go-kratos/kratos/v2/log"
+	kratosMetadata "github.com/go-kratos/kratos/v2/metadata"
 
 	"github.com/tx7do/go-utils/copierutil"
 	"github.com/tx7do/go-utils/mapper"
@@ -17,6 +20,7 @@ import (
 	"go-wind-cms/app/core/service/internal/data/ent"
 	"go-wind-cms/app/core/service/internal/data/ent/comment"
 	"go-wind-cms/app/core/service/internal/data/ent/predicate"
+	"go-wind-cms/app/core/service/internal/data/ent/sitesetting"
 
 	commentV1 "go-wind-cms/api/gen/go/comment/service/v1"
 )
@@ -188,7 +192,31 @@ func (r *CommentRepo) Create(ctx context.Context, req *commentV1.CreateCommentRe
 		return nil, commentV1.ErrorBadRequest("invalid parameter")
 	}
 
+	// ── 评论策略开关(site_settings)──
+	// enable_comments=false:评论功能整体关闭(登录/游客一律拒绝);
+	// allow_guest_comments=false:游客(未登录)不可评论,登录用户不受影响。
+	// 开关全站点生效;设置行不存在时视为开启。
+	if !r.boolSetting(ctx, settingKeyEnableComments) {
+		return nil, commentV1.ErrorForbidden("comments are disabled")
+	}
+	if req.Data.GetAuthorType() == commentV1.Comment_AUTHOR_TYPE_GUEST &&
+		!r.boolSetting(ctx, settingKeyAllowGuestComments) {
+		return nil, commentV1.ErrorForbidden("guest comments are disabled")
+	}
+
+	// 租户归属:游客/匿名链路 BFF 经 x-md-global-tenant-id 元数据注入(内网可信);
+	// 读取失败回落 0(平台)。与搜索链路的租户注入口径一致。
+	tenantID := uint32(0)
+	if md, ok := kratosMetadata.FromServerContext(ctx); ok {
+		if v := md.Get("x-md-global-tenant-id"); v != "" {
+			if parsed, perr := strconv.ParseUint(v, 10, 32); perr == nil {
+				tenantID = uint32(parsed)
+			}
+		}
+	}
+
 	builder := r.entClient.Client().Comment.Create().
+		SetTenantID(tenantID).
 		SetNillableContentType(r.contentTypeConverter.ToEntity(req.Data.ContentType)).
 		SetNillableObjectID(req.Data.ObjectId).
 		SetNillableContent(req.Data.Content).
@@ -296,3 +324,28 @@ func (r *CommentRepo) Delete(ctx context.Context, req *commentV1.DeleteCommentRe
 
 	return err
 }
+
+// boolSetting 读取 site_settings 中指定 key 的布尔值(取 created_at 最新一条)。
+// 无记录或读取失败时返回 true(缺省开启,开关仅用于显式关闭)。
+func (r *CommentRepo) boolSetting(ctx context.Context, key string) bool {
+	setting, err := r.entClient.Client().SiteSetting.Query().
+		Where(sitesetting.KeyEQ(key)).
+		Order(sitesetting.ByCreatedAt(sql.OrderDesc())).
+		First(ctx)
+	if err != nil {
+		if !ent.IsNotFound(err) {
+			r.log.Errorf("read site setting [%s] failed: %s", key, err.Error())
+		}
+		return true
+	}
+	if setting == nil || setting.Value == nil {
+		return true
+	}
+	return strings.EqualFold(*setting.Value, "true")
+}
+
+// 评论策略开关的 site_settings 键
+const (
+	settingKeyEnableComments     = "enable_comments"
+	settingKeyAllowGuestComments = "allow_guest_comments"
+)

@@ -3,6 +3,7 @@ import { useAuthStore } from '@/stores/modules/app/auth.state'
 
 const { t } = useI18n()
 const localePath = useLocalePath()
+const route = useRoute()
 const authStore = useAuthStore()
 
 const username = ref('')
@@ -21,7 +22,18 @@ const handleLogin = async () => {
       username: username.value,
       password: password.value,
     }, async () => {
-      await navigateTo(localePath('/'))
+      // 登录前被 401 拦截到本页时会带 redirect 参数，登录成功后应回到原页面。
+      // 历史链接可能存在双重编码（%252F），防御性解码一次。
+      const redirect = route.query.redirect
+      let target = typeof redirect === 'string' ? redirect : ''
+      if (/%[0-9a-fA-F]{2}/.test(target)) {
+        try {
+          target = decodeURIComponent(target)
+        } catch {
+          // 保留原值
+        }
+      }
+      await navigateTo(target.startsWith('/') ? target : localePath('/'))
     })
   } catch (e: any) {
     errorMsg.value = e?.message || t('authentication.login.login_failed')

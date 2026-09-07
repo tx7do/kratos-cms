@@ -155,14 +155,20 @@ func (s *AuthenticationService) RefreshToken(ctx context.Context, req *authentic
 		return nil, authenticationV1.ErrorBadRequest("invalid request")
 	}
 
+	// 常规路径:access token 仍有效时,auth 中间件已注入 operator。
+	// 兜底路径:access token 已过期(本操作在白名单中,operator 不会被注入)时,
+	// 从过期 JWT 的 payload 自行解码 uid/jti 作为刷新令牌的绑定键——真正的
+	// 凭证校验由 core 以 refresh token 值完成,过期 access token 不作为凭证。
 	operator, err := auth.FromContext(ctx)
-	if err != nil {
-		return nil, err
+	if err == nil {
+		req.UserId = trans.Ptr(operator.GetUserId())
+		req.Jti = operator.Jti
+	} else if uid, jti, uerr := netutil.ParseUnverifiedBearerJWTClaims(ctx); uerr == nil {
+		req.UserId = trans.Ptr(uid)
+		req.Jti = trans.Ptr(jti)
 	}
 
 	req.ClientType = trans.Ptr(authenticationV1.ClientType_admin)
-	req.UserId = trans.Ptr(operator.GetUserId())
-	req.Jti = operator.Jti
 
 	return s.authenticationServiceClient.RefreshToken(ctx, req)
 }

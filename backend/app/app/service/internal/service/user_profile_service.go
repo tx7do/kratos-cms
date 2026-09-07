@@ -88,11 +88,14 @@ func (s *UserProfileService) ChangePassword(ctx context.Context, req *identityV1
 		return nil, err
 	}
 
+	// NeedDecrypt:true → core 会先把 AES(base64) 密文解密成明文再做 bcrypt
+	// 校验/入库,与登录/注册的密码传输口径一致(前端提交 AES 密文)。
 	return s.userCredentialServiceClient.ChangeCredential(ctx, &authenticationV1.ChangeCredentialRequest{
 		IdentityType:  authenticationV1.UserCredential_USERNAME,
 		Identifier:    operator.GetUsername(),
 		OldCredential: req.GetOldPassword(),
 		NewCredential: req.GetNewPassword(),
+		NeedDecrypt:   true,
 	})
 }
 

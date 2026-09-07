@@ -2,27 +2,33 @@ package service
 
 import (
 	"context"
+	"strconv"
 
 	"github.com/go-kratos/kratos/v2/log"
+	khttp "github.com/go-kratos/kratos/v2/transport/http"
+	kratosMetadata "github.com/go-kratos/kratos/v2/metadata"
 	paginationV1 "github.com/tx7do/go-crud/api/gen/go/pagination/v1"
 	"github.com/tx7do/kratos-bootstrap/bootstrap"
 	"google.golang.org/protobuf/types/known/emptypb"
 
 	appV1 "go-wind-cms/api/gen/go/app/service/v1"
 	contentV1 "go-wind-cms/api/gen/go/content/service/v1"
+	entmiddleware "go-wind-cms/pkg/middleware/ent"
 )
 
 type PostService struct {
 	appV1.PostServiceHTTPServer
 
-	postClient contentV1.PostServiceClient
-	log        *log.Helper
+	postClient    contentV1.PostServiceClient
+	tenantResolve entmiddleware.TenantResolver
+	log           *log.Helper
 }
 
-func NewPostService(ctx *bootstrap.Context, postClient contentV1.PostServiceClient) *PostService {
+func NewPostService(ctx *bootstrap.Context, postClient contentV1.PostServiceClient, tenantResolve entmiddleware.TenantResolver) *PostService {
 	return &PostService{
-		log:        ctx.NewLoggerHelper("post/service/app-service"),
-		postClient: postClient,
+		log:           ctx.NewLoggerHelper("post/service/app-service"),
+		postClient:    postClient,
+		tenantResolve: tenantResolve,
 	}
 }
 
@@ -75,12 +81,21 @@ func (s *PostService) GetTranslation(ctx context.Context, req *contentV1.GetPost
 	return s.postClient.GetTranslation(ctx, req)
 }
 
-// SearchPosts 全文搜索帖子，纯透传到 core 服务。
+// SearchPosts 全文搜索帖子。
 //
-// core 端从 viewer 上下文注入 tenant_id（匿名经路线2 的 AnonymousTenantViewer
-// 解析 Host 得到，登录为 UserViewer），并硬编码 status=PUBLISHED，仅返回
-// postId/language/title 最小字段集。tenant_id 非零由 viewer 保证，调用方无法
-// 指定或绕过。与文章列表/详情一致，本端点在鉴权白名单中，允许匿名搜索。
+// core 端搜索对租户做强制过滤并硬编码 status=PUBLISHED，仅返回 postId/language/
+// title 最小字段集。tenant_id 由服务端上下文决定，调用方无法指定或绕过。
+// 匿名经路线2 解析 Host 得到 AnonymousTenantViewer，但 BFF→core 是 gRPC 调用、
+// 拿不到 HTTP Host，故此处按请求 Host 解析租户后经 x-md-global-tenant-id 传给
+// core 兜底（仅本服务内网 gRPC 可达，header 不可被外部调用方伪造注入）；
+// 解析不出租户则不注入，core 端维持 fail-closed（返回空）。
 func (s *PostService) SearchPosts(ctx context.Context, req *contentV1.SearchPostsRequest) (*contentV1.SearchPostsResponse, error) {
+	if s.tenantResolve != nil {
+		if hr, ok := khttp.RequestFromServerContext(ctx); ok && hr != nil && hr.Host != "" {
+			if tid, err := s.tenantResolve.ResolveTenantIDByDomain(ctx, hr.Host); err == nil && tid > 0 {
+				ctx = kratosMetadata.AppendToClientContext(ctx, "x-md-global-tenant-id", strconv.FormatUint(uint64(tid), 10))
+			}
+		}
+	}
 	return s.postClient.SearchPosts(ctx, req)
 }

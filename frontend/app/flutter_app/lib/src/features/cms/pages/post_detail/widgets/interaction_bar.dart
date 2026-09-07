@@ -67,7 +67,7 @@ class _InteractionBarState extends State<InteractionBar> {
     final statusResp =
         results[0] as InteractionServiceV1GetInteractionStatusResponse?;
     final countsResp = results[1] as InteractionServiceV1GetCountsResponse?;
-    final st = statusResp?.status?[pid.toString()];
+    final st = statusResp?.statuses?[pid.toString()];
     final likeCount = InteractionService.extractCount(
         countsResp, pid, InteractionServiceV1CounterMetric.counterMetricLike);
     final watchCount = InteractionService.extractCount(countsResp, pid,
@@ -94,9 +94,12 @@ class _InteractionBarState extends State<InteractionBar> {
           InteractionServiceV1TargetType.targetTypePost, pid);
     }
     if (!mounted || resp == null) return;
+    // 在 setState 闭包外解包，规避闭包捕获导致空安全提升失效
+    final liked = resp.liked;
+    final likeCount = resp.likeCount;
     setState(() {
-      _liked = resp.liked ?? _liked;
-      _likeCount = resp.likeCount ?? _likeCount;
+      _liked = liked ?? _liked;
+      _likeCount = likeCount ?? _likeCount;
     });
   }
 
@@ -110,9 +113,11 @@ class _InteractionBarState extends State<InteractionBar> {
       resp = await _interactionService.watch(pid);
     }
     if (!mounted || resp == null) return;
+    final watched = resp.watched;
+    final watchCount = resp.watchCount;
     setState(() {
-      _watched = resp.watched ?? _watched;
-      _watchCount = resp.watchCount ?? _watchCount;
+      _watched = watched ?? _watched;
+      _watchCount = watchCount ?? _watchCount;
     });
   }
 

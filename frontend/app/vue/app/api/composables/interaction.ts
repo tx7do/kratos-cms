@@ -15,6 +15,7 @@ import {
   type interactionservicev1_CounterMetric,
 } from '@/api/generated/app/service/v1';
 import { apiClient } from '@/api/client';
+import { useAccessStore } from '@/stores/modules/core/access.state';
 
 // ==============================
 // 交互服务 API（点赞 / 收藏 / 交互状态 / 计数）
@@ -97,7 +98,8 @@ export async function getCounts(
 
 /**
  * useInteractionStatus —— 批量查询当前 viewer 对指定目标的 {liked, watched} 状态。
- * 仅当 targetIds 非空时启用查询。用于渲染列表页中点赞/收藏按钮的初始态。
+ * 仅当 targetIds 非空且已登录时启用查询：该接口要求 viewer 身份，游客调用必然
+ * 401（并可能触发全局重新认证逻辑），游客态直接以默认状态渲染即可。
  *
  * 说明：Vue 端 targetIds 接受 MaybeRefOrGetter，以响应列表数据变化（如分页切换）
  * 自动重新发起查询。queryKey 与 enabled 均以 computed 形式注册，保证响应式追踪。
@@ -110,6 +112,7 @@ export function useInteractionStatus(
     'queryKey' | 'queryFn' | 'enabled'
   >,
 ) {
+  const accessStore = useAccessStore();
   return useQuery({
     queryKey: computed(() => [
       'interaction-status',
@@ -120,7 +123,9 @@ export function useInteractionStatus(
       const ids = toValue(targetIds);
       return getInteractionStatus(targetType, ids);
     },
-    enabled: computed(() => toValue(targetIds).length > 0),
+    enabled: computed(
+      () => toValue(targetIds).length > 0 && !!accessStore.accessToken?.value,
+    ),
     staleTime: 0,
     ...options,
   });

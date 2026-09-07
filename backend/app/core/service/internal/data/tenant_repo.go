@@ -2,6 +2,7 @@ package data
 
 import (
 	"context"
+	"strings"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
@@ -365,11 +366,28 @@ func (r *TenantRepo) GetTenantIdByDomain(ctx context.Context, domain string) (ui
 		Where(tenant.DomainEQ(domain)).
 		Only(ctx)
 	if err != nil {
-		if ent.IsNotFound(err) {
+		if !ent.IsNotFound(err) {
+			r.log.Errorf("query tenant by domain failed: %s", err.Error())
+			return 0, identityV1.ErrorInternalServerError("query tenant by domain failed")
+		}
+		// 精确匹配失败后按主机名（去掉端口）回退一次：开发环境各前端跑在不同
+		// 端口（5011/5001/10086），Host 恒带端口，而租户 domain 只有一个字段，
+		// 若不回退则每个前端都得单独配 domain。先精确后回退，生产（标准端口，
+		// Host 不带端口）行为不变。
+		if host, _, found := strings.Cut(domain, ":"); found && host != "" {
+			entity, err = r.entClient.Client().Tenant.Query().
+				Where(tenant.DomainEQ(host)).
+				Only(ctx)
+			if err != nil {
+				if ent.IsNotFound(err) {
+					return 0, nil
+				}
+				r.log.Errorf("query tenant by host failed: %s", err.Error())
+				return 0, identityV1.ErrorInternalServerError("query tenant by domain failed")
+			}
+		} else {
 			return 0, nil
 		}
-		r.log.Errorf("query tenant by domain failed: %s", err.Error())
-		return 0, identityV1.ErrorInternalServerError("query tenant by domain failed")
 	}
 	if entity == nil || entity.ID == 0 {
 		return 0, nil

@@ -15,6 +15,8 @@ const (
 	PlatformAdminRoleCode = PlatformRoleCodePrefix + "admin"
 	// TenantAdminRoleCode 租户管理员角色代码
 	TenantAdminRoleCode = TenantRoleCodePrefix + "manager"
+	// TenantUserRoleCode 租户普通用户角色代码(C 端注册默认角色)
+	TenantUserRoleCode = TenantRoleCodePrefix + "user"
 	// TenantAdminTemplateRoleCode 租户管理员模板角色代码
 	TenantAdminTemplateRoleCode = TemplateRoleCodePrefix + TenantAdminRoleCode
 
@@ -22,6 +24,8 @@ const (
 	DefaultPlatformAdminRoleName = "平台管理员"
 	// DefaultTenantManagerRoleName 租户管理员角色默认名称
 	DefaultTenantManagerRoleName = "租户管理员"
+	// DefaultTenantUserRoleName 租户普通用户角色默认名称
+	DefaultTenantUserRoleName = "普通用户"
 )
 
 func HasRoleCodePrefix(roleCode string, prefix string) bool {
