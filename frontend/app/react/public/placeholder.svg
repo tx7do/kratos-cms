@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
-  <!-- 文章封面占位图：山峦插画,绿色调与站点主色 primary (#16a34a) 同源 -->
+  <!-- 文章封面占位图：山峦插画,绿色调与站点主色 primary (#16a34a) 同源;构图重心置于竖直中线,兼容超宽 object-cover 裁切 -->
   <defs>
     <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#f4f8f5"/>
-      <stop offset="1" stop-color="#e6efe9"/>
+      <stop offset="0" stop-color="#fefffe"/>
+      <stop offset="1" stop-color="#e2f3e9"/>
     </linearGradient>
   </defs>
   <rect width="640" height="360" fill="url(#sky)"/>
-  <circle cx="430" cy="104" r="38" fill="#cfe7d2" opacity="0.85"/>
-  <path d="M0 264 C 140 180, 300 200, 400 240 C 500 280, 560 250, 640 220 L 640 360 L 0 360 Z" fill="#16a34a" fill-opacity="0.12"/>
-  <path d="M0 320 C 180 240, 360 300, 640 260 L 640 360 L 0 360 Z" fill="#16a34a" fill-opacity="0.22"/>
+  <circle cx="440" cy="148" r="36" fill="#b9e3c6"/>
+  <path d="M0 268 C 140 200, 300 218, 400 246 C 500 274, 570 258, 640 238 L 640 360 L 0 360 Z" fill="#16a34a" fill-opacity="0.18"/>
+  <path d="M0 322 C 180 262, 380 308, 640 272 L 640 360 L 0 360 Z" fill="#16a34a" fill-opacity="0.34"/>
 </svg>
