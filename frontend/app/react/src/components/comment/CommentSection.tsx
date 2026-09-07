@@ -237,39 +237,37 @@ const CommentSection: React.FC<CommentSectionProps> = ({
 
     return (
         <section className={cn(
-            'mx-auto mb-10 max-w-300 rounded-2xl border border-border bg-card p-14 shadow-sm backdrop-blur-sm',
-            'max-md:rounded-xl max-md:p-10',
-            'max-sm:rounded-xl max-sm:p-8',
+            'mb-10 rounded-2xl border border-border bg-card p-6 shadow-sm backdrop-blur-sm md:p-8',
+            'max-md:rounded-xl',
         )}>
             {/* Section Header */}
-            <div className="mb-10 max-md:mb-8">
-                <h2 className="flex items-center gap-3.5 text-3xl font-bold tracking-tight text-foreground max-md:text-2xl max-sm:text-xl">
-                    <XIcon name="carbon:chat" size={36}/>
+            <div className="mb-8">
+                <h2 className="flex items-center gap-2.5 text-2xl font-bold tracking-tight text-foreground max-md:text-xl">
+                    <XIcon name="carbon:chat" size={24}/>
                     {t('comments_count', {count: displayComments.length})}
                 </h2>
             </div>
 
             {/* Comment Form */}
             <div className={cn(
-                'relative mb-12 overflow-hidden rounded-2xl border border-primary/10 p-12',
+                'relative mb-8 overflow-hidden rounded-2xl border border-primary/10 p-5 md:p-6',
                 'bg-linear-to-br from-card to-primary/2 shadow-sm',
                 'transition-all duration-400 hover:border-primary hover:shadow-md',
-                'max-md:rounded-xl max-md:p-8 max-md:mb-9',
-                'max-sm:p-7 max-sm:mb-8',
+                'max-md:rounded-xl',
             )}>
                 {/* Gradient top bar */}
                 <div className="absolute top-0 left-0 right-0 h-1 bg-primary opacity-90"/>
 
                 {/* 标题块：去除绿色背景方框，改为简洁文字 + 绿色图标点绥 */}
-                <div className="mb-8 flex items-center gap-2.5 max-md:mb-6">
+                <div className="mb-5 flex items-center gap-2.5">
                     <XIcon name="carbon:edit" size={22} className="text-primary"/>
                     <h3 className="text-lg font-bold tracking-tight text-foreground max-md:text-base">
                         {t('write_comment')}
                     </h3>
                 </div>
 
-                <div className="flex flex-col gap-6">
-                    <div className="grid grid-cols-2 gap-6 max-md:grid-cols-1 max-md:gap-4">
+                <div className="flex flex-col gap-4">
+                    <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1 max-md:gap-3">
                         <div className="flex flex-col gap-2">
                             <input
                                 value={newComment.authorName}

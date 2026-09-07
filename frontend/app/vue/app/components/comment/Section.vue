@@ -120,7 +120,7 @@ async function handleSubmitComment() {
     }, 100)
   } catch (error) {
     console.error('Submit comment failed:', error)
-    alert(t('comment.submit_comment_failed'))
+    alert(error?.message || t('comment.submit_comment_failed'))
   } finally {
     submitting.value = false
   }
@@ -163,7 +163,7 @@ async function handleReply(comment: any, content: string, authorName: string, au
     await loadComments(true)
   } catch (error) {
     console.error('Submit reply failed:', error)
-    alert(t('comment.submit_comment_failed'))
+    alert(error?.message || t('comment.submit_comment_failed'))
   } finally {
     submitting.value = false
   }
@@ -197,37 +197,35 @@ onMounted(() => {
 
 <template>
   <section :class="cn(
-    'mx-auto mb-10 max-w-300 rounded-2xl border border-border bg-card p-14 shadow-sm backdrop-blur-sm',
-    'max-md:rounded-xl max-md:p-10',
-    'max-sm:rounded-xl max-sm:p-8',
+    'mb-10 rounded-2xl border border-border bg-card p-6 shadow-sm backdrop-blur-sm md:p-8',
+    'max-md:rounded-xl',
   )">
     <!-- Section Header -->
-    <div class="mb-10 max-md:mb-8">
-      <h2 class="flex items-center gap-3.5 text-3xl font-bold tracking-tight text-foreground max-md:text-2xl max-sm:text-xl">
-        <XIcon icon="carbon:chat" :size="36" />
+    <div class="mb-8">
+      <h2 class="flex items-center gap-2.5 text-2xl font-bold tracking-tight text-foreground max-md:text-xl">
+        <XIcon icon="carbon:chat" :size="24" />
         {{ t('comment.comments_count', { count: comments.length }) }}
       </h2>
     </div>
 
     <!-- Comment Form -->
     <div :class="cn(
-      'relative mb-12 overflow-hidden rounded-2xl border border-primary/10 p-12',
+      'relative mb-8 overflow-hidden rounded-2xl border border-primary/10 p-5 md:p-6',
       'bg-linear-to-br from-card to-primary/2 shadow-sm',
       'transition-all duration-400 hover:border-primary hover:shadow-md',
-      'max-md:rounded-xl max-md:p-8 max-md:mb-9',
-      'max-sm:p-7 max-sm:mb-8',
+      'max-md:rounded-xl',
     )">
       <div class="absolute top-0 left-0 right-0 h-1 bg-primary opacity-90" />
 
-      <div class="mb-8 flex items-center gap-2.5 max-md:mb-6">
+      <div class="mb-5 flex items-center gap-2.5">
         <XIcon icon="carbon:edit" :size="22" class="text-primary" />
         <h3 class="text-lg font-bold tracking-tight text-foreground max-md:text-base">
           {{ t('comment.write_comment') }}
         </h3>
       </div>
 
-      <div class="flex flex-col gap-6">
-        <div class="grid grid-cols-2 gap-6 max-md:grid-cols-1 max-md:gap-4">
+      <div class="flex flex-col gap-4">
+        <div class="grid grid-cols-2 gap-4 max-md:grid-cols-1 max-md:gap-3">
           <input
             v-model="newComment.authorName"
             :placeholder="t('comment.nickname') + ' *'"

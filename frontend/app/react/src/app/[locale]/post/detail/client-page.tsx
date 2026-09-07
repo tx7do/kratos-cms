@@ -282,18 +282,15 @@ export default function PostDetailPage() {
                                 share: t('post_detail.share'),
                             }}
                         />
+                        {/* Comments Section：与正文同列宽，避免独立容器撑满整页 */}
+                        <CommentSection
+                            objectId={postId}
+                            contentType="CONTENT_TYPE_POST"
+                            onUpdateComments={() => {}}
+                        />
                     </div>
                 </div>
             </article>
-
-            {/* Comments Section */}
-            <SectionContainer noPadding>
-                <CommentSection
-                    objectId={postId}
-                    contentType="CONTENT_TYPE_POST"
-                    onUpdateComments={() => {}}
-                />
-            </SectionContainer>
 
             {/* Related Posts */}
             <SectionContainer>

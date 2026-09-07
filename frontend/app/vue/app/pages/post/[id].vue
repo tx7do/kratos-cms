@@ -272,17 +272,15 @@ onMounted(() => {
                 @bookmark="toggleBookmark"
                 @share="handleShare"
             />
+
+            <!-- Comments Section：与正文同列宽，避免独立容器撑满整页 -->
+            <CommentSection
+                :object-id="postId"
+                content-type="CONTENT_TYPE_POST"
+            />
           </div>
         </div>
       </article>
-
-      <!-- Comments Section -->
-      <LayoutSectionContainer no-padding>
-        <CommentSection
-            :object-id="postId"
-            content-type="CONTENT_TYPE_POST"
-        />
-      </LayoutSectionContainer>
 
       <!-- Related Posts -->
       <LayoutSectionContainer>
