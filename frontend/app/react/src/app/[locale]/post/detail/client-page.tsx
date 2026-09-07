@@ -214,7 +214,6 @@ export default function PostDetailPage() {
                 {displayThumbnail && (
                     <div className="relative mb-8 h-[300px] overflow-hidden rounded-xl max-md:h-[200px]">
                         <Image src={displayThumbnail} alt={displayTitle} className="h-full w-full object-cover"/>
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"/>
                     </div>
                 )}
 

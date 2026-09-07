@@ -227,7 +227,6 @@ onMounted(() => {
         <!-- Thumbnail Banner -->
         <div v-if="displayThumbnail" class="relative mb-8 h-[300px] overflow-hidden rounded-xl max-md:h-[200px]">
           <UiImage :src="displayThumbnail" :alt="displayTitle" class="h-full w-full object-cover"/>
-          <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"/>
         </div>
 
         <div :class="[!isTocExpanded ? 'lg:ps-12' : '', 'flex gap-6 max-md:flex-col']">

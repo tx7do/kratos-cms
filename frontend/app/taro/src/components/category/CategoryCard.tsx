@@ -49,7 +49,6 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
                   alt={getCategoryName(category, t)}
                   className='w-full h-full object-cover'
                 />
-                <View className='absolute inset-0 bg-gradient-to-t from-black/20 to-transparent' />
             </View>
 
             {/* 内容区域 */}
