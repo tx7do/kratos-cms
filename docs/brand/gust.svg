@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <title>GoWind 风行 — 阵风图形（浅底/深底通用）</title>
+  <defs>
+    <linearGradient id="wg" gradientUnits="userSpaceOnUse" x1="0" y1="30" x2="0" y2="420">
+      <stop offset="0" stop-color="#70B3FF"/>
+      <stop offset=".5" stop-color="#0D74F2"/>
+      <stop offset="1" stop-color="#005AC2"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(47,20)" fill="none" stroke="url(#wg)" stroke-width="42" stroke-linecap="round">
+    <path d="M100 150 H280 A40 40 0 0 0 235 86"/>
+    <path d="M76 270 H330 A40 40 0 0 0 285 206"/>
+    <path d="M128 390 H260 A40 40 0 0 0 215 326"/>
+  </g>
+</svg>

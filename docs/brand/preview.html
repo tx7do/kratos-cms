@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>GoWind 风行 · 品牌标识提案</title>
+<style>
+  :root{
+    --primary:#006BE6; --ink:#1F2937; --sub:#6B7280;
+    --canvas:#F1F3F6; --border:#E4E4E7;
+    --dark:#0B0F19; --dark-surface:#111827;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI","Microsoft YaHei",system-ui,sans-serif;background:var(--canvas);color:var(--ink);padding:48px 40px;max-width:1120px;margin:0 auto}
+  h1{font-size:26px;margin-bottom:8px}
+  .lead{color:var(--sub);margin-bottom:36px;line-height:1.8;max-width:880px;font-size:14px}
+  .concept{background:#fff;border:1px solid var(--border);border-radius:14px;padding:26px 28px;margin-bottom:28px;box-shadow:0 1px 3px rgba(15,23,42,.06)}
+  .concept h2{font-size:19px;margin-bottom:4px}
+  .concept h2 em{font-style:normal;color:var(--primary);margin-right:10px}
+  .concept p{color:var(--sub);font-size:13px;line-height:1.7;margin-bottom:20px}
+  .row{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-end}
+  .cell{display:flex;flex-direction:column;gap:8px;align-items:center}
+  .cell b{font-size:12px;color:var(--sub);font-weight:500}
+  .dark-box{background:var(--dark-surface);border-radius:12px;padding:14px;display:inline-flex}
+  .strip{border-radius:12px;padding:14px 22px;margin-top:20px;display:flex;align-items:center;justify-content:center}
+  .strip.light{background:#fff;border:1px solid var(--border)}
+  .strip.dark{background:var(--dark-surface)}
+  .strip img{width:420px;max-width:100%}
+  .sizes{display:flex;align-items:flex-end;gap:18px}
+  .tab{display:inline-flex;align-items:center;gap:8px;background:#DEE3EA;border-radius:8px 8px 0 0;padding:6px 14px 6px 10px;font-size:12px;color:#374151}
+  .prod{display:inline-flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--border);border-radius:999px;padding:8px 22px 8px 8px;margin:0 14px 14px 0;font-size:15px;font-weight:600}
+  .prod small{font-weight:400;color:var(--sub);font-size:12px}
+</style>
+</head>
+<body>
+  <h1>GoWind 风行 · 品牌标识提案</h1>
+  <p class="lead">
+    品牌主名 <b>GoWind</b>，中文名 <b>风行</b>——如风疾行。Admin 只是产品线之一，因此本提案以
+    「主品牌标识 + 产品名后缀」的架构设计：图形标与字标属于 GoWind 风行，产品（Admin / CMS / UBA / IM / 量化…）
+    通过文字后缀组合，不再单独造标。色板取自《设计语言规范》权威主色 <b>hsl(212 100% 45%) ≈ #006BE6</b>，
+    渐变取其明暗两阶（#70B3FF → #005AC2）。全部资产为纯矢量 SVG，无字体依赖。
+  </p>
+
+  <section class="concept">
+    <h2><em>方案 A</em>阵风 · Gust</h2>
+    <p>三道流动的风痕，尾端卷成浪形回勾，长短错落制造速度感。语义最直白——一眼是"风"，与"风行"的疾行意象最贴；笔画粗壮，16px 下依然清晰。气质：轻盈、敏捷、工具感。</p>
+    <div class="row">
+      <div class="cell"><img src="gust-tile.svg" width="128" height="128"><b>应用图标</b></div>
+      <div class="cell"><img src="gust.svg" width="128" height="128"><b>图形 · 浅底</b></div>
+      <div class="cell"><span class="dark-box"><img src="gust.svg" width="128" height="128"></span><b>图形 · 深底</b></div>
+      <div class="cell">
+        <div class="sizes">
+          <img src="gust-favicon.svg" width="48" height="48">
+          <img src="gust-favicon.svg" width="32" height="32">
+          <img src="gust-favicon.svg" width="24" height="24">
+          <img src="gust-favicon.svg" width="16" height="16">
+        </div><b>favicon 48/32/24/16</b>
+      </div>
+      <div class="cell"><div class="tab"><img src="gust-favicon.svg" width="16" height="16">GoWind Admin</div><b>标签页模拟</b></div>
+    </div>
+    <div class="strip light"><img src="gust-lockup.svg" alt=""></div>
+    <div class="strip dark"><img src="gust-lockup.svg" alt=""></div>
+  </section>
+
+  <section class="concept">
+    <h2><em>方案 B</em>旋涡 · Vortex <span style="font-size:12px;color:#fff;background:var(--primary);border-radius:999px;padding:3px 12px;vertical-align:3px;margin-left:8px">已选定 · 已落地三端</span></h2>
+    <p>三段弧线首尾旋接成气旋，由内向外渐次展开，透明度递减造纵深。剪影近圆形，是天生的应用图标形；"汇聚流转、以风御风"的隐喻贴合多产品线的平台底座。气质：有力、向心、平台感。</p>
+    <div class="row">
+      <div class="cell"><img src="vortex-tile.svg" width="128" height="128"><b>应用图标</b></div>
+      <div class="cell"><img src="vortex.svg" width="128" height="128"><b>图形 · 浅底</b></div>
+      <div class="cell"><span class="dark-box"><img src="vortex.svg" width="128" height="128"></span><b>图形 · 深底</b></div>
+      <div class="cell">
+        <div class="sizes">
+          <img src="vortex-favicon.svg" width="48" height="48">
+          <img src="vortex-favicon.svg" width="32" height="32">
+          <img src="vortex-favicon.svg" width="24" height="24">
+          <img src="vortex-favicon.svg" width="16" height="16">
+        </div><b>favicon 48/32/24/16</b>
+      </div>
+      <div class="cell"><div class="tab"><img src="vortex-favicon.svg" width="16" height="16">GoWind Admin</div><b>标签页模拟</b></div>
+    </div>
+    <div class="strip light"><img src="vortex-lockup.svg" alt=""></div>
+    <div class="strip dark"><img src="vortex-lockup.svg" alt=""></div>
+  </section>
+
+  <section class="concept">
+    <h2><em>方案 C</em>W 字标 · Monogram</h2>
+    <p>GoWind 之 "W"（Wind）的三笔连写，末笔高高挑起并向后卷成风环——字母与风的动势合为一体。独字标识在侧栏收窄、社交头像等场景辨识度最高。气质：利落、签名感、品牌感。</p>
+    <div class="row">
+      <div class="cell"><img src="wmark-tile.svg" width="128" height="128"><b>应用图标</b></div>
+      <div class="cell"><img src="wmark.svg" width="128" height="128"><b>图形 · 浅底</b></div>
+      <div class="cell"><span class="dark-box"><img src="wmark.svg" width="128" height="128"></span><b>图形 · 深底</b></div>
+      <div class="cell">
+        <div class="sizes">
+          <img src="wmark-favicon.svg" width="48" height="48">
+          <img src="wmark-favicon.svg" width="32" height="32">
+          <img src="wmark-favicon.svg" width="24" height="24">
+          <img src="wmark-favicon.svg" width="16" height="16">
+        </div><b>favicon 48/32/24/16</b>
+      </div>
+      <div class="cell"><div class="tab"><img src="wmark-favicon.svg" width="16" height="16">GoWind Admin</div><b>标签页模拟</b></div>
+    </div>
+    <div class="strip light"><img src="wmark-lockup.svg" alt=""></div>
+    <div class="strip dark"><img src="wmark-lockup.svg" alt=""></div>
+  </section>
+
+  <section class="concept">
+    <h2><em>附件一</em>独立字标 · Wordmark</h2>
+    <p>GOWIND（渐变）+ 风行（实色）两行式几何字标，「风行」二字同样为手工几何笔画并已转路径——不依赖任何字体，任何环境渲染一致。可配合任一图形方案使用。</p>
+    <div class="row">
+      <div class="cell"><img src="wordmark.svg" width="250"><b>字标 · 浅底</b></div>
+      <div class="cell"><span class="dark-box"><img src="wordmark.svg" width="250"></span><b>字标 · 深底</b></div>
+    </div>
+  </section>
+
+  <section class="concept">
+    <h2><em>附件二</em>品牌架构 · 主品牌 + 产品线</h2>
+    <p>主品牌图形标全产品共用；产品名以「GoWind × 产品名」文字后缀呈现（系统字体即可），侧栏、启动页、文档头均按此组合。以下用方案 A 图形示意（最终以选定方案为准）。</p>
+    <div>
+      <span class="prod"><img src="gust-tile.svg" width="36" height="36" style="border-radius:9px">GoWind Admin <small>管理后台（本仓）</small></span>
+      <span class="prod"><img src="gust-tile.svg" width="36" height="36" style="border-radius:9px">GoWind CMS <small>内容管理</small></span>
+      <span class="prod"><img src="gust-tile.svg" width="36" height="36" style="border-radius:9px">GoWind UBA <small>用户行为分析</small></span>
+      <span class="prod"><img src="gust-tile.svg" width="36" height="36" style="border-radius:9px">GoWind IM <small>即时通讯</small></span>
+      <span class="prod"><img src="gust-tile.svg" width="36" height="36" style="border-radius:9px">GoWind Quant <small>量化</small></span>
+    </div>
+  </section>
+</body>
+</html>

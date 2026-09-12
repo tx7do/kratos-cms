@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 240">
+  <title>GoWind 风行 — 旋涡横版组合</title>
+  <defs>
+    <linearGradient id="wg" gradientUnits="userSpaceOnUse" x1="0" y1="38" x2="0" y2="474">
+      <stop offset="0" stop-color="#70B3FF"/>
+      <stop offset=".5" stop-color="#0D74F2"/>
+      <stop offset="1" stop-color="#005AC2"/>
+    </linearGradient>
+    <linearGradient id="tg" gradientUnits="userSpaceOnUse" x1="0" y1="-12" x2="0" y2="112">
+      <stop offset="0" stop-color="#70B3FF"/>
+      <stop offset=".5" stop-color="#0D74F2"/>
+      <stop offset="1" stop-color="#005AC2"/>
+    </linearGradient>
+    <g id="Lg" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path id="cG" d="M70 22 A40 40 0 1 0 82 50 L56 50"/>
+      <circle id="cO" cx="42" cy="50" r="40"/>
+      <path id="cW" d="M10 0 L30 100 L48 30 L66 100 L86 0"/>
+      <path id="cI" d="M10 0 L10 100"/>
+      <path id="cN" d="M10 100 L10 0 L74 100 L74 0"/>
+      <path id="cD" d="M10 0 L10 100 M10 0 L24 0 A50 50 0 0 1 24 100 L10 100"/>
+    </g>
+    <g id="fx">
+      <path d="M14.6 18.4V46.6C14.6 62.7 13.7 85.8 2.8 101.3C5.5 102.7 10.8 107.0 12.8 109.4C24.9 92.4 27.0 64.4 27.0 46.6V30.0H72.4C72.4 82.2 72.7 108.0 88.4 108.0C95.1 108.0 97.4 102.6 98.5 89.6C96.3 87.5 93.2 83.3 91.2 80.3C91.0 88.2 90.4 95.2 89.3 95.2C83.7 95.2 83.8 68.8 84.4 18.4ZM58.4 35.7C56.4 42.2 53.6 48.8 50.4 55.1C46.1 49.5 41.8 44.0 37.7 39.1L28.0 44.2C33.3 50.8 38.9 58.4 44.2 65.9C38.3 75.0 31.5 82.8 24.2 88.2C26.9 90.4 30.8 94.6 32.8 97.4C39.5 91.8 45.7 84.6 51.1 76.3C55.6 83.3 59.4 89.8 61.8 95.1L72.7 88.8C69.4 82.1 63.9 73.7 57.8 65.1C62.2 56.9 65.9 47.9 68.9 38.7Z"/>
+      <path d="M156.7 20.7V32.2H205.5V20.7ZM137.4 15.0C132.6 22.0 122.9 31.1 114.6 36.4C116.7 38.8 119.8 43.6 121.3 46.3C130.9 39.6 141.7 29.3 149.0 19.8ZM152.4 48.5V59.9H182.0V94.8C182.0 96.3 181.4 96.7 179.6 96.7C177.8 96.8 171.1 96.8 165.4 96.5C167.0 100.0 168.6 105.2 169.1 108.7C178.0 108.7 184.4 108.5 188.7 106.7C193.1 104.9 194.3 101.5 194.3 95.1V59.9H208.1V48.5ZM141.2 36.8C134.7 48.2 123.7 59.8 113.5 66.9C115.9 69.4 120.0 74.8 121.7 77.3C124.4 75.1 127.1 72.6 129.9 69.9V109.1H141.9V56.5C145.9 51.5 149.6 46.3 152.6 41.2Z"/>
+    </g>
+  </defs>
+  <g transform="translate(15,13) scale(0.42)" fill="none" stroke="url(#wg)" stroke-linecap="round">
+    <path d="M241 431 A176 176 0 1 1 408 344" stroke-width="84"/>
+    <path d="M264 199 A58 58 0 1 1 204 282" stroke-width="54"/>
+  </g>
+  <g transform="translate(248,32)" fill="none" stroke="url(#tg)" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
+    <use href="#cG"/><use href="#cO" x="116"/><use href="#cW" x="234"/><use href="#cI" x="354"/><use href="#cN" x="398"/><use href="#cD" x="506"/>
+  </g>
+  <g transform="translate(250,152) scale(0.72)" fill="url(#tg)" stroke="none" stroke-linecap="round" stroke-linejoin="round">
+    <use href="#fx"/>
+  </g>
+</svg>

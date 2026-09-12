@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <title>GoWind 风行 — 旋涡图形 v3（双粗臂高辨识版，16px 可读）</title>
+  <defs>
+    <linearGradient id="wg" gradientUnits="userSpaceOnUse" x1="0" y1="38" x2="0" y2="474">
+      <stop offset="0" stop-color="#70B3FF"/>
+      <stop offset=".5" stop-color="#0D74F2"/>
+      <stop offset="1" stop-color="#005AC2"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke="url(#wg)" stroke-linecap="round">
+    <!-- 外臂：r176 扫 295°，缺口朝右上 -->
+    <path d="M241 431 A176 176 0 1 1 408 344" stroke-width="84"/>
+    <!-- 内臂：r58 扫 235°，缺口与外臂错位 ~125°，负空间连成 S 形气道 -->
+    <path d="M264 199 A58 58 0 1 1 204 282" stroke-width="54"/>
+  </g>
+</svg>

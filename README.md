@@ -1,8 +1,8 @@
 <div align="center">
 
-# GoWind Content Hub
+<img src="docs/brand/vortex-tile.svg" width="120" alt="GoWind Content Hub" />
 
-### 风行 · 开箱即用的企业级前后端一体内容平台
+# GoWind Content Hub
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![Go Version](https://img.shields.io/badge/Go-1.25+-00ADD8?logo=go&logoColor=white)](https://go.dev/)
@@ -11,7 +11,7 @@
 [![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter&logoColor=white)](https://flutter.dev/)
 [![Kratos](https://img.shields.io/badge/Kratos-2.9-00ADD8?logo=go&logoColor=white)](https://go-kratos.dev/)
 
-**[English](./README.en-US.md)** · **中文** · **[日本語](./README.ja-JP.md)**
+[English](./README.en-US.md) | **中文** | [日本語](./README.ja-JP.md)
 
 </div>
 
